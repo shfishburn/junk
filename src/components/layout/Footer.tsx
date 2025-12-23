@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 
 export function Footer() {
   return (
@@ -56,11 +56,20 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="tel:+13605551234"
+                  href="tel:+13606109233"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Phone className="h-4 w-4 flex-shrink-0" />
-                  (360) 555-1234
+                  (360) 610-9233
+                </a>
+              </li>
+              <li>
+                <a
+                  href="sms:+13606109233"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4 flex-shrink-0" />
+                  Text Us
                 </a>
               </li>
               <li>

@@ -28,9 +28,9 @@ export function HeroSection() {
               </Link>
             </Button>
             <Button asChild variant="hero" size="lg" className="text-base">
-              <a href="tel:+13605551234">
+              <a href="tel:+13606109233">
                 <Phone className="mr-2 h-4 w-4" />
-                (360) 555-1234
+                (360) 610-9233
               </a>
             </Button>
           </div>
