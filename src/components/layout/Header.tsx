@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/service-area", label: "Service Area" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/ai-estimator", label: "AI Estimator", icon: Sparkles },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -31,12 +32,14 @@ export function Header() {
               key={link.href}
               to={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
+                "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
                 location.pathname === link.href
                   ? "text-primary"
-                  : "text-muted-foreground"
+                  : "text-muted-foreground",
+                link.icon && "text-primary"
               )}
             >
+              {link.icon && <link.icon className="h-3.5 w-3.5" />}
               {link.label}
             </Link>
           ))}
@@ -72,12 +75,14 @@ export function Header() {
                 to={link.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "py-2 text-base font-medium transition-colors",
+                  "py-2 text-base font-medium transition-colors flex items-center gap-2",
                   location.pathname === link.href
                     ? "text-primary"
-                    : "text-muted-foreground"
+                    : "text-muted-foreground",
+                  link.icon && "text-primary"
                 )}
               >
+                {link.icon && <link.icon className="h-4 w-4" />}
                 {link.label}
               </Link>
             ))}

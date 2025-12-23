@@ -1,17 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, Clock, MapPin, Loader2, MessageCircle, Sparkles, Camera } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { JunkAnalyzerModal } from "@/components/JunkAnalyzerModal";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAnalyzerOpen, setIsAnalyzerOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -91,12 +90,11 @@ const Contact = () => {
                     <p className="text-muted-foreground text-sm mb-3">
                       Snap a photo and let our AI do the heavy lifting (pun intended).
                     </p>
-                    <Button 
-                      onClick={() => setIsAnalyzerOpen(true)}
-                      className="w-full sm:w-auto"
-                    >
-                      <Camera className="mr-2 h-4 w-4" />
-                      Get AI Quote
+                    <Button asChild className="w-full sm:w-auto">
+                      <Link to="/ai-estimator">
+                        <Camera className="mr-2 h-4 w-4" />
+                        Get AI Quote
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -242,7 +240,6 @@ const Contact = () => {
         </div>
       </section>
 
-      <JunkAnalyzerModal open={isAnalyzerOpen} onOpenChange={setIsAnalyzerOpen} />
     </Layout>
   );
 };

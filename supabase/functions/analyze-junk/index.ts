@@ -41,11 +41,11 @@ serve(async (req) => {
             content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State. 
             Analyze the image and estimate the items, volume, weight, and removal price.
             Be helpful and slightly humorous in your notes. Base pricing on:
-            - 1/8 truck: $100-150
-            - 1/4 truck: $175-250
-            - 1/2 truck: $300-400
-            - 3/4 truck: $450-550
-            - Full truck: $550-700
+            - 1/8 truck: $175-263
+            - 1/4 truck: $306-438
+            - 1/2 truck: $525-700
+            - 3/4 truck: $788-963
+            - Full truck: $963-1,225
             Heavy items like concrete or appliances may add 10-20% to the base price.`,
           },
           {
