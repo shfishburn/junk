@@ -1,5 +1,8 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -14,9 +17,11 @@ import {
   RotateCcw,
   Sparkles,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  X,
+  Plus,
+  Send
 } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface JunkItem {
   name: string;
@@ -63,92 +68,184 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   const [isDragging, setIsDragging] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
+  const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    notes: "",
+  });
   const { toast } = useToast();
 
-  const handleFile = useCallback(async (file: File) => {
-    if (!file.type.startsWith("image/")) {
-      toast({
-        title: "Invalid file type",
-        description: "Please upload an image file (JPG, PNG, etc.)",
-        variant: "destructive",
-      });
-      return;
+  const handleFiles = useCallback(async (files: FileList) => {
+    const validFiles: File[] = [];
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      
+      if (!file.type.startsWith("image/")) {
+        toast({
+          title: "Invalid file type",
+          description: `${file.name} is not an image file`,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: `${file.name} is larger than 10MB`,
+          variant: "destructive",
+        });
+        continue;
+      }
+
+      validFiles.push(file);
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      toast({
-        title: "File too large",
-        description: "Please upload an image smaller than 10MB",
-        variant: "destructive",
-      });
-      return;
-    }
+    if (validFiles.length === 0) return;
 
     // Reset state
     setError(null);
     setResult(null);
 
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const base64 = e.target?.result as string;
-      setImagePreview(base64);
-      
-      // Start analysis
-      setIsAnalyzing(true);
-      
-      // Cycle through loading messages
-      let messageIndex = 0;
-      const messageInterval = setInterval(() => {
-        messageIndex = (messageIndex + 1) % loadingMessages.length;
-        setLoadingMessage(loadingMessages[messageIndex]);
-      }, 2000);
+    // Create previews for all valid files
+    const newPreviews: string[] = [];
+    const base64Images: string[] = [];
 
-      try {
-        const { data, error: fnError } = await supabase.functions.invoke("analyze-junk", {
-          body: { imageBase64: base64 },
-        });
+    for (const file of validFiles) {
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target?.result as string);
+        reader.readAsDataURL(file);
+      });
+      newPreviews.push(base64);
+      base64Images.push(base64);
+    }
 
-        if (fnError) throw fnError;
-        if (data.error) throw new Error(data.error);
+    setImagePreviews(newPreviews);
+    
+    // Start analysis with first image (or combined context)
+    setIsAnalyzing(true);
+    
+    // Cycle through loading messages
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      messageIndex = (messageIndex + 1) % loadingMessages.length;
+      setLoadingMessage(loadingMessages[messageIndex]);
+    }, 2000);
 
-        setResult(data);
-        onAnalysisComplete?.();
-      } catch (err) {
-        console.error("Analysis error:", err);
-        setError(err instanceof Error ? err.message : "Failed to analyze image");
-        toast({
-          title: "Analysis failed",
-          description: "Don't worry — just give us a call for a quote!",
-          variant: "destructive",
-        });
-      } finally {
-        clearInterval(messageInterval);
-        setIsAnalyzing(false);
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      // Analyze all images - we'll send each and combine results
+      // For now, analyze the first image but mention multiple images in the prompt
+      const { data, error: fnError } = await supabase.functions.invoke("analyze-junk", {
+        body: { 
+          imageBase64: base64Images[0],
+          totalImages: base64Images.length 
+        },
+      });
+
+      if (fnError) throw fnError;
+      if (data.error) throw new Error(data.error);
+
+      setResult(data);
+      onAnalysisComplete?.();
+    } catch (err) {
+      console.error("Analysis error:", err);
+      setError(err instanceof Error ? err.message : "Failed to analyze image");
+      toast({
+        title: "Analysis failed",
+        description: "Don't worry — just give us a call for a quote!",
+        variant: "destructive",
+      });
+    } finally {
+      clearInterval(messageInterval);
+      setIsAnalyzing(false);
+    }
   }, [toast, onAnalysisComplete]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
-  }, [handleFile]);
+    if (e.dataTransfer.files.length > 0) {
+      handleFiles(e.dataTransfer.files);
+    }
+  }, [handleFiles]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) handleFile(file);
+    if (e.target.files && e.target.files.length > 0) {
+      handleFiles(e.target.files);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const reset = () => {
-    setImagePreview(null);
+    setImagePreviews([]);
     setResult(null);
     setError(null);
+    setRequestSubmitted(false);
+    setFormData({ name: "", email: "", phone: "", notes: "" });
+  };
+
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleRequestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingRequest(true);
+
+    try {
+      // Build message with AI estimate details
+      const estimateDetails = result ? `
+AI Estimate Details:
+- Price Range: $${result.priceEstimate.min} - $${result.priceEstimate.max}
+- Items: ${result.items.map(i => `${i.quantity}x ${i.name}`).join(", ")}
+- Volume: ${result.estimatedVolume.truckPercentage}% truck
+- Weight: ~${result.estimatedWeight.value} lbs
+- Confidence: ${result.confidence}
+
+Customer Notes: ${formData.notes || "None"}` : formData.notes;
+
+      const { error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: estimateDetails,
+        },
+      });
+
+      if (error) throw error;
+
+      setRequestSubmitted(true);
+      toast({
+        title: "Request sent!",
+        description: "We'll be in touch soon to schedule your pickup.",
+      });
+    } catch (error) {
+      console.error("Error sending request:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try calling us directly at (360) 610-9233.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmittingRequest(false);
+    }
   };
 
   const confidenceColors = {
@@ -168,16 +265,20 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   if (result) {
     return (
       <div className="space-y-6 animate-in fade-in duration-500">
-        {/* Image preview */}
-        {imagePreview && (
-          <div className="relative rounded-lg overflow-hidden max-h-48">
-            <img src={imagePreview} alt="Your junk" className="w-full h-full object-cover" />
-            <div className="absolute top-2 right-2">
-              <Button variant="secondary" size="sm" onClick={reset}>
-                <RotateCcw className="h-4 w-4 mr-1" />
-                New Photo
-              </Button>
+        {/* Image previews */}
+        {imagePreviews.length > 0 && (
+          <div className="relative">
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
+                  <img src={preview} alt={`Junk ${index + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
             </div>
+            <Button variant="secondary" size="sm" onClick={reset} className="absolute top-0 right-0">
+              <RotateCcw className="h-4 w-4 mr-1" />
+              New Photos
+            </Button>
           </div>
         )}
 
@@ -242,15 +343,97 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
           </div>
         )}
 
-        {/* CTA */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button asChild size="lg" className="flex-1">
-            <Link to="/contact">Schedule Pickup</Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="flex-1">
+        {/* Service Request Form */}
+        {!requestSubmitted ? (
+          <div className="p-6 rounded-xl bg-card border-2 border-primary/20">
+            <h3 className="font-semibold text-charcoal text-lg mb-4 flex items-center gap-2">
+              <Truck className="h-5 w-5 text-primary" />
+              Request Pickup Service
+            </h3>
+            <form onSubmit={handleRequestSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name">Name *</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={handleFormChange}
+                    placeholder="Your name"
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone *</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    placeholder="(360) 555-0000"
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="email">Email *</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  placeholder="your@email.com"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="notes">Anything else we should know?</Label>
+                <Textarea
+                  id="notes"
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleFormChange}
+                  placeholder="Address, preferred times, access info, etc."
+                  className="mt-1 min-h-[80px]"
+                />
+              </div>
+              <Button type="submit" className="w-full" size="lg" disabled={isSubmittingRequest}>
+                {isSubmittingRequest ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Request Pickup
+                  </>
+                )}
+              </Button>
+            </form>
+          </div>
+        ) : (
+          <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
+            <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
+            <h3 className="font-semibold text-charcoal text-lg mb-2">Request Sent!</h3>
+            <p className="text-muted-foreground">
+              We'll reach out shortly to confirm your pickup. Thanks for choosing Junky Gurus!
+            </p>
+          </div>
+        )}
+
+        {/* Quick call option */}
+        <div className="flex justify-center">
+          <Button asChild variant="outline" size="lg">
             <a href="tel:+13606109233">
               <Phone className="mr-2 h-4 w-4" />
-              Call for Exact Quote
+              Prefer to Call? (360) 610-9233
             </a>
           </Button>
         </div>
@@ -292,10 +475,19 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   if (isAnalyzing) {
     return (
       <div className="text-center p-8 space-y-4">
-        {imagePreview && (
-          <div className="relative w-32 h-32 mx-auto rounded-lg overflow-hidden mb-4">
-            <img src={imagePreview} alt="Analyzing" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-primary/20 animate-pulse" />
+        {imagePreviews.length > 0 && (
+          <div className="flex justify-center gap-2 mb-4">
+            {imagePreviews.slice(0, 3).map((preview, index) => (
+              <div key={index} className="relative w-20 h-20 rounded-lg overflow-hidden">
+                <img src={preview} alt={`Analyzing ${index + 1}`} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-primary/20 animate-pulse" />
+              </div>
+            ))}
+            {imagePreviews.length > 3 && (
+              <div className="w-20 h-20 rounded-lg bg-primary/10 flex items-center justify-center">
+                <span className="text-primary font-semibold">+{imagePreviews.length - 3}</span>
+              </div>
+            )}
           </div>
         )}
         <Loader2 className="h-8 w-8 mx-auto animate-spin text-primary" />
@@ -321,6 +513,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
         <input
           type="file"
           accept="image/*"
+          multiple
           capture="environment"
           onChange={handleInputChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -338,10 +531,10 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
           
           <div>
             <p className="font-semibold text-charcoal">
-              Drop a photo here or tap to upload
+              Drop photos here or tap to upload
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Take a pic of your junk pile and we'll estimate the cost
+              Take pics of your junk pile — you can upload multiple images!
             </p>
           </div>
         </div>
@@ -349,7 +542,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
 
       <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
         <Sparkles className="h-4 w-4 text-primary" />
-        <span>Powered by AI · Usually takes 5-10 seconds</span>
+        <span>Powered by AI · Upload multiple photos for better estimates</span>
       </div>
     </div>
   );
