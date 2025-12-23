@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -80,6 +80,36 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
     notes: "",
   });
   const { toast } = useToast();
+
+  // Restore saved estimate from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('junk-estimate');
+    if (saved) {
+      try {
+        const { result: savedResult, imagePreviews: savedPreviews, timestamp } = JSON.parse(saved);
+        // Check if not expired (24 hours)
+        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          setResult(savedResult);
+          setImagePreviews(savedPreviews || []);
+        } else {
+          localStorage.removeItem('junk-estimate');
+        }
+      } catch (e) {
+        localStorage.removeItem('junk-estimate');
+      }
+    }
+  }, []);
+
+  // Save estimate to localStorage when result changes
+  useEffect(() => {
+    if (result && imagePreviews.length > 0) {
+      localStorage.setItem('junk-estimate', JSON.stringify({
+        result,
+        imagePreviews,
+        timestamp: Date.now()
+      }));
+    }
+  }, [result, imagePreviews]);
 
   const handleFiles = useCallback(async (files: FileList) => {
     const validFiles: File[] = [];
@@ -188,6 +218,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   };
 
   const reset = () => {
+    localStorage.removeItem('junk-estimate');
     setImagePreviews([]);
     setResult(null);
     setError(null);
