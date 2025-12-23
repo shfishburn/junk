@@ -5,11 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, Clock, MapPin, Loader2, MessageCircle } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, Loader2, MessageCircle, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { JunkAnalyzerModal } from "@/components/JunkAnalyzerModal";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAnalyzerOpen, setIsAnalyzerOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -78,6 +80,28 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
+              {/* AI Quote Card */}
+              <div className="mb-8 p-6 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-charcoal mb-1">Skip the Typing</h3>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      Snap a photo and let our AI do the heavy lifting (pun intended).
+                    </p>
+                    <Button 
+                      onClick={() => setIsAnalyzerOpen(true)}
+                      className="w-full sm:w-auto"
+                    >
+                      <Camera className="mr-2 h-4 w-4" />
+                      Get AI Quote
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-6">
                 Reach Out (We're Friendly, Promise)
               </h2>
@@ -217,6 +241,8 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      <JunkAnalyzerModal open={isAnalyzerOpen} onOpenChange={setIsAnalyzerOpen} />
     </Layout>
   );
 };
