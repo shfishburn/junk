@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,7 +23,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold text-primary">Junky Gurus</span>
+          <img src={logo} alt="Junky Gurus LLC" className="h-12 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
