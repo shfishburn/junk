@@ -1,7 +1,8 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2 } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera } from "lucide-react";
+import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 
 const steps = [
   {
@@ -52,6 +53,30 @@ const Pricing = () => {
             <p className="text-lg text-muted-foreground">
               We're bad at math, but we're great at being upfront. Here's how our pricing works — no gimmicks, no bait-and-switch.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Estimator Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <Sparkles className="h-4 w-4" />
+                New! AI-Powered Estimates
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+                Too Lazy to Describe It? Just Show Us.
+              </h2>
+              <p className="text-muted-foreground">
+                Snap a photo of your junk pile and our AI will estimate the cost. It's seen some things. It won't judge.
+              </p>
+            </div>
+            
+            <div className="p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
+              <JunkAnalyzer />
+            </div>
           </div>
         </div>
       </section>
