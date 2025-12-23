@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const services = [
   {
@@ -36,11 +37,17 @@ const services = [
 ];
 
 export function ServicesOverview() {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section className="py-16 md:py-24">
+    <section ref={ref} className="py-16 md:py-24">
       <div className="container">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+        <div 
+          className={`text-center mb-12 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             What We Haul
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -49,19 +56,26 @@ export function ServicesOverview() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
+          {services.map((service, index) => (
             <div
               key={service.title}
-              className="group p-6 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
+              className={`group p-6 rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-500 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+              style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
             >
               <service.icon className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-semibold text-charcoal mb-2">{service.title}</h3>
+              <h3 className="font-semibold text-card-foreground mb-2">{service.title}</h3>
               <p className="text-sm text-muted-foreground">{service.description}</p>
             </div>
           ))}
         </div>
 
-        <div className="text-center mt-10">
+        <div 
+          className={`text-center mt-10 transition-all duration-700 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <Button asChild variant="outline">
             <Link to="/services">
               View All Services
