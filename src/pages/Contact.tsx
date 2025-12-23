@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, Clock, MapPin, Loader2 } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, Loader2, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
@@ -39,7 +39,7 @@ const Contact = () => {
       console.error("Error sending message:", error);
       toast({
         title: "Something went wrong",
-        description: "Please try calling us directly at (360) 555-1234.",
+        description: "Please try calling us directly at (360) 610-9233.",
         variant: "destructive",
       });
     } finally {
@@ -87,15 +87,15 @@ const Contact = () => {
 
               <div className="space-y-6">
                 <a
-                  href="tel:+13605551234"
+                  href="tel:+13606109233"
                   className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Phone className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-charcoal">Phone</h3>
-                    <p className="text-primary font-medium">(360) 555-1234</p>
+                    <h3 className="font-semibold text-charcoal">Call Us</h3>
+                    <p className="text-primary font-medium">(360) 610-9233</p>
                   </div>
                 </a>
 

@@ -25,9 +25,9 @@ export function CTASection() {
               <Link to="/contact">Get a Free Quote</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="text-base border-white/30 text-white hover:bg-white/10 bg-transparent">
-              <a href="tel:+13605551234">
+              <a href="tel:+13606109233">
                 <Phone className="mr-2 h-4 w-4" />
-                Call (360) 555-1234
+                Call (360) 610-9233
               </a>
             </Button>
           </div>
