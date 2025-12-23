@@ -27,7 +27,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="text-base bg-white/10 border-white text-white hover:bg-white/20">
+            <Button asChild variant="hero" size="lg" className="text-base">
               <a href="tel:+13605551234">
                 <Phone className="mr-2 h-4 w-4" />
                 (360) 555-1234
