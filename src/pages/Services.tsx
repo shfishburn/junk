@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import residentialImg from "@/assets/service-residential.jpg";
+import appliancesImg from "@/assets/service-appliances.jpg";
+import yardWasteImg from "@/assets/service-yard-waste.jpg";
+import cleanupsImg from "@/assets/service-cleanouts.jpg";
+import constructionImg from "@/assets/service-construction.jpg";
+import commercialImg from "@/assets/service-commercial.jpg";
 
 const services = [
   {
@@ -25,7 +30,7 @@ const services = [
     title: "Appliance Removal",
     slug: "appliances",
     description: "Safe removal and responsible disposal of large household appliances.",
-    image: null,
+    image: appliancesImg,
     details: [
       "Refrigerators and freezers",
       "Washers and dryers",
@@ -39,7 +44,7 @@ const services = [
     title: "Yard Waste & Debris",
     slug: "yard-waste",
     description: "Clean up your property with our yard waste removal services.",
-    image: null,
+    image: yardWasteImg,
     details: [
       "Branches and tree limbs",
       "Leaves and grass clippings",
@@ -53,7 +58,7 @@ const services = [
     title: "Garage & Estate Cleanouts",
     slug: "cleanouts",
     description: "Complete cleanout services for garages, basements, attics, and estates.",
-    image: null,
+    image: cleanupsImg,
     details: [
       "Full garage cleanouts",
       "Basement and attic clearing",
@@ -67,7 +72,7 @@ const services = [
     title: "Construction & Renovation Debris",
     slug: "construction",
     description: "Keep your job site clean with our construction debris removal.",
-    image: null,
+    image: constructionImg,
     details: [
       "Drywall and lumber",
       "Flooring materials",
@@ -81,7 +86,7 @@ const services = [
     title: "Light Commercial Cleanouts",
     slug: "commercial",
     description: "Efficient junk removal for offices and small businesses.",
-    image: null,
+    image: commercialImg,
     details: [
       "Office furniture removal",
       "Cubicle and desk disposal",
