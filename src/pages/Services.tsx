@@ -15,13 +15,13 @@ const services = [
     icon: Home,
     title: "Residential Junk Removal",
     slug: "residential",
-    description: "We remove unwanted items from your home quickly and responsibly.",
+    description: "That 'perfectly good' couch you've been meaning to sell for 3 years? Time to let it go. We'll handle it with care (and zero judgment).",
     image: residentialImg,
     details: [
       "Old furniture and mattresses",
       "Electronics and appliances",
       "Clothing and household goods",
-      "Exercise equipment",
+      "Exercise equipment (we see you, unused treadmill)",
       "Kids' toys and playsets",
     ],
   },
@@ -29,7 +29,7 @@ const services = [
     icon: Refrigerator,
     title: "Appliance Removal",
     slug: "appliances",
-    description: "Safe removal and responsible disposal of large household appliances.",
+    description: "We'll wrestle that fridge down the stairs so you don't have to. Your back will thank us later.",
     image: appliancesImg,
     details: [
       "Refrigerators and freezers",
@@ -43,7 +43,7 @@ const services = [
     icon: TreeDeciduous,
     title: "Yard Waste & Debris",
     slug: "yard-waste",
-    description: "Clean up your property with our yard waste removal services.",
+    description: "Mother Nature's mess, met by our muscle. Storm knocked down a tree? We've got you.",
     image: yardWasteImg,
     details: [
       "Branches and tree limbs",
@@ -57,21 +57,21 @@ const services = [
     icon: Trash2,
     title: "Garage & Estate Cleanouts",
     slug: "cleanouts",
-    description: "Complete cleanout services for garages, basements, attics, and estates.",
+    description: "We're not here to judge how you got here. We're just here to fix it — one truckload at a time.",
     image: cleanupsImg,
     details: [
       "Full garage cleanouts",
       "Basement and attic clearing",
       "Estate and foreclosure cleanouts",
       "Storage unit cleanouts",
-      "Hoarding situations (handled with care)",
+      "Hoarding situations (handled with compassion)",
     ],
   },
   {
     icon: HardHat,
     title: "Construction & Renovation Debris",
     slug: "construction",
-    description: "Keep your job site clean with our construction debris removal.",
+    description: "Contractors love us. Their job sites? Not so much (before we arrive, anyway).",
     image: constructionImg,
     details: [
       "Drywall and lumber",
@@ -85,7 +85,7 @@ const services = [
     icon: Building2,
     title: "Light Commercial Cleanouts",
     slug: "commercial",
-    description: "Efficient junk removal for offices and small businesses.",
+    description: "Office furniture doesn't deserve a funeral. Just a quick, dignified exit. We'll make it happen.",
     image: commercialImg,
     details: [
       "Office furniture removal",
@@ -167,10 +167,10 @@ const Services = () => {
         <div className="container">
           <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Our Junk Removal Services
+              We Haul It All (Seriously, Try Us)
             </h1>
             <p className="text-lg text-muted-foreground">
-              From a single item to a complete property cleanout, we handle all types of junk removal in Mount Vernon and throughout the North Sound region.
+              From one sad couch to a garage that hasn't seen daylight since 2003, we handle all types of junk removal across the North Sound. Challenge us.
             </p>
           </div>
         </div>
@@ -192,10 +192,10 @@ const Services = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Don't See What You Need?
+              Got Something Weird? We're Intrigued.
             </h2>
             <p className="text-lg text-primary-foreground/90 mb-8">
-              We haul almost anything. Give us a call and we'll let you know if we can help.
+              We've hauled hot tubs, pianos, and things we still can't identify. Give us a call — we love a good mystery.
             </p>
             <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
               <Link to="/contact">Contact Us</Link>

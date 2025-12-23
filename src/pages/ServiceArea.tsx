@@ -8,7 +8,7 @@ import ServiceAreaMap from "@/components/ServiceAreaMap";
 const areas = [
   {
     county: "Skagit County",
-    description: "Our home base. We know Skagit County inside and out and offer the fastest response times here.",
+    description: "Our home turf! We know every back road, coffee shop, and suspiciously full garage in Skagit County.",
     cities: [
       "Mount Vernon",
       "Burlington",
@@ -23,7 +23,7 @@ const areas = [
   },
   {
     county: "Whatcom County",
-    description: "From Bellingham to the Canadian border, we provide reliable junk removal throughout Whatcom County.",
+    description: "From Bellingham's hip neighborhoods to the Canadian border, we've got your junk covered. Maple bars optional but appreciated.",
     cities: [
       "Bellingham",
       "Lynden",
@@ -38,7 +38,7 @@ const areas = [
   },
   {
     county: "Snohomish County",
-    description: "We serve northern Snohomish County with the same commitment to quality and fair pricing.",
+    description: "We serve northern Snohomish County with the same enthusiasm we bring everywhere. Your junk doesn't stand a chance.",
     cities: [
       "Everett",
       "Marysville",
@@ -53,7 +53,7 @@ const areas = [
   },
   {
     county: "King County",
-    description: "We extend our services to northern King County for larger projects and commercial work.",
+    description: "We venture into northern King County for bigger projects. Seattle traffic? Worth it for good junk.",
     cities: [
       "Shoreline",
       "Kenmore",
@@ -84,10 +84,10 @@ const ServiceArea = () => {
             }`}
           >
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              Junk Removal Service Area
+              We Go Far for Good Junk
             </h1>
             <p className="text-lg text-muted-foreground">
-              Based in Marysville, Washington, we proudly serve Skagit, Whatcom, Snohomish, and King Counties within a 50-mile radius. No job is too small or too far.
+              Based in Marysville, we'll drive up to 50 miles to haul your stuff. Think of us as clutter superheroes with a really big truck and an unreasonable enthusiasm for making things disappear.
             </p>
           </div>
         </div>
@@ -169,7 +169,7 @@ const ServiceArea = () => {
               Not Sure If We Serve Your Area?
             </h2>
             <p className="text-lg opacity-90 mb-8">
-              Give us a call. If we can't help, we'll point you in the right direction.
+              We're optimistic people. Give us a ring — we might surprise you. And if we truly can't help, we'll point you to someone who can.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" variant="secondary">
