@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
+import heroImage from "@/assets/hero-junk.jpg";
 
 export function HeroSection() {
   return (
-    <section className="hero-gradient py-16 md:py-24 lg:py-32">
-      <div className="container">
+    <section 
+      className="relative py-16 md:py-24 lg:py-32 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${heroImage})` }}
+    >
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/60" />
+      
+      <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-charcoal mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in">
             Fast, Local Junk Removal Serving Mount Vernon and the North Sound
           </h1>
-          <p className="text-lg md:text-xl text-charcoal-light mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <p className="text-lg md:text-xl text-white/90 mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
             Simple junk removal. Honest pricing. Responsible disposal. From single items to full cleanouts — we handle it all.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
@@ -20,7 +27,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="text-base">
+            <Button asChild variant="outline" size="lg" className="text-base bg-white/10 border-white text-white hover:bg-white/20">
               <a href="tel:+13605551234">
                 <Phone className="mr-2 h-4 w-4" />
                 (360) 555-1234
