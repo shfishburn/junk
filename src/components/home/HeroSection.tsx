@@ -15,15 +15,15 @@ export function HeroSection() {
       <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in">
-            Fast, Local Junk Removal Serving Mount Vernon and the North Sound
+            We Love Your Junk (So You Don't Have To)
           </h1>
           <p className="text-lg md:text-xl text-white/90 mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Simple junk removal. Honest pricing. Responsible disposal. From single items to full cleanouts — we handle it all.
+            That old couch mocking you from the garage? That exercise bike turned clothes hanger? We'll make it disappear faster than your motivation to use it.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <Button asChild size="lg" className="text-base">
               <Link to="/contact">
-                Get a Free Quote
+                Let's Ditch This Stuff
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -7,35 +7,35 @@ const steps = [
   {
     icon: MessageSquare,
     step: "1",
-    title: "Contact Us",
-    description: "Give us a call or fill out our contact form. Tell us what you need hauled and we'll set up a time that works for you.",
+    title: "Tell Us About Your Junk",
+    description: "Give us a call or fill out the form. Don't be shy — we've heard it all. Describe your pile of shame and we'll figure out the rest.",
   },
   {
     icon: Truck,
     step: "2",
-    title: "On-Site Estimate",
-    description: "We'll come to your location and give you an upfront, honest price based on the volume of junk. No hidden fees, no surprises.",
+    title: "We Show Up & Quote You",
+    description: "We come to you and give you a real price, not some bait-and-switch nonsense. If it doesn't work for you, no hard feelings.",
   },
   {
     icon: CheckCircle2,
     step: "3",
-    title: "Same-Day Removal",
-    description: "Approve the price and we get to work immediately. We'll haul, load, and clean up — often the same day you call.",
+    title: "Say Yes & It's Gone",
+    description: "Say the magic word ('yes') and we get to work. Often same-day. Watch your junk disappear and feel the weight lift off your shoulders.",
   },
 ];
 
 const pricingInfo = [
   {
     title: "Volume-Based Pricing",
-    description: "We charge based on how much space your items take in our truck. A single item costs less than a full load. It's that simple.",
+    description: "We charge based on how much space your stuff takes in our truck. Small pile = small price. Big pile = bigger price. Rocket science, this is not.",
   },
   {
     title: "No Hidden Fees",
-    description: "The price we quote is the price you pay. We don't add fuel surcharges, labor fees, or surprise costs after the fact.",
+    description: "The price we quote is the price you pay. We don't add sneaky surcharges or mysterious 'processing fees.' We hate that stuff too.",
   },
   {
     title: "Free Estimates",
-    description: "Not sure how much it'll cost? We'll give you a free, no-obligation estimate on-site. If it doesn't work for you, no hard feelings.",
+    description: "Not sure what it'll cost? Neither are we until we see it! That's why we give free, no-pressure estimates. Worst case, you get a number. Best case, your junk is gone.",
   },
 ];
 
@@ -47,10 +47,10 @@ const Pricing = () => {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              Simple, Honest Pricing
+              Transparent Pricing (No Surprise Fees, We Promise)
             </h1>
             <p className="text-lg text-muted-foreground">
-              We believe in transparent pricing. No gimmicks, no bait-and-switch. You'll know exactly what you're paying before we start.
+              We're bad at math, but we're great at being upfront. Here's how our pricing works — no gimmicks, no bait-and-switch.
             </p>
           </div>
         </div>
@@ -141,10 +141,10 @@ const Pricing = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get Your Free Quote
+              Ready to Find Out the Damage?
             </h2>
             <p className="text-lg opacity-90 mb-8">
-              No obligation, no pressure. Just honest pricing for honest work.
+              Get a free quote. No obligation, no sales pitch, just straight talk from people who really, really like hauling junk.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" variant="secondary">

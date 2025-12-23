@@ -7,22 +7,22 @@ const values = [
   {
     icon: Heart,
     title: "Respect for Your Property",
-    description: "We treat your home like our own. Careful handling, clean work, and no damage — that's our standard.",
+    description: "We treat your home like it's our mom's house. (Hi, Mom!)",
   },
   {
     icon: Recycle,
     title: "Responsible Disposal",
-    description: "We don't just dump everything. We donate usable items, recycle what we can, and dispose of the rest properly.",
+    description: "We don't just dump everything. We donate, recycle, and only landfill what absolutely has to go. Mother Earth approves.",
   },
   {
     icon: Users,
     title: "Local & Personal",
-    description: "We're your neighbors in Mount Vernon. When you call, you talk to us — not a call center.",
+    description: "We're your neighbors. When you call, you get us — not a robot, not a call center, just real humans who care.",
   },
   {
     icon: Shield,
     title: "Reliable & Trustworthy",
-    description: "We show up when we say we will, do what we say we'll do, and charge what we quote. Simple as that.",
+    description: "We show up when we say we will. Revolutionary, we know.",
   },
 ];
 
@@ -34,10 +34,10 @@ const About = () => {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              About Junky Gurus
+              The Junk-Obsessed Humans Behind the Truck
             </h1>
             <p className="text-lg text-muted-foreground">
-              We're a locally owned junk removal company based in Mount Vernon, Washington. We believe in hard work, honest pricing, and treating people right.
+              We're a locally owned junk removal company based in Mount Vernon, Washington. We believe in hard work, honest pricing, and the deep satisfaction of making clutter disappear.
             </p>
           </div>
         </div>
@@ -48,20 +48,20 @@ const About = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-6">
-              Our Story
+              How We Got Into the Junk Business
             </h2>
             <div className="space-y-4 text-charcoal-light text-lg">
               <p>
-                Junky Gurus started with a simple idea: junk removal shouldn't be complicated, expensive, or stressful.
+                Junky Gurus started because we got tired of seeing people get ripped off by junk removal companies. Hidden fees? No-shows? Workers who leave your place messier than they found it? Hard pass.
               </p>
               <p>
-                We've seen how other companies operate — hidden fees, no-show appointments, careless workers who leave messes behind. That's not us.
+                We figured there had to be a better way. Spoiler alert: there is, and you're looking at it.
               </p>
               <p>
-                We're based right here in Mount Vernon, and we serve the communities we live in. When you hire us, you're hiring your neighbors. We take pride in that.
+                We're based right here in Mount Vernon, and we serve the communities we live in. When you hire us, you're hiring your neighbors — folks who actually care whether your driveway gets scratched.
               </p>
               <p>
-                Whether you need one old couch hauled away or an entire estate cleaned out, we bring the same level of care and professionalism to every job.
+                Whether you need one sad, lonely couch hauled away or an entire estate that's been collecting "treasures" since 1987, we bring the same level of enthusiasm to every job. Yes, we said enthusiasm. We're weird like that.
               </p>
             </div>
           </div>
@@ -72,7 +72,7 @@ const About = () => {
       <section className="py-16 md:py-24 bg-section-alt">
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-12">
-            What We Stand For
+            Our Guiding Principles (We Actually Follow These)
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value) => (
@@ -97,10 +97,10 @@ const About = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-6">
-              Part of the Community
+              More Than Just Haulers
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              We're more than a junk removal company. We're invested in making Mount Vernon and the North Sound a better place to live. We support local charities, donate usable items to those in need, and work hard to keep our environmental impact as low as possible.
+              We're invested in making Mount Vernon and the North Sound a better place to live. We donate usable items to those in need, recycle like our planet depends on it (because it does), and support local charities. Basically, we're trying to be the junk removal company your grandma would be proud of.
             </p>
             <Button asChild>
               <Link to="/contact">Work With Us</Link>
@@ -114,10 +114,10 @@ const About = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Get Started?
+              Ready to Reclaim Your Space?
             </h2>
             <p className="text-lg opacity-90 mb-8">
-              Let us take the junk off your hands. Honest pricing, reliable service, local people.
+              Your junk is our jam. Let's make some magic happen (by which we mean: making your stuff disappear).
             </p>
             <Button asChild size="lg" variant="secondary">
               <Link to="/contact">Get a Free Quote</Link>

@@ -5,17 +5,17 @@ const signals = [
   {
     icon: Clock,
     title: "Same-Day Service",
-    description: "Need it gone today? We offer same-day pickup when available.",
+    description: "Need it gone yesterday? We can't time travel, but we're pretty darn close.",
   },
   {
     icon: Shield,
     title: "Locally Owned & Operated",
-    description: "We're your neighbors. We treat your property with respect.",
+    description: "We're your neighbors. We've probably argued about the same potholes.",
   },
   {
     icon: Leaf,
     title: "Responsible Disposal",
-    description: "We donate, recycle, and dispose of items responsibly.",
+    description: "We recycle, donate, and only dump what absolutely has to go. Planet Earth sends its thanks.",
   },
 ];
 

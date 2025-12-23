@@ -15,10 +15,10 @@ export function CTASection() {
           }`}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-            Ready to Clear the Clutter?
+            Your Junk Won't Remove Itself (Trust Us, We've Asked)
           </h2>
           <p className="text-lg text-primary-foreground/90 mb-8">
-            Get a free, no-obligation quote today. We'll give you an honest price and can often haul the same day.
+            Get a free quote and experience the sweet, sweet freedom of a clutter-free life. We're weirdly excited to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="text-base bg-white text-primary hover:bg-white/90">

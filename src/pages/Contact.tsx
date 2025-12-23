@@ -63,10 +63,10 @@ const Contact = () => {
         <div className="container">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              Contact Us
+              Let's Chat About Your Clutter
             </h1>
             <p className="text-lg text-muted-foreground">
-              Ready to get rid of your junk? Give us a call or fill out the form below for a free, no-obligation quote.
+              We promise we won't judge. We've seen way worse. Tell us what's haunting you and we'll make it disappear.
             </p>
           </div>
         </div>
@@ -79,10 +79,10 @@ const Contact = () => {
             {/* Contact Info */}
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-6">
-                Get in Touch
+                Reach Out (We're Friendly, Promise)
               </h2>
               <p className="text-muted-foreground mb-8">
-                The fastest way to get a quote is to give us a call. We can usually give you a ballpark estimate over the phone and schedule a time that works for you.
+                The fastest way to get a quote is to give us a call. We love hearing about people's junk — it's kind of our thing.
               </p>
 
               <div className="space-y-6">
@@ -140,10 +140,10 @@ const Contact = () => {
             <div>
               <div className="p-6 md:p-8 rounded-lg bg-card border border-border">
                 <h2 className="text-2xl font-bold text-charcoal mb-2">
-                  Request a Free Quote
+                  Spill the Beans About Your Junk
                 </h2>
                 <p className="text-muted-foreground mb-6">
-                  Tell us about your junk removal needs and we'll get back to you right away.
+                  The more details, the better. We're weirdly excited to hear about your pile of stuff.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -189,7 +189,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="message">What do you need hauled? *</Label>
+                    <Label htmlFor="message">What's haunting you? *</Label>
                     <Textarea
                       id="message"
                       name="message"

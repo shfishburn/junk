@@ -22,10 +22,10 @@ export function ServiceAreaSection() {
           }`}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Proudly Serving the North Sound
+            We Go Far for Good Junk
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Based in Mount Vernon, we provide fast, reliable junk removal across four counties.
+            50 miles of junk removal range. Think of us as clutter superheroes with a really big truck.
           </p>
         </div>
 
