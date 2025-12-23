@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera } from "lucide-react";
@@ -43,6 +44,12 @@ const pricingInfo = [
 const Pricing = () => {
   return (
     <Layout>
+      <SEO
+        title="Pricing & How It Works"
+        description="Transparent junk removal pricing in Mount Vernon, WA. Volume-based pricing, no hidden fees, free estimates. Get an instant AI quote!"
+        keywords="junk removal pricing, junk removal cost, Mount Vernon hauling prices, free estimate"
+        url="/pricing"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone } from "lucide-react";
@@ -74,6 +75,12 @@ const ServiceArea = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Service Area"
+        description="Junk removal in Skagit, Whatcom, Snohomish & King Counties. Serving Mount Vernon, Bellingham, Everett, and surrounding areas within 50 miles."
+        keywords="junk removal Skagit County, junk removal Whatcom County, junk removal Bellingham, junk removal Everett, service area"
+        url="/service-area"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">

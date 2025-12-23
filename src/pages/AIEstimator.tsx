@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -25,6 +26,12 @@ const tips = [
 const AIEstimator = () => {
   return (
     <Layout>
+      <SEO
+        title="AI Junk Removal Estimator"
+        description="Get an instant junk removal estimate with AI. Upload a photo of your junk and receive a price quote in seconds. Free and easy!"
+        keywords="AI junk estimate, instant junk removal quote, photo estimate, junk removal calculator"
+        url="/ai-estimator"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">

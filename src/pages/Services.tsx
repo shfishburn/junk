@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight } from "lucide-react";
@@ -162,6 +163,12 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 const Services = () => {
   return (
     <Layout>
+      <SEO
+        title="Junk Removal Services"
+        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, and commercial cleanouts in Mount Vernon, WA and the North Sound."
+        keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal"
+        url="/services"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">

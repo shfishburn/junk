@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -59,6 +60,12 @@ const Contact = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Contact Us"
+        description="Get a free junk removal quote in Mount Vernon, WA. Call (360) 610-9233 or fill out our contact form. We respond fast!"
+        keywords="junk removal quote, contact junky gurus, Mount Vernon junk removal, free estimate"
+        url="/contact"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">

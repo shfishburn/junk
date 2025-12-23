@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Recycle, Users, Shield } from "lucide-react";
@@ -29,6 +30,12 @@ const values = [
 const About = () => {
   return (
     <Layout>
+      <SEO
+        title="About Us"
+        description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA. We believe in hard work, honest pricing, and responsible disposal."
+        keywords="about junky gurus, Mount Vernon junk removal, local junk removal company, responsible disposal"
+        url="/about"
+      />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
