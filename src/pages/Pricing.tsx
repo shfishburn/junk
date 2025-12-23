@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera } from "lucide-react";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
+import { Helmet } from "react-helmet-async";
 
 const steps = [
   {
@@ -41,6 +42,54 @@ const pricingInfo = [
   },
 ];
 
+const faqs = [
+  {
+    question: "How much does junk removal cost?",
+    answer: "Our pricing is volume-based, meaning you pay for how much space your items take in our truck. A single item like a couch might cost $75-150, while a full truckload ranges from $400-600. We provide free, no-obligation estimates so you know exactly what to expect."
+  },
+  {
+    question: "Do you offer free estimates?",
+    answer: "Yes! We offer completely free, no-pressure estimates. We'll come to your location, assess your junk, and give you an upfront price. If it doesn't work for you, no hard feelings."
+  },
+  {
+    question: "Are there any hidden fees?",
+    answer: "Absolutely not. The price we quote is the price you pay. We don't add sneaky surcharges, fuel fees, or mysterious 'processing fees.' What you see is what you get."
+  },
+  {
+    question: "What affects the price of junk removal?",
+    answer: "Four main factors affect pricing: 1) Volume - how much space your junk takes in our truck, 2) Weight - heavy items like concrete may cost more, 3) Location - inside pickup vs. curbside, and 4) Special items - hazardous materials or items requiring special disposal."
+  },
+  {
+    question: "Do you offer same-day junk removal?",
+    answer: "Yes, we often can provide same-day service depending on our schedule. Give us a call and we'll do our best to accommodate your timeline."
+  },
+  {
+    question: "What items do you remove?",
+    answer: "We remove almost everything including furniture, appliances, electronics, yard waste, construction debris, and more. We handle residential, commercial, and estate cleanouts. Some hazardous materials may require special handling."
+  },
+  {
+    question: "What areas do you serve?",
+    answer: "We're based in Mount Vernon, WA and serve Skagit, Whatcom, Snohomish, and northern King Counties. We travel up to 50 miles for junk removal services."
+  },
+  {
+    question: "Do you recycle or donate items?",
+    answer: "Yes! We're committed to responsible disposal. We donate usable items to local charities, recycle what we can, and only landfill items that absolutely have to go."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
 const Pricing = () => {
   return (
     <Layout>
@@ -50,6 +99,11 @@ const Pricing = () => {
         keywords="junk removal pricing, junk removal cost, Mount Vernon hauling prices, free estimate"
         url="/pricing"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
@@ -163,6 +217,37 @@ const Pricing = () => {
               <p className="pt-4">
                 The best way to get an accurate price? <strong className="text-charcoal">Just give us a call.</strong> We'll ask a few questions and often can give you a ballpark over the phone.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 md:py-24 bg-section-alt">
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-12">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <details
+                  key={index}
+                  className="group p-6 rounded-lg bg-background border border-border"
+                >
+                  <summary className="flex justify-between items-center cursor-pointer list-none font-semibold text-charcoal">
+                    {faq.question}
+                    <span className="ml-4 flex-shrink-0 text-primary transition-transform group-open:rotate-180">
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <p className="mt-4 text-muted-foreground">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </div>
