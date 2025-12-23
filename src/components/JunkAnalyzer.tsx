@@ -255,9 +255,13 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
           </Button>
         </div>
 
-        <p className="text-xs text-muted-foreground text-center">
-          * This is an AI estimate. Final price determined on-site by our team.
-        </p>
+        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+          <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
+            <strong>Heads up!</strong> Our AI is smart, but it's not psychic. This estimate is for entertainment and planning purposes only. 
+            The actual price depends on what we find when we show up — sometimes there's more junk hiding behind other junk. 
+            We'll give you the real deal on-site before we lift a finger. No surprises, pinky promise.
+          </p>
+        </div>
       </div>
     );
   }
