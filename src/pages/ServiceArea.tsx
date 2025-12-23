@@ -2,6 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import ServiceAreaMap from "@/components/ServiceAreaMap";
 
 const areas = [
   {
@@ -67,17 +69,45 @@ const areas = [
 ];
 
 const ServiceArea = () => {
+  const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
+  const { ref: mapRef, isVisible: mapVisible } = useScrollAnimation();
+
   return (
     <Layout>
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
-          <div className="max-w-3xl">
+          <div 
+            ref={heroRef}
+            className={`max-w-3xl transition-all duration-700 ${
+              heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
               Junk Removal Service Area
             </h1>
             <p className="text-lg text-muted-foreground">
-              Based in Mount Vernon, Washington, we proudly serve Skagit, Whatcom, Snohomish, and King Counties. No job is too small or too far.
+              Based in Marysville, Washington, we proudly serve Skagit, Whatcom, Snohomish, and King Counties within a 50-mile radius. No job is too small or too far.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-12 md:py-16">
+        <div className="container">
+          <div 
+            ref={mapRef}
+            className={`transition-all duration-700 delay-150 ${
+              mapVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-6 text-center">
+              Our 50-Mile Service Radius
+            </h2>
+            <ServiceAreaMap />
+            <p className="text-center text-muted-foreground mt-4">
+              Click the marker to see our location. We travel up to 50 miles for junk removal services.
             </p>
           </div>
         </div>
