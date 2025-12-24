@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera, CalendarIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+import { JunkRouletteModal } from "@/components/JunkRouletteModal";
 
 const TIME_SLOTS = [
   "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
@@ -23,6 +24,7 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preferredDate, setPreferredDate] = useState<Date | undefined>();
   const [preferredTime, setPreferredTime] = useState<string>("");
+  const [showRoulette, setShowRoulette] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -53,6 +55,9 @@ const Contact = () => {
         title: "Message sent!",
         description: "We'll get back to you as soon as possible.",
       });
+
+      // Show the roulette wheel!
+      setShowRoulette(true);
 
       setFormData({ name: "", email: "", phone: "", message: "" });
       setPreferredDate(undefined);
@@ -328,6 +333,13 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Junk Roulette Modal */}
+      <JunkRouletteModal
+        open={showRoulette}
+        onOpenChange={setShowRoulette}
+        customerName={formData.name}
+        customerEmail={formData.email}
+      />
     </Layout>
   );
 };
