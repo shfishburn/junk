@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera, CalendarIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
+
+const TIME_SLOTS = [
+  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
+];
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [preferredDate, setPreferredDate] = useState<Date | undefined>();
+  const [preferredTime, setPreferredTime] = useState<string>("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,8 +36,15 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      const appointmentInfo = preferredDate 
+        ? `${format(preferredDate, "EEEE, MMMM d, yyyy")}${preferredTime ? ` at ${preferredTime}` : ""}`
+        : null;
+
       const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: formData,
+        body: {
+          ...formData,
+          preferredAppointment: appointmentInfo,
+        },
       });
 
       if (error) throw error;
@@ -37,6 +55,8 @@ const Contact = () => {
       });
 
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setPreferredDate(undefined);
+      setPreferredTime("");
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
@@ -56,6 +76,13 @@ const Contact = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  // Disable past dates and Sundays
+  const disabledDays = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today || date.getDay() === 0;
   };
 
   return (
@@ -215,6 +242,60 @@ const Contact = () => {
                       placeholder="(360) 555-0000"
                       className="mt-1"
                     />
+                  </div>
+
+                  {/* Date & Time Picker */}
+                  <div className="space-y-3">
+                    <Label>Preferred Appointment (Optional)</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !preferredDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {preferredDate ? format(preferredDate, "PPP") : "Pick a date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={preferredDate}
+                          onSelect={(date) => {
+                            setPreferredDate(date);
+                            setPreferredTime("");
+                          }}
+                          disabled={disabledDays}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    {preferredDate && (
+                      <div>
+                        <Label className="text-sm text-muted-foreground mb-2 block">
+                          Select a time slot
+                        </Label>
+                        <div className="grid grid-cols-5 gap-2">
+                          {TIME_SLOTS.map((slot) => (
+                            <Button
+                              key={slot}
+                              type="button"
+                              variant={preferredTime === slot ? "default" : "outline"}
+                              size="sm"
+                              className="text-xs"
+                              onClick={() => setPreferredTime(slot)}
+                            >
+                              {slot.replace(":00 ", "")}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div>
