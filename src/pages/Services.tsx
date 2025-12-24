@@ -10,6 +10,7 @@ import yardWasteImg from "@/assets/service-yard-waste.jpg";
 import cleanupsImg from "@/assets/service-cleanouts.jpg";
 import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
+import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 
 const services = [
   {
@@ -101,7 +102,7 @@ const services = [
     title: "Light Demolition",
     slug: "light-demolition",
     description: "Need something torn down? We'll knock it out (literally) and haul away every last piece.",
-    image: constructionImg,
+    image: lightDemolitionImg,
     details: [
       "Deck and patio removal",
       "Shed and playhouse teardown",
