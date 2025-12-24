@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Helmet } from "react-helmet-async";
@@ -48,6 +48,17 @@ const truckLoadPricing = [
   { load: "1/2 Truck Load", description: "Garage cleanout or bedroom furniture set", price: "$375 – $500" },
   { load: "3/4 Truck Load", description: "Large room or multiple rooms", price: "$500 – $625" },
   { load: "Full Truck Load", description: "Whole house or estate cleanout", price: "$625 – $815" },
+];
+
+const constructionMaterialPricing = [
+  { material: "Drywall / Sheetrock", description: "Per sheet or small pile", price: "$15 – $30 per sheet" },
+  { material: "Lumber / Wood Scraps", description: "Framing, plywood, boards", price: "$75 – $200" },
+  { material: "Concrete / Brick", description: "Heavy materials (weight-based)", price: "$150 – $400" },
+  { material: "Roofing Shingles", description: "Asphalt or composite", price: "$175 – $350" },
+  { material: "Tile / Flooring", description: "Ceramic, vinyl, laminate", price: "$100 – $250" },
+  { material: "Windows / Doors", description: "Frames included", price: "$25 – $75 each" },
+  { material: "Insulation", description: "Fiberglass, foam, or blown-in", price: "$100 – $200" },
+  { material: "Mixed Construction Debris", description: "Remodel or demo waste", price: "$200 – $500" },
 ];
 
 const pricingInfo = [
@@ -262,6 +273,38 @@ const Pricing = () => {
                 </TableBody>
               </Table>
             </div>
+          </div>
+
+          {/* Construction Material Pricing */}
+          <div className="mt-8 bg-background rounded-xl border border-border overflow-hidden">
+            <div className="p-6 bg-primary/5 border-b border-border">
+              <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
+                <HardHat className="h-5 w-5 text-primary" />
+                Construction Material Removal
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">Debris from remodels, demos, and construction projects</p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold">Material</TableHead>
+                  <TableHead className="text-right font-semibold">Price Range</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {constructionMaterialPricing.map((item) => (
+                  <TableRow key={item.material}>
+                    <TableCell>
+                      <div>
+                        <span className="font-medium">{item.material}</span>
+                        <p className="text-xs text-muted-foreground">{item.description}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right font-medium text-primary">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
 
           <p className="text-center text-sm text-muted-foreground mt-8">
