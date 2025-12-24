@@ -72,10 +72,31 @@ export default function PrivacyPolicy() {
 
           <section className="mb-8">
             <h2 className="text-xl font-semibold text-foreground mb-4">Cookies</h2>
-            <p className="text-muted-foreground">
-              Our website may use cookies to enhance your browsing experience. You can control cookie settings 
-              through your browser preferences.
+            <p className="text-muted-foreground mb-4">
+              Our website uses cookies to enhance your browsing experience. You can manage your cookie 
+              preferences at any time using the "Cookie Settings" link in our footer.
             </p>
+            
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">Essential Cookies (Always Active)</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
+              <li>Session management and basic site functionality</li>
+              <li>Remembering your cookie preferences</li>
+              <li>Security and fraud prevention</li>
+            </ul>
+
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">Analytics Cookies (Optional)</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
+              <li>Google Analytics - helps us understand how visitors interact with our site</li>
+              <li>Collects anonymized data about pages visited, time on site, and user behavior</li>
+              <li>You can opt out anytime via "Cookie Settings" in the footer</li>
+            </ul>
+
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">Marketing Cookies (Optional)</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+              <li>Currently not in use</li>
+              <li>May be used in the future for advertising and measuring campaign effectiveness</li>
+              <li>Will require your explicit consent before activation</li>
+            </ul>
           </section>
 
           <section className="mb-8">
