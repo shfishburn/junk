@@ -178,7 +178,7 @@ const Services = () => {
     <Layout>
       <SEO
         title="Junk Removal Services"
-        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, and commercial cleanouts in Mount Vernon, WA and the North Sound."
+        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, and commercial cleanouts in Mount Vernon, WA and the Puget Sound Region."
         keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal"
         url="/services"
       />
@@ -190,7 +190,7 @@ const Services = () => {
               We Haul It All (Seriously, Try Us)
             </h1>
             <p className="text-lg text-muted-foreground">
-              From one sad couch to a garage that hasn't seen daylight since 2003, we handle all types of junk removal across the North Sound. Challenge us.
+              From one sad couch to a garage that hasn't seen daylight since 2003, we handle all types of junk removal across the Puget Sound Region. Challenge us.
             </p>
           </div>
         </div>
