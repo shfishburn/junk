@@ -107,8 +107,6 @@ const services = [
       "Deck and patio removal",
       "Shed and playhouse teardown",
       "Fence removal",
-      "Interior non-load-bearing walls",
-      "Hot tub and spa removal",
     ],
   },
 ];
