@@ -42,12 +42,12 @@ const singleItemPricing = [
 ];
 
 const truckLoadPricing = [
-  { load: "Minimum Load", description: "A few small items (1-2 pieces)", price: "$99 – $150" },
-  { load: "1/8 Truck Load", description: "A couple items like a chair + TV", price: "$150 – $200" },
-  { load: "1/4 Truck Load", description: "Small room cleanout or a few furniture pieces", price: "$200 – $300" },
-  { load: "1/2 Truck Load", description: "Garage cleanout or bedroom furniture set", price: "$300 – $400" },
-  { load: "3/4 Truck Load", description: "Large room or multiple rooms", price: "$400 – $500" },
-  { load: "Full Truck Load", description: "Whole house or estate cleanout", price: "$500 – $650" },
+  { load: "Minimum Load", description: "A few small items (1-2 pieces)", price: "$125 – $190" },
+  { load: "1/8 Truck Load", description: "A couple items like a chair + TV", price: "$190 – $250" },
+  { load: "1/4 Truck Load", description: "Small room cleanout or a few furniture pieces", price: "$250 – $375" },
+  { load: "1/2 Truck Load", description: "Garage cleanout or bedroom furniture set", price: "$375 – $500" },
+  { load: "3/4 Truck Load", description: "Large room or multiple rooms", price: "$500 – $625" },
+  { load: "Full Truck Load", description: "Whole house or estate cleanout", price: "$625 – $815" },
 ];
 
 const pricingInfo = [
