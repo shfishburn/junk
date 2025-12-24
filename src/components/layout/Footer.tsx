@@ -24,6 +24,7 @@ export function Footer() {
                 { href: "/services", label: "Services" },
                 { href: "/service-area", label: "Service Area" },
                 { href: "/pricing", label: "Pricing" },
+                { href: "/faq", label: "FAQ" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },
               ].map((link) => (
