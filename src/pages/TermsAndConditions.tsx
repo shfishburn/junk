@@ -24,8 +24,8 @@ export default function TermsAndConditions() {
           <section className="mb-8">
             <h2 className="text-xl font-semibold text-foreground mb-4">Services Provided</h2>
             <p className="text-muted-foreground mb-4">
-              Junky Gurus provides junk removal, hauling, and disposal services in the Mount Vernon and North Sound 
-              region. Our services include but are not limited to:
+              Junky Gurus provides junk removal, hauling, and disposal services in the Mount Vernon and Puget Sound 
+              Region. Our services include but are not limited to:
             </p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2">
               <li>Residential junk removal</li>

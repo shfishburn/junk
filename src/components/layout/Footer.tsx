@@ -13,7 +13,7 @@ export function Footer() {
               Junky Gurus
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
-              Fast, reliable junk removal serving Mount Vernon and the North Sound region.
+              Fast, reliable junk removal serving Mount Vernon and the Puget Sound Region.
             </p>
           </div>
 
