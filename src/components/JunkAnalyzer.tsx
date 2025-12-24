@@ -22,6 +22,7 @@ import {
   Plus,
   Send
 } from "lucide-react";
+import { JunkRouletteModal } from "./JunkRouletteModal";
 
 interface JunkItem {
   name: string;
@@ -73,6 +74,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const [showRoulette, setShowRoulette] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -267,6 +269,9 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         title: "Request sent!",
         description: "We'll be in touch soon to schedule your pickup.",
       });
+      
+      // Show the roulette wheel!
+      setShowRoulette(true);
     } catch (error) {
       console.error("Error sending request:", error);
       toast({
@@ -458,6 +463,14 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </p>
           </div>
         )}
+
+        {/* Junk Roulette Modal */}
+        <JunkRouletteModal
+          open={showRoulette}
+          onOpenChange={setShowRoulette}
+          customerName={formData.name}
+          customerEmail={formData.email}
+        />
 
         {/* Quick call option */}
         <div className="flex justify-center">

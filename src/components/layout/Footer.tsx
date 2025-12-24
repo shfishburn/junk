@@ -28,6 +28,7 @@ export function Footer() {
                 { href: "/faq", label: "FAQ" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },
+                { href: "/referrals", label: "Refer a Friend 🎁" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
