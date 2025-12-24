@@ -25,6 +25,7 @@ const Contact = () => {
   const [preferredDate, setPreferredDate] = useState<Date | undefined>();
   const [preferredTime, setPreferredTime] = useState<string>("");
   const [showRoulette, setShowRoulette] = useState(false);
+  const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,11 +52,9 @@ const Contact = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Message sent!",
-        description: "We'll get back to you as soon as possible.",
-      });
-
+      // Save customer info before clearing form
+      setSubmittedCustomer({ name: formData.name, email: formData.email });
+      
       // Show the roulette wheel!
       setShowRoulette(true);
 
@@ -337,8 +336,8 @@ const Contact = () => {
       <JunkRouletteModal
         open={showRoulette}
         onOpenChange={setShowRoulette}
-        customerName={formData.name}
-        customerEmail={formData.email}
+        customerName={submittedCustomer.name}
+        customerEmail={submittedCustomer.email}
       />
     </Layout>
   );
