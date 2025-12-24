@@ -54,7 +54,6 @@ const constructionMaterialPricing = [
   { material: "Drywall / Sheetrock", description: "Per sheet or small pile", price: "$15 – $30 per sheet" },
   { material: "Lumber / Wood Scraps", description: "Framing, plywood, boards", price: "$75 – $200" },
   { material: "Concrete / Brick", description: "Heavy materials (weight-based)", price: "$150 – $400" },
-  { material: "Roofing Shingles", description: "Asphalt or composite", price: "$175 – $350" },
   { material: "Tile / Flooring", description: "Ceramic, vinyl, laminate", price: "$100 – $250" },
   { material: "Windows / Doors", description: "Frames included", price: "$25 – $75 each" },
   { material: "Insulation", description: "Fiberglass, foam, or blown-in", price: "$100 – $200" },
