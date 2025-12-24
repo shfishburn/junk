@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
-import { TruckLoadDiagram } from "@/components/TruckLoadDiagram";
 import { Helmet } from "react-helmet-async";
 
 const steps = [
@@ -265,14 +264,9 @@ const Pricing = () => {
             </div>
           </div>
 
-          <p className="text-center text-sm text-muted-foreground mt-8 mb-12">
+          <p className="text-center text-sm text-muted-foreground mt-8">
             * Prices are estimates and may vary based on weight, location, and accessibility. Get a free quote for exact pricing.
           </p>
-
-          {/* Truck Load Diagram */}
-          <div className="bg-background rounded-xl border border-border p-6 md:p-8">
-            <TruckLoadDiagram />
-          </div>
         </div>
       </section>
 
