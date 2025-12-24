@@ -68,6 +68,15 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="tel:+13604222428"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Phone className="h-4 w-4 flex-shrink-0" />
+                  (360) 422-2428
+                </a>
+              </li>
+              <li>
+                <a
                   href="sms:+13606109233"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
