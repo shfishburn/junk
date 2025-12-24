@@ -88,6 +88,10 @@ export default {
           "0%": { transform: "translateY(-20px) rotate(0deg)", opacity: "1" },
           "100%": { transform: "translateY(100vh) rotate(720deg)", opacity: "0" },
         },
+        "gradient-shift": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -96,6 +100,7 @@ export default {
         "fade-in-up": "fade-in-up 0.6s ease-out forwards",
         "fade-in-scale": "fade-in-scale 0.5s ease-out forwards",
         "confetti-fall": "confetti-fall 2s ease-in-out forwards",
+        "gradient-shift": "gradient-shift 8s ease infinite",
       },
     },
   },
