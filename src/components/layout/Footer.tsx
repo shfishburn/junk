@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Cookie } from "lucide-react";
+import { openCookiePreferences } from "@/components/CookieConsent";
 
 export function Footer() {
   return (
@@ -102,6 +103,14 @@ export function Footer() {
             <Link to="/terms-and-conditions" className="hover:text-primary transition-colors">
               Terms & Conditions
             </Link>
+            <span>|</span>
+            <button 
+              onClick={openCookiePreferences}
+              className="hover:text-primary transition-colors inline-flex items-center gap-1"
+            >
+              <Cookie className="h-3 w-3" />
+              Cookie Settings
+            </button>
           </div>
           <p className="text-sm text-muted-foreground">
             Locally owned & operated in Mount Vernon, WA
