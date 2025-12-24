@@ -540,11 +540,17 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         />
 
         {/* Quick call option */}
-        <div className="flex justify-center">
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
           <Button asChild variant="outline" size="lg">
             <a href="tel:+13606109233">
               <Phone className="mr-2 h-4 w-4" />
-              Prefer to Call? (360) 610-9233
+              (360) 610-9233
+            </a>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <a href="tel:+13604222428">
+              <Phone className="mr-2 h-4 w-4" />
+              (360) 422-2428
             </a>
           </Button>
         </div>
