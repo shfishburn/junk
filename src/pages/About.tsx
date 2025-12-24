@@ -107,7 +107,7 @@ const About = () => {
               More Than Just Haulers
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              We're invested in making Mount Vernon and the Puget Sound Region a better place to live. We donate usable items to those in need, recycle like our planet depends on it (because it does), and support local charities. Basically, we're trying to be the junk removal company your grandma would be proud of.
+              We're invested in making Mount Vernon and the Puget Sound Region a better place to live. We donate usable items to those in need and recycle like our planet depends on it (because it does). Basically, we're trying to be the junk removal company your grandma would be proud of.
             </p>
             <Button asChild>
               <Link to="/contact">Work With Us</Link>
