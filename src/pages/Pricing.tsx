@@ -2,7 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Helmet } from "react-helmet-async";
 
@@ -25,6 +26,28 @@ const steps = [
     title: "Say Yes & It's Gone",
     description: "Say the magic word ('yes') and we get to work. Often same-day. Watch your junk disappear and feel the weight lift off your shoulders.",
   },
+];
+
+const singleItemPricing = [
+  { item: "Couch / Sofa", price: "$75 – $150", icon: Sofa },
+  { item: "Mattress / Box Spring", price: "$50 – $100", icon: BedDouble },
+  { item: "Recliner / Armchair", price: "$50 – $85", icon: Armchair },
+  { item: "TV (any size)", price: "$35 – $75", icon: Tv },
+  { item: "Refrigerator / Freezer", price: "$75 – $125", icon: Refrigerator },
+  { item: "Washer / Dryer (each)", price: "$65 – $100", icon: Package },
+  { item: "Desk / Table", price: "$50 – $100", icon: Package },
+  { item: "Treadmill / Exercise Bike", price: "$75 – $125", icon: Package },
+  { item: "Hot Tub", price: "$300 – $500", icon: Package },
+  { item: "Piano", price: "$200 – $400", icon: Package },
+];
+
+const truckLoadPricing = [
+  { load: "Minimum Load", description: "A few small items (1-2 pieces)", price: "$99 – $150" },
+  { load: "1/8 Truck Load", description: "A couple items like a chair + TV", price: "$150 – $200" },
+  { load: "1/4 Truck Load", description: "Small room cleanout or a few furniture pieces", price: "$200 – $300" },
+  { load: "1/2 Truck Load", description: "Garage cleanout or bedroom furniture set", price: "$300 – $400" },
+  { load: "3/4 Truck Load", description: "Large room or multiple rooms", price: "$400 – $500" },
+  { load: "Full Truck Load", description: "Whole house or estate cleanout", price: "$500 – $650" },
 ];
 
 const pricingInfo = [
@@ -162,6 +185,88 @@ const Pricing = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Pricing Sheet */}
+      <section className="py-16 md:py-24 bg-section-alt">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              Pricing Guide
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Here's a ballpark of what things cost. Final prices depend on weight, location, and other factors — but this gives you a solid idea.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Single Item Pricing */}
+            <div className="bg-background rounded-xl border border-border overflow-hidden">
+              <div className="p-6 bg-primary/5 border-b border-border">
+                <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  Single Item Removal
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">Common items we haul away</p>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="font-semibold">Item</TableHead>
+                    <TableHead className="text-right font-semibold">Price Range</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {singleItemPricing.map((item) => (
+                    <TableRow key={item.item}>
+                      <TableCell className="flex items-center gap-3">
+                        <item.icon className="h-4 w-4 text-muted-foreground" />
+                        {item.item}
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-primary">{item.price}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Truck Load Pricing */}
+            <div className="bg-background rounded-xl border border-border overflow-hidden">
+              <div className="p-6 bg-primary/5 border-b border-border">
+                <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
+                  <Truck className="h-5 w-5 text-primary" />
+                  Truck Load Pricing
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">Based on volume in our truck</p>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="font-semibold">Load Size</TableHead>
+                    <TableHead className="text-right font-semibold">Price Range</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {truckLoadPricing.map((load) => (
+                    <TableRow key={load.load}>
+                      <TableCell>
+                        <div>
+                          <span className="font-medium">{load.load}</span>
+                          <p className="text-xs text-muted-foreground">{load.description}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right font-medium text-primary">{load.price}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          <p className="text-center text-sm text-muted-foreground mt-8">
+            * Prices are estimates and may vary based on weight, location, and accessibility. Get a free quote for exact pricing.
+          </p>
         </div>
       </section>
 
