@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
@@ -94,6 +94,20 @@ const services = [
       "Equipment and electronics",
       "Retail fixture removal",
       "Warehouse cleanouts",
+    ],
+  },
+  {
+    icon: Hammer,
+    title: "Light Demolition",
+    slug: "light-demolition",
+    description: "Need something torn down? We'll knock it out (literally) and haul away every last piece.",
+    image: constructionImg,
+    details: [
+      "Deck and patio removal",
+      "Shed and playhouse teardown",
+      "Fence removal",
+      "Interior non-load-bearing walls",
+      "Hot tub and spa removal",
     ],
   },
 ];
