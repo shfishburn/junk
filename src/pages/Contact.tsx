@@ -146,18 +146,16 @@ const Contact = () => {
               </p>
 
               <div className="space-y-6">
-                <a
-                  href="tel:+13606109233"
-                  className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-                >
+                <div className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Phone className="h-5 w-5 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-charcoal">Call Us</h3>
-                    <p className="text-primary font-medium">(360) 610-9233</p>
+                    <a href="tel:+13606109233" className="text-primary font-medium hover:underline block">(360) 610-9233</a>
+                    <a href="tel:+13604222428" className="text-primary font-medium hover:underline block">(360) 422-2428</a>
                   </div>
-                </a>
+                </div>
 
                 <a
                   href="mailto:info@junkygurus.com"
