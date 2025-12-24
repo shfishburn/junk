@@ -93,6 +93,15 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Junky Gurus. All rights reserved.
           </p>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <span>|</span>
+            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors">
+              Terms & Conditions
+            </Link>
+          </div>
           <p className="text-sm text-muted-foreground">
             Locally owned & operated in Mount Vernon, WA
           </p>
