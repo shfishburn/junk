@@ -55,7 +55,6 @@ const constructionMaterialPricing = [
   { material: "Lumber / Wood Scraps", description: "Framing, plywood, boards", price: "$75 – $200" },
   { material: "Concrete / Brick", description: "Heavy materials (weight-based)", price: "$150 – $400" },
   { material: "Tile / Flooring", description: "Ceramic, vinyl, laminate (weight-based)", price: "$100 – $250" },
-  { material: "Windows / Doors", description: "Frames included", price: "$25 – $75 each" },
   { material: "Insulation", description: "Fiberglass, foam, or blown-in", price: "$100 – $200" },
   { material: "Mixed Construction Debris", description: "Remodel or demo waste", price: "$200 – $500" },
 ];
