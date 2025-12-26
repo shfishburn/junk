@@ -9,6 +9,7 @@ import ServiceArea from "./pages/ServiceArea";
 import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Booking from "./pages/Booking";
 import AIEstimator from "./pages/AIEstimator";
 import Referrals from "./pages/Referrals";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/booking" element={<Booking />} />
           <Route path="/ai-estimator" element={<AIEstimator />} />
           <Route path="/referrals" element={<Referrals />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
