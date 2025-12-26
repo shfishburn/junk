@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { format, isBefore, startOfDay, isSunday } from "date-fns";
+import { z } from "zod";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,10 +19,43 @@ const TIME_SLOTS = [
   "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
 ];
 
+// Zod schema for booking form validation
+const bookingSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, "Name is required")
+    .max(100, "Name must be less than 100 characters"),
+  email: z.string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address")
+    .max(255, "Email must be less than 255 characters"),
+  phone: z.string()
+    .trim()
+    .max(20, "Phone must be less than 20 characters")
+    .regex(/^[\d\s\-\(\)\+]*$/, "Please enter a valid phone number")
+    .optional()
+    .or(z.literal("")),
+  message: z.string()
+    .trim()
+    .max(1000, "Message must be less than 1000 characters")
+    .optional()
+    .or(z.literal("")),
+});
+
+type BookingFormData = z.infer<typeof bookingSchema>;
+
 interface Booking {
   booking_date: string;
   booking_time: string;
   status: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
 }
 
 export default function Book() {
@@ -31,6 +65,7 @@ export default function Book() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -104,6 +139,25 @@ export default function Book() {
     return isBefore(date, today) || isSunday(date) || isDateFullyBooked(date);
   };
 
+  const validateForm = (): boolean => {
+    const result = bookingSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const errors: FormErrors = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof FormErrors;
+        if (field) {
+          errors[field] = err.message;
+        }
+      });
+      setFormErrors(errors);
+      return false;
+    }
+    
+    setFormErrors({});
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -115,29 +169,58 @@ export default function Book() {
       return;
     }
 
+    if (!validateForm()) {
+      toast({
+        title: "Please fix the form errors",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      // Parse and sanitize form data
+      const validatedData = bookingSchema.parse(formData);
+      
       // Insert booking into database
       const { error: bookingError } = await supabase.from("bookings").insert({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone || null,
-        message: formData.message || null,
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone || null,
+        message: validatedData.message || null,
         booking_date: format(selectedDate, "yyyy-MM-dd"),
         booking_time: selectedTime,
         status: "pending",
       });
 
-      if (bookingError) throw bookingError;
+      if (bookingError) {
+        // Handle unique constraint violation (double booking)
+        if (bookingError.code === "23505") {
+          toast({
+            title: "Time slot no longer available",
+            description: "Someone just booked this slot. Please select another time.",
+            variant: "destructive",
+          });
+          // Refresh bookings to show updated availability
+          const { data } = await supabase
+            .from("bookings")
+            .select("booking_date, booking_time, status")
+            .in("status", ["pending", "confirmed"]);
+          if (data) setExistingBookings(data);
+          setSelectedTime("");
+          return;
+        }
+        throw bookingError;
+      }
 
       // Send booking confirmation email
       await supabase.functions.invoke("send-contact-email", {
         body: {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message || "",
+          name: validatedData.name,
+          email: validatedData.email,
+          phone: validatedData.phone || "",
+          message: validatedData.message || "",
           isBooking: true,
           bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
           bookingTime: selectedTime,
@@ -312,11 +395,17 @@ export default function Book() {
                           id="name"
                           required
                           value={formData.name}
-                          onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setFormData({ ...formData, name: e.target.value });
+                            if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                          }}
                           placeholder="Your full name"
+                          maxLength={100}
+                          className={formErrors.name ? "border-destructive" : ""}
                         />
+                        {formErrors.name && (
+                          <p className="text-sm text-destructive mt-1">{formErrors.name}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="email">Email *</Label>
@@ -325,11 +414,17 @@ export default function Book() {
                           type="email"
                           required
                           value={formData.email}
-                          onChange={(e) =>
-                            setFormData({ ...formData, email: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setFormData({ ...formData, email: e.target.value });
+                            if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                          }}
                           placeholder="your@email.com"
+                          maxLength={255}
+                          className={formErrors.email ? "border-destructive" : ""}
                         />
+                        {formErrors.email && (
+                          <p className="text-sm text-destructive mt-1">{formErrors.email}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="phone">Phone</Label>
@@ -337,23 +432,35 @@ export default function Book() {
                           id="phone"
                           type="tel"
                           value={formData.phone}
-                          onChange={(e) =>
-                            setFormData({ ...formData, phone: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setFormData({ ...formData, phone: e.target.value });
+                            if (formErrors.phone) setFormErrors({ ...formErrors, phone: undefined });
+                          }}
                           placeholder="(555) 123-4567"
+                          maxLength={20}
+                          className={formErrors.phone ? "border-destructive" : ""}
                         />
+                        {formErrors.phone && (
+                          <p className="text-sm text-destructive mt-1">{formErrors.phone}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="message">What do you need removed?</Label>
                         <Textarea
                           id="message"
                           value={formData.message}
-                          onChange={(e) =>
-                            setFormData({ ...formData, message: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setFormData({ ...formData, message: e.target.value });
+                            if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
+                          }}
                           placeholder="Briefly describe the items or project..."
                           rows={3}
+                          maxLength={1000}
+                          className={formErrors.message ? "border-destructive" : ""}
                         />
+                        {formErrors.message && (
+                          <p className="text-sm text-destructive mt-1">{formErrors.message}</p>
+                        )}
                       </div>
 
                       <div className="bg-muted p-4 rounded-lg">
