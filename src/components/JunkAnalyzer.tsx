@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,9 +21,12 @@ import {
   AlertCircle,
   X,
   Plus,
-  Send
+  Send,
+  CalendarDays
 } from "lucide-react";
 import { JunkRouletteModal } from "./JunkRouletteModal";
+import { BookingSlotPicker } from "./BookingSlotPicker";
+import { useBookingSlots } from "@/hooks/use-booking-slots";
 
 interface JunkItem {
   name: string;
@@ -75,6 +79,8 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
   const [showRoulette, setShowRoulette] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState<string>("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -82,6 +88,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
     notes: "",
   });
   const { toast } = useToast();
+  const { refetchBookings } = useBookingSlots();
 
   // Restore saved estimate from localStorage on mount
   useEffect(() => {
@@ -225,6 +232,8 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
     setResult(null);
     setError(null);
     setRequestSubmitted(false);
+    setSelectedDate(undefined);
+    setSelectedTime("");
     setFormData({ name: "", email: "", phone: "", notes: "" });
   };
 
@@ -239,41 +248,80 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
 
   const handleRequestSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!selectedDate || !selectedTime) {
+      toast({
+        title: "Please select a date and time",
+        description: "Choose when you'd like us to come pick up your junk.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmittingRequest(true);
 
     try {
       // Build message with AI estimate details
       const estimateDetails = result ? `
-AI Estimate Details:
-- Price Range: $${result.priceEstimate.min} - $${result.priceEstimate.max}
-- Items: ${result.items.map(i => `${i.quantity}x ${i.name}`).join(", ")}
-- Volume: ${result.estimatedVolume.truckPercentage}% truck
-- Weight: ~${result.estimatedWeight.value} lbs
-- Confidence: ${result.confidence}
+AI JUNK REMOVAL ESTIMATE
+
+Price Range: $${result.priceEstimate.min} - $${result.priceEstimate.max}
+Items: ${result.items.map(i => `${i.quantity}x ${i.name}`).join(", ")}
+Volume: ${result.estimatedVolume.truckPercentage}% truck (~${result.estimatedVolume.value} cubic yards)
+Weight: ~${result.estimatedWeight.value} lbs (${result.estimatedWeight.category})
+Confidence: ${result.confidence}
 
 Customer Notes: ${formData.notes || "None"}` : formData.notes;
 
-      const { error } = await supabase.functions.invoke("send-contact-email", {
+      // Create booking record in database
+      const { error: bookingError } = await supabase.from("bookings").insert({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        message: estimateDetails,
+        booking_date: format(selectedDate, "yyyy-MM-dd"),
+        booking_time: selectedTime,
+        status: "pending",
+      });
+
+      if (bookingError) {
+        // Handle unique constraint violation (double booking)
+        if (bookingError.code === "23505") {
+          toast({
+            title: "Time slot no longer available",
+            description: "Someone just booked this slot. Please select another time.",
+            variant: "destructive",
+          });
+          refetchBookings();
+          setSelectedTime("");
+          return;
+        }
+        throw bookingError;
+      }
+
+      // Send booking confirmation email
+      await supabase.functions.invoke("send-contact-email", {
         body: {
           name: formData.name,
           email: formData.email,
-          phone: formData.phone,
+          phone: formData.phone || "",
           message: estimateDetails,
+          isBooking: true,
+          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
+          bookingTime: selectedTime,
         },
       });
 
-      if (error) throw error;
-
       setRequestSubmitted(true);
       toast({
-        title: "Request sent!",
-        description: "We'll be in touch soon to schedule your pickup.",
+        title: "Booking confirmed!",
+        description: "Check your email for confirmation details.",
       });
       
       // Show the roulette wheel!
       setShowRoulette(true);
     } catch (error) {
-      console.error("Error sending request:", error);
+      console.error("Error creating booking:", error);
       toast({
         title: "Something went wrong",
         description: "Please try calling us directly at (360) 610-9233.",
@@ -379,76 +427,95 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           </div>
         )}
 
-        {/* Service Request Form */}
+        {/* Service Request Form with Booking */}
         {!requestSubmitted ? (
           <div className="p-6 rounded-xl bg-card border-2 border-primary/20">
             <h3 className="font-semibold text-charcoal text-lg mb-4 flex items-center gap-2">
-              <Truck className="h-5 w-5 text-primary" />
-              Request Pickup Service
+              <CalendarDays className="h-5 w-5 text-primary" />
+              Book Your Pickup
             </h3>
-            <form onSubmit={handleRequestSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Name *</Label>
+            <form onSubmit={handleRequestSubmit} className="space-y-6">
+              {/* Booking Slot Picker */}
+              <BookingSlotPicker
+                selectedDate={selectedDate}
+                selectedTime={selectedTime}
+                onDateChange={setSelectedDate}
+                onTimeChange={setSelectedTime}
+                compact
+              />
+              
+              {/* Contact Details */}
+              <div className="border-t border-border pt-4">
+                <h4 className="font-medium text-charcoal mb-3">Your Details</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Name *</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      placeholder="Your name"
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">Phone *</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      placeholder="(360) 555-0000"
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Label htmlFor="email">Email *</Label>
                   <Input
-                    id="name"
-                    name="name"
-                    type="text"
+                    id="email"
+                    name="email"
+                    type="email"
                     required
-                    value={formData.name}
+                    value={formData.email}
                     onChange={handleFormChange}
-                    placeholder="Your name"
+                    placeholder="your@email.com"
                     className="mt-1"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="phone">Phone *</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    value={formData.phone}
+                <div className="mt-4">
+                  <Label htmlFor="notes">Anything else we should know?</Label>
+                  <Textarea
+                    id="notes"
+                    name="notes"
+                    value={formData.notes}
                     onChange={handleFormChange}
-                    placeholder="(360) 555-0000"
-                    className="mt-1"
+                    placeholder="Address, access info, etc."
+                    className="mt-1 min-h-[80px]"
                   />
                 </div>
               </div>
-              <div>
-                <Label htmlFor="email">Email *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleFormChange}
-                  placeholder="your@email.com"
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="notes">Anything else we should know?</Label>
-                <Textarea
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleFormChange}
-                  placeholder="Address, preferred times, access info, etc."
-                  className="mt-1 min-h-[80px]"
-                />
-              </div>
-              <Button type="submit" className="w-full" size="lg" disabled={isSubmittingRequest}>
+              
+              <Button 
+                type="submit" 
+                className="w-full" 
+                size="lg" 
+                disabled={isSubmittingRequest || !selectedDate || !selectedTime}
+              >
                 {isSubmittingRequest ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Sending...
+                    Booking...
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Request Pickup
+                    <CalendarDays className="mr-2 h-4 w-4" />
+                    Confirm Booking
                   </>
                 )}
               </Button>
@@ -457,9 +524,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         ) : (
           <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
             <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
-            <h3 className="font-semibold text-charcoal text-lg mb-2">Request Sent!</h3>
+            <h3 className="font-semibold text-charcoal text-lg mb-2">Booking Confirmed!</h3>
             <p className="text-muted-foreground">
-              We'll reach out shortly to confirm your pickup. Thanks for choosing Junky Gurus!
+              Your pickup is scheduled for{" "}
+              <strong className="text-foreground">
+                {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
+              </strong>
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Check your email for confirmation details.
             </p>
           </div>
         )}
