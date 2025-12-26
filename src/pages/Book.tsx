@@ -131,15 +131,16 @@ export default function Book() {
 
       if (bookingError) throw bookingError;
 
-      // Send confirmation email
-      const appointmentStr = `${format(selectedDate, "EEEE, MMMM d, yyyy")} at ${selectedTime}`;
+      // Send booking confirmation email
       await supabase.functions.invoke("send-contact-email", {
         body: {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          message: formData.message || "Booking request",
-          preferredAppointment: appointmentStr,
+          message: formData.message || "",
+          isBooking: true,
+          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
+          bookingTime: selectedTime,
         },
       });
 
