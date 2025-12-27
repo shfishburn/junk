@@ -79,8 +79,8 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-# Sitemap
-Sitemap: https://thejunkygurus.com/sitemap.xml
+# Sitemap (dynamically generated)
+Sitemap: https://vwskratcffxobbicpkie.supabase.co/functions/v1/sitemap
 
 # LLM Context Files
 Llms-txt: https://thejunkygurus.com/llms.txt
