@@ -199,24 +199,32 @@ export function Header() {
           onAnimationEnd={handleAnimationEnd}
         >
           <nav className="container py-4 flex flex-col gap-2">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 to={link.href}
                 onClick={handleLinkClick}
                 className={cn(
-                  "py-2 text-base font-medium transition-colors flex items-center gap-2",
+                  "py-2 text-base font-medium transition-colors flex items-center gap-2 opacity-0",
                   location.pathname === link.href
                     ? "text-primary"
                     : "text-muted-foreground",
-                  link.icon && "text-primary"
+                  link.icon && "text-primary",
+                  !isClosing && "animate-fade-in-up"
                 )}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 {link.icon && <link.icon className="h-4 w-4" />}
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 mt-2 border-t border-border">
+            <div 
+              className={cn(
+                "pt-4 mt-2 border-t border-border opacity-0",
+                !isClosing && "animate-fade-in-up"
+              )}
+              style={{ animationDelay: `${navLinks.length * 50}ms` }}
+            >
               <Button asChild className="w-full">
                 <Link to="/contact" onClick={handleLinkClick}>
                   Get a Free Quote
