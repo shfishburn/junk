@@ -58,6 +58,52 @@ const getGreetingMessage = (): Message => ({
   status: "sent",
 });
 
+// Phone number regex pattern
+const PHONE_REGEX = /(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/g;
+
+// Process text to make phone numbers clickable
+const processPhoneNumbers = (text: string): (string | JSX.Element)[] => {
+  const parts = text.split(PHONE_REGEX);
+  return parts.map((part, index) => {
+    if (PHONE_REGEX.test(part)) {
+      // Reset regex lastIndex
+      PHONE_REGEX.lastIndex = 0;
+      const cleanNumber = part.replace(/\D/g, "");
+      return (
+        <a
+          key={index}
+          href={`tel:+1${cleanNumber}`}
+          className="text-primary underline hover:no-underline font-medium"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
+// Custom text renderer that handles phone numbers
+const TextWithPhoneLinks = ({ children }: { children: React.ReactNode }) => {
+  if (typeof children === "string") {
+    return <>{processPhoneNumbers(children)}</>;
+  }
+  if (Array.isArray(children)) {
+    return (
+      <>
+        {children.map((child, i) => 
+          typeof child === "string" ? (
+            <span key={i}>{processPhoneNumbers(child)}</span>
+          ) : (
+            child
+          )
+        )}
+      </>
+    );
+  }
+  return <>{children}</>;
+};
+
 async function streamChat({
   messages,
   onDelta,
@@ -474,12 +520,20 @@ export function AIAssistant() {
                   {msg.role === "assistant" ? (
                     <ReactMarkdown
                       components={{
-                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                        p: ({ children }) => (
+                          <p className="mb-2 last:mb-0">
+                            <TextWithPhoneLinks>{children}</TextWithPhoneLinks>
+                          </p>
+                        ),
                         strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
                         em: ({ children }) => <em className="italic">{children}</em>,
                         ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
                         ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
-                        li: ({ children }) => <li className="ml-1">{children}</li>,
+                        li: ({ children }) => (
+                          <li className="ml-1">
+                            <TextWithPhoneLinks>{children}</TextWithPhoneLinks>
+                          </li>
+                        ),
                         a: ({ href, children }) => (
                           <a 
                             href={href} 
@@ -493,6 +547,7 @@ export function AIAssistant() {
                         code: ({ children }) => (
                           <code className="bg-background/50 px-1 py-0.5 rounded text-xs font-mono">{children}</code>
                         ),
+                        text: ({ children }) => <TextWithPhoneLinks>{children}</TextWithPhoneLinks>,
                       }}
                     >
                       {msg.content}
