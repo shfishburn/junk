@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle } from "lucide-react";
@@ -155,6 +156,7 @@ const Pricing = () => {
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
+          <Breadcrumbs items={[{ label: "Pricing" }]} />
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
               Transparent Pricing (No Surprise Fees, We Promise)

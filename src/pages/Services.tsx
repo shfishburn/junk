@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle } from "lucide-react";
@@ -255,6 +256,7 @@ const Services = () => {
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
+          <Breadcrumbs items={[{ label: "Services" }]} />
           <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               We Haul It All (Seriously, Try Us)

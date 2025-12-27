@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Recycle, Users, Shield } from "lucide-react";
@@ -39,6 +40,7 @@ const About = () => {
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
+          <Breadcrumbs items={[{ label: "About" }]} />
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
               The Junk-Obsessed Humans Behind the Truck
