@@ -9,17 +9,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
+import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
-
-// Validation schema for hazmat booking form
-const hazmatFormSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
-  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters"),
-  address: z.string().trim().min(1, "Address is required").max(500, "Address must be less than 500 characters"),
-  notes: z.string().max(1000, "Notes must be less than 1000 characters").optional(),
-});
 import { 
   AlertTriangle, 
   Loader2, 
@@ -36,10 +28,14 @@ import {
   Minus
 } from "lucide-react";
 
-const TIME_SLOTS = [
-  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
-];
+// Validation schema for hazmat booking form
+const hazmatFormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters"),
+  address: z.string().trim().min(1, "Address is required").max(500, "Address must be less than 500 characters"),
+  notes: z.string().max(1000, "Notes must be less than 1000 characters").optional(),
+});
 
 const HAZMAT_ITEMS = [
   { id: "paint_gallon", label: "Paint (gallon cans)", icon: Paintbrush, unit: "cans" },
@@ -74,6 +70,7 @@ export function HazmatBookingForm() {
     HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 }))
   );
   const { toast } = useToast();
+  const { isDateDisabled } = useBookingSlots();
 
   const handleItemToggle = (itemId: string) => {
     setHazmatItems(prev => 
@@ -184,11 +181,6 @@ export function HazmatBookingForm() {
     }));
   };
 
-  const disabledDays = (date: Date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date < today || date.getDay() === 0;
-  };
 
   const selectedCount = hazmatItems.filter(item => item.selected).length;
 
@@ -361,7 +353,7 @@ export function HazmatBookingForm() {
                   setPreferredDate(date);
                   setPreferredTime("");
                 }}
-                disabled={disabledDays}
+                disabled={isDateDisabled}
                 initialFocus
                 className="pointer-events-auto"
               />

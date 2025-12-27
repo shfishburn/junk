@@ -13,15 +13,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
 import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera, CalendarIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { JunkRouletteModal } from "@/components/JunkRouletteModal";
-
-const TIME_SLOTS = [
-  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
-];
 
 const SERVICE_TYPES = [
   { value: "residential", label: "Residential Junk Removal" },
@@ -59,6 +55,7 @@ const Contact = () => {
     message: "",
   });
   const { toast } = useToast();
+  const { isDateDisabled } = useBookingSlots();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,12 +123,6 @@ const Contact = () => {
     }
   };
 
-  // Disable past dates and Sundays
-  const disabledDays = (date: Date) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date < today || date.getDay() === 0;
-  };
 
   return (
     <Layout>
@@ -336,7 +327,7 @@ const Contact = () => {
                             setPreferredDate(date);
                             setPreferredTime("");
                           }}
-                          disabled={disabledDays}
+                          disabled={isDateDisabled}
                           initialFocus
                           className="pointer-events-auto"
                         />
