@@ -40,6 +40,13 @@ export function Header() {
     }
     return false;
   });
+  // Track scroll progress for progressive shadow (0 to 1, capped at 200px scroll)
+  const [scrollProgress, setScrollProgress] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return Math.min(window.scrollY / 200, 1);
+    }
+    return 0;
+  });
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isSpanish = location.pathname === "/espanol";
@@ -50,15 +57,20 @@ export function Header() {
   useEffect(() => {
     // Set initial state immediately on mount
     setIsScrolled(window.scrollY > 20);
+    setScrollProgress(Math.min(window.scrollY / 200, 1));
     
     let ticking = false;
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const scrolled = window.scrollY > 20;
+        const scrollY = window.scrollY;
+        const scrolled = scrollY > 20;
+        const progress = Math.min(scrollY / 200, 1);
+        
         // Only update state if it actually changed
         setIsScrolled(prev => prev !== scrolled ? scrolled : prev);
+        setScrollProgress(progress);
         if (isOpen) closeMenu();
         ticking = false;
       });
@@ -73,9 +85,14 @@ export function Header() {
     closeMenu();
   }, [location.pathname]);
 
+  // Progressive shadow: starts subtle, intensifies with scroll
+  const progressiveShadow = isScrolled 
+    ? `0 ${4 + scrollProgress * 8}px ${8 + scrollProgress * 16}px -${2 + scrollProgress * 2}px rgba(0, 0, 0, ${0.05 + scrollProgress * 0.1})`
+    : 'none';
+
   const headerBg = hasHero && !isScrolled
     ? "bg-transparent"
-    : "bg-background/95 backdrop-blur-md border-b border-border shadow-sm";
+    : "bg-background/95 backdrop-blur-md border-b border-border";
 
   const textColor = hasHero && !isScrolled
     ? "text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
@@ -86,10 +103,13 @@ export function Header() {
     : "text-muted-foreground";
 
   return (
-    <header className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      headerBg
-    )}>
+    <header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        headerBg
+      )}
+      style={{ boxShadow: progressiveShadow }}
+    >
       <div 
         className="container flex items-center justify-between transition-all duration-300"
         style={{ height: isScrolled ? 'var(--header-height-collapsed)' : 'var(--header-height-expanded)' }}
