@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Helmet } from "react-helmet-async";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   Accordion,
@@ -143,15 +144,15 @@ export default function FAQ() {
   return (
     <Layout>
       <SEO 
-        title="FAQ | Junky Gurus Junk Removal" 
+        title="FAQ" 
         description="Find answers to frequently asked questions about Junky Gurus junk removal services, pricing, scheduling, and service areas in Mount Vernon and the Puget Sound Region."
         url="/faq"
       />
-      {/* FAQ Schema for Rich Snippets */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
       
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16 md:py-24">

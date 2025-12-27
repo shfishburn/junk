@@ -5,8 +5,9 @@ export default function PrivacyPolicy() {
   return (
     <Layout>
       <SEO 
-        title="Privacy Policy | Junky Gurus" 
+        title="Privacy Policy" 
         description="Read the privacy policy for Junky Gurus junk removal services. Learn how we collect, use, and protect your personal information."
+        url="/privacy-policy"
       />
       <div className="container py-16 md:py-24">
         <div className="max-w-3xl mx-auto prose prose-slate dark:prose-invert">
