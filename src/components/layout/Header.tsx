@@ -182,7 +182,7 @@ export function Header() {
       {isOpen && (
         <div 
           className={cn(
-            "md:hidden fixed inset-0 top-16 bg-foreground/50 z-40",
+            "md:hidden fixed inset-0 top-16 bg-foreground/40 backdrop-blur-sm z-40",
             isClosing ? "animate-fade-out" : "animate-fade-in"
           )}
           onClick={handleMenuToggle}
