@@ -2,12 +2,11 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { DateTimePicker } from "@/components/DateTimePicker";
+import { FormField, TextareaField } from "@/components/FormField";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { 
@@ -268,61 +267,47 @@ export function HazmatBookingForm() {
 
         {/* Contact Info */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="hazmat-name">Name *</Label>
-            <Input
-              id="hazmat-name"
-              name="name"
-              type="text"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your name"
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label htmlFor="hazmat-phone">Phone *</Label>
-            <Input
-              id="hazmat-phone"
-              name="phone"
-              type="tel"
-              required
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="(360) 555-0000"
-              className="mt-1"
-            />
-          </div>
-        </div>
-
-        <div>
-          <Label htmlFor="hazmat-email">Email *</Label>
-          <Input
-            id="hazmat-email"
-            name="email"
-            type="email"
-            required
-            value={formData.email}
+          <FormField
+            id="hazmat-name"
+            name="name"
+            label="Name"
+            value={formData.name}
             onChange={handleChange}
-            placeholder="your@email.com"
-            className="mt-1"
+            placeholder="Your name"
+            required
+          />
+          <FormField
+            id="hazmat-phone"
+            name="phone"
+            label="Phone"
+            type="tel"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="(360) 555-0000"
+            required
           />
         </div>
 
-        <div>
-          <Label htmlFor="hazmat-address">Pickup Address *</Label>
-          <Input
-            id="hazmat-address"
-            name="address"
-            type="text"
-            required
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="123 Main St, Mount Vernon, WA"
-            className="mt-1"
-          />
-        </div>
+        <FormField
+          id="hazmat-email"
+          name="email"
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="your@email.com"
+          required
+        />
+
+        <FormField
+          id="hazmat-address"
+          name="address"
+          label="Pickup Address"
+          value={formData.address}
+          onChange={handleChange}
+          placeholder="123 Main St, Mount Vernon, WA"
+          required
+        />
 
         {/* Date & Time Picker */}
         <DateTimePicker
@@ -333,17 +318,15 @@ export function HazmatBookingForm() {
           label="Preferred Pickup Date (Optional)"
         />
 
-        <div>
-          <Label htmlFor="hazmat-notes">Additional Notes</Label>
-          <Textarea
-            id="hazmat-notes"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            placeholder="Anything else we should know? (e.g., items are in garage, need help carrying, etc.)"
-            className="mt-1 min-h-[80px]"
-          />
-        </div>
+        <TextareaField
+          id="hazmat-notes"
+          name="notes"
+          label="Additional Notes"
+          value={formData.notes}
+          onChange={handleChange}
+          placeholder="Anything else we should know? (e.g., items are in garage, need help carrying, etc.)"
+          rows={3}
+        />
 
         <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
           {isSubmitting ? (

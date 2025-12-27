@@ -6,15 +6,13 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { DateTimePicker } from "@/components/DateTimePicker";
+import { FormField, TextareaField } from "@/components/FormField";
 import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
 import { JunkRouletteModal } from "@/components/JunkRouletteModal";
 
 const SERVICE_TYPES = [
@@ -240,46 +238,38 @@ const Contact = () => {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Name *</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your name"
-                      className={cn("mt-1", errors.name && "border-destructive")}
-                    />
-                    {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
-                  </div>
+                  <FormField
+                    id="name"
+                    name="name"
+                    label="Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    required
+                    error={errors.name}
+                  />
 
-                  <div>
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your@email.com"
-                      className={cn("mt-1", errors.email && "border-destructive")}
-                    />
-                    {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
-                  </div>
+                  <FormField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your@email.com"
+                    required
+                    error={errors.email}
+                  />
 
-                  <div>
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="(360) 555-0000"
-                      className="mt-1"
-                    />
-                  </div>
+                  <FormField
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="(360) 555-0000"
+                  />
 
                   <div>
                     <Label htmlFor="serviceType">Service Type</Label>
@@ -308,18 +298,17 @@ const Contact = () => {
                     onTimeChange={setPreferredTime}
                   />
 
-                  <div>
-                    <Label htmlFor="message">What's haunting you? *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell us about the items you need removed, the location, and any other details..."
-                      className={cn("mt-1 min-h-[120px]", errors.message && "border-destructive")}
-                    />
-                    {errors.message && <p className="text-sm text-destructive mt-1">{errors.message}</p>}
-                  </div>
+                  <TextareaField
+                    id="message"
+                    name="message"
+                    label="What's haunting you?"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us about the items you need removed, the location, and any other details..."
+                    required
+                    error={errors.message}
+                    rows={4}
+                  />
 
                   <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? (

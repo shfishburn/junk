@@ -2,8 +2,6 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { FormField, TextareaField } from "@/components/FormField";
 import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
 import { BookingSlotPicker } from "@/components/BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
@@ -252,79 +251,63 @@ export default function Book() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Name *</Label>
-                    <Input
-                      id="name"
-                      required
-                      value={formData.name}
-                      onChange={(e) => {
-                        setFormData({ ...formData, name: e.target.value });
-                        if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
-                      }}
-                      placeholder="Your full name"
-                      maxLength={100}
-                      className={formErrors.name ? "border-destructive" : ""}
-                    />
-                    {formErrors.name && (
-                      <p className="text-sm text-destructive mt-1">{formErrors.name}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => {
-                        setFormData({ ...formData, email: e.target.value });
-                        if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
-                      }}
-                      placeholder="your@email.com"
-                      maxLength={255}
-                      className={formErrors.email ? "border-destructive" : ""}
-                    />
-                    {formErrors.email && (
-                      <p className="text-sm text-destructive mt-1">{formErrors.email}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => {
-                        setFormData({ ...formData, phone: e.target.value });
-                        if (formErrors.phone) setFormErrors({ ...formErrors, phone: undefined });
-                      }}
-                      placeholder="(555) 123-4567"
-                      maxLength={20}
-                      className={formErrors.phone ? "border-destructive" : ""}
-                    />
-                    {formErrors.phone && (
-                      <p className="text-sm text-destructive mt-1">{formErrors.phone}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="message">What do you need removed?</Label>
-                    <Textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => {
-                        setFormData({ ...formData, message: e.target.value });
-                        if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
-                      }}
-                      placeholder="Briefly describe the items or project..."
-                      rows={3}
-                      maxLength={1000}
-                      className={formErrors.message ? "border-destructive" : ""}
-                    />
-                    {formErrors.message && (
-                      <p className="text-sm text-destructive mt-1">{formErrors.message}</p>
-                    )}
-                  </div>
+                  <FormField
+                    id="name"
+                    name="name"
+                    label="Name"
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                    }}
+                    placeholder="Your full name"
+                    required
+                    maxLength={100}
+                    error={formErrors.name}
+                  />
+                  <FormField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                    }}
+                    placeholder="your@email.com"
+                    required
+                    maxLength={255}
+                    error={formErrors.email}
+                  />
+                  <FormField
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      if (formErrors.phone) setFormErrors({ ...formErrors, phone: undefined });
+                    }}
+                    placeholder="(555) 123-4567"
+                    maxLength={20}
+                    error={formErrors.phone}
+                  />
+                  <TextareaField
+                    id="message"
+                    name="message"
+                    label="What do you need removed?"
+                    value={formData.message}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
+                    }}
+                    placeholder="Briefly describe the items or project..."
+                    rows={3}
+                    maxLength={1000}
+                    error={formErrors.message}
+                  />
 
                   {/* Senior/Veteran Discount Checkboxes */}
                   <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
