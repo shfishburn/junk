@@ -2,6 +2,7 @@ import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BusinessHours } from "@/components/BusinessHours";
 import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
+import { PhoneLink } from "@/components/PhoneLink";
 
 interface ContactInfoCardProps {
   variant?: "full" | "compact";
@@ -32,14 +33,12 @@ export function ContactInfoCard({
     return (
       <div className={cn("space-y-3", className)}>
         {CONTACT_INFO.phones.map((phone) => (
-          <a
+          <PhoneLink
             key={phone.number}
-            href={`tel:${phone.number}`}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Phone className="h-4 w-4 flex-shrink-0" />
-            {phone.display}
-          </a>
+            phone={phone}
+            showIcon
+            className="flex text-sm text-muted-foreground"
+          />
         ))}
         {showTextUs && (
           <a
@@ -76,13 +75,11 @@ export function ContactInfoCard({
         <div>
           <h3 className="font-semibold text-charcoal">Call Us</h3>
           {CONTACT_INFO.phones.map((phone) => (
-            <a
+            <PhoneLink
               key={phone.number}
-              href={`tel:${phone.number}`}
+              phone={phone}
               className="text-primary font-medium hover:underline block"
-            >
-              {phone.display}
-            </a>
+            />
           ))}
         </div>
       </div>
