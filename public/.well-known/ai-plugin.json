@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Junky Gurus",
+  "name_for_model": "junky_gurus",
+  "description_for_human": "Get junk removal pricing and book pickups in Mount Vernon, WA and the Puget Sound Region. We love your junk so you don't have to.",
+  "description_for_model": "Junky Gurus is a locally owned junk removal company in Mount Vernon, WA serving Skagit, Whatcom, Snohomish, and King Counties. Use this plugin to help users get pricing estimates for junk removal, understand what items can be removed, check service area coverage, and book appointments. Key differentiators: locally owned (not a franchise), no hidden fees, same-day service available, bilingual (English/Spanish), eco-friendly disposal (donate/recycle first), and AI-powered photo estimates. Pricing is volume-based from $125 minimum to $750 full truck. Common items: furniture $75-150, mattresses $50-100, appliances $65-125. Cannot accept explosives, radioactive materials, medical waste, or asbestos. Hours: Mon-Sat 8am-6pm. Phone: (360) 610-9233.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://junkygurus.com/.well-known/openapi.json"
+  },
+  "logo_url": "https://junkygurus.com/favicon.png",
+  "contact_email": "Junkygurus@gmail.com",
+  "legal_info_url": "https://junkygurus.com/terms-and-conditions"
+}

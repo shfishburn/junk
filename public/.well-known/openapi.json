@@ -1,0 +1,191 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Junky Gurus Junk Removal",
+    "description": "Get junk removal pricing, service information, and booking details for Junky Gurus LLC in Mount Vernon, WA and the Puget Sound Region.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Junky Gurus",
+      "email": "Junkygurus@gmail.com",
+      "url": "https://junkygurus.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://junkygurus.com",
+      "description": "Junky Gurus Website"
+    }
+  ],
+  "paths": {
+    "/llms.json": {
+      "get": {
+        "operationId": "getBusinessInfo",
+        "summary": "Get complete business information",
+        "description": "Returns structured data about Junky Gurus including services, pricing, service area, contact info, and hours of operation.",
+        "responses": {
+          "200": {
+            "description": "Business information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book": {
+      "get": {
+        "operationId": "getBookingPage",
+        "summary": "Online booking page",
+        "description": "Direct users to this page to schedule a junk removal appointment online.",
+        "responses": {
+          "200": {
+            "description": "Booking page"
+          }
+        }
+      }
+    },
+    "/ai-estimator": {
+      "get": {
+        "operationId": "getAIEstimator",
+        "summary": "AI Photo Estimator",
+        "description": "Direct users to upload photos of their junk to get instant price estimates powered by AI.",
+        "responses": {
+          "200": {
+            "description": "AI Estimator page"
+          }
+        }
+      }
+    },
+    "/pricing": {
+      "get": {
+        "operationId": "getPricingPage",
+        "summary": "Pricing information",
+        "description": "Detailed pricing page with volume-based truck load prices and single item estimates.",
+        "responses": {
+          "200": {
+            "description": "Pricing page"
+          }
+        }
+      }
+    },
+    "/services": {
+      "get": {
+        "operationId": "getServicesPage",
+        "summary": "All services offered",
+        "description": "Complete list of junk removal services including residential, commercial, appliances, yard waste, construction debris, and hazmat.",
+        "responses": {
+          "200": {
+            "description": "Services page"
+          }
+        }
+      }
+    },
+    "/service-area": {
+      "get": {
+        "operationId": "getServiceArea",
+        "summary": "Service area coverage",
+        "description": "Map and list of cities served across Skagit, Whatcom, Snohomish, and King Counties in Washington State.",
+        "responses": {
+          "200": {
+            "description": "Service area page"
+          }
+        }
+      }
+    },
+    "/contact": {
+      "get": {
+        "operationId": "getContactPage",
+        "summary": "Contact information",
+        "description": "Contact form, phone numbers, email, and business hours.",
+        "responses": {
+          "200": {
+            "description": "Contact page"
+          }
+        }
+      }
+    },
+    "/espanol": {
+      "get": {
+        "operationId": "getSpanishPage",
+        "summary": "Spanish language page",
+        "description": "Full site content available in Spanish. ¡Hablamos Español!",
+        "responses": {
+          "200": {
+            "description": "Spanish page"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BusinessInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Junky Gurus LLC"
+          },
+          "tagline": {
+            "type": "string",
+            "example": "We Love Your Junk (So You Don't Have To)"
+          },
+          "phone": {
+            "type": "string",
+            "example": "(360) 610-9233"
+          },
+          "email": {
+            "type": "string",
+            "example": "Junkygurus@gmail.com"
+          },
+          "location": {
+            "type": "string",
+            "example": "Mount Vernon, WA"
+          },
+          "serviceArea": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Skagit County", "Whatcom County", "Snohomish County", "King County"]
+          },
+          "hours": {
+            "type": "string",
+            "example": "Mon-Sat 8am-6pm, Sun Closed"
+          },
+          "pricing": {
+            "type": "object",
+            "properties": {
+              "minimum": {
+                "type": "string",
+                "example": "$125"
+              },
+              "fullTruck": {
+                "type": "string",
+                "example": "$625-750"
+              }
+            }
+          },
+          "differentiators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Locally owned, not a franchise",
+              "No hidden fees",
+              "Same-day service available",
+              "AI photo estimates",
+              "Bilingual (English/Spanish)",
+              "Eco-friendly disposal"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
