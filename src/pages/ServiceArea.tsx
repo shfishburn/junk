@@ -1,11 +1,10 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, SERVICE_AREA_DATA, CountyCard } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
-import { SERVICE_AREA_DATA, CountyCard } from "@/components/ServiceAreaInfo";
 
 const ServiceArea = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();

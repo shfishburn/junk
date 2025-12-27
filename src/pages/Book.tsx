@@ -7,11 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { FormField, TextareaField } from "@/components/FormField";
+import { SEO, Breadcrumbs, FormField, TextareaField, BookingSlotPicker } from "@/components/shared";
 import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
-import { BookingSlotPicker } from "@/components/BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
 import { Checkbox } from "@/components/ui/checkbox";
 

@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/shared";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { DemolitionAnalyzer } from "@/components/DemolitionAnalyzer";
 import { Button } from "@/components/ui/button";

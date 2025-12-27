@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { JunkBingoCard } from "@/components/JunkBingoCard";
 import { Copy, Check, Share2, RotateCcw, Gift, MessageCircle, Mail, Facebook, Twitter, Phone, ArrowRight } from "lucide-react";

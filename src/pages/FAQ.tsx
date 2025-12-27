@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO, Breadcrumbs } from "@/components/shared";
 import { Helmet } from "react-helmet-async";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   Accordion,
   AccordionContent,
