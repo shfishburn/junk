@@ -1,9 +1,9 @@
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { TimeSlotGrid } from "@/components/TimeSlotGrid";
+import { BookingCalendar } from "@/components/BookingCalendar";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -37,7 +37,7 @@ export function DateTimePicker({
   timeSlotColumns = 5,
   abbreviatedTime = true,
 }: DateTimePickerProps) {
-  const { isDateDisabled, isTimeBooked } = useBookingSlots();
+  const { isTimeBooked } = useBookingSlots();
 
   const handleDateSelect = (newDate: Date | undefined) => {
     onDateChange(newDate);
@@ -62,13 +62,9 @@ export function DateTimePicker({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={handleDateSelect}
-            disabled={isDateDisabled}
-            initialFocus
-            className="pointer-events-auto"
+          <BookingCalendar
+            selectedDate={date}
+            onDateChange={handleDateSelect}
           />
         </PopoverContent>
       </Popover>
