@@ -1,13 +1,57 @@
 import { useState, useEffect } from "react";
-import { X, Zap } from "lucide-react";
+import { X, Zap, Leaf, Percent, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib";
+import type { LucideIcon } from "lucide-react";
 
 const ANNOUNCEMENT_DISMISSED_KEY = "junky-gurus-announcement-dismissed";
 const ANNOUNCEMENT_VERSION = "v1"; // Change this to show announcement again after updates
 
+interface Announcement {
+  icon: LucideIcon;
+  emoji: string;
+  message: string;
+  linkText: string;
+  linkTo: string;
+}
+
+const announcements: Announcement[] = [
+  {
+    icon: Clock,
+    emoji: "🎉",
+    message: "Same-day pickups available!",
+    linkText: "Book now",
+    linkTo: "/book",
+  },
+  {
+    icon: Percent,
+    emoji: "💰",
+    message: "10% off your first booking!",
+    linkText: "Get quote",
+    linkTo: "/ai-estimator",
+  },
+  {
+    icon: Leaf,
+    emoji: "🌱",
+    message: "Eco-friendly disposal — we recycle & donate!",
+    linkText: "Learn more",
+    linkTo: "/about",
+  },
+  {
+    icon: Zap,
+    emoji: "⚡",
+    message: "Free estimates in minutes!",
+    linkText: "Try it",
+    linkTo: "/ai-estimator",
+  },
+];
+
+const ROTATE_INTERVAL = 4000; // 4 seconds
+
 export function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     // Check if user has dismissed this version of the announcement
@@ -22,6 +66,21 @@ export function AnnouncementBar() {
     }
   }, []);
 
+  // Rotate announcements
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % announcements.length);
+        setIsAnimating(false);
+      }, 300); // Half of animation duration
+    }, ROTATE_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
   const handleDismiss = () => {
     setIsVisible(false);
     try {
@@ -35,6 +94,9 @@ export function AnnouncementBar() {
 
   if (!isVisible) return null;
 
+  const current = announcements[currentIndex];
+  const IconComponent = current.icon;
+
   return (
     <div 
       className={cn(
@@ -44,17 +106,29 @@ export function AnnouncementBar() {
       style={{ height: 'var(--announcement-bar-height, 2.5rem)' }}
       role="banner"
       aria-label="Announcement"
+      aria-live="polite"
     >
       <div className="container h-full flex items-center justify-center gap-2 px-4">
-        <Zap className="h-4 w-4 flex-shrink-0 animate-pulse" aria-hidden="true" />
-        <p className="text-sm font-medium truncate">
-          <span className="hidden sm:inline">🎉 </span>
-          Same-day pickups available!
+        <IconComponent 
+          className={cn(
+            "h-4 w-4 flex-shrink-0 transition-all duration-300",
+            isAnimating ? "opacity-0 scale-75" : "opacity-100 scale-100"
+          )} 
+          aria-hidden="true" 
+        />
+        <p 
+          className={cn(
+            "text-sm font-medium truncate transition-all duration-300",
+            isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+          )}
+        >
+          <span className="hidden sm:inline">{current.emoji} </span>
+          {current.message}
           <Link 
-            to="/book" 
+            to={current.linkTo} 
             className="ml-2 underline underline-offset-2 hover:no-underline font-semibold"
           >
-            Book now
+            {current.linkText}
           </Link>
         </p>
         <button
