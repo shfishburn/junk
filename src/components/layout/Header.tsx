@@ -172,8 +172,10 @@ export function Header() {
           <a 
             href="tel:+13606109233" 
             className={cn(
-              "flex items-center gap-2 text-sm font-medium transition-colors",
-              mutedColor, "hover:text-primary"
+              "flex items-center gap-2 text-sm font-medium transition-all duration-300 px-3 py-1.5 rounded-full",
+              isHome && !isScrolled 
+                ? "text-white bg-white/10 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                : "text-muted-foreground hover:text-primary"
             )}
           >
             <Phone className="h-4 w-4" />
