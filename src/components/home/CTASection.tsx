@@ -21,7 +21,7 @@ export function CTASection() {
             Get a free quote and experience the sweet, sweet freedom of a clutter-free life. We're weirdly excited to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-base bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl">
+            <Button asChild size="lg" variant="invert" className="text-base">
               <Link to="/contact">Get a Free Quote</Link>
             </Button>
             <Button asChild size="lg" variant="hero" className="text-base">
