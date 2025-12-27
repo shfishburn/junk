@@ -6,13 +6,13 @@ const steps = [
     icon: Camera,
     step: "1",
     title: "Get a Quote",
-    description: "Snap a photo or give us a call. We'll give you an honest price in minutes.",
+    description: "Snap a photo or give us a call. Get a real price—what we quote is what you pay.",
   },
   {
     icon: Truck,
     step: "2",
     title: "We Haul It",
-    description: "Our crew shows up on time, loads everything, and sweeps up after.",
+    description: "Our crew arrives when scheduled—not 'sometime between 8 and 5.' Then we load everything and sweep up after.",
   },
   {
     icon: PartyPopper,
