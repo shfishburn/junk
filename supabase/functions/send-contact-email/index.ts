@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -9,16 +10,41 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface ContactEmailRequest {
-  name: string;
-  email: string;
-  phone?: string;
-  message: string;
-  preferredAppointment?: string;
-  isBooking?: boolean;
-  bookingDate?: string;
-  bookingTime?: string;
-  isHazmatRequest?: boolean;
+// Server-side validation schema matching client constraints
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().max(20, "Phone must be less than 20 characters").optional().nullable(),
+  message: z.string().trim().max(2000, "Message must be less than 2000 characters").optional().default(""),
+  preferredAppointment: z.string().max(100, "Preferred appointment must be less than 100 characters").optional().nullable(),
+  isBooking: z.boolean().optional().default(false),
+  bookingDate: z.string().max(50, "Booking date must be less than 50 characters").optional().nullable(),
+  bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
+  isHazmatRequest: z.boolean().optional().default(false),
+  serviceType: z.string().max(50, "Service type must be less than 50 characters").optional().nullable(),
+});
+
+// HTML sanitization function to prevent XSS in email templates
+function sanitizeHtml(input: string | undefined | null): string {
+  if (!input) return "";
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+    .replace(/\n/g, "<br>");
+}
+
+// Sanitize for plain text (keeps newlines for parsing)
+function sanitizeText(input: string | undefined | null): string {
+  if (!input) return "";
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -27,41 +53,70 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { 
-      name, 
-      email, 
-      phone, 
-      message, 
-      preferredAppointment,
-      isBooking,
-      bookingDate,
-      bookingTime,
-      isHazmatRequest
-    }: ContactEmailRequest = await req.json();
+    const rawData = await req.json();
+    
+    // Validate input with Zod
+    const parseResult = contactSchema.safeParse(rawData);
+    
+    if (!parseResult.success) {
+      console.error("Validation failed:", parseResult.error.flatten());
+      return new Response(
+        JSON.stringify({ 
+          error: "Invalid input", 
+          details: parseResult.error.flatten() 
+        }),
+        { 
+          status: 400, 
+          headers: { "Content-Type": "application/json", ...corsHeaders } 
+        }
+      );
+    }
+    
+    const validatedData = parseResult.data;
+    
+    // Sanitize all user inputs for HTML email templates
+    const name = sanitizeHtml(validatedData.name);
+    const email = validatedData.email; // Email is validated, keep for sending
+    const phone = sanitizeHtml(validatedData.phone);
+    const message = validatedData.message || "";
+    const preferredAppointment = sanitizeHtml(validatedData.preferredAppointment);
+    const isBooking = validatedData.isBooking;
+    const bookingDate = sanitizeHtml(validatedData.bookingDate);
+    const bookingTime = sanitizeHtml(validatedData.bookingTime);
+    const isHazmatRequest = validatedData.isHazmatRequest;
 
-    console.log("Received submission:", { name, email, phone, isBooking, bookingDate, bookingTime, isHazmatRequest });
+    console.log("Validated submission:", { 
+      name: validatedData.name, 
+      email, 
+      phone: validatedData.phone, 
+      isBooking, 
+      bookingDate: validatedData.bookingDate, 
+      bookingTime: validatedData.bookingTime, 
+      isHazmatRequest 
+    });
 
     const adminEmail = "Junkygurus@gmail.com";
 
     if (isHazmatRequest) {
-      // Parse hazmat items from message
+      // Parse hazmat items from message (sanitize for parsing, then sanitize output)
+      const sanitizedMessage = sanitizeText(message);
       const messageLines = message.split('\n');
-      const pickupAddress = messageLines.find(l => l.startsWith('Pickup Address:'))?.replace('Pickup Address:', '').trim() || 'Not provided';
+      const pickupAddress = sanitizeHtml(messageLines.find(l => l.startsWith('Pickup Address:'))?.replace('Pickup Address:', '').trim() || 'Not provided');
       const materialsLine = messageLines.find(l => l.startsWith('Materials:'));
       const materialsIndex = messageLines.indexOf(materialsLine || '');
       const materialsText = materialsIndex >= 0 ? messageLines[materialsIndex]?.replace('Materials:', '').trim() : '';
-      const additionalNotes = messageLines.find(l => l.startsWith('Additional Notes:'))?.replace('Additional Notes:', '').trim() || 'None';
+      const additionalNotes = sanitizeHtml(messageLines.find(l => l.startsWith('Additional Notes:'))?.replace('Additional Notes:', '').trim() || 'None');
       
-      // Format materials as list items
+      // Format materials as list items (sanitize each item)
       const materialsList = materialsText
-        ? materialsText.split(', ').map(item => `<li style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${item}</li>`).join('')
+        ? materialsText.split(', ').map(item => `<li style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${sanitizeHtml(item)}</li>`).join('')
         : '<li>No specific items listed</li>';
 
       // Admin notification for hazmat
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <onboarding@resend.dev>",
         to: [adminEmail],
-        subject: `⚠️ HAZMAT Pickup Request from ${name}`,
+        subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
@@ -85,7 +140,7 @@ const handler = async (req: Request): Promise<Response> => {
             <table style="width: 100%; border-collapse: collapse;">
               <tr><td style="padding: 8px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
               <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td><a href="tel:${phone}">${phone || 'Not provided'}</a></td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td><a href="tel:${validatedData.phone || ''}">${phone || 'Not provided'}</a></td></tr>
             </table>
             
             ${additionalNotes !== 'None' ? `
@@ -157,11 +212,13 @@ const handler = async (req: Request): Promise<Response> => {
 
       console.log("Customer hazmat confirmation sent:", customerEmail);
     } else if (isBooking && bookingDate && bookingTime) {
+      const sanitizedMessage = sanitizeHtml(message);
+      
       // Booking-specific emails
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <onboarding@resend.dev>",
         to: [adminEmail],
-        subject: `🗓️ New Booking from ${name} - ${bookingDate} at ${bookingTime}`,
+        subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h1 style="color: #16a34a;">New Booking Request</h1>
@@ -177,7 +234,7 @@ const handler = async (req: Request): Promise<Response> => {
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
             
-            ${message ? `<h2 style="color: #374151;">Additional Notes</h2><p>${message}</p>` : ""}
+            ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
             
             <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">— Junky Gurus Booking System</p>
           </div>
@@ -220,11 +277,13 @@ const handler = async (req: Request): Promise<Response> => {
 
       console.log("Customer booking confirmation sent:", customerEmail);
     } else {
+      const sanitizedMessage = sanitizeHtml(message);
+      
       // Standard contact form emails
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <onboarding@resend.dev>",
         to: [adminEmail],
-        subject: `New Quote Request from ${name}`,
+        subject: `New Quote Request from ${validatedData.name}`,
         html: `
           <h1>New Quote Request</h1>
           <p><strong>Name:</strong> ${name}</p>
@@ -232,7 +291,7 @@ const handler = async (req: Request): Promise<Response> => {
           <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
           ${preferredAppointment ? `<p><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
           <h2>Message:</h2>
-          <p>${message}</p>
+          <p>${sanitizedMessage}</p>
         `,
       });
 
