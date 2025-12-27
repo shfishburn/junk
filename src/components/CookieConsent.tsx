@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Cookie, Settings } from "lucide-react";
 import { 
@@ -9,10 +10,33 @@ import {
 } from "@/lib";
 import { CookiePreferencesModal } from "./CookiePreferencesModal";
 
+const translations = {
+  en: {
+    title: "We use cookies to haul away a better experience!",
+    description: "Essential cookies keep things running smoothly. Analytics cookies help us understand how to serve you better. No junk here!",
+    learnMore: "Learn more",
+    essentialOnly: "Essential Only",
+    customize: "Customize",
+    acceptAll: "Accept All",
+  },
+  es: {
+    title: "¡Usamos cookies para una mejor experiencia!",
+    description: "Las cookies esenciales mantienen todo funcionando. Las cookies de análisis nos ayudan a servirle mejor. ¡Sin basura aquí!",
+    learnMore: "Más información",
+    essentialOnly: "Solo Esenciales",
+    customize: "Personalizar",
+    acceptAll: "Aceptar Todo",
+  },
+};
+
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const location = useLocation();
+  
+  const isSpanish = location.pathname === "/espanol";
+  const t = isSpanish ? translations.es : translations.en;
 
   useEffect(() => {
     // Small delay to prevent flash on page load
@@ -82,16 +106,15 @@ export function CookieConsent() {
                 <Cookie className="h-6 w-6 text-primary shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <p className="font-semibold text-foreground">
-                    We use cookies to haul away a better experience!
+                    {t.title}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Essential cookies keep things running smoothly. Analytics cookies help us 
-                    understand how to serve you better. No junk here!{" "}
+                    {t.description}{" "}
                     <a 
                       href="/privacy-policy" 
                       className="text-primary hover:underline"
                     >
-                      Learn more
+                      {t.learnMore}
                     </a>
                   </p>
                 </div>
@@ -105,7 +128,7 @@ export function CookieConsent() {
                   onClick={handleEssentialOnly}
                   className="text-sm text-muted-foreground hover:text-foreground"
                 >
-                  Essential Only
+                  {t.essentialOnly}
                 </Button>
                 <Button
                   variant="outline"
@@ -114,14 +137,14 @@ export function CookieConsent() {
                   className="text-sm gap-1"
                 >
                   <Settings className="h-4 w-4" />
-                  Customize
+                  {t.customize}
                 </Button>
                 <Button
                   size="sm"
                   onClick={handleAcceptAll}
                   className="text-sm shadow-sm"
                 >
-                  Accept All
+                  {t.acceptAll}
                 </Button>
               </div>
             </div>
