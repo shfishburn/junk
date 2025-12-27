@@ -82,6 +82,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   const [requestSubmitted, setRequestSubmitted] = useState(false);
   const [showRoulette, setShowRoulette] = useState(false);
   const [showBingo, setShowBingo] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -196,6 +197,10 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
       if (data.error) throw new Error(data.error);
 
       setResult(data);
+      
+      // Show confetti celebration!
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3000);
       
       // Show Bingo modal after successful analysis (only once per session)
       if (!wasBingoShownForEstimate()) {
@@ -361,7 +366,27 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
   // Results view
   if (result) {
     return (
-      <div className="space-y-6 animate-in fade-in duration-500">
+      <div className="space-y-6 animate-in fade-in duration-500 relative">
+        {/* Confetti celebration */}
+        {showConfetti && (
+          <div className="fixed inset-0 pointer-events-none z-50">
+            {[...Array(60)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute animate-[confetti_3s_ease-out_forwards]"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: "-10px",
+                  animationDelay: `${Math.random() * 0.5}s`,
+                  backgroundColor: ["#22c55e", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"][Math.floor(Math.random() * 6)],
+                  width: `${8 + Math.random() * 10}px`,
+                  height: `${8 + Math.random() * 10}px`,
+                  borderRadius: Math.random() > 0.5 ? "50%" : "0",
+                }}
+              />
+            ))}
+          </div>
+        )}
         {/* Image previews */}
         {imagePreviews.length > 0 && (
           <div className="relative">
