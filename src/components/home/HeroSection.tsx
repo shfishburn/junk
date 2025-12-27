@@ -23,8 +23,8 @@ export function HeroSection() {
           animationDelay: "0.2s"
         }}>
             <Button asChild size="lg" className="text-base">
-              <Link to="/contact">
-                Let's Ditch This Stuff
+              <Link to="/book">
+                Book Pickup
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

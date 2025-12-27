@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import { z } from "zod";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera, CalendarIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,22 +22,59 @@ const TIME_SLOTS = [
   "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
 ];
 
+const SERVICE_TYPES = [
+  { value: "residential", label: "Residential Junk Removal" },
+  { value: "appliances", label: "Appliance Removal" },
+  { value: "construction", label: "Construction Debris" },
+  { value: "yard", label: "Yard Waste" },
+  { value: "commercial", label: "Commercial/Office" },
+  { value: "cleanout", label: "Estate/Garage Cleanout" },
+  { value: "hazmat", label: "Hazmat Materials" },
+  { value: "other", label: "Other" },
+];
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().max(20, "Phone number is too long").optional(),
+  serviceType: z.string().optional(),
+  message: z.string().trim().min(1, "Please tell us about your junk").max(2000, "Message must be less than 2000 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preferredDate, setPreferredDate] = useState<Date | undefined>();
   const [preferredTime, setPreferredTime] = useState<string>("");
   const [showRoulette, setShowRoulette] = useState(false);
   const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    serviceType: "",
     message: "",
   });
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    // Validate form
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof ContactFormData;
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -43,9 +82,12 @@ const Contact = () => {
         ? `${format(preferredDate, "EEEE, MMMM d, yyyy")}${preferredTime ? ` at ${preferredTime}` : ""}`
         : null;
 
+      const serviceLabel = SERVICE_TYPES.find(s => s.value === formData.serviceType)?.label;
+
       const { error } = await supabase.functions.invoke("send-contact-email", {
         body: {
           ...formData,
+          serviceType: serviceLabel || formData.serviceType,
           preferredAppointment: appointmentInfo,
         },
       });
@@ -58,7 +100,7 @@ const Contact = () => {
       // Show the roulette wheel!
       setShowRoulette(true);
 
-      setFormData({ name: "", email: "", phone: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", serviceType: "", message: "" });
       setPreferredDate(undefined);
       setPreferredTime("");
     } catch (error) {
@@ -76,10 +118,11 @@ const Contact = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof ContactFormData]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   // Disable past dates and Sundays
@@ -211,12 +254,12 @@ const Contact = () => {
                       id="name"
                       name="name"
                       type="text"
-                      required
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="mt-1"
+                      className={cn("mt-1", errors.name && "border-destructive")}
                     />
+                    {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
                   </div>
 
                   <div>
@@ -225,12 +268,12 @@ const Contact = () => {
                       id="email"
                       name="email"
                       type="email"
-                      required
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="your@email.com"
-                      className="mt-1"
+                      className={cn("mt-1", errors.email && "border-destructive")}
                     />
+                    {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
                   </div>
 
                   <div>
@@ -244,6 +287,25 @@ const Contact = () => {
                       placeholder="(360) 555-0000"
                       className="mt-1"
                     />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="serviceType">Service Type</Label>
+                    <Select
+                      value={formData.serviceType}
+                      onValueChange={(value) => setFormData((prev) => ({ ...prev, serviceType: value }))}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="What type of junk?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {SERVICE_TYPES.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   {/* Date & Time Picker */}
@@ -305,12 +367,12 @@ const Contact = () => {
                     <Textarea
                       id="message"
                       name="message"
-                      required
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell us about the items you need removed, the location, and any other details..."
-                      className="mt-1 min-h-[120px]"
+                      className={cn("mt-1 min-h-[120px]", errors.message && "border-destructive")}
                     />
+                    {errors.message && <p className="text-sm text-destructive mt-1">{errors.message}</p>}
                   </div>
 
                   <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>

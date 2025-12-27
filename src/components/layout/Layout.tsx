@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AIAssistant } from "@/components/AIAssistant";
+import { MobilePhoneButton } from "@/components/MobilePhoneButton";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
 
 interface LayoutProps {
@@ -22,6 +23,7 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <CookieConsent />
       <AIAssistant />
+      <MobilePhoneButton />
     </div>
   );
 }

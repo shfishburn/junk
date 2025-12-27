@@ -1,12 +1,22 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, MessageCircle, Cookie } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Cookie, Clock } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
+
+const serviceAreas = [
+  "Mount Vernon",
+  "Burlington",
+  "Anacortes",
+  "Sedro-Woolley",
+  "Bellingham",
+  "Marysville",
+  "Everett",
+];
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <Link to="/" className="text-xl font-bold text-primary">
@@ -15,6 +25,62 @@ export function Footer() {
             <p className="mt-3 text-sm text-muted-foreground">
               Fast, reliable junk removal serving Mount Vernon and the Puget Sound Region.
             </p>
+            <div className="mt-4 flex items-start gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4 flex-shrink-0 mt-0.5" />
+              <div>
+                <p>Mon - Sat: 8am - 6pm</p>
+                <p>Sunday: Closed</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-charcoal mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/referrals" className="text-muted-foreground hover:text-primary transition-colors">
+                  Referral Program
+                </Link>
+              </li>
+              <li>
+                <Link to="/service-area" className="text-muted-foreground hover:text-primary transition-colors">
+                  Service Area
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Service Areas */}
+          <div>
+            <h4 className="font-semibold text-charcoal mb-4">Service Areas</h4>
+            <ul className="space-y-2 text-sm">
+              {serviceAreas.map((area) => (
+                <li key={area} className="text-muted-foreground">
+                  {area}, WA
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Contact */}
@@ -78,7 +144,7 @@ export function Footer() {
               Terms & Conditions
             </Link>
             <span>|</span>
-            <button 
+            <button
               onClick={openCookiePreferences}
               className="hover:text-primary transition-colors inline-flex items-center gap-1"
             >
@@ -86,9 +152,6 @@ export function Footer() {
               Cookie Settings
             </button>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Locally owned & operated in Mount Vernon, WA
-          </p>
         </div>
       </div>
     </footer>
