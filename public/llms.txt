@@ -73,6 +73,8 @@ That old couch mocking you from the garage? That exercise bike turned clothes ha
 
 Your junk is our jam. Let's make some magic happen.
 
+Website: https://thejunkygurus.com
+
 ## Optional
 
 - [Full LLM Context](/llms-full.txt)
