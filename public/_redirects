@@ -1,0 +1,5 @@
+# Redirect sitemap.xml to dynamic edge function
+/sitemap.xml https://vwskratcffxobbicpkie.supabase.co/functions/v1/sitemap 301
+
+# SPA fallback - must be last
+/*    /index.html   200
