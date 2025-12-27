@@ -4,8 +4,8 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 const signals = [
   {
     icon: Clock,
-    title: "Same-Day Service",
-    description: "Need it gone yesterday? We can't time travel, but we're pretty darn close.",
+    title: "Reliable Scheduling",
+    description: "When we say Tuesday at 10, we mean Tuesday at 10. No vague arrival windows.",
   },
   {
     icon: Shield,
@@ -14,8 +14,8 @@ const signals = [
   },
   {
     icon: Leaf,
-    title: "Eco-Friendly",
-    description: "We recycle and donate whenever possible. Mother Earth approves.",
+    title: "Eco-First Disposal",
+    description: "Furniture gets donated. Metals get recycled. Landfill is our last resort—not our default.",
   },
   {
     icon: Star,
@@ -25,12 +25,12 @@ const signals = [
   {
     icon: Award,
     title: "Locally Owned",
-    description: "We're your neighbors, not some faceless corporation.",
+    description: "We live here. We answer our own phones. Your neighbor's driveway matters to us.",
   },
   {
     icon: Recycle,
     title: "Responsible Disposal",
-    description: "Proper recycling, donations, and eco-friendly practices.",
+    description: "We actively sort every load. Usable items get second lives, not buried.",
   },
 ];
 

@@ -6,6 +6,7 @@ import { ServicesOverview } from "@/components/home/ServicesOverview";
 import { AIEstimatorCTA } from "@/components/home/AIEstimatorCTA";
 import { GamificationCTA } from "@/components/home/GamificationCTA";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { NoSurprises } from "@/components/home/NoSurprises";
 import { TrustSignals } from "@/components/home/TrustSignals";
 import { ServiceAreaSection } from "@/components/home/ServiceAreaSection";
 import { CTASection } from "@/components/home/CTASection";
@@ -15,7 +16,7 @@ const Index = () => {
     <Layout>
       <SEO
         title="Junk Removal Mount Vernon WA"
-        description="Professional junk removal in Mount Vernon, WA. Simple pricing, responsible disposal. From single items to full cleanouts. Call (360) 610-9233 for a free quote."
+        description="Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Know your price before we arrive. Call (360) 610-9233."
         keywords="junk removal, Mount Vernon, Skagit County, hauling, cleanout, appliance removal, furniture removal"
         url="/"
         pageType="homepage"
@@ -27,6 +28,7 @@ const Index = () => {
       <AIEstimatorCTA />
       <GamificationCTA />
       <TestimonialsSection />
+      <NoSurprises />
       <TrustSignals />
       <ServiceAreaSection />
       <CTASection />

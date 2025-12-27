@@ -18,13 +18,13 @@ export function AIEstimatorCTA() {
             <div className="flex-1 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium mb-4">
                 <Sparkles className="h-4 w-4" />
-                Instant AI Quotes
+                Skip the Sales Dance
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Get an Estimate in 30 Seconds
+                Know Your Price Before We Ever Arrive
               </h2>
               <p className="text-muted-foreground mb-6">
-                Snap a photo of your junk, and our AI will analyze it and give you an instant price estimate. No waiting, no phone tag.
+                Upload photos. Get a real price. No phone tag. No on-site upsells. No surprises.
               </p>
               
               <div className="flex flex-wrap gap-4 mb-6 justify-center md:justify-start">

@@ -24,9 +24,17 @@ export function HeroSection() {
             Same-Day Service Available
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-4 animate-fade-in">
             We Love Your Junk (So You Don't Have To)
           </h1>
+          <p
+            className="text-base md:text-lg text-on-primary font-medium mb-4 animate-fade-in"
+            style={{
+              animationDelay: "0.05s",
+            }}
+          >
+            Real pricing upfront. Reliable scheduling. Responsible disposal. From a local team that actually shows up.
+          </p>
           <p
             className="text-lg md:text-xl text-on-primary-muted mb-8 animate-fade-in"
             style={{
@@ -52,7 +60,7 @@ export function HeroSection() {
             <Button asChild size="lg" variant="invert" className="text-base">
               <Link to="/ai-estimator">
                 <Sparkles className="mr-2 h-4 w-4" />
-                Get AI Quote
+                Know Your Price First
               </Link>
             </Button>
             <Button asChild variant="hero" size="lg" className="text-base">
