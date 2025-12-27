@@ -81,6 +81,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        confetti: {
+          "0%": { transform: "translateY(-10px) rotate(0deg)", opacity: "1" },
+          "100%": { transform: "translateY(400px) rotate(720deg)", opacity: "0" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -144,6 +148,7 @@ export default {
         "fade-in-up": "fade-in-up 0.6s ease-out forwards",
         "fade-in-scale": "fade-in-scale 0.5s ease-out forwards",
         "confetti-fall": "confetti-fall 2s ease-in-out forwards",
+        "confetti": "confetti 2s ease-out forwards",
         "gradient-shift": "gradient-shift 8s ease infinite",
         "slide-in-down": "slide-in-down 0.4s ease-out forwards",
         "slide-out-up": "slide-out-up 0.3s ease-out forwards",

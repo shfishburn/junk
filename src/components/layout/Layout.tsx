@@ -3,8 +3,10 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AIAssistant } from "@/components/AIAssistant";
+import { ExitIntentPopup } from "@/components/ExitIntentPopup";
 import { PageTransition } from "@/components/PageTransition";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
+import { useExitIntent } from "@/hooks/use-exit-intent";
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,6 +15,9 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   // Initialize Google Analytics (respects cookie consent)
   useGoogleAnalytics();
+  
+  // Exit intent popup for first-time visitors
+  const { showPopup, closePopup } = useExitIntent();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -25,6 +30,7 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <CookieConsent />
       <AIAssistant />
+      <ExitIntentPopup open={showPopup} onClose={closePopup} />
     </div>
   );
 }
