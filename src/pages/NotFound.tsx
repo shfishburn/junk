@@ -1,16 +1,11 @@
 import { useLocation, Link } from "react-router-dom";
-import { useEffect } from "react";
-import { Home, ArrowLeft, Phone } from "lucide-react";
+import { Home, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 
 const NotFound = () => {
   const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
 
   return (
     <Layout>
@@ -47,8 +42,8 @@ const NotFound = () => {
           </div>
           <p className="mt-8 text-sm text-muted-foreground">
             Need junk removal? Call us at{" "}
-            <a href="tel:+13606302366" className="text-primary hover:underline font-medium">
-              (360) 630-2366
+            <a href="tel:+13606109233" className="text-primary hover:underline font-medium">
+              (360) 610-9233
             </a>
           </p>
         </div>
