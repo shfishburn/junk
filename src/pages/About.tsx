@@ -239,7 +239,16 @@ const About = () => {
           
           <div className="mt-10 text-center">
             <p className="text-muted-foreground">
-              Proud partner of <span className="font-semibold text-foreground">Habitat for Humanity ReStore</span> — helping build homes and hope in our community.
+              Proud partner of{" "}
+              <a 
+                href="https://www.habitat.org/restores" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                Habitat for Humanity ReStore
+              </a>
+              {" "}— helping build homes and hope in our community.
             </p>
           </div>
         </div>
