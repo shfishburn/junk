@@ -18,8 +18,28 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [showContactBar, setShowContactBar] = useState(false);
   const location = useLocation();
+
+  const handleMenuToggle = () => {
+    if (isOpen) {
+      setIsClosing(true);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      setIsOpen(false);
+      setIsClosing(false);
+    }
+  };
+
+  const handleLinkClick = () => {
+    setIsClosing(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -109,7 +129,7 @@ export function Header() {
         {/* Mobile Menu Button */}
         <button
           className="md:hidden p-2 -mr-2 relative w-10 h-10 flex items-center justify-center"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleMenuToggle}
           aria-label="Toggle menu"
         >
           <div className="flex flex-col justify-center items-center w-6 h-6">
@@ -137,13 +157,19 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-background animate-slide-in-right">
+        <div 
+          className={cn(
+            "md:hidden border-t border-border bg-background",
+            isClosing ? "animate-slide-out-right" : "animate-slide-in-right"
+          )}
+          onAnimationEnd={handleAnimationEnd}
+        >
           <nav className="container py-4 flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                onClick={() => setIsOpen(false)}
+                onClick={handleLinkClick}
                 className={cn(
                   "py-2 text-base font-medium transition-colors flex items-center gap-2",
                   location.pathname === link.href
@@ -158,7 +184,7 @@ export function Header() {
             ))}
             <div className="pt-4 mt-2 border-t border-border">
               <Button asChild className="w-full">
-                <Link to="/contact" onClick={() => setIsOpen(false)}>
+                <Link to="/contact" onClick={handleLinkClick}>
                   Get a Free Quote
                 </Link>
               </Button>
