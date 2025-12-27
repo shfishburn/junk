@@ -18,6 +18,7 @@ interface ContactEmailRequest {
   isBooking?: boolean;
   bookingDate?: string;
   bookingTime?: string;
+  isHazmatRequest?: boolean;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -34,14 +35,128 @@ const handler = async (req: Request): Promise<Response> => {
       preferredAppointment,
       isBooking,
       bookingDate,
-      bookingTime
+      bookingTime,
+      isHazmatRequest
     }: ContactEmailRequest = await req.json();
 
-    console.log("Received submission:", { name, email, phone, isBooking, bookingDate, bookingTime });
+    console.log("Received submission:", { name, email, phone, isBooking, bookingDate, bookingTime, isHazmatRequest });
 
     const adminEmail = "Junkygurus@gmail.com";
 
-    if (isBooking && bookingDate && bookingTime) {
+    if (isHazmatRequest) {
+      // Parse hazmat items from message
+      const messageLines = message.split('\n');
+      const pickupAddress = messageLines.find(l => l.startsWith('Pickup Address:'))?.replace('Pickup Address:', '').trim() || 'Not provided';
+      const materialsLine = messageLines.find(l => l.startsWith('Materials:'));
+      const materialsIndex = messageLines.indexOf(materialsLine || '');
+      const materialsText = materialsIndex >= 0 ? messageLines[materialsIndex]?.replace('Materials:', '').trim() : '';
+      const additionalNotes = messageLines.find(l => l.startsWith('Additional Notes:'))?.replace('Additional Notes:', '').trim() || 'None';
+      
+      // Format materials as list items
+      const materialsList = materialsText
+        ? materialsText.split(', ').map(item => `<li style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${item}</li>`).join('')
+        : '<li>No specific items listed</li>';
+
+      // Admin notification for hazmat
+      const businessEmail = await resend.emails.send({
+        from: "Junky Gurus <onboarding@resend.dev>",
+        to: [adminEmail],
+        subject: `⚠️ HAZMAT Pickup Request from ${name}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
+              <h1 style="color: #92400e; margin: 0; font-size: 24px;">⚠️ Hazardous Materials Pickup Request</h1>
+            </div>
+            
+            <div style="background: #fef9c3; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #854d0e;">📦 Materials to Pick Up</h2>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                ${materialsList}
+              </ul>
+            </div>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #374151;">📍 Pickup Details</h2>
+              <p style="margin: 0;"><strong>Address:</strong> ${pickupAddress}</p>
+              ${preferredAppointment ? `<p style="margin: 8px 0 0 0;"><strong>Preferred Date/Time:</strong> ${preferredAppointment}</p>` : ''}
+            </div>
+            
+            <h2 style="color: #374151;">👤 Customer Information</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 8px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td><a href="tel:${phone}">${phone || 'Not provided'}</a></td></tr>
+            </table>
+            
+            ${additionalNotes !== 'None' ? `
+              <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                <h3 style="margin-top: 0; color: #374151;">📝 Additional Notes</h3>
+                <p style="margin: 0;">${additionalNotes}</p>
+              </div>
+            ` : ''}
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+              <p style="color: #6b7280; font-size: 12px; margin: 0;">
+                ⚠️ Remember: Verify items are acceptable for transport before confirming pickup.
+              </p>
+            </div>
+          </div>
+        `,
+      });
+
+      console.log("Admin hazmat notification sent:", businessEmail);
+
+      // Customer confirmation for hazmat
+      const customerEmail = await resend.emails.send({
+        from: "Junky Gurus <onboarding@resend.dev>",
+        to: [email],
+        subject: "Your Hazmat Pickup Request is Received! ♻️",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #16a34a;">Thanks for your hazmat pickup request, ${name}!</h1>
+            <p>We've received your request to pick up hazardous materials and we're on it!</p>
+            
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+              <h2 style="margin-top: 0; color: #166534;">📦 Your Items</h2>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                ${materialsList}
+              </ul>
+            </div>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0;">📍 Pickup Location</h2>
+              <p style="margin: 0;">${pickupAddress}</p>
+              ${preferredAppointment ? `<p style="margin: 8px 0 0 0;"><strong>Preferred time:</strong> ${preferredAppointment}</p>` : ''}
+            </div>
+            
+            <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #92400e;">What happens next?</h2>
+              <ul>
+                <li>We'll review your request within 24 hours</li>
+                <li>We'll confirm the items and provide a final quote</li>
+                <li>Once approved, we'll schedule your pickup</li>
+                <li>We'll safely transport everything to certified disposal facilities</li>
+              </ul>
+            </div>
+            
+            <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="margin-top: 0;">💡 Prep Tips</h3>
+              <ul style="margin: 0; padding-left: 20px;">
+                <li>Keep items in original containers when possible</li>
+                <li>Make sure lids are secure</li>
+                <li>Keep items accessible for easy pickup</li>
+              </ul>
+            </div>
+            
+            <p><strong>Questions?</strong> Give us a call at <strong>(360) 610-9233</strong></p>
+            
+            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">— The Junky Gurus Team</p>
+          </div>
+        `,
+      });
+
+      console.log("Customer hazmat confirmation sent:", customerEmail);
+    } else if (isBooking && bookingDate && bookingTime) {
       // Booking-specific emails
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <onboarding@resend.dev>",
