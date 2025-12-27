@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AIEstimator from "./pages/AIEstimator";
 import Referrals from "./pages/Referrals";
+import Bingo from "./pages/Bingo";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import FAQ from "./pages/FAQ";
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/ai-estimator" element={<AIEstimator />} />
           <Route path="/referrals" element={<Referrals />} />
+          <Route path="/bingo" element={<Bingo />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/faq" element={<FAQ />} />
