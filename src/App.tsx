@@ -21,6 +21,7 @@ import AdminLogin from "./pages/admin/Login";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBookings from "./pages/admin/Bookings";
 import AdminCalendarView from "./pages/admin/CalendarView";
+import AdminHazmatRequests from "./pages/admin/HazmatRequests";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />
+          <Route path="/admin/hazmat" element={<AdminHazmatRequests />} />
           <Route path="/admin/calendar" element={<AdminCalendarView />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -7,7 +7,7 @@ import StatsCards from '@/components/admin/StatsCards';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Loader2, Calendar, Clock } from 'lucide-react';
+import { Loader2, Calendar, Clock, AlertTriangle } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -172,6 +172,18 @@ export default function AdminDashboard() {
                 <p className="font-medium">Calendar View</p>
                 <p className="text-sm text-muted-foreground">
                   See your schedule at a glance
+                </p>
+              </button>
+              <button
+                onClick={() => navigate('/admin/hazmat')}
+                className="w-full text-left p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors border border-amber-200"
+              >
+                <p className="font-medium flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-amber-500" />
+                  Hazmat Requests
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Manage hazardous material pickups
                 </p>
               </button>
             </CardContent>
