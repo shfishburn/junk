@@ -151,3 +151,28 @@
     background: var(--hero-gradient);
   }
 }
+
+/* Enhanced focus states */
+@layer base {
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-none ring-2 ring-primary/40 ring-offset-2 ring-offset-background border-primary;
+  }
+}
+
+/* Link hover underline animation */
+@layer utilities {
+  .link-hover-underline {
+    @apply relative;
+  }
+  
+  .link-hover-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 origin-right transition-transform duration-300;
+  }
+  
+  .link-hover-underline:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+}

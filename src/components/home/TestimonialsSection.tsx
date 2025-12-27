@@ -45,7 +45,7 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.name}
-              className={`relative p-6 rounded-lg bg-card border border-border transition-all duration-700 ${
+              className={`relative p-6 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${index * 150}ms` : "0ms" }}
