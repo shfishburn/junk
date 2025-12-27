@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { format, isBefore, startOfDay, isSunday } from "date-fns";
+import { useState } from "react";
+import { format } from "date-fns";
 import { z } from "zod";
-import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,13 +10,9 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
-import { CalendarDays, Clock, User, CheckCircle2, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-const TIME_SLOTS = [
-  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM",
-  "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
-];
+import { User, CheckCircle2, Loader2 } from "lucide-react";
+import { BookingSlotPicker } from "@/components/BookingSlotPicker";
+import { useBookingSlots } from "@/hooks/use-booking-slots";
 
 // Zod schema for booking form validation
 const bookingSchema = z.object({
@@ -45,12 +40,6 @@ const bookingSchema = z.object({
 
 type BookingFormData = z.infer<typeof bookingSchema>;
 
-interface Booking {
-  booking_date: string;
-  booking_time: string;
-  status: string;
-}
-
 interface FormErrors {
   name?: string;
   email?: string;
@@ -61,8 +50,6 @@ interface FormErrors {
 export default function Book() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
-  const [existingBookings, setExistingBookings] = useState<Booking[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -73,71 +60,7 @@ export default function Book() {
     message: "",
   });
   const { toast } = useToast();
-
-  // Fetch existing bookings
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("bookings")
-          .select("booking_date, booking_time, status")
-          .in("status", ["pending", "confirmed"]);
-
-        if (error) throw error;
-        setExistingBookings(data || []);
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBookings();
-
-    // Subscribe to real-time updates
-    const channel = supabase
-      .channel("bookings-changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "bookings" },
-        () => {
-          fetchBookings();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // Check if a specific time slot is booked
-  const isTimeBooked = (date: Date, time: string) => {
-    const dateStr = format(date, "yyyy-MM-dd");
-    return existingBookings.some(
-      (booking) => booking.booking_date === dateStr && booking.booking_time === time
-    );
-  };
-
-  // Get available time slots for a date
-  const getAvailableSlots = (date: Date) => {
-    return TIME_SLOTS.filter((time) => !isTimeBooked(date, time));
-  };
-
-  // Check if a date is fully booked
-  const isDateFullyBooked = (date: Date) => {
-    const dateStr = format(date, "yyyy-MM-dd");
-    const bookedSlots = existingBookings.filter(
-      (booking) => booking.booking_date === dateStr
-    );
-    return bookedSlots.length >= TIME_SLOTS.length;
-  };
-
-  // Disable dates that are past, Sunday, or fully booked
-  const isDateDisabled = (date: Date) => {
-    const today = startOfDay(new Date());
-    return isBefore(date, today) || isSunday(date) || isDateFullyBooked(date);
-  };
+  const { refetchBookings } = useBookingSlots();
 
   const validateForm = (): boolean => {
     const result = bookingSchema.safeParse(formData);
@@ -203,11 +126,7 @@ export default function Book() {
             variant: "destructive",
           });
           // Refresh bookings to show updated availability
-          const { data } = await supabase
-            .from("bookings")
-            .select("booking_date, booking_time, status")
-            .in("status", ["pending", "confirmed"]);
-          if (data) setExistingBookings(data);
+          refetchBookings();
           setSelectedTime("");
           return;
         }
@@ -292,206 +211,127 @@ export default function Book() {
           </p>
         </div>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Calendar Section */}
-            <Card>
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Date & Time Selection - Using shared component */}
+          <BookingSlotPicker
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onDateChange={setSelectedDate}
+            onTimeChange={setSelectedTime}
+          />
+
+          {/* Booking Form - Only show when date and time selected */}
+          {selectedDate && selectedTime && (
+            <Card className="max-w-xl mx-auto">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <CalendarDays className="h-5 w-5 text-primary" />
-                  Select a Date
+                  <User className="h-5 w-5 text-primary" />
+                  Your Details
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={(date) => {
-                    setSelectedDate(date);
-                    setSelectedTime("");
-                  }}
-                  disabled={isDateDisabled}
-                  className="rounded-md border w-full"
-                  modifiers={{
-                    fullyBooked: (date) => isDateFullyBooked(date),
-                  }}
-                  modifiersStyles={{
-                    fullyBooked: { 
-                      color: "hsl(var(--muted-foreground))",
-                      textDecoration: "line-through",
-                    },
-                  }}
-                />
-                <div className="mt-4 flex flex-wrap gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-primary"></div>
-                    <span>Available</span>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Name *</Label>
+                    <Input
+                      id="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                      }}
+                      placeholder="Your full name"
+                      maxLength={100}
+                      className={formErrors.name ? "border-destructive" : ""}
+                    />
+                    {formErrors.name && (
+                      <p className="text-sm text-destructive mt-1">{formErrors.name}</p>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-muted border"></div>
-                    <span>Unavailable</span>
+                  <div>
+                    <Label htmlFor="email">Email *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value });
+                        if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
+                      }}
+                      placeholder="your@email.com"
+                      maxLength={255}
+                      className={formErrors.email ? "border-destructive" : ""}
+                    />
+                    {formErrors.email && (
+                      <p className="text-sm text-destructive mt-1">{formErrors.email}</p>
+                    )}
                   </div>
-                </div>
+                  <div>
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        if (formErrors.phone) setFormErrors({ ...formErrors, phone: undefined });
+                      }}
+                      placeholder="(555) 123-4567"
+                      maxLength={20}
+                      className={formErrors.phone ? "border-destructive" : ""}
+                    />
+                    {formErrors.phone && (
+                      <p className="text-sm text-destructive mt-1">{formErrors.phone}</p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="message">What do you need removed?</Label>
+                    <Textarea
+                      id="message"
+                      value={formData.message}
+                      onChange={(e) => {
+                        setFormData({ ...formData, message: e.target.value });
+                        if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
+                      }}
+                      placeholder="Briefly describe the items or project..."
+                      rows={3}
+                      maxLength={1000}
+                      className={formErrors.message ? "border-destructive" : ""}
+                    />
+                    {formErrors.message && (
+                      <p className="text-sm text-destructive mt-1">{formErrors.message}</p>
+                    )}
+                  </div>
+
+                  <div className="bg-muted p-4 rounded-lg">
+                    <p className="text-sm font-medium">Your Appointment</p>
+                    <p className="text-primary font-semibold">
+                      {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
+                    </p>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    size="lg"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Booking...
+                      </>
+                    ) : (
+                      "Confirm Booking"
+                    )}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
-
-            {/* Time Slots & Form Section */}
-            <div className="space-y-6">
-              {/* Time Slots */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-primary" />
-                    Select a Time
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {selectedDate ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                      {TIME_SLOTS.map((time) => {
-                        const isBooked = isTimeBooked(selectedDate, time);
-                        return (
-                          <Button
-                            key={time}
-                            variant={selectedTime === time ? "default" : "outline"}
-                            disabled={isBooked}
-                            onClick={() => setSelectedTime(time)}
-                            className={cn(
-                              "w-full",
-                              isBooked && "opacity-50 line-through"
-                            )}
-                          >
-                            {time}
-                          </Button>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <p className="text-muted-foreground text-center py-8">
-                      Please select a date first
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Booking Form */}
-              {selectedDate && selectedTime && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <User className="h-5 w-5 text-primary" />
-                      Your Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      <div>
-                        <Label htmlFor="name">Name *</Label>
-                        <Input
-                          id="name"
-                          required
-                          value={formData.name}
-                          onChange={(e) => {
-                            setFormData({ ...formData, name: e.target.value });
-                            if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
-                          }}
-                          placeholder="Your full name"
-                          maxLength={100}
-                          className={formErrors.name ? "border-destructive" : ""}
-                        />
-                        {formErrors.name && (
-                          <p className="text-sm text-destructive mt-1">{formErrors.name}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="email">Email *</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => {
-                            setFormData({ ...formData, email: e.target.value });
-                            if (formErrors.email) setFormErrors({ ...formErrors, email: undefined });
-                          }}
-                          placeholder="your@email.com"
-                          maxLength={255}
-                          className={formErrors.email ? "border-destructive" : ""}
-                        />
-                        {formErrors.email && (
-                          <p className="text-sm text-destructive mt-1">{formErrors.email}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="phone">Phone</Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => {
-                            setFormData({ ...formData, phone: e.target.value });
-                            if (formErrors.phone) setFormErrors({ ...formErrors, phone: undefined });
-                          }}
-                          placeholder="(555) 123-4567"
-                          maxLength={20}
-                          className={formErrors.phone ? "border-destructive" : ""}
-                        />
-                        {formErrors.phone && (
-                          <p className="text-sm text-destructive mt-1">{formErrors.phone}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="message">What do you need removed?</Label>
-                        <Textarea
-                          id="message"
-                          value={formData.message}
-                          onChange={(e) => {
-                            setFormData({ ...formData, message: e.target.value });
-                            if (formErrors.message) setFormErrors({ ...formErrors, message: undefined });
-                          }}
-                          placeholder="Briefly describe the items or project..."
-                          rows={3}
-                          maxLength={1000}
-                          className={formErrors.message ? "border-destructive" : ""}
-                        />
-                        {formErrors.message && (
-                          <p className="text-sm text-destructive mt-1">{formErrors.message}</p>
-                        )}
-                      </div>
-
-                      <div className="bg-muted p-4 rounded-lg">
-                        <p className="text-sm font-medium">Your Appointment</p>
-                        <p className="text-primary font-semibold">
-                          {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
-                        </p>
-                      </div>
-
-                      <Button
-                        type="submit"
-                        className="w-full"
-                        size="lg"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Confirming...
-                          </>
-                        ) : (
-                          "Confirm Booking"
-                        )}
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Layout>
   );
