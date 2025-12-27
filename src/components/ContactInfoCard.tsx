@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { BusinessHours } from "@/components/BusinessHours";
 import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 import { PhoneLink } from "@/components/PhoneLink";
+import { EmailLink } from "@/components/EmailLink";
 
 interface ContactInfoCardProps {
   variant?: "full" | "compact";
@@ -49,13 +50,10 @@ export function ContactInfoCard({
             Text Us
           </a>
         )}
-        <a
-          href={`mailto:${CONTACT_INFO.email}`}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-        >
-          <Mail className="h-4 w-4 flex-shrink-0" />
-          {CONTACT_INFO.email}
-        </a>
+        <EmailLink
+          showIcon
+          className="flex text-sm text-muted-foreground"
+        />
         {showLocation && (
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
@@ -84,10 +82,7 @@ export function ContactInfoCard({
         </div>
       </div>
 
-      <a
-        href={`mailto:${CONTACT_INFO.email}`}
-        className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
-      >
+      <EmailLink className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors">
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
           <Mail className="h-5 w-5 text-primary" />
         </div>
@@ -95,7 +90,7 @@ export function ContactInfoCard({
           <h3 className="font-semibold text-charcoal">Email</h3>
           <p className="text-primary font-medium">{CONTACT_INFO.email}</p>
         </div>
-      </a>
+      </EmailLink>
 
       {showHours && <BusinessHours />}
 
