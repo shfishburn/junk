@@ -9,7 +9,8 @@ import {
   LogOut, 
   Home,
   Menu,
-  X
+  X,
+  AlertTriangle
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ interface AdminLayoutProps {
 const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Bookings', href: '/admin/bookings', icon: List },
+  { label: 'Hazmat Requests', href: '/admin/hazmat', icon: AlertTriangle },
   { label: 'Calendar', href: '/admin/calendar', icon: CalendarDays },
 ];
 
