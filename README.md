@@ -60,6 +60,29 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Project Structure
+
+### Component Organization
+
+This project uses **barrel files** for centralized component exports, making imports cleaner and more maintainable.
+
+| Barrel File | Import Path | Purpose |
+|-------------|-------------|---------|
+| `shared.ts` | `@/components/shared` | Contact, forms, booking, SEO, navigation |
+| `features.ts` | `@/components/features` | AI analyzers, modals, interactive features |
+| `layout/index.ts` | `@/components/layout` | Header, Footer, Layout wrapper |
+| `home/index.ts` | `@/components/home` | Home page section components |
+| `skeletons/index.ts` | `@/components/skeletons` | Loading skeleton components |
+
+**Example usage:**
+```tsx
+import { Layout } from "@/components/layout";
+import { SEO, PhoneLink } from "@/components/shared";
+import { JunkAnalyzer } from "@/components/features";
+```
+
+📄 See [docs/BARREL_FILES.md](docs/BARREL_FILES.md) for complete documentation.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
