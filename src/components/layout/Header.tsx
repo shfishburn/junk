@@ -36,37 +36,34 @@ export function Header() {
       showContactBar && "shadow-md"
     )}>
       {/* Mobile Contact Bar - appears on scroll */}
-      <div
-        className={cn(
-          "md:hidden bg-primary text-primary-foreground transition-all duration-300 overflow-hidden",
-          showContactBar ? "h-10" : "h-0"
-        )}
-      >
-        <div className="container flex items-center justify-center gap-4 h-10">
-          <a
-            href="tel:+13606109233"
-            className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
-          >
-            <Phone className="h-4 w-4" />
-            Call
-          </a>
-          <span className="text-primary-foreground/50">|</span>
-          <a
-            href="sms:+13606109233"
-            className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Text
-          </a>
-          <span className="text-primary-foreground/50">|</span>
-          <Link
-            to="/contact"
-            className="text-sm font-medium hover:opacity-80 transition-opacity"
-          >
-            Get Quote
-          </Link>
+      {showContactBar && (
+        <div className="md:hidden bg-primary text-primary-foreground animate-slide-in-down h-10">
+          <div className="container flex items-center justify-center gap-4 h-10">
+            <a
+              href="tel:+13606109233"
+              className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+            >
+              <Phone className="h-4 w-4" />
+              Call
+            </a>
+            <span className="text-primary-foreground/50">|</span>
+            <a
+              href="sms:+13606109233"
+              className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Text
+            </a>
+            <span className="text-primary-foreground/50">|</span>
+            <Link
+              to="/contact"
+              className="text-sm font-medium hover:opacity-80 transition-opacity"
+            >
+              Get Quote
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
