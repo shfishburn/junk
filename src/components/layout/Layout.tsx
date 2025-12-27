@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AIAssistant } from "@/components/AIAssistant";
 import { MobilePhoneButton } from "@/components/MobilePhoneButton";
+import { PageTransition } from "@/components/PageTransition";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
 
 interface LayoutProps {
@@ -18,7 +19,9 @@ export function Layout({ children }: LayoutProps) {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 relative">
-        {children}
+        <PageTransition>
+          {children}
+        </PageTransition>
       </main>
       <Footer />
       <CookieConsent />
