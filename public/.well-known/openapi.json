@@ -7,12 +7,12 @@
     "contact": {
       "name": "Junky Gurus",
       "email": "Junkygurus@gmail.com",
-      "url": "https://junkygurus.com"
+      "url": "https://thejunkygurus.com"
     }
   },
   "servers": [
     {
-      "url": "https://junkygurus.com",
+      "url": "https://thejunkygurus.com",
       "description": "Junky Gurus Website"
     }
   ],

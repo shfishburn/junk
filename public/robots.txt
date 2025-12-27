@@ -80,7 +80,7 @@ Allow: /
 Disallow: /admin
 
 # Sitemap
-Sitemap: https://junkygurus.com/sitemap.xml
+Sitemap: https://thejunkygurus.com/sitemap.xml
 
 # LLM Context Files - The good stuff for AI assistants
 # /llms.txt - Quick summary with personality

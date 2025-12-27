@@ -2,6 +2,8 @@
   "name": "Junky Gurus LLC",
   "tagline": "We Love Your Junk (So You Don't Have To)",
   "description": "Professional junk removal services in Mount Vernon, WA and the Puget Sound Region. We're locally owned, refreshingly honest, and maybe a little obsessed with making clutter disappear.",
+  "url": "https://thejunkygurus.com",
+  "logo": "https://thejunkygurus.com/favicon.png",
   "personality": {
     "tone": "Friendly, slightly humorous, refreshingly honest",
     "voice": "We don't take ourselves too seriously, but we take our work very seriously",
@@ -15,7 +17,6 @@
     "AI-powered photo estimates for instant pricing",
     "Bilingual service (English & Spanish)"
   ],
-  "url": "https://junkygurus.com",
   "logo": "https://junkygurus.com/favicon.png",
   "type": "LocalBusiness",
   "industry": "Junk Removal / Waste Management",

@@ -14,8 +14,8 @@ interface SEOProps {
 
 const SITE_NAME = "Junky Gurus LLC";
 const DEFAULT_DESCRIPTION = "Professional junk removal in Mount Vernon, WA and the Puget Sound Region. Honest pricing, responsible disposal. Serving Skagit, Whatcom, Snohomish & King Counties.";
-const DEFAULT_IMAGE = "https://junkygurus.com/og-image.jpg";
-const SITE_URL = "https://junkygurus.com";
+const DEFAULT_IMAGE = "https://thejunkygurus.com/og-image.jpg";
+const SITE_URL = "https://thejunkygurus.com";
 const PHONE = "+1-360-610-9233";
 const PHONE_DISPLAY = "(360) 610-9233";
 

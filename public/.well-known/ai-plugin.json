@@ -9,9 +9,9 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://junkygurus.com/.well-known/openapi.json"
+    "url": "https://thejunkygurus.com/.well-known/openapi.json"
   },
-  "logo_url": "https://junkygurus.com/favicon.png",
+  "logo_url": "https://thejunkygurus.com/favicon.png",
   "contact_email": "Junkygurus@gmail.com",
-  "legal_info_url": "https://junkygurus.com/terms-and-conditions"
+  "legal_info_url": "https://thejunkygurus.com/terms-and-conditions"
 }
