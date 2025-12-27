@@ -1,6 +1,6 @@
 # Barrel Files Summary
 
-This document provides an overview of all barrel (index) files used for centralized component exports in the codebase.
+This document provides an overview of all barrel (index) files used for centralized component and hook exports in the codebase.
 
 ---
 
@@ -127,6 +127,26 @@ Loading skeleton components for better UX.
 
 ---
 
+## 📁 `@/hooks`
+**File:** `src/hooks/index.ts`
+
+Custom React hooks for shared functionality.
+
+| Export | Description |
+|--------|-------------|
+| `useAdminAuth` | Admin authentication state and actions |
+| `useBookingSlots` | Booking availability and slot management |
+| `TIME_SLOTS` | Available time slots constant |
+| `useExitIntent` | Exit intent detection for popups |
+| `useGoogleAnalytics` | Google Analytics integration |
+| `useLoadingDelay` | Delayed loading state for skeletons |
+| `useIsMobile` | Mobile device detection |
+| `useScrollAnimation` | Scroll-triggered animations |
+| `useToast` | Toast notification hook |
+| `toast` | Toast notification function |
+
+---
+
 ## Usage Examples
 
 ```tsx
@@ -144,6 +164,9 @@ import { HeroSection, CTASection } from "@/components/home";
 
 // Import from skeletons
 import { ServiceCardSkeletonGrid } from "@/components/skeletons";
+
+// Import from hooks
+import { useToast, useScrollAnimation, useBookingSlots } from "@/hooks";
 ```
 
 ---
