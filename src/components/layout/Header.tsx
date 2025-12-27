@@ -94,10 +94,11 @@ export function Header() {
         <div className="hidden md:flex items-center gap-4">
           <Link
             to="/espanol"
-            className="flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+            title="Servicio disponible en español"
           >
-            <span>🇲🇽</span>
-            Español
+            <span aria-hidden="true">🇲🇽</span>
+            <span>Español</span>
           </Link>
           <div className="flex items-center gap-3 text-sm font-medium">
             <Phone className="h-4 w-4 text-primary" />
@@ -172,10 +173,10 @@ export function Header() {
               <Link
                 to="/espanol"
                 onClick={closeMenu}
-                className="py-2 text-base font-medium text-primary flex items-center gap-2"
+                className="py-2 text-base font-medium text-primary flex items-center gap-2 bg-primary/10 rounded-lg px-3 -mx-1"
               >
-                <span>🇲🇽</span>
-                Español
+                <span aria-hidden="true">🇲🇽</span>
+                <span>¿Hablas español? Nosotros también.</span>
               </Link>
               <div className="pt-4 mt-2 border-t border-border">
                 <Button asChild className="w-full">
