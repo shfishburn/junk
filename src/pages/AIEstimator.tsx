@@ -5,7 +5,7 @@ import { DemolitionAnalyzer } from "@/components/DemolitionAnalyzer";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { Phone, Camera, Lightbulb, Ruler, Eye, Trash2, Hammer } from "lucide-react";
+import { Phone, Camera, Lightbulb, Ruler, Eye, Trash2, Hammer, XCircle, CheckCircle } from "lucide-react";
 
 const junkTips = [
   {
@@ -43,16 +43,28 @@ const demolitionTips = [
   },
 ];
 
+const noMoreList = [
+  "Phone tag with sales reps",
+  "Waiting days for a callback",
+  "On-site upsells or surprises",
+];
+
+const youGetList = [
+  "Real price in seconds",
+  "No obligation, no pressure",
+  "What we quote is what you pay",
+];
+
 const AIEstimator = () => {
   return (
     <Layout>
       <SEO
-        title="AI Junk & Demolition Estimator"
-        description="Get an instant junk removal or demolition estimate with AI. Upload a photo and receive a price quote in seconds. Free and easy!"
-        keywords="AI junk estimate, instant junk removal quote, demolition estimate, photo estimate, junk removal calculator"
+        title="AI Photo Estimator - Skip the Sales Dance"
+        description="Know your junk removal price before we arrive. Upload a photo, get a real price. No phone tag, no on-site upsells, no surprises."
+        keywords="AI junk estimate, instant junk removal quote, demolition estimate, photo estimate, no hidden fees"
         url="/ai-estimator"
         pageType="tool"
-        pagePurpose="AI-powered photo estimator tool. Upload photos of junk or demolition projects to get instant price estimates."
+        pagePurpose="AI-powered photo estimator tool. Skip the sales dance - upload photos to get instant, accurate price estimates with no obligation."
       />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
@@ -60,15 +72,40 @@ const AIEstimator = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Camera className="h-4 w-4" />
-              AI-Powered Estimates
+              Skip the Sales Dance
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
-              Snap It. Know It. Done.
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Know Your Price Before We Arrive
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Upload a photo of your junk pile or demolition project and our AI will give you an instant estimate. 
-              It's like having a removal guru in your pocket (minus the heavy lifting).
+            <p className="text-lg text-muted-foreground mb-8">
+              Upload photos. Get a real price. No phone tag. No on-site upsells. No surprises.
             </p>
+            
+            {/* Anxiety Neutralizers */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
+              <div className="flex-1 p-4 rounded-xl bg-destructive/5 border border-destructive/10">
+                <p className="text-sm font-medium text-destructive/80 mb-3">No More:</p>
+                <ul className="space-y-2">
+                  {noMoreList.map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <XCircle className="h-4 w-4 text-destructive/60 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex-1 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                <p className="text-sm font-medium text-primary mb-3">You Get:</p>
+                <ul className="space-y-2">
+                  {youGetList.map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <CheckCircle className="h-4 w-4 text-primary/60 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -155,12 +192,14 @@ const AIEstimator = () => {
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               Prefer to Talk to a Human?
             </h2>
-            <p className="text-muted-foreground mb-8">
-              No problem! Give us a call or fill out our contact form. 
-              We're real people who genuinely love talking about junk and demolition.
+            <p className="text-muted-foreground mb-2">
+              No problem! Give us a call or fill out our contact form.
+            </p>
+            <p className="text-sm text-muted-foreground mb-8">
+              Same deal — we'll give you a real price with no surprises.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
