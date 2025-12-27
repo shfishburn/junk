@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TimeSlotGrid } from "@/components/TimeSlotGrid";
+import { BookingCalendar } from "@/components/BookingCalendar";
 import { CalendarDays, Clock, Loader2 } from "lucide-react";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
 
@@ -23,24 +23,11 @@ export function BookingSlotPicker({
   const {
     isLoading,
     isTimeBooked,
-    isDateFullyBooked,
-    isDateDisabled,
   } = useBookingSlots();
 
   const handleDateSelect = (date: Date | undefined) => {
     onDateChange(date);
     onTimeChange("");
-  };
-
-  const calendarModifiers = {
-    fullyBooked: (date: Date) => isDateFullyBooked(date),
-  };
-
-  const calendarModifiersStyles = {
-    fullyBooked: {
-      color: "hsl(var(--muted-foreground))",
-      textDecoration: "line-through",
-    },
   };
 
   if (isLoading) {
@@ -76,14 +63,9 @@ export function BookingSlotPicker({
               <CalendarDays className="h-4 w-4 text-primary" />
               Select Date
             </label>
-            <Calendar
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              disabled={isDateDisabled}
-              className="rounded-md border w-full"
-              modifiers={calendarModifiers}
-              modifiersStyles={calendarModifiersStyles}
+            <BookingCalendar
+              selectedDate={selectedDate}
+              onDateChange={handleDateSelect}
             />
           </div>
 
@@ -127,14 +109,9 @@ export function BookingSlotPicker({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={handleDateSelect}
-            disabled={isDateDisabled}
-            className="rounded-md border w-full"
-            modifiers={calendarModifiers}
-            modifiersStyles={calendarModifiersStyles}
+          <BookingCalendar
+            selectedDate={selectedDate}
+            onDateChange={handleDateSelect}
           />
           <div className="mt-4 flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-2">
