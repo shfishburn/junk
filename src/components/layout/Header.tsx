@@ -194,9 +194,11 @@ export function Header() {
                 ? "text-white bg-white/10 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
                 : "text-muted-foreground hover:text-primary"
             )}
+            aria-label="Call us at (360) 610-9233"
           >
-            <Phone className="h-4 w-4" />
+            <Phone className="h-4 w-4" aria-hidden="true" />
             <span className="hidden xl:inline">(360) 610-9233</span>
+            <span className="xl:hidden sr-only">(360) 610-9233</span>
           </a>
 
           <Button 
@@ -221,30 +223,40 @@ export function Header() {
             textColor, "hover:bg-primary/10"
           )}
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle menu"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
         >
           {isOpen ? (
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6" aria-hidden="true" />
           ) : (
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6" aria-hidden="true" />
           )}
         </button>
       </div>
 
-      <div className={cn(
-        "lg:hidden fixed inset-0 top-20 z-40 transition-all duration-300",
-        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      )}>
+      <div 
+        id="mobile-menu"
+        className={cn(
+          "lg:hidden fixed inset-0 top-20 z-40 transition-all duration-300",
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}
+        aria-hidden={!isOpen}
+      >
         {/* Backdrop */}
         <div 
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           onClick={closeMenu}
+          aria-hidden="true"
         />
         
-        <nav className={cn(
-          "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-5rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
-          isOpen ? "translate-x-0" : "translate-x-full"
-        )}>
+        <nav 
+          className={cn(
+            "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-5rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
+            isOpen ? "translate-x-0" : "translate-x-full"
+          )}
+          aria-label="Mobile navigation"
+        >
           <div className="p-6 flex flex-col gap-1">
             {/* Main Links */}
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">

@@ -18,8 +18,12 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Skip to content link for accessibility */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       <Header />
-      <main className="flex-1 relative pt-20">
+      <main id="main-content" className="flex-1 relative pt-20" tabIndex={-1}>
         <PageTransition>
           {children}
         </PageTransition>
