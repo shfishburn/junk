@@ -176,3 +176,12 @@
     @apply scale-x-100 origin-left;
   }
 }
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

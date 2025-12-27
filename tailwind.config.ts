@@ -131,6 +131,10 @@ export default {
           from: { transform: "translateX(0) scale(1)", opacity: "1" },
           to: { transform: "translateX(100%) scale(0.95)", opacity: "0" },
         },
+        "page-enter": {
+          from: { opacity: "0", transform: "translateY(12px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -145,6 +149,7 @@ export default {
         "slide-out-up": "slide-out-up 0.3s ease-out forwards",
         "slide-in-right": "slide-in-right 0.3s ease-out forwards",
         "slide-out-right": "slide-out-right 0.3s ease-out forwards",
+        "page-enter": "page-enter 0.3s ease-out forwards",
       },
     },
   },
