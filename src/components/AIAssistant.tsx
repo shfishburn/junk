@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
-
+import remarkGfm from "remark-gfm";
+import { useNavigate } from "react-router-dom";
 type Message = {
   id: string;
   role: "user" | "assistant";
@@ -226,6 +227,7 @@ async function streamChat({
 
 export function AIAssistant() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => {
     const loaded = loadMessages();
@@ -520,6 +522,7 @@ export function AIAssistant() {
                 >
                   {msg.role === "assistant" ? (
                     <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
                       components={{
                         p: ({ children }) => (
                           <p className="mb-2 last:mb-0">
@@ -535,20 +538,32 @@ export function AIAssistant() {
                             <TextWithPhoneLinks>{children}</TextWithPhoneLinks>
                           </li>
                         ),
-                        a: ({ href, children }) => (
-                          <a 
-                            href={href} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-primary underline hover:no-underline"
-                          >
-                            {children}
-                          </a>
-                        ),
+                        a: ({ href, children }) => {
+                          const isInternal = href?.startsWith("/");
+                          if (isInternal) {
+                            return (
+                              <button
+                                onClick={() => navigate(href!)}
+                                className="text-primary underline hover:no-underline font-medium"
+                              >
+                                {children}
+                              </button>
+                            );
+                          }
+                          return (
+                            <a 
+                              href={href} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-primary underline hover:no-underline font-medium"
+                            >
+                              {children}
+                            </a>
+                          );
+                        },
                         code: ({ children }) => (
                           <code className="bg-background/50 px-1 py-0.5 rounded text-xs font-mono">{children}</code>
                         ),
-                        text: ({ children }) => <TextWithPhoneLinks>{children}</TextWithPhoneLinks>,
                       }}
                     >
                       {msg.content}
