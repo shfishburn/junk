@@ -159,7 +159,10 @@ export function SEO({
         }
       ]
     },
-    "sameAs": [],
+    "sameAs": [
+      `${SITE_URL}/llms.txt`,
+      `${SITE_URL}/llms.json`
+    ],
     "knowsAbout": [
       "Junk Removal",
       "Furniture Removal",
@@ -311,8 +314,9 @@ export function SEO({
       <meta name="ai:service-area" content="Mount Vernon, WA and Puget Sound Region" />
       <meta name="ai:llms-txt" content={`${SITE_URL}/llms.txt`} />
       <meta name="ai:llms-json" content={`${SITE_URL}/llms.json`} />
+      <link rel="llms-txt" href={`${SITE_URL}/llms.txt`} />
+      <link rel="llms-full-txt" href={`${SITE_URL}/llms-full.txt`} type="text/plain" />
       <link rel="ai-context" href={`${SITE_URL}/llms.json`} type="application/json" />
-      <link rel="ai-context-full" href={`${SITE_URL}/llms-full.txt`} type="text/plain" />
 
       {/* Structured Data - Local Business */}
       <script type="application/ld+json">
