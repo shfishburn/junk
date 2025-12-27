@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Sparkles, CalendarDays, MessageCircle } from "lucide-react";
+import { Phone, Sparkles, CalendarDays, MessageCircle, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
@@ -11,7 +11,7 @@ const navLinks = [
   { href: "/ai-estimator", label: "AI Quote", icon: Sparkles },
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/discounts", label: "Discounts" },
+  { href: "/discounts", label: "Discounts", icon: Percent },
   { href: "/contact", label: "Contact" },
 ];
 
