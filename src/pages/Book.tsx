@@ -202,6 +202,7 @@ export default function Book() {
       <SEO
         title="Book an Appointment | Junky Gurus"
         description="Schedule your junk removal appointment online. Select a convenient date and time, and we'll take care of the rest."
+        url="/book"
       />
       
       <section className="py-12 md:py-20 bg-section-alt">
