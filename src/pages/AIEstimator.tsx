@@ -53,6 +53,7 @@ const youGetList = [
   "Real price in seconds",
   "No obligation, no pressure",
   "What we quote is what you pay",
+  "15% off for seniors & veterans",
 ];
 
 const AIEstimator = () => {

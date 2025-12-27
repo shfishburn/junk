@@ -21,6 +21,7 @@
     "Know your price first — upload photos, get a real price, no sales dance",
     "Reliable scheduling — when we say Tuesday at 10, we mean Tuesday at 10",
     "Eco-first disposal — donate, recycle, landfill only as last resort",
+    "15% senior & veteran discount — no paperwork required",
     "Locally owned — we live here, we answer our own phones",
     "Comfortable service in English or Spanish"
   ],
@@ -171,7 +172,13 @@
     ],
     "includes": ["Labor", "Loading", "Hauling", "Disposal/Donation/Recycling", "Cleanup after"],
     "paymentMethods": ["Cash", "Credit cards", "Debit cards", "Digital payments (Venmo, etc.)"],
-    "discounts": ["Seniors", "Military", "Returning customers"]
+    "discounts": {
+      "seniorVeteran": {
+        "percentage": "15%",
+        "eligibility": ["Seniors (65+)", "Veterans", "Active military"],
+        "requirements": "No paperwork required — just let us know"
+      }
+    }
   },
   "features": {
     "noSurprises": true,

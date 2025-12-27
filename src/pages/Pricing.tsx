@@ -3,10 +3,11 @@ import { SEO } from "@/components/SEO";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Helmet } from "react-helmet-async";
+import { DiscountBadge } from "@/components/DiscountBadge";
 
 const steps = [
   {
@@ -89,6 +90,10 @@ const pricingInfo = [
 
 const faqs = [
   {
+    question: "Do you offer any discounts?",
+    answer: "Yes! We offer a 15% discount for seniors (65+) and veterans. No paperwork required—just let us know when you book or when we arrive. It's our way of saying thanks for your service to our country and community."
+  },
+  {
     question: "How much does junk removal cost?",
     answer: "Our pricing is volume-based, meaning you pay for how much space your items take in our truck. A single item like a couch might cost $75-150, while a full truckload ranges from $400-600. We provide free, no-obligation estimates so you know exactly what to expect."
   },
@@ -163,9 +168,10 @@ const Pricing = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
               Transparent Pricing (No Surprise Fees, We Promise)
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground mb-6">
               We're bad at math, but we're great at being upfront. Here's how our pricing works — no gimmicks, no bait-and-switch.
             </p>
+            <DiscountBadge variant="banner" />
           </div>
         </div>
       </section>

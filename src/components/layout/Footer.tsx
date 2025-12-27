@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, MessageCircle, Cookie, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Cookie, Clock, Heart } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
 
 const serviceAreas = [
@@ -25,7 +25,11 @@ export function Footer() {
             <p className="mt-3 text-sm text-muted-foreground">
               Fast, reliable junk removal serving Mount Vernon and the Puget Sound Region.
             </p>
-            <div className="mt-4 flex items-start gap-2 text-sm text-muted-foreground">
+            <div className="mt-4 flex items-center gap-2 text-sm text-primary font-medium">
+              <Heart className="h-4 w-4" />
+              <span>15% off for seniors & veterans</span>
+            </div>
+            <div className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4 flex-shrink-0 mt-0.5" />
               <div>
                 <p>Mon - Sat: 8am - 6pm</p>
