@@ -20,6 +20,8 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [showContactBar, setShowContactBar] = useState(false);
+  const [isContactBarVisible, setIsContactBarVisible] = useState(false);
+  const [isContactBarClosing, setIsContactBarClosing] = useState(false);
   const location = useLocation();
 
   const handleMenuToggle = () => {
@@ -37,18 +39,33 @@ export function Header() {
     }
   };
 
+  const handleContactBarAnimationEnd = () => {
+    if (isContactBarClosing) {
+      setIsContactBarVisible(false);
+      setIsContactBarClosing(false);
+    }
+  };
+
   const handleLinkClick = () => {
     setIsClosing(true);
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowContactBar(window.scrollY > 150);
+      const shouldShow = window.scrollY > 150;
+      setShowContactBar(shouldShow);
+      
+      if (shouldShow && !isContactBarVisible) {
+        setIsContactBarVisible(true);
+        setIsContactBarClosing(false);
+      } else if (!shouldShow && isContactBarVisible && !isContactBarClosing) {
+        setIsContactBarClosing(true);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isContactBarVisible, isContactBarClosing]);
 
   return (
     <header className={cn(
@@ -56,8 +73,14 @@ export function Header() {
       showContactBar && "shadow-md"
     )}>
       {/* Mobile Contact Bar - appears on scroll */}
-      {showContactBar && (
-        <div className="md:hidden bg-primary text-primary-foreground animate-slide-in-down h-10">
+      {isContactBarVisible && (
+        <div 
+          className={cn(
+            "md:hidden bg-primary text-primary-foreground h-10",
+            isContactBarClosing ? "animate-slide-out-up" : "animate-slide-in-down"
+          )}
+          onAnimationEnd={handleContactBarAnimationEnd}
+        >
           <div className="container flex items-center justify-center gap-4 h-10">
             <a
               href="tel:+13606109233"
