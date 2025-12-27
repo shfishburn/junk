@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import ServiceAreaMap from "@/components/ServiceAreaMap";
+import { ServiceAreaMap } from "@/components/features";
 
 const ServiceArea = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
