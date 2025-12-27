@@ -5,7 +5,7 @@ import { cn } from "@/lib";
 import { useToast } from "@/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 type Message = {
   id: string;
   role: "user" | "assistant";
@@ -51,10 +51,12 @@ const saveMessages = (messages: Message[]) => {
 };
 
 // Initial greeting message
-const getGreetingMessage = (): Message => ({
+const getGreetingMessage = (isSpanish: boolean): Message => ({
   id: generateId(),
   role: "assistant",
-  content: "Hey there! 👋 I'm Junk Guru, your friendly guide to all things junk removal. How can I help you today?",
+  content: isSpanish 
+    ? "¡Hola! 👋 Soy Junk Guru, tu guía amigable para todo lo relacionado con la remoción de basura. ¿Cómo puedo ayudarte hoy?"
+    : "Hey there! 👋 I'm Junk Guru, your friendly guide to all things junk removal. How can I help you today?",
   timestamp: Date.now(),
   status: "sent",
 });
@@ -107,12 +109,14 @@ const TextWithPhoneLinks = ({ children }: { children: React.ReactNode }) => {
 
 async function streamChat({
   messages,
+  language,
   onDelta,
   onDone,
   onError,
   signal,
 }: {
   messages: Message[];
+  language: "en" | "es";
   onDelta: (deltaText: string) => void;
   onDone: () => void;
   onError: (error: string, isRetryable: boolean) => void;
@@ -126,7 +130,8 @@ async function streamChat({
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
       body: JSON.stringify({ 
-        messages: messages.map(m => ({ role: m.role, content: m.content }))
+        messages: messages.map(m => ({ role: m.role, content: m.content })),
+        language
       }),
       signal,
     });
@@ -228,10 +233,14 @@ async function streamChat({
 export function AIAssistant() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isSpanish = location.pathname === "/espanol";
+  const language = isSpanish ? "es" : "en";
+  
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => {
     const loaded = loadMessages();
-    return loaded.length > 0 ? loaded : [getGreetingMessage()];
+    return loaded.length > 0 ? loaded : [getGreetingMessage(isSpanish)];
   });
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -248,10 +257,10 @@ export function AIAssistant() {
 
   // Save messages whenever they change
   useEffect(() => {
-    if (messages.length > 1 || messages[0]?.content !== getGreetingMessage().content) {
+    if (messages.length > 1 || messages[0]?.content !== getGreetingMessage(isSpanish).content) {
       saveMessages(messages);
     }
-  }, [messages]);
+  }, [messages, isSpanish]);
 
   useEffect(() => {
     scrollToBottom();
@@ -271,13 +280,13 @@ export function AIAssistant() {
   }, []);
 
   const clearHistory = useCallback(() => {
-    setMessages([getGreetingMessage()]);
+    setMessages([getGreetingMessage(isSpanish)]);
     localStorage.removeItem(STORAGE_KEY);
     toast({
-      title: "Chat cleared",
-      description: "Your conversation history has been cleared.",
+      title: isSpanish ? "Chat borrado" : "Chat cleared",
+      description: isSpanish ? "Tu historial de conversación ha sido borrado." : "Your conversation history has been cleared.",
     });
-  }, [toast]);
+  }, [toast, isSpanish]);
 
   const retryLastMessage = useCallback(async () => {
     // Find the last user message that failed
@@ -338,6 +347,7 @@ export function AIAssistant() {
 
     await streamChat({
       messages: currentMessages,
+      language,
       signal: abortControllerRef.current.signal,
       onDelta: updateAssistant,
       onDone: () => {
