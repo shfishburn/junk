@@ -6,16 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
+import { DateTimePicker } from "@/components/DateTimePicker";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { 
   AlertTriangle, 
   Loader2, 
-  CalendarIcon, 
   Paintbrush, 
   Battery, 
   Lightbulb, 
@@ -70,7 +67,6 @@ export function HazmatBookingForm() {
     HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 }))
   );
   const { toast } = useToast();
-  const { isDateDisabled } = useBookingSlots();
 
   const handleItemToggle = (itemId: string) => {
     setHazmatItems(prev => 
@@ -329,59 +325,13 @@ export function HazmatBookingForm() {
         </div>
 
         {/* Date & Time Picker */}
-        <div className="space-y-3">
-          <Label>Preferred Pickup Date (Optional)</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                type="button"
-                variant="outline"
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !preferredDate && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {preferredDate ? format(preferredDate, "PPP") : "Pick a date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={preferredDate}
-                onSelect={(date) => {
-                  setPreferredDate(date);
-                  setPreferredTime("");
-                }}
-                disabled={isDateDisabled}
-                initialFocus
-                className="pointer-events-auto"
-              />
-            </PopoverContent>
-          </Popover>
-
-          {preferredDate && (
-            <div>
-              <Label className="text-sm text-muted-foreground mb-2 block">
-                Select a time slot
-              </Label>
-              <div className="grid grid-cols-5 gap-2">
-                {TIME_SLOTS.map((slot) => (
-                  <Button
-                    key={slot}
-                    type="button"
-                    variant={preferredTime === slot ? "default" : "outline"}
-                    size="sm"
-                    className="text-xs"
-                    onClick={() => setPreferredTime(slot)}
-                  >
-                    {slot.replace(":00 ", "")}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        <DateTimePicker
+          date={preferredDate}
+          time={preferredTime}
+          onDateChange={setPreferredDate}
+          onTimeChange={setPreferredTime}
+          label="Preferred Pickup Date (Optional)"
+        />
 
         <div>
           <Label htmlFor="hazmat-notes">Additional Notes</Label>

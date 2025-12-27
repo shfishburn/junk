@@ -9,12 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
-import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera, CalendarIcon } from "lucide-react";
+import { DateTimePicker } from "@/components/DateTimePicker";
+import { Phone, Mail, Clock, MapPin, Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { JunkRouletteModal } from "@/components/JunkRouletteModal";
@@ -55,7 +53,6 @@ const Contact = () => {
     message: "",
   });
   const { toast } = useToast();
-  const { isDateDisabled } = useBookingSlots();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -304,58 +301,12 @@ const Contact = () => {
                   </div>
 
                   {/* Date & Time Picker */}
-                  <div className="space-y-3">
-                    <Label>Preferred Appointment (Optional)</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !preferredDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {preferredDate ? format(preferredDate, "PPP") : "Pick a date"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={preferredDate}
-                          onSelect={(date) => {
-                            setPreferredDate(date);
-                            setPreferredTime("");
-                          }}
-                          disabled={isDateDisabled}
-                          initialFocus
-                          className="pointer-events-auto"
-                        />
-                      </PopoverContent>
-                    </Popover>
-
-                    {preferredDate && (
-                      <div>
-                        <Label className="text-sm text-muted-foreground mb-2 block">
-                          Select a time slot
-                        </Label>
-                        <div className="grid grid-cols-5 gap-2">
-                          {TIME_SLOTS.map((slot) => (
-                            <Button
-                              key={slot}
-                              type="button"
-                              variant={preferredTime === slot ? "default" : "outline"}
-                              size="sm"
-                              className="text-xs"
-                              onClick={() => setPreferredTime(slot)}
-                            >
-                              {slot.replace(":00 ", "")}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <DateTimePicker
+                    date={preferredDate}
+                    time={preferredTime}
+                    onDateChange={setPreferredDate}
+                    onTimeChange={setPreferredTime}
+                  />
 
                   <div>
                     <Label htmlFor="message">What's haunting you? *</Label>
