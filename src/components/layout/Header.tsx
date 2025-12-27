@@ -137,7 +137,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-background">
+        <div className="md:hidden border-t border-border bg-background animate-slide-in-right">
           <nav className="container py-4 flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
