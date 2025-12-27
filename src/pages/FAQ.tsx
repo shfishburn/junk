@@ -123,12 +123,34 @@ const faqCategories = [
   }
 ];
 
+// Generate FAQ schema from categories
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqCategories.flatMap(category => 
+    category.questions.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  )
+};
+
 export default function FAQ() {
   return (
     <Layout>
       <SEO 
         title="FAQ | Junky Gurus Junk Removal" 
         description="Find answers to frequently asked questions about Junky Gurus junk removal services, pricing, scheduling, and service areas in Mount Vernon and the Puget Sound Region."
+        url="/faq"
+      />
+      {/* FAQ Schema for Rich Snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       
       {/* Hero Section */}
