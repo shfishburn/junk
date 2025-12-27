@@ -510,11 +510,34 @@ export function AIAssistant() {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-border space-y-3">
+          {/* Quick Replies - show when not loading and input is empty */}
+          {!isLoading && !input.trim() && (
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "Get a Quote", message: "I'd like to get a quote for junk removal" },
+                { label: "What do you haul?", message: "What types of items do you haul?" },
+                { label: "Service area", message: "What areas do you service?" },
+                { label: "Pricing", message: "How does your pricing work?" },
+              ].map((quick) => (
+                <button
+                  key={quick.label}
+                  onClick={() => {
+                    setInput(quick.message);
+                    inputRef.current?.focus();
+                  }}
+                  className="px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+                >
+                  {quick.label}
+                </button>
+              ))}
+            </div>
+          )}
+          
           {isLoading && (
             <button
               onClick={cancelRequest}
-              className="w-full mb-2 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1"
+              className="w-full text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1"
             >
               <X className="h-3 w-3" />
               Cancel response
