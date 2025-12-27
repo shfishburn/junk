@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 import { SERVICE_AREA_DATA } from "@/components/shared";
 
 const counties = SERVICE_AREA_DATA.counties.map(c => ({

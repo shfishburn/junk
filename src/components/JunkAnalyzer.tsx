@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
 import { wasBingoShownForEstimate, markBingoShown, resetBingoShown } from "@/lib/bingo-items";
 import { 
@@ -29,7 +29,7 @@ import {
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "@/components/shared";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
+
 
 // Validation schema for booking form
 const bookingFormSchema = z.object({

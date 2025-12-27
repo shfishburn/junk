@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dices, Gift, ArrowRight, Users } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 
 export function GamificationCTA() {
   const { ref, isVisible } = useScrollAnimation();

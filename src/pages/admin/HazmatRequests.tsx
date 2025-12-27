@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { useAdminAuth } from '@/hooks/use-admin-auth';
+import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
 import HazmatRequestTable from '@/components/admin/HazmatRequestTable';
 import { Input } from '@/components/ui/input';

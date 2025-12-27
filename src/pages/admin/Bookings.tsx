@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { useAdminAuth } from '@/hooks/use-admin-auth';
+import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
 import BookingTable from '@/components/admin/BookingTable';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks";
 import { Loader2, Search, Download } from 'lucide-react';
 
 interface Booking {

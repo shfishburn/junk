@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { useLoadingDelay } from "@/hooks/use-loading-delay";
+import { useScrollAnimation, useLoadingDelay } from "@/hooks";
 import { ServiceCardSkeletonGrid } from "@/components/skeletons";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";

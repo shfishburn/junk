@@ -1,6 +1,6 @@
 // Hooks Barrel File
 export { useAdminAuth } from "./use-admin-auth";
-export { useBookingSlots } from "./use-booking-slots";
+export { useBookingSlots, TIME_SLOTS } from "./use-booking-slots";
 export { useExitIntent } from "./use-exit-intent";
 export { useGoogleAnalytics } from "./use-google-analytics";
 export { useLoadingDelay } from "./use-loading-delay";

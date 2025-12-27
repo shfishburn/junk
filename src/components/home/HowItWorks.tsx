@@ -1,5 +1,5 @@
 import { Camera, Truck, PartyPopper } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 
 const steps = [
   {

@@ -3,8 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CookieConsent, AIAssistant, ExitIntentPopup } from "@/components/features";
 import { PageTransition } from "@/components/shared";
-import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
-import { useExitIntent } from "@/hooks/use-exit-intent";
+import { useGoogleAnalytics, useExitIntent } from "@/hooks";
 
 interface LayoutProps {
   children: ReactNode;

@@ -1,5 +1,5 @@
 import { Calendar } from "@/components/ui/calendar";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
+import { useBookingSlots } from "@/hooks";
 
 interface BookingCalendarProps {
   selectedDate: Date | undefined;

@@ -3,7 +3,7 @@ import { SEO, SERVICE_AREA_DATA, CountyCard } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 import { ServiceAreaMap } from "@/components/features";
 
 const ServiceArea = () => {

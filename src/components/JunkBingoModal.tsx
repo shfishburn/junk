@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Copy, Check, Share2, RotateCcw, Gift, MessageCircle, Mail, Facebook, Twitter } from "lucide-react";
 import { JunkBingoCard } from "./JunkBingoCard";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { cn } from "@/lib/utils";
 import {
   type BingoCard,
