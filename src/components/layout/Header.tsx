@@ -1,229 +1,319 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Sparkles, CalendarDays, MessageCircle, Percent } from "lucide-react";
+import { Phone, Sparkles, CalendarDays, ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib";
 import logo from "@/assets/logo.png";
 
-const navLinks = [
+const mainNavLinks = [
   { href: "/", label: "Home" },
-  { href: "/book", label: "Book Now", icon: CalendarDays },
-  { href: "/ai-estimator", label: "AI Quote", icon: Sparkles },
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/discounts", label: "Discounts", icon: Percent },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About" },
 ];
 
-const anchorLinks = [
-  { href: "/#services", label: "Our Services" },
-  { href: "/#testimonials", label: "Reviews" },
-  { href: "/#contact", label: "Contact Us" },
+const serviceLinks = [
+  { href: "/services", label: "All Services" },
+  { href: "/ai-estimator", label: "AI Instant Quote", icon: Sparkles },
+  { href: "/service-area", label: "Service Areas" },
+];
+
+const resourceLinks = [
+  { href: "/faq", label: "FAQ" },
+  { href: "/discounts", label: "Discounts & Deals" },
+  { href: "/referrals", label: "Referral Program" },
+  { href: "/bingo", label: "Junk Bingo Game" },
 ];
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showContactBar, setShowContactBar] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/";
 
   const closeMenu = () => setIsOpen(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (isOpen) closeMenu();
-      setShowContactBar(window.scrollY > 150);
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isOpen]);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    closeMenu();
+  }, [location.pathname]);
+
+  const headerBg = isHome && !isScrolled
+    ? "bg-transparent"
+    : "bg-background/95 backdrop-blur-md border-b border-border shadow-sm";
+
+  const textColor = isHome && !isScrolled
+    ? "text-white"
+    : "text-foreground";
+
+  const mutedColor = isHome && !isScrolled
+    ? "text-white/80"
+    : "text-muted-foreground";
+
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full border-b border-border bg-background transition-shadow duration-300",
-      showContactBar && "shadow-md"
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+      headerBg
     )}>
-      {/* Mobile Contact Bar - appears on scroll */}
-      {showContactBar && (
-        <div className="md:hidden bg-primary text-primary-foreground h-10">
-          <div className="container flex items-center justify-center gap-4 h-10">
-            <a
-              href="tel:+13606109233"
-              className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
-            >
-              <Phone className="h-4 w-4" />
-              Call
-            </a>
-            <span className="text-primary-foreground/50">|</span>
-            <a
-              href="sms:+13606109233"
-              className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Text
-            </a>
-            <span className="text-primary-foreground/50">|</span>
-            <Link
-              to="/contact"
-              className="text-sm font-medium hover:opacity-80 transition-opacity"
-            >
-              Get Quote
-            </Link>
-          </div>
-        </div>
-      )}
-
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Junky Gurus LLC" className="h-12 w-auto" />
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 relative z-10">
+          <img 
+            src={logo} 
+            alt="Junky Gurus LLC" 
+            className={cn(
+              "h-10 w-auto transition-all duration-300",
+              isHome && !isScrolled && "brightness-0 invert"
+            )} 
+          />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+        <nav className="hidden lg:flex items-center gap-1">
+          {mainNavLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
+                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
                 location.pathname === link.href
-                  ? "text-primary"
-                  : "text-muted-foreground",
-                link.icon && "text-primary"
+                  ? "text-primary bg-primary/10"
+                  : cn(mutedColor, "hover:text-primary hover:bg-primary/5")
               )}
             >
-              {link.icon && <link.icon className="h-3.5 w-3.5" />}
               {link.label}
             </Link>
           ))}
-          
-          {/* Anchor links for homepage sections */}
-          <span className="text-muted-foreground/30">|</span>
-          {anchorLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
+
+          {/* Services Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={cn(
+              "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
+              mutedColor, "hover:text-primary hover:bg-primary/5"
+            )}>
+              Tools
+              <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center" className="w-48 bg-background border border-border shadow-lg z-50">
+              {serviceLinks.map((link) => (
+                <DropdownMenuItem key={link.href} asChild>
+                  <Link
+                    to={link.href}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    {link.icon && <link.icon className="h-4 w-4 text-primary" />}
+                    {link.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Resources Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={cn(
+              "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
+              mutedColor, "hover:text-primary hover:bg-primary/5"
+            )}>
+              More
+              <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="center" className="w-48 bg-background border border-border shadow-lg z-50">
+              {resourceLinks.map((link) => (
+                <DropdownMenuItem key={link.href} asChild>
+                  <Link to={link.href} className="cursor-pointer">
+                    {link.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Link
+            to="/contact"
+            className={cn(
+              "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              mutedColor, "hover:text-primary hover:bg-primary/5"
+            )}
+          >
+            Contact
+          </Link>
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        {/* Desktop CTA */}
+        <div className="hidden lg:flex items-center gap-3">
           <Link
             to="/espanol"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+            className={cn(
+              "text-sm font-medium transition-colors flex items-center gap-1",
+              mutedColor, "hover:text-primary"
+            )}
             title="Servicio disponible en español"
           >
             <span aria-hidden="true">🇲🇽</span>
-            <span>Español</span>
           </Link>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <Phone className="h-4 w-4 text-primary" />
-            <a href="tel:+13606109233" className="text-charcoal-light hover:text-primary transition-colors">
-              (360) 610-9233
-            </a>
-            <span className="text-muted-foreground">|</span>
-            <a href="tel:+13604222428" className="text-charcoal-light hover:text-primary transition-colors">
-              (360) 422-2428
-            </a>
-          </div>
-          <Button asChild>
-            <Link to="/contact">Get a Quote</Link>
+          
+          <a 
+            href="tel:+13606109233" 
+            className={cn(
+              "flex items-center gap-2 text-sm font-medium transition-colors",
+              mutedColor, "hover:text-primary"
+            )}
+          >
+            <Phone className="h-4 w-4" />
+            <span className="hidden xl:inline">(360) 610-9233</span>
+          </a>
+
+          <Button asChild size="sm" className="gap-2">
+            <Link to="/book">
+              <CalendarDays className="h-4 w-4" />
+              Book Now
+            </Link>
           </Button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 -mr-2 relative w-10 h-10 flex items-center justify-center"
+          className={cn(
+            "lg:hidden p-2 -mr-2 rounded-md transition-colors",
+            textColor, "hover:bg-primary/10"
+          )}
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          <div className="flex flex-col justify-center items-center w-6 h-6">
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300",
-                isOpen ? "rotate-45 translate-y-[5px]" : ""
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 my-[4px]",
-                isOpen ? "opacity-0" : ""
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300",
-                isOpen ? "-rotate-45 -translate-y-[5px]" : ""
-              )}
-            />
-          </div>
+          {isOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
         </button>
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && (
-        <>
-          <div 
-            className="md:hidden fixed inset-0 top-16 bg-black/40 z-40"
-            onClick={closeMenu}
-          />
-          <nav className="md:hidden absolute left-0 right-0 top-full bg-background border-b border-border z-50 shadow-lg">
-            <div className="container py-4 flex flex-col gap-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  onClick={closeMenu}
-                  className={cn(
-                    "py-2 text-base font-medium transition-colors flex items-center gap-2",
-                    location.pathname === link.href
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                    link.icon && "text-primary"
-                  )}
-                >
-                  {link.icon && <link.icon className="h-4 w-4" />}
-                  {link.label}
-                </Link>
-              ))}
-              
-              {/* Anchor links for homepage sections */}
-              <div className="pt-2 mt-2 border-t border-border/50">
-                <p className="text-xs text-muted-foreground mb-2">Quick Links</p>
-                {anchorLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    to={link.href}
-                    onClick={closeMenu}
-                    className="py-2 text-base font-medium text-muted-foreground hover:text-foreground transition-colors block"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-              
+      <div className={cn(
+        "lg:hidden fixed inset-0 top-16 z-40 transition-all duration-300",
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      )}>
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          onClick={closeMenu}
+        />
+        
+        {/* Menu Panel */}
+        <nav className={cn(
+          "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-4rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
+          isOpen ? "translate-x-0" : "translate-x-full"
+        )}>
+          <div className="p-6 flex flex-col gap-1">
+            {/* Main Links */}
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+              Navigation
+            </p>
+            {mainNavLinks.map((link) => (
               <Link
-                to="/espanol"
+                key={link.href}
+                to={link.href}
                 onClick={closeMenu}
-                className="py-2 text-base font-medium text-primary flex items-center gap-2 bg-primary/10 rounded-lg px-3 -mx-1"
+                className={cn(
+                  "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                  location.pathname === link.href
+                    ? "text-primary bg-primary/10"
+                    : "text-foreground hover:bg-muted"
+                )}
               >
-                <span aria-hidden="true">🇲🇽</span>
-                <span>¿Hablas español? Nosotros también.</span>
+                {link.label}
               </Link>
-              <div className="pt-4 mt-2 border-t border-border">
-                <Button asChild className="w-full">
-                  <Link to="/contact" onClick={closeMenu}>
-                    Get a Free Quote
-                  </Link>
-                </Button>
-              </div>
+            ))}
+            <Link
+              to="/contact"
+              onClick={closeMenu}
+              className={cn(
+                "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                location.pathname === "/contact"
+                  ? "text-primary bg-primary/10"
+                  : "text-foreground hover:bg-muted"
+              )}
+            >
+              Contact
+            </Link>
+
+            {/* Tools Section */}
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-6 mb-2">
+              Tools
+            </p>
+            {serviceLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={closeMenu}
+                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted rounded-lg transition-colors flex items-center gap-2"
+              >
+                {link.icon && <link.icon className="h-4 w-4 text-primary" />}
+                {link.label}
+              </Link>
+            ))}
+
+            {/* Resources Section */}
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-6 mb-2">
+              Resources
+            </p>
+            {resourceLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={closeMenu}
+                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            {/* Spanish Link */}
+            <Link
+              to="/espanol"
+              onClick={closeMenu}
+              className="py-3 px-4 text-base font-medium text-primary bg-primary/10 rounded-lg mt-6 flex items-center gap-2"
+            >
+              <span aria-hidden="true">🇲🇽</span>
+              ¿Hablas español?
+            </Link>
+
+            {/* CTAs */}
+            <div className="mt-6 pt-6 border-t border-border space-y-3">
+              <a
+                href="tel:+13606109233"
+                className="flex items-center justify-center gap-2 py-3 px-4 text-base font-medium text-foreground bg-muted rounded-lg"
+              >
+                <Phone className="h-4 w-4" />
+                (360) 610-9233
+              </a>
+              <Button asChild className="w-full" size="lg">
+                <Link to="/book" onClick={closeMenu}>
+                  <CalendarDays className="h-4 w-4 mr-2" />
+                  Book Now
+                </Link>
+              </Button>
             </div>
-          </nav>
-        </>
-      )}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
