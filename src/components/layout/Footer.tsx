@@ -159,6 +159,10 @@ export function Footer() {
               <Cookie className="h-3 w-3" />
               Cookie Settings
             </button>
+            <span className="text-border">|</span>
+            <Link to="/admin" className="hover:text-primary transition-colors link-hover-underline inline-block">
+              Admin
+            </Link>
           </div>
         </div>
       </div>
