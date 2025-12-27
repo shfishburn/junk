@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout/Layout";
+import { Layout } from "@/components/layout";
 import { SEO, ReferralWidget } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";

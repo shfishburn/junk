@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { z } from "zod";
-import { Layout } from "@/components/layout/Layout";
+import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, DateTimePicker, FormField, TextareaField, ContactInfoCard } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
