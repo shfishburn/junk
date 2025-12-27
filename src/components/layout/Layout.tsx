@@ -1,9 +1,7 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { CookieConsent } from "@/components/CookieConsent";
-import { AIAssistant } from "@/components/AIAssistant";
-import { ExitIntentPopup } from "@/components/ExitIntentPopup";
+import { CookieConsent, AIAssistant, ExitIntentPopup } from "@/components/features";
 import { PageTransition } from "@/components/shared";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
 import { useExitIntent } from "@/hooks/use-exit-intent";
