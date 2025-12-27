@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { wasBingoShownForEstimate, markBingoShown, resetBingoShown } from "@/lib/bingo-items";
 import { 
   Upload, 
   Camera, 
@@ -25,6 +26,7 @@ import {
   CalendarDays
 } from "lucide-react";
 import { JunkRouletteModal } from "./JunkRouletteModal";
+import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "./BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
 
@@ -79,6 +81,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
   const [showRoulette, setShowRoulette] = useState(false);
+  const [showBingo, setShowBingo] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -193,6 +196,15 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
       if (data.error) throw new Error(data.error);
 
       setResult(data);
+      
+      // Show Bingo modal after successful analysis (only once per session)
+      if (!wasBingoShownForEstimate()) {
+        setTimeout(() => {
+          setShowBingo(true);
+          markBingoShown();
+        }, 1000);
+      }
+      
       onAnalysisComplete?.();
     } catch (err) {
       console.error("Analysis error:", err);
@@ -228,6 +240,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
 
   const reset = () => {
     localStorage.removeItem('junk-estimate');
+    resetBingoShown();
     setImagePreviews([]);
     setResult(null);
     setError(null);
@@ -543,6 +556,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           onOpenChange={setShowRoulette}
           customerName={formData.name}
           customerEmail={formData.email}
+        />
+
+        {/* Junk Bingo Modal - shows after estimate */}
+        <JunkBingoModal
+          open={showBingo}
+          onOpenChange={setShowBingo}
         />
 
         {/* Quick call option */}
