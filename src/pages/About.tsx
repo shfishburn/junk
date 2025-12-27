@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Clock, Award, DollarSign, Sparkles, Accessibility, Bot } from "lucide-react";
+import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Sparkles, Accessibility, Bot, Home, Trash2 } from "lucide-react";
 import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
 
 const values = [
@@ -10,11 +10,6 @@ const values = [
     icon: Heart,
     title: "Respect for Your Property",
     description: "We treat your home like it's our mom's house. (Hi, Mom!)",
-  },
-  {
-    icon: Recycle,
-    title: "Responsible Disposal",
-    description: "We don't just dump everything. We donate, recycle, and only landfill what absolutely has to go. Mother Earth approves.",
   },
   {
     icon: Users,
@@ -28,10 +23,31 @@ const values = [
   },
 ];
 
+const disposalPathways = [
+  {
+    icon: Home,
+    title: "Donate",
+    description: "Usable furniture, appliances, and household items go to Habitat for Humanity ReStore and local charities—giving your stuff a second life.",
+    priority: "First Choice",
+  },
+  {
+    icon: Recycle,
+    title: "Recycle",
+    description: "Metals, electronics, cardboard, and recyclables go to proper facilities. We sort it so the planet doesn't pay the price.",
+    priority: "Second Choice",
+  },
+  {
+    icon: Trash2,
+    title: "Dispose Responsibly",
+    description: "Only what truly can't be reused or recycled goes to the landfill. It's always our last resort, never our first.",
+    priority: "Last Resort",
+  },
+];
+
 const promises = [
   { text: "Upfront pricing—what we quote is what you pay", positive: true },
   { text: "Reliable scheduling—we show up when we say we will", positive: true },
-  { text: "Responsible disposal—donate, recycle, landfill last", positive: true },
+  { text: "Eco-conscious disposal—your junk deserves better than a landfill", positive: true },
   { text: "15% off for seniors & veterans", positive: true },
 ];
 
@@ -169,7 +185,7 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
             Our Guiding Principles (We Actually Follow These)
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {values.map((value) => (
               <div key={value.title} className="flex gap-4 p-6 rounded-lg bg-background border border-border">
                 <div className="flex-shrink-0">
@@ -183,6 +199,48 @@ const About = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Where Your Junk Actually Goes */}
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Recycle className="h-4 w-4" />
+              Environmental Responsibility
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Where Your Junk Actually Goes
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              We don't just haul your stuff to the nearest landfill and call it a day. Every item we pick up goes through our disposal hierarchy—because what happens after we leave matters just as much as how we treat your home.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {disposalPathways.map((pathway, index) => (
+              <div 
+                key={pathway.title} 
+                className="relative p-6 rounded-xl bg-card border border-border text-center"
+              >
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
+                  {pathway.priority}
+                </div>
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mt-2 mb-4">
+                  <pathway.icon className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">{pathway.title}</h3>
+                <p className="text-muted-foreground text-sm">{pathway.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-10 text-center">
+            <p className="text-muted-foreground">
+              Proud partner of <span className="font-semibold text-foreground">Habitat for Humanity ReStore</span> — helping build homes and hope in our community.
+            </p>
           </div>
         </div>
       </section>
@@ -220,7 +278,7 @@ const About = () => {
               More Than Just Hauling Junk
             </h2>
             <p className="text-lg text-muted-foreground">
-              We believe every part of your experience should be exceptional—from the moment you visit our website to the moment we drive away. That's why we've invested in technology that makes everything easier, faster, and more accessible.
+              From AI-powered estimates to accessible design to responsible disposal—we obsess over every detail because you deserve better than "good enough." That's why we've invested in technology that makes everything easier, faster, and more accessible.
             </p>
           </div>
           
@@ -253,10 +311,10 @@ const About = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Invested in Our Community
+              Rooted in Mount Vernon
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              We're invested in making Mount Vernon and the Puget Sound Region a better place to live. We donate usable items to those in need and recycle like our planet depends on it (because it does). Basically, we're trying to be the junk removal company your grandma would be proud of.
+              We live here. We work here. Every dollar you spend with us stays in the community—supporting local families, local businesses, and local causes. We're the junk removal company your grandma would be proud of.
             </p>
             <Button asChild>
               <Link to="/contact">Work With Us</Link>
