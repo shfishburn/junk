@@ -3,7 +3,7 @@ import { SEO } from "@/components/SEO";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
@@ -22,7 +22,7 @@ const services = [
     icon: Home,
     title: "Residential Junk Removal",
     slug: "residential",
-    description: "That 'perfectly good' couch you've been meaning to sell for 3 years? Time to let it go. We'll handle it with care (and zero judgment).",
+    description: "Tired of staring at that furniture you've been 'meaning to sell' for years? We'll take it off your hands—no judgment, no hassle, no mystery fees.",
     image: residentialImg,
     details: [
       "Old furniture and mattresses",
@@ -36,7 +36,7 @@ const services = [
     icon: Refrigerator,
     title: "Appliance Removal",
     slug: "appliances",
-    description: "We'll wrestle that fridge down the stairs so you don't have to. Your back will thank us later.",
+    description: "Dreading the thought of moving that fridge yourself? We'll wrestle it down the stairs, load it up, and recycle it properly—you don't lift a finger.",
     image: appliancesImg,
     details: [
       "Refrigerators and freezers",
@@ -50,7 +50,7 @@ const services = [
     icon: TreeDeciduous,
     title: "Yard Waste & Debris",
     slug: "yard-waste",
-    description: "Mother Nature's mess, met by our muscle. Storm knocked down a tree? We've got you.",
+    description: "Storm damage piling up? City won't take it curbside? We haul branches, debris, and yard waste so you're not stuck waiting for the next 'special collection day.'",
     image: yardWasteImg,
     details: [
       "Branches and tree limbs",
@@ -64,7 +64,7 @@ const services = [
     icon: Trash2,
     title: "Garage & Estate Cleanouts",
     slug: "cleanouts",
-    description: "We're not here to judge how you got here. We're just here to fix it — one truckload at a time.",
+    description: "Overwhelmed by a garage, basement, or estate that's gotten out of hand? We're not here to judge. We're here to help—one truckload at a time, with pricing you'll know upfront.",
     image: cleanupsImg,
     details: [
       "Full garage cleanouts",
@@ -78,7 +78,7 @@ const services = [
     icon: HardHat,
     title: "Construction & Renovation Debris",
     slug: "construction",
-    description: "Contractors love us. Their job sites? Not so much (before we arrive, anyway).",
+    description: "Job site buried in debris and the dumpster's already full? We clear construction waste fast so your project stays on schedule—with a price you'll know before we arrive.",
     image: constructionImg,
     details: [
       "Drywall and lumber",
@@ -92,7 +92,7 @@ const services = [
     icon: Building2,
     title: "Light Commercial Cleanouts",
     slug: "commercial",
-    description: "Office furniture doesn't deserve a funeral. Just a quick, dignified exit. We'll make it happen.",
+    description: "Office move? Closing down? That furniture won't vanish on its own. We handle commercial cleanouts efficiently—show up when scheduled, no corporate runaround.",
     image: commercialImg,
     details: [
       "Office furniture removal",
@@ -106,7 +106,7 @@ const services = [
     icon: Hammer,
     title: "Light Demolition",
     slug: "light-demolition",
-    description: "Need something torn down? We'll knock it out (literally) and haul away every last piece.",
+    description: "Got a deck, shed, or fence that needs to go? We'll tear it down and haul it away—no rental dumpsters, no weekend project, no surprises.",
     image: lightDemolitionImg,
     details: [
       "Deck and patio removal",
@@ -118,7 +118,7 @@ const services = [
     icon: AlertTriangle,
     title: "Hazardous Materials Pickup",
     slug: "hazmat-pickup",
-    description: "Got old paint cans staring at you? Batteries multiplying in a drawer? We'll pick them up and deliver them to the proper disposal sites so you don't have to figure out where they go.",
+    description: "Confused about where to take old paint, batteries, or chemicals? Skip the research and the 'special disposal days.' We pick up hazardous materials and deliver them where they need to go—so you don't have to figure it out.",
     image: hazmatImg,
     details: [
       "Latex & oil-based paint",
@@ -131,6 +131,14 @@ const services = [
       "Propane tanks",
     ],
   },
+];
+
+const trustCallouts = [
+  { icon: DollarSign, text: "Upfront pricing—what we quote is what you pay" },
+  { icon: Clock, text: "Reliable scheduling—we show up when we say we will" },
+  { icon: Recycle, text: "Responsible disposal—donate, recycle, landfill last" },
+  { icon: Check, text: "No on-site upsells or surprise fees" },
+  { icon: Heart, text: "15% off for seniors & veterans" },
 ];
 
 const hazmatFaqs = [
@@ -253,8 +261,8 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           ))}
         </ul>
         <Button asChild>
-          <Link to="/contact">
-            Get a Quote
+          <Link to="/ai-estimator">
+            Know Your Price
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
@@ -285,11 +293,11 @@ const Services = () => {
     <Layout>
       <SEO
         title="Junk Removal Services"
-        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, hazardous materials pickup, and commercial cleanouts in Mount Vernon, WA and the Puget Sound Region."
-        keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal, hazardous materials pickup, paint disposal, battery recycling"
+        description="Junk removal services in Mount Vernon, WA with no hidden fees and reliable scheduling. Residential, commercial, appliances, yard waste, construction debris, and hazmat pickup. Know your price first."
+        keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal, hazardous materials pickup, paint disposal, battery recycling, no hidden fees"
         url="/services"
         pageType="services-list"
-        pagePurpose="Complete list of junk removal services offered. Includes residential, commercial, appliances, yard waste, construction debris, light demolition, and hazmat pickup."
+        pagePurpose="Complete list of junk removal services offered. Includes residential, commercial, appliances, yard waste, construction debris, light demolition, and hazmat pickup. All services include upfront pricing with no hidden fees."
       />
       <Helmet>
         <script type="application/ld+json">
@@ -305,11 +313,26 @@ const Services = () => {
           <Breadcrumbs items={[{ label: "Services" }]} />
           <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              We Haul It All (Seriously, Try Us)
+              Junk Removal Without the Runaround
             </h1>
-            <p className="text-lg text-muted-foreground">
-              From one sad couch to a garage that hasn't seen daylight since 2003, we handle all types of junk removal across the Puget Sound Region. Challenge us.
+            <p className="text-lg text-muted-foreground mb-8">
+              No hidden fees. No vague arrival windows. No mystery charges when we show up. Just honest pricing, reliable scheduling, and responsible disposal—from a local team that actually shows up.
             </p>
+          </div>
+          
+          {/* Trust Callout */}
+          <div className="mt-8 p-6 rounded-xl bg-card border border-border">
+            <h2 className="text-lg font-semibold text-foreground mb-4">Every Service Includes:</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {trustCallouts.map((item, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <item.icon className="h-4 w-4 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">{item.text}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -370,13 +393,13 @@ const Services = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Got Something Weird? We're Intrigued.
+              Not Sure What You've Got? We'll Figure It Out.
             </h2>
             <p className="text-lg text-primary-foreground/90 mb-8">
-              We've hauled hot tubs, pianos, and things we still can't identify. Give us a call — we love a good mystery.
+              Upload a photo for an instant estimate—or just give us a call. No sales pitch, no pressure. Just answers.
             </p>
             <Button asChild size="lg" className="bg-on-primary text-primary hover:bg-on-primary/90">
-              <Link to="/contact">Contact Us</Link>
+              <Link to="/ai-estimator">Get Your Price</Link>
             </Button>
           </div>
         </div>
