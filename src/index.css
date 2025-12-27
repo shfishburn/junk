@@ -8,6 +8,7 @@
 :root {
   --header-height-expanded: 5rem;  /* 80px - h-20 */
   --header-height-collapsed: 4rem; /* 64px - h-16 */
+  --announcement-bar-height: 2.5rem; /* 40px */
 }
 
 /* Junky Gurus Design System - Apple-inspired with muted green accent */

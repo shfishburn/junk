@@ -31,7 +31,11 @@ const resourceLinks = [
   { href: "/bingo", label: "Junk Bingo Game" },
 ];
 
-export function Header() {
+interface HeaderProps {
+  announcementVisible?: boolean;
+}
+
+export function Header({ announcementVisible = false }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   // Initialize with actual scroll position to prevent flash on page refresh
   const [isScrolled, setIsScrolled] = useState(() => {
@@ -102,13 +106,19 @@ export function Header() {
     ? "text-white/90 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-muted-foreground";
 
+  // Calculate header top position based on announcement bar
+  const headerTop = announcementVisible ? 'var(--announcement-bar-height)' : '0';
+
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 z-50 transition-all duration-300",
         headerBg
       )}
-      style={{ boxShadow: progressiveShadow }}
+      style={{ 
+        top: headerTop,
+        boxShadow: progressiveShadow 
+      }}
     >
       <div 
         className="container flex items-center justify-between transition-all duration-300"

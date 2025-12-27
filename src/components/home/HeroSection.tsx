@@ -1,8 +1,32 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Sparkles, Clock } from "lucide-react";
 
+const ANNOUNCEMENT_DISMISSED_KEY = "junky-gurus-announcement-dismissed";
+const ANNOUNCEMENT_VERSION = "v1";
+
 export function HeroSection() {
+  const [announcementVisible, setAnnouncementVisible] = useState(false);
+  
+  useEffect(() => {
+    try {
+      const dismissed = localStorage.getItem(ANNOUNCEMENT_DISMISSED_KEY);
+      setAnnouncementVisible(dismissed !== ANNOUNCEMENT_VERSION);
+    } catch {
+      setAnnouncementVisible(true);
+    }
+    
+    const handleDismiss = () => setAnnouncementVisible(false);
+    window.addEventListener('announcementDismissed', handleDismiss);
+    return () => window.removeEventListener('announcementDismissed', handleDismiss);
+  }, []);
+
+  // Calculate the total header area height
+  const totalHeaderHeight = announcementVisible 
+    ? 'calc(var(--header-height-expanded) + var(--announcement-bar-height))'
+    : 'var(--header-height-expanded)';
+
   return (
     <section
       className="relative bg-cover bg-center bg-no-repeat"
@@ -10,9 +34,9 @@ export function HeroSection() {
         backgroundImage:
           'url("/lovable-uploads/1a609a72-5d33-4187-a5ca-c308b7fc5c42.jpg")',
         // Pull hero up behind the fixed header so background fills viewport top
-        marginTop: 'calc(-1 * var(--header-height-expanded))',
+        marginTop: `calc(-1 * ${totalHeaderHeight})`,
         // Add padding so content stays visible below header
-        paddingTop: 'calc(var(--header-height-expanded) + 4rem)',
+        paddingTop: `calc(${totalHeaderHeight} + 4rem)`,
         paddingBottom: '4rem',
       }}
     >
