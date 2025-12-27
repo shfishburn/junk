@@ -52,6 +52,11 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Close mobile menu on scroll
+      if (isOpen && !isClosing) {
+        setIsClosing(true);
+      }
+
       const shouldShow = window.scrollY > 150;
       setShowContactBar(shouldShow);
       
@@ -65,7 +70,7 @@ export function Header() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isContactBarVisible, isContactBarClosing]);
+  }, [isContactBarVisible, isContactBarClosing, isOpen, isClosing]);
 
   return (
     <header className={cn(
@@ -182,7 +187,7 @@ export function Header() {
       {isOpen && (
         <div 
           className={cn(
-            "md:hidden fixed inset-0 top-16 bg-foreground/40 backdrop-blur-sm z-40",
+            "md:hidden fixed inset-0 top-16 bg-black/30 backdrop-blur-md z-40",
             isClosing ? "animate-fade-out" : "animate-fade-in"
           )}
           onClick={handleMenuToggle}
