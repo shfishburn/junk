@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, MessageCircle, Cookie, Clock, Heart } from "lucide-react";
+import { Cookie, Clock, Heart } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
+import { ContactInfoCard } from "@/components/ContactInfoCard";
 
 export function Footer() {
   return (
@@ -34,48 +35,7 @@ export function Footer() {
             <div className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
               <span>🇲🇽</span> ¡Hablamos Español!
             </div>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="tel:+13606109233"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Phone className="h-4 w-4 flex-shrink-0" />
-                  (360) 610-9233
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+13604222428"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Phone className="h-4 w-4 flex-shrink-0" />
-                  (360) 422-2428
-                </a>
-              </li>
-              <li>
-                <a
-                  href="sms:+13606109233"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <MessageCircle className="h-4 w-4 flex-shrink-0" />
-                  Text Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:Junkygurus@gmail.com"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="h-4 w-4 flex-shrink-0" />
-                  Junkygurus@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                <span>Mount Vernon, WA</span>
-              </li>
-            </ul>
+            <ContactInfoCard variant="compact" showHours={false} showTextUs />
           </div>
         </div>
 
