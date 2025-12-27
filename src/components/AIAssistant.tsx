@@ -3,6 +3,7 @@ import { MessageCircle, X, Send, Bot, User, Loader2, RefreshCw, Wifi, WifiOff, T
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import ReactMarkdown from "react-markdown";
 
 type Message = {
   id: string;
@@ -463,14 +464,42 @@ export function AIAssistant() {
               <div className="flex flex-col gap-1 max-w-[80%]">
                 <div
                   className={cn(
-                    "p-3 rounded-lg text-sm whitespace-pre-wrap",
+                    "p-3 rounded-lg text-sm",
                     msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-none"
+                      ? "bg-primary text-primary-foreground rounded-br-none whitespace-pre-wrap"
                       : "bg-muted text-foreground rounded-bl-none",
                     msg.status === "error" && msg.role === "user" && "opacity-70"
                   )}
                 >
-                  {msg.content}
+                  {msg.role === "assistant" ? (
+                    <ReactMarkdown
+                      components={{
+                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                        em: ({ children }) => <em className="italic">{children}</em>,
+                        ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                        li: ({ children }) => <li className="ml-1">{children}</li>,
+                        a: ({ href, children }) => (
+                          <a 
+                            href={href} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-primary underline hover:no-underline"
+                          >
+                            {children}
+                          </a>
+                        ),
+                        code: ({ children }) => (
+                          <code className="bg-background/50 px-1 py-0.5 rounded text-xs font-mono">{children}</code>
+                        ),
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
+                  ) : (
+                    msg.content
+                  )}
                 </div>
                 {msg.status === "sending" && msg.role === "user" && (
                   <span className="text-xs text-muted-foreground self-end">Sending...</span>
