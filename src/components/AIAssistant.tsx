@@ -235,6 +235,7 @@ export function AIAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("idle");
   const [retryCount, setRetryCount] = useState(0);
+  const [showAllQuickReplies, setShowAllQuickReplies] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -596,30 +597,44 @@ export function AIAssistant() {
         {/* Input */}
         <div className="p-4 border-t border-border space-y-3">
           {/* Quick Replies - show when not loading and input is empty */}
-          {!isLoading && !input.trim() && (
-            <div className="flex flex-wrap gap-2">
-              {[
-                { label: "Get a Quote", message: "I'd like to get a quote for junk removal" },
-                { label: "📅 Book Now", message: "How do I schedule a junk pickup appointment?" },
-                { label: "📸 AI Estimator", message: "Tell me about your AI Estimator tool where I can upload photos for an instant quote" },
-                { label: "🔨 Light Demolition", message: "What light demolition services do you offer? Like deck removal, shed teardown, or fence removal?" },
-                { label: "Hazmat Pickup", message: "Do you handle hazardous materials like paint, chemicals, or batteries?" },
-                { label: "What do you haul?", message: "What types of items do you haul?" },
-                { label: "Service area", message: "What areas do you service?" },
-              ].map((quick) => (
-                <button
-                  key={quick.label}
-                  onClick={() => {
-                    setInput(quick.message);
-                    inputRef.current?.focus();
-                  }}
-                  className="px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
-                >
-                  {quick.label}
-                </button>
-              ))}
-            </div>
-          )}
+          {!isLoading && !input.trim() && (() => {
+            const allQuickReplies = [
+              { label: "Get a Quote", message: "I'd like to get a quote for junk removal" },
+              { label: "📅 Book Now", message: "How do I schedule a junk pickup appointment?" },
+              { label: "📸 AI Estimator", message: "Tell me about your AI Estimator tool where I can upload photos for an instant quote" },
+              { label: "🔨 Light Demolition", message: "What light demolition services do you offer? Like deck removal, shed teardown, or fence removal?" },
+              { label: "Hazmat Pickup", message: "Do you handle hazardous materials like paint, chemicals, or batteries?" },
+              { label: "What do you haul?", message: "What types of items do you haul?" },
+              { label: "Service area", message: "What areas do you service?" },
+            ];
+            const visibleReplies = showAllQuickReplies ? allQuickReplies : allQuickReplies.slice(0, 4);
+            const hasMore = allQuickReplies.length > 4;
+            
+            return (
+              <div className="flex flex-wrap gap-2">
+                {visibleReplies.map((quick) => (
+                  <button
+                    key={quick.label}
+                    onClick={() => {
+                      setInput(quick.message);
+                      inputRef.current?.focus();
+                    }}
+                    className="px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+                  >
+                    {quick.label}
+                  </button>
+                ))}
+                {hasMore && (
+                  <button
+                    onClick={() => setShowAllQuickReplies(!showAllQuickReplies)}
+                    className="px-3 py-1.5 text-xs bg-muted text-muted-foreground rounded-full hover:bg-muted/80 transition-colors"
+                  >
+                    {showAllQuickReplies ? "Less" : `+${allQuickReplies.length - 4} more`}
+                  </button>
+                )}
+              </div>
+            );
+          })()}
           
           {isLoading && (
             <button
