@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Cookie, Clock, Heart } from "lucide-react";
+import { Cookie, Heart } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
 import { ContactInfoCard } from "@/components/ContactInfoCard";
+import { BusinessHours } from "@/components/BusinessHours";
 
 export function Footer() {
   return (
@@ -20,13 +21,7 @@ export function Footer() {
               <Heart className="h-4 w-4" />
               <span>15% off for seniors & veterans</span>
             </div>
-            <div className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4 flex-shrink-0 mt-0.5" />
-              <div>
-                <p>Mon - Sat: 8am - 6pm</p>
-                <p>Sunday: Closed</p>
-              </div>
-            </div>
+            <BusinessHours variant="compact" className="mt-3" />
           </div>
 
           {/* Contact */}
