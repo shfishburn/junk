@@ -6,6 +6,7 @@ import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRig
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
+import { HazmatBookingForm } from "@/components/HazmatBookingForm";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
 import yardWasteImg from "@/assets/service-yard-waste.jpg";
@@ -308,7 +309,15 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Hazmat Booking Form */}
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <div className="max-w-2xl mx-auto">
+            <HazmatBookingForm />
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 md:py-24 bg-primary">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
