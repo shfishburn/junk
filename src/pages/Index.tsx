@@ -18,6 +18,8 @@ const Index = () => {
         description="Professional junk removal in Mount Vernon, WA. Simple pricing, responsible disposal. From single items to full cleanouts. Call (360) 610-9233 for a free quote."
         keywords="junk removal, Mount Vernon, Skagit County, hauling, cleanout, appliance removal, furniture removal"
         url="/"
+        pageType="homepage"
+        pagePurpose="Main landing page for Junky Gurus junk removal services. Book appointments, get quotes, view services and pricing."
       />
       <HeroSection />
       <HowItWorks />

@@ -288,6 +288,8 @@ const Services = () => {
         description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, hazardous materials pickup, and commercial cleanouts in Mount Vernon, WA and the Puget Sound Region."
         keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal, hazardous materials pickup, paint disposal, battery recycling"
         url="/services"
+        pageType="services-list"
+        pagePurpose="Complete list of junk removal services offered. Includes residential, commercial, appliances, yard waste, construction debris, light demolition, and hazmat pickup."
       />
       <Helmet>
         <script type="application/ld+json">

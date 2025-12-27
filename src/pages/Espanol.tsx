@@ -31,6 +31,8 @@ const Espanol = () => {
         description="Servicio profesional de remoción de basura en Mount Vernon y el área de Puget Sound. Precios transparentes, servicio el mismo día. ¡Hablamos español! Llame (360) 610-9233."
         keywords="remoción de basura, servicio de basura, limpieza de casa, Mount Vernon, Skagit County, hablamos español, junk removal spanish"
         url="/espanol"
+        pageType="landing"
+        pagePurpose="Spanish language version of the site. Servicios de remoción de basura. Contact: (360) 610-9233. ¡Hablamos Español!"
       />
 
       {/* Hero Section */}
