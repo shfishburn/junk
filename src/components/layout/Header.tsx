@@ -77,7 +77,10 @@ export function Header() {
           <img 
             src={logo} 
             alt="Junky Gurus LLC" 
-            className="h-14 w-auto"
+            className={cn(
+              "h-14 w-auto transition-all duration-300",
+              isHome && !isScrolled && "drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
+            )}
           />
         </Link>
 
