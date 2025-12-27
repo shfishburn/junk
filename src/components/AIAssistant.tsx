@@ -545,6 +545,7 @@ export function AIAssistant() {
             <div className="flex flex-wrap gap-2">
               {[
                 { label: "Get a Quote", message: "I'd like to get a quote for junk removal" },
+                { label: "Hazmat Pickup", message: "Do you handle hazardous materials like paint, chemicals, or batteries?" },
                 { label: "What do you haul?", message: "What types of items do you haul?" },
                 { label: "Service area", message: "What areas do you service?" },
                 { label: "Pricing", message: "How does your pricing work?" },
