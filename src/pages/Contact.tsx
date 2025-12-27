@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { JunkRouletteModal } from "@/components/JunkRouletteModal";
+import { JunkRouletteModal } from "@/components/features";
 
 const SERVICE_TYPES = [
   { value: "residential", label: "Residential Junk Removal" },

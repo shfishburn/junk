@@ -1,6 +1,6 @@
 // Feature Components Barrel File
 export { AIAssistant } from "./AIAssistant";
-export { CookieConsent } from "./CookieConsent";
+export { CookieConsent, openCookiePreferences } from "./CookieConsent";
 export { CookiePreferencesModal } from "./CookiePreferencesModal";
 export { ExitIntentPopup } from "./ExitIntentPopup";
 export { JunkAnalyzer } from "./JunkAnalyzer";

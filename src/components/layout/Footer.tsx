@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Cookie, Heart } from "lucide-react";
-import { openCookiePreferences } from "@/components/CookieConsent";
+import { openCookiePreferences } from "@/components/features";
 import { ContactInfoCard, BusinessHours } from "@/components/shared";
 
 export function Footer() {
