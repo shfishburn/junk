@@ -7,12 +7,12 @@ import logo from "@/assets/logo.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/book", label: "Book Now", icon: CalendarDays },
+  { href: "/ai-estimator", label: "AI Estimator", icon: Sparkles },
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
   { href: "/service-area", label: "Service Area" },
   { href: "/about", label: "About" },
-  { href: "/ai-estimator", label: "AI Estimator", icon: Sparkles },
-  { href: "/book", label: "Book Now", icon: CalendarDays },
   { href: "/contact", label: "Contact" },
 ];
 
