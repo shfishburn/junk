@@ -33,7 +33,13 @@ const resourceLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  // Initialize with actual scroll position to prevent flash on page refresh
+  const [isScrolled, setIsScrolled] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.scrollY > 20;
+    }
+    return false;
+  });
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isSpanish = location.pathname === "/espanol";
@@ -42,6 +48,9 @@ export function Header() {
   const closeMenu = () => setIsOpen(false);
 
   useEffect(() => {
+    // Set initial state immediately on mount
+    setIsScrolled(window.scrollY > 20);
+    
     const handleScroll = () => {
       if (isOpen) closeMenu();
       setIsScrolled(window.scrollY > 20);
