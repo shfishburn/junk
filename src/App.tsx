@@ -30,6 +30,12 @@ import {
   Anacortes,
   SedroWoolley,
   Bellingham,
+  MountVernon,
+  LaConner,
+  Bow,
+  Concrete,
+  Stanwood,
+  Marysville,
 } from "@/pages";
 
 const queryClient = new QueryClient();
@@ -66,6 +72,12 @@ const App = () => (
           <Route path="/junk-removal-anacortes-wa" element={<Anacortes />} />
           <Route path="/junk-removal-sedro-woolley-wa" element={<SedroWoolley />} />
           <Route path="/junk-removal-bellingham-wa" element={<Bellingham />} />
+          <Route path="/junk-removal-mount-vernon-wa" element={<MountVernon />} />
+          <Route path="/junk-removal-la-conner-wa" element={<LaConner />} />
+          <Route path="/junk-removal-bow-wa" element={<Bow />} />
+          <Route path="/junk-removal-concrete-wa" element={<Concrete />} />
+          <Route path="/junk-removal-stanwood-wa" element={<Stanwood />} />
+          <Route path="/junk-removal-marysville-wa" element={<Marysville />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

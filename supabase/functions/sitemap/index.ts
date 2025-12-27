@@ -39,6 +39,12 @@ const siteRoutes: SiteRoute[] = [
   { path: '/junk-removal-anacortes-wa', priority: 0.8, changefreq: 'monthly' },
   { path: '/junk-removal-sedro-woolley-wa', priority: 0.8, changefreq: 'monthly' },
   { path: '/junk-removal-bellingham-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-mount-vernon-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-la-conner-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-bow-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-concrete-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-stanwood-wa', priority: 0.8, changefreq: 'monthly' },
+  { path: '/junk-removal-marysville-wa', priority: 0.8, changefreq: 'monthly' },
   
   // Legal pages
   { path: '/privacy-policy', priority: 0.3, changefreq: 'yearly' },
