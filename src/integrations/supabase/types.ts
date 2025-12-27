@@ -53,6 +53,51 @@ export type Database = {
         }
         Relationships: []
       }
+      hazmat_requests: {
+        Row: {
+          address: string
+          created_at: string
+          email: string
+          id: string
+          materials: Json
+          name: string
+          notes: string | null
+          phone: string
+          preferred_date: string | null
+          preferred_time: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          email: string
+          id?: string
+          materials?: Json
+          name: string
+          notes?: string | null
+          phone: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          email?: string
+          id?: string
+          materials?: Json
+          name?: string
+          notes?: string | null
+          phone?: string
+          preferred_date?: string | null
+          preferred_time?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
