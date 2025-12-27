@@ -19,6 +19,7 @@ import FAQ from "./pages/FAQ";
 import Book from "./pages/Book";
 import NotFound from "./pages/NotFound";
 import Espanol from "./pages/Espanol";
+import Discounts from "./pages/Discounts";
 import AdminLogin from "./pages/admin/Login";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBookings from "./pages/admin/Bookings";
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/book" element={<Book />} />
           <Route path="/espanol" element={<Espanol />} />
+          <Route path="/discounts" element={<Discounts />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />

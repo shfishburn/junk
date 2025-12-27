@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/ai-estimator", label: "AI Quote", icon: Sparkles },
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/discounts", label: "Discounts" },
   { href: "/contact", label: "Contact" },
 ];
 
