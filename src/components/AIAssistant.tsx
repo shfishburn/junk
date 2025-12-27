@@ -434,32 +434,56 @@ export function AIAssistant() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "fixed bottom-4 right-4 z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
+          "fixed z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110",
           "bg-primary text-primary-foreground",
-          isOpen && "rotate-180"
+          // Mobile: bottom center, Desktop: bottom right
+          "bottom-4 right-4 sm:bottom-4 sm:right-4",
+          isOpen && "sm:rotate-180"
         )}
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>
 
+      {/* Backdrop for mobile */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 sm:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
       {/* Chat Window */}
       <div
         className={cn(
-          "fixed bottom-20 right-4 z-50 w-[350px] sm:w-[400px] bg-card border border-border rounded-lg shadow-xl transition-all duration-300 flex flex-col",
-          isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
+          "fixed z-50 bg-card border border-border shadow-xl transition-all duration-300 flex flex-col",
+          // Mobile: full width bottom sheet
+          "inset-x-0 bottom-0 rounded-t-2xl",
+          // Desktop: floating card
+          "sm:inset-auto sm:bottom-20 sm:right-4 sm:w-[400px] sm:rounded-lg",
+          isOpen 
+            ? "opacity-100 translate-y-0 pointer-events-auto" 
+            : "opacity-0 translate-y-full sm:translate-y-4 pointer-events-none"
         )}
-        style={{ maxHeight: "calc(100vh - 120px)", height: "500px" }}
+        style={{ 
+          maxHeight: "calc(100vh - 60px)", 
+          height: "min(85vh, 600px)"
+        }}
       >
+        {/* Drag handle for mobile */}
+        <div className="flex justify-center pt-2 pb-1 sm:hidden">
+          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+        </div>
+
         {/* Header */}
-        <div className="p-4 border-b border-border bg-primary text-primary-foreground rounded-t-lg">
+        <div className="px-4 py-3 sm:p-4 border-b border-border bg-primary text-primary-foreground sm:rounded-t-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary-foreground/20 rounded-full">
                 <Bot className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold">Junk Guru</h3>
+                <h3 className="font-semibold text-base">Junk Guru</h3>
                 <div className="flex items-center gap-1.5 text-xs opacity-80">
                   {connectionStatus === "connected" && (
                     <>
@@ -483,20 +507,31 @@ export function AIAssistant() {
                 </div>
               </div>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
-              onClick={clearHistory}
-              title="Clear chat history"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 text-primary-foreground hover:bg-primary-foreground/20"
+                onClick={clearHistory}
+                title="Clear chat history"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 text-primary-foreground hover:bg-primary-foreground/20 sm:hidden"
+                onClick={() => setIsOpen(false)}
+                title="Close chat"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -506,14 +541,14 @@ export function AIAssistant() {
               )}
             >
               {msg.role === "assistant" && (
-                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+                <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
               )}
-              <div className="flex flex-col gap-1 max-w-[80%]">
+              <div className="flex flex-col gap-1 max-w-[85%] sm:max-w-[80%]">
                 <div
                   className={cn(
-                    "p-3 rounded-lg text-sm",
+                    "p-3 rounded-xl sm:rounded-lg text-sm leading-relaxed",
                     msg.role === "user"
                       ? "bg-primary text-primary-foreground rounded-br-none whitespace-pre-wrap"
                       : "bg-muted text-foreground rounded-bl-none",
@@ -578,7 +613,7 @@ export function AIAssistant() {
                 {msg.status === "error" && msg.role === "user" && (
                   <button
                     onClick={retryLastMessage}
-                    className="text-xs text-destructive hover:underline self-end flex items-center gap-1"
+                    className="text-xs text-destructive hover:underline self-end flex items-center gap-1 py-1"
                   >
                     <RefreshCw className="h-3 w-3" />
                     Retry
@@ -586,7 +621,7 @@ export function AIAssistant() {
                 )}
               </div>
               {msg.role === "user" && (
-                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+                <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary flex items-center justify-center">
                   <User className="h-4 w-4 text-primary-foreground" />
                 </div>
               )}
@@ -594,10 +629,10 @@ export function AIAssistant() {
           ))}
           {isLoading && messages[messages.length - 1]?.role === "user" && !messages.find(m => m.role === "assistant" && m.status === "sending") && (
             <div className="flex gap-2 justify-start animate-fade-in">
-              <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Bot className="h-4 w-4 text-primary animate-pulse" />
               </div>
-              <div className="bg-muted p-3 rounded-lg rounded-bl-none">
+              <div className="bg-muted p-3 rounded-xl sm:rounded-lg rounded-bl-none">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-muted-foreground">Typing</span>
                   <div className="flex gap-1">
@@ -613,7 +648,7 @@ export function AIAssistant() {
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-border space-y-3">
+        <div className="p-3 sm:p-4 pb-safe border-t border-border space-y-3">
           {/* Quick Replies - show when not loading and input is empty */}
           {!isLoading && !input.trim() && (() => {
             const allQuickReplies = [
@@ -637,7 +672,7 @@ export function AIAssistant() {
                       setInput(quick.message);
                       inputRef.current?.focus();
                     }}
-                    className="px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+                    className="px-3 py-2 sm:py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 active:bg-primary/30 transition-colors touch-manipulation"
                   >
                     {quick.label}
                   </button>
@@ -645,7 +680,7 @@ export function AIAssistant() {
                 {hasMore && (
                   <button
                     onClick={() => setShowAllQuickReplies(!showAllQuickReplies)}
-                    className="px-3 py-1.5 text-xs bg-muted text-muted-foreground rounded-full hover:bg-muted/80 transition-colors"
+                    className="px-3 py-2 sm:py-1.5 text-xs bg-muted text-muted-foreground rounded-full hover:bg-muted/80 active:bg-muted/60 transition-colors touch-manipulation"
                   >
                     {showAllQuickReplies ? "Less" : `+${allQuickReplies.length - 4} more`}
                   </button>
@@ -657,7 +692,7 @@ export function AIAssistant() {
           {isLoading && (
             <button
               onClick={cancelRequest}
-              className="w-full text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1"
+              className="w-full py-2 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1 touch-manipulation"
             >
               <X className="h-3 w-3" />
               Cancel response
@@ -671,7 +706,7 @@ export function AIAssistant() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask about our services..."
-              className="flex-1 px-3 py-2 text-sm bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+              className="flex-1 px-4 py-3 sm:py-2 text-base sm:text-sm bg-background border border-input rounded-xl sm:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
               disabled={isLoading}
             />
             {hasFailedMessage && !isLoading ? (
@@ -679,19 +714,19 @@ export function AIAssistant() {
                 onClick={retryLastMessage}
                 size="icon"
                 variant="outline"
-                className="shrink-0"
+                className="shrink-0 h-12 w-12 sm:h-10 sm:w-10 rounded-xl sm:rounded-md touch-manipulation"
                 title="Retry failed message"
               >
-                <RefreshCw className="h-4 w-4" />
+                <RefreshCw className="h-5 w-5 sm:h-4 sm:w-4" />
               </Button>
             ) : (
               <Button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
                 size="icon"
-                className="shrink-0"
+                className="shrink-0 h-12 w-12 sm:h-10 sm:w-10 rounded-xl sm:rounded-md touch-manipulation"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-5 w-5 sm:h-4 sm:w-4" />
               </Button>
             )}
           </div>
