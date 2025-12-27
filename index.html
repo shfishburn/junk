@@ -44,13 +44,107 @@
     <meta name="geo.placename" content="Mount Vernon, Washington" />
     <meta name="geo.position" content="48.4201;-122.3340" />
     <meta name="ICBM" content="48.4201, -122.3340" />
+    <!-- LLM Discovery -->
+    <link rel="llms-txt" href="https://thejunkygurus.com/llms.txt" />
+    <link rel="llms-full-txt" href="https://thejunkygurus.com/llms-full.txt" type="text/plain" />
+    <link rel="ai-context" href="https://thejunkygurus.com/llms.json" type="application/json" />
+    <meta name="ai:llms-txt" content="https://thejunkygurus.com/llms.txt" />
 
     <!-- Preconnect to external resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Critical Structured Data (for crawlers that don't execute JS) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://thejunkygurus.com/#localbusiness",
+      "name": "Junky Gurus LLC",
+      "alternateName": "Junky Gurus",
+      "description": "Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Know your price before we arrive.",
+      "url": "https://thejunkygurus.com",
+      "logo": "https://thejunkygurus.com/favicon.png",
+      "image": "https://thejunkygurus.com/og-image.jpg",
+      "telephone": "+1-360-610-9233",
+      "email": "thejunkygurus@gmail.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Mount Vernon",
+        "addressRegion": "WA",
+        "postalCode": "98273",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.4201,
+        "longitude": -122.3343
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Skagit County, WA" },
+        { "@type": "AdministrativeArea", "name": "Whatcom County, WA" },
+        { "@type": "AdministrativeArea", "name": "Snohomish County, WA" },
+        { "@type": "AdministrativeArea", "name": "King County, WA" }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ],
+      "sameAs": [
+        "https://thejunkygurus.com/llms.txt",
+        "https://thejunkygurus.com/llms.json"
+      ],
+      "slogan": "We Love Your Junk (So You Don't Have To)",
+      "knowsAbout": ["Junk Removal", "Furniture Removal", "Appliance Hauling", "Estate Cleanouts", "Construction Debris"]
+    }
+    </script>
   </head>
 
   <body>
+    <!-- Noscript fallback content for crawlers and users without JS -->
+    <noscript>
+      <div style="max-width: 800px; margin: 0 auto; padding: 40px 20px; font-family: system-ui, sans-serif;">
+        <h1>Junky Gurus - Junk Removal Without Surprises</h1>
+        <p><strong>We Love Your Junk (So You Don't Have To)</strong></p>
+        <p>Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Know your price before we arrive.</p>
+        
+        <h2>What Makes Us Different</h2>
+        <ul>
+          <li><strong>No Surprise Pricing</strong> - What we quote is what you pay. No hidden fees for stairs, fuel, or disposal.</li>
+          <li><strong>We Actually Show Up</strong> - Reliable scheduling from a local team that respects your time.</li>
+          <li><strong>Responsible Disposal</strong> - We donate, recycle, and landfill last.</li>
+          <li><strong>Know Your Price First</strong> - Upload photos for an instant AI estimate before we arrive.</li>
+        </ul>
+        
+        <h2>Services</h2>
+        <ul>
+          <li>Residential Junk Removal</li>
+          <li>Appliance Removal</li>
+          <li>Yard Waste & Debris</li>
+          <li>Garage & Estate Cleanouts</li>
+          <li>Construction Debris</li>
+          <li>Light Commercial Cleanouts</li>
+          <li>Light Demolition</li>
+          <li>Household Hazmat Pickup</li>
+        </ul>
+        
+        <h2>Service Area</h2>
+        <p>Serving Skagit, Whatcom, Snohomish, and King Counties including Mount Vernon, Burlington, Anacortes, Sedro-Woolley, Bellingham, Everett, and Marysville.</p>
+        
+        <h2>Contact</h2>
+        <p>Phone: <a href="tel:+13606109233">(360) 610-9233</a></p>
+        <p>Email: <a href="mailto:thejunkygurus@gmail.com">thejunkygurus@gmail.com</a></p>
+        <p>Hours: Mon-Sat 8am-6pm</p>
+        
+        <p><em>15% discount for seniors (65+) and veterans.</em></p>
+      </div>
+    </noscript>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

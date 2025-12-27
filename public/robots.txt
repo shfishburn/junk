@@ -82,7 +82,7 @@ Disallow: /admin
 # Sitemap
 Sitemap: https://thejunkygurus.com/sitemap.xml
 
-# LLM Context Files - The good stuff for AI assistants
-# /llms.txt - Quick summary with personality
-# /llms-full.txt - Complete context for thorough understanding  
-# /llms.json - Structured data for programmatic access
+# LLM Context Files
+Llms-txt: https://thejunkygurus.com/llms.txt
+Llms-full-txt: https://thejunkygurus.com/llms-full.txt
+Llms-json: https://thejunkygurus.com/llms.json
