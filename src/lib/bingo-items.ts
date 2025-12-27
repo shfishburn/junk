@@ -198,3 +198,24 @@ export function clearBingoState(): void {
 export function getCheckedCount(checked: boolean[]): number {
   return checked.filter(c => c).length;
 }
+
+// Track if bingo was shown for current estimate session
+const BINGO_SHOWN_KEY = "junk-bingo-shown";
+
+export function wasBingoShownForEstimate(): boolean {
+  const shown = localStorage.getItem(BINGO_SHOWN_KEY);
+  if (!shown) return false;
+  
+  // Check if within same day
+  const shownDate = new Date(shown);
+  const now = new Date();
+  return shownDate.toDateString() === now.toDateString();
+}
+
+export function markBingoShown(): void {
+  localStorage.setItem(BINGO_SHOWN_KEY, new Date().toISOString());
+}
+
+export function resetBingoShown(): void {
+  localStorage.removeItem(BINGO_SHOWN_KEY);
+}
