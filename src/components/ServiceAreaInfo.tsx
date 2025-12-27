@@ -1,6 +1,6 @@
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 export const SERVICE_AREA_DATA = {
   baseLocation: "Mount Vernon, WA",

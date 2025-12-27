@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { setConsentPreferences, getConsentPreferences } from "@/lib/cookies";
+import { setConsentPreferences, getConsentPreferences } from "@/lib";
 import { Cookie, BarChart3, Megaphone, Shield } from "lucide-react";
 
 interface CookiePreferencesModalProps {

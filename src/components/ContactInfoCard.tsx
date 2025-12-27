@@ -1,6 +1,5 @@
 import { Phone, Mail, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { CONTACT_INFO } from "@/lib/contact-info";
+import { cn, CONTACT_INFO } from "@/lib";
 import { BusinessHours } from "@/components/BusinessHours";
 import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 import { PhoneLink } from "@/components/PhoneLink";

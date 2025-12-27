@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Copy, Check, Share2, RotateCcw, Gift, MessageCircle, Mail, Facebook, Twitter } from "lucide-react";
 import { JunkBingoCard } from "./JunkBingoCard";
 import { useToast } from "@/hooks";
-import { cn } from "@/lib/utils";
 import {
+  cn,
   type BingoCard,
   generateBingoCard,
   saveBingoState,
@@ -16,7 +16,7 @@ import {
   isBlackout,
   generateBingoCode,
   getCheckedCount,
-} from "@/lib/bingo-items";
+} from "@/lib";
 
 interface JunkBingoModalProps {
   open: boolean;

@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { JunkBingoCard } from "@/components/features";
 import { Copy, Check, Share2, RotateCcw, Gift, MessageCircle, Mail, Facebook, Twitter, Phone, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks";
-import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
 import {
+  cn,
   type BingoCard,
   generateBingoCard,
   saveBingoState,
@@ -19,7 +18,8 @@ import {
   generateBingoCode,
   getCheckedCount,
   DISCOUNT_TIERS,
-} from "@/lib/bingo-items";
+} from "@/lib";
+import { Link } from "react-router-dom";
 
 export default function Bingo() {
   const [card, setCard] = useState<BingoCard | null>(null);

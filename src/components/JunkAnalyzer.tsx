@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
-import { wasBingoShownForEstimate, markBingoShown, resetBingoShown } from "@/lib/bingo-items";
+import { wasBingoShownForEstimate, markBingoShown, resetBingoShown } from "@/lib";
 import { 
   Upload, 
   Camera, 

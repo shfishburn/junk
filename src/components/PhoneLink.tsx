@@ -1,6 +1,5 @@
 import { Phone } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { CONTACT_INFO, type PhoneInfo } from "@/lib/contact-info";
+import { cn, CONTACT_INFO, type PhoneInfo } from "@/lib";
 
 type PhoneType = "primary" | "secondary";
 

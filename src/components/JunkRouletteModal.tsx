@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { JunkRoulette } from "./JunkRoulette";
 import { ReferralWidget } from "@/components/shared";
-import { hasSpunToday, getLastPrize, type Prize } from "@/lib/roulette-prizes";
+import { hasSpunToday, getLastPrize, type Prize } from "@/lib";
 import { Copy, Check, PartyPopper, Gift } from "lucide-react";
 import { useToast } from "@/hooks";
 

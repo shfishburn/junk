@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Phone, Sparkles, CalendarDays, MessageCircle, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import logo from "@/assets/logo.png";
 
 const navLinks = [

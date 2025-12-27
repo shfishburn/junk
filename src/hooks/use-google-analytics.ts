@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { isCategoryConsented, CookiePreferences } from '@/lib/cookies';
+import { isCategoryConsented, type CookiePreferences } from "@/lib";
 
 // Replace with your GA4 Measurement ID when ready
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || '';

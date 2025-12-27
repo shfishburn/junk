@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { PRIZES, getWeightedRandomPrize, generateDiscountCode, recordSpin, type Prize } from "@/lib/roulette-prizes";
+import { PRIZES, getWeightedRandomPrize, generateDiscountCode, recordSpin, type Prize } from "@/lib";
 
 interface JunkRouletteProps {
   onComplete: (prize: Prize, code: string) => void;
