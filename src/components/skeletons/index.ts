@@ -1,3 +1,3 @@
 // Skeleton Components Barrel File
-export { ServiceCardSkeleton } from "./ServiceCardSkeleton";
-export { TestimonialCardSkeleton } from "./TestimonialCardSkeleton";
+export { ServiceCardSkeleton, ServiceCardSkeletonGrid } from "./ServiceCardSkeleton";
+export { TestimonialCardSkeleton, TestimonialSkeletonGrid } from "./TestimonialCardSkeleton";
