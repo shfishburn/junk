@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Helmet } from "react-helmet-async";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
 import yardWasteImg from "@/assets/service-yard-waste.jpg";
@@ -129,6 +131,50 @@ const services = [
   },
 ];
 
+const hazmatFaqs = [
+  {
+    question: "What hazardous materials do you accept?",
+    answer: "We accept common household hazardous materials including latex and oil-based paints, household chemicals and cleaners, all types of batteries, fluorescent bulbs and CFLs, motor oil and antifreeze, electronics and e-waste, aerosol cans, and small propane tanks."
+  },
+  {
+    question: "What items do you NOT accept?",
+    answer: "We cannot accept explosives, ammunition, radioactive materials, medical waste, biohazardous materials, asbestos, or industrial chemicals. These require specialized disposal services. If you're unsure about an item, give us a call and we'll let you know."
+  },
+  {
+    question: "Do you need special permits for hazmat pickup?",
+    answer: "No! That's the beauty of our service. We pick up household hazardous materials and transport them to certified collection facilities on your behalf. We handle the logistics so you don't have to figure out where these items go or wait for special collection days."
+  },
+  {
+    question: "How does the hazmat pickup service work?",
+    answer: "It's simple: schedule a pickup, we arrive and safely collect your hazardous materials, then we transport them to the appropriate certified collection facility for proper disposal. You get peace of mind knowing everything is handled responsibly."
+  },
+  {
+    question: "Are there quantity limits for hazardous materials?",
+    answer: "For most household quantities, there are no limits. However, if you have an unusually large amount of hazardous materials (like clearing out a workshop or business), give us a call first so we can plan accordingly and provide an accurate quote."
+  },
+  {
+    question: "Is hazmat pickup available same-day?",
+    answer: "In most cases, yes! We try to accommodate same-day hazmat pickups whenever possible. Just give us a call and we'll do our best to fit you into our schedule."
+  },
+  {
+    question: "How should I prepare hazardous materials for pickup?",
+    answer: "Keep items in their original containers when possible. Make sure lids are secure and containers aren't leaking. If you have loose batteries, put them in a bag or box. We'll handle the rest — no need to stress about perfect packaging."
+  },
+];
+
+const hazmatFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": hazmatFaqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
   const { ref, isVisible } = useScrollAnimation();
   const isReversed = index % 2 === 1;
@@ -200,6 +246,11 @@ const Services = () => {
         keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal, hazardous materials pickup, paint disposal, battery recycling"
         url="/services"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(hazmatFaqSchema)}
+        </script>
+      </Helmet>
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
@@ -221,6 +272,38 @@ const Services = () => {
             {services.map((service, index) => (
               <ServiceCard key={service.slug} service={service} index={index} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hazmat FAQ Section */}
+      <section className="py-16 md:py-24 bg-section-alt">
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <AlertTriangle className="h-4 w-4" />
+                Hazardous Materials FAQ
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Questions About Hazmat Pickup?
+              </h2>
+              <p className="text-muted-foreground">
+                We get it — hazardous materials can be confusing. Here's what you need to know.
+              </p>
+            </div>
+            <Accordion type="single" collapsible className="w-full">
+              {hazmatFaqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left text-foreground hover:text-primary">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>
