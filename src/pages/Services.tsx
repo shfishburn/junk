@@ -116,9 +116,9 @@ const services = [
   },
   {
     icon: AlertTriangle,
-    title: "Hazardous Materials Pickup",
+    title: "Household Hazmat Pickup",
     slug: "hazmat-pickup",
-    description: "Confused about where to take old paint, batteries, or chemicals? Skip the research and the 'special disposal days.' We pick up hazardous materials and deliver them where they need to go—so you don't have to figure it out.",
+    description: "Confused about where to take old paint, batteries, or chemicals? Skip the research and the 'special disposal days.' We pick up common household hazardous materials and deliver them where they need to go—so you don't have to figure it out.",
     image: hazmatImg,
     details: [
       "Latex & oil-based paint",
@@ -128,8 +128,9 @@ const services = [
       "Motor oil & antifreeze",
       "Electronics & e-waste",
       "Aerosol cans",
-      "Propane tanks",
+      "Propane tanks (small)",
     ],
+    note: "We handle household quantities. Industrial chemicals, asbestos, and medical waste require specialized services—ask us and we'll point you in the right direction.",
   },
 ];
 
@@ -260,6 +261,11 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             </li>
           ))}
         </ul>
+        {'note' in service && service.note && (
+          <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg mb-6 border border-border">
+            <strong>Note:</strong> {service.note}
+          </p>
+        )}
         <Button asChild>
           <Link to="/ai-estimator">
             Know Your Price

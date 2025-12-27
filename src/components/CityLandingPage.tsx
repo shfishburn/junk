@@ -260,7 +260,7 @@ export function CityLandingPage({ city }: { city: CityData }) {
                 <Link to="/pricing">View Pricing</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/ai-estimator">Get AI Estimate</Link>
+                <Link to="/ai-estimator">Get Your Real Price</Link>
               </Button>
             </div>
           </div>

@@ -41,7 +41,7 @@ export function AIEstimatorCTA() {
               <Button asChild size="lg">
                 <Link to="/ai-estimator">
                   <Sparkles className="mr-2 h-4 w-4" />
-                  Try AI Estimator
+                  Get Your Real Price
                 </Link>
               </Button>
             </div>

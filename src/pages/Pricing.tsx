@@ -80,7 +80,7 @@ const pricingInfo = [
   },
   {
     title: "No Hidden Fees",
-    description: "The price we quote is the price you pay. We don't add sneaky surcharges or mysterious 'processing fees.' We hate that stuff too.",
+    description: "The price we quote is the price you pay. No extra charges for stairs, fuel surcharges, or 'disposal fees.' We hate that stuff too.",
   },
   {
     title: "Free Estimates",
@@ -127,7 +127,7 @@ const faqs = [
   },
   {
     question: "Do you take hazardous materials?",
-    answer: "Yes! We offer a hazardous materials pickup service for items like paint, batteries, chemicals, motor oil, and e-waste. We pick them up and deliver them to certified collection facilities so you don't have to figure out where they go. Pricing includes pickup, transport, and disposal fees."
+    answer: "Yes! We offer a household hazardous materials pickup service for common items like paint, batteries, household chemicals, motor oil, and e-waste. We pick them up and deliver to certified collection facilities. Note: We cannot accept explosives, medical waste, asbestos, or industrial chemicals—those require specialized services. Not sure about something? Just ask."
   }
 ];
 
@@ -336,9 +336,9 @@ const Pricing = () => {
             <div className="p-6 bg-primary/5 border-b border-border">
               <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-primary" />
-                Hazardous Materials Pickup
+                Household Hazmat Pickup
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">We pick up and deliver to certified collection facilities</p>
+              <p className="text-sm text-muted-foreground mt-1">We pick up common household hazardous items and deliver to certified facilities</p>
             </div>
             <Table>
               <TableHeader>
@@ -363,7 +363,7 @@ const Pricing = () => {
             </Table>
             <div className="p-4 bg-muted/50 border-t border-border">
               <p className="text-xs text-muted-foreground">
-                * Pricing includes pickup, transport, and disposal fees. Some items may be subject to quantity limits.
+                * Pricing includes pickup, transport, and disposal fees. We handle household quantities. Industrial chemicals, asbestos, and medical waste require specialized services—just ask and we'll point you in the right direction.
               </p>
             </div>
           </div>
