@@ -5,8 +5,9 @@ export default function TermsAndConditions() {
   return (
     <Layout>
       <SEO 
-        title="Terms and Conditions | Junky Gurus" 
+        title="Terms and Conditions" 
         description="Read the terms and conditions for Junky Gurus junk removal services. Understand our service agreement, liability, and policies."
+        url="/terms-and-conditions"
       />
       <div className="container py-16 md:py-24">
         <div className="max-w-3xl mx-auto prose prose-slate dark:prose-invert">
