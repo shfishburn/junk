@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
 import { Button } from "@/components/ui/button";
-import { JunkBingoCard } from "@/components/JunkBingoCard";
+import { JunkBingoCard } from "@/components/features";
 import { Copy, Check, Share2, RotateCcw, Gift, MessageCircle, Mail, Facebook, Twitter, Phone, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
