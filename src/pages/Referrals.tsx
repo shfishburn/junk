@@ -148,7 +148,7 @@ const Referrals = () => {
               </Button>
               <Button asChild size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                 <Link to="/ai-estimator">
-                  Get AI Quote
+                  Get Your Real Price
                 </Link>
               </Button>
             </div>
