@@ -4,31 +4,33 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "@/components/shared";
-import Index from "./pages/Index";
-import Services from "./pages/Services";
-import ServiceArea from "./pages/ServiceArea";
-import Pricing from "./pages/Pricing";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import AIEstimator from "./pages/AIEstimator";
-import Referrals from "./pages/Referrals";
-import Bingo from "./pages/Bingo";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsAndConditions from "./pages/TermsAndConditions";
-import FAQ from "./pages/FAQ";
-import Book from "./pages/Book";
-import NotFound from "./pages/NotFound";
-import Espanol from "./pages/Espanol";
-import Discounts from "./pages/Discounts";
-import AdminLogin from "./pages/admin/Login";
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminBookings from "./pages/admin/Bookings";
-import AdminCalendarView from "./pages/admin/CalendarView";
-import AdminHazmatRequests from "./pages/admin/HazmatRequests";
-import Burlington from "./pages/cities/Burlington";
-import Anacortes from "./pages/cities/Anacortes";
-import SedroWoolley from "./pages/cities/SedroWoolley";
-import Bellingham from "./pages/cities/Bellingham";
+import {
+  Index,
+  Services,
+  ServiceArea,
+  Pricing,
+  About,
+  Contact,
+  AIEstimator,
+  Referrals,
+  Bingo,
+  PrivacyPolicy,
+  TermsAndConditions,
+  FAQ,
+  Book,
+  NotFound,
+  Espanol,
+  Discounts,
+  AdminLogin,
+  AdminDashboard,
+  AdminBookings,
+  AdminCalendarView,
+  AdminHazmatRequests,
+  Burlington,
+  Anacortes,
+  SedroWoolley,
+  Bellingham,
+} from "@/pages";
 
 const queryClient = new QueryClient();
 
