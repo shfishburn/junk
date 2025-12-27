@@ -73,5 +73,3 @@ export function PhoneButton({
     </a>
   );
 }
-
-export { CONTACT_INFO };

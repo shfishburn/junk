@@ -15,9 +15,6 @@ interface ContactInfoCardProps {
   className?: string;
 }
 
-// Re-export CONTACT_INFO for backwards compatibility
-export { CONTACT_INFO } from "@/lib/contact-info";
-
 // Computed values that depend on SERVICE_AREA_DATA
 const locationInfo = {
   location: SERVICE_AREA_DATA.baseLocation,

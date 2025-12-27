@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
-import { BookingSlotPicker } from "./BookingSlotPicker";
+import { BookingSlotPicker } from "@/components/shared";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
 
 // Validation schema for booking form
