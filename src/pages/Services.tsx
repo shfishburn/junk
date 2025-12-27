@@ -164,6 +164,47 @@ const hazmatFaqs = [
   },
 ];
 
+const SITE_URL = "https://junkygurus.com";
+
+// Individual Service Schema for each service
+const servicesSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": services.map((service, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "@id": `${SITE_URL}/services#${service.slug}`,
+      "name": service.title,
+      "description": service.description,
+      "provider": {
+        "@type": "LocalBusiness",
+        "@id": `${SITE_URL}/#localbusiness`,
+        "name": "Junky Gurus LLC"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 48.4201,
+          "longitude": -122.3343
+        },
+        "geoRadius": "80467"
+      },
+      "serviceType": service.title,
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "USD"
+        }
+      }
+    }
+  }))
+};
+
 const hazmatFaqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -249,6 +290,9 @@ const Services = () => {
         url="/services"
       />
       <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(servicesSchema)}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify(hazmatFaqSchema)}
         </script>
