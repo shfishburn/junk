@@ -71,7 +71,7 @@ export function Header() {
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
       headerBg
     )}>
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-20 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 relative z-10">
           <img 
@@ -205,9 +205,8 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
       <div className={cn(
-        "lg:hidden fixed inset-0 top-16 z-40 transition-all duration-300",
+        "lg:hidden fixed inset-0 top-20 z-40 transition-all duration-300",
         isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}>
         {/* Backdrop */}
@@ -216,9 +215,8 @@ export function Header() {
           onClick={closeMenu}
         />
         
-        {/* Menu Panel */}
         <nav className={cn(
-          "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-4rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
+          "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-5rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}>
           <div className="p-6 flex flex-col gap-1">
