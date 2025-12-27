@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout/Layout";
+import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Helmet } from "react-helmet-async";
 import {

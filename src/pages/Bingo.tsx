@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Layout } from "@/components/layout/Layout";
+import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { JunkBingoCard } from "@/components/JunkBingoCard";

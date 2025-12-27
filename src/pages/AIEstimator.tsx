@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout/Layout";
+import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { DemolitionAnalyzer } from "@/components/DemolitionAnalyzer";
