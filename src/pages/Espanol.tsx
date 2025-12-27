@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Phone, MessageCircle, Truck, Recycle, Clock, Shield, CheckCircle, MapPin, Sparkles } from "lucide-react";
+import { Phone, MessageCircle, Truck, Recycle, Clock, Shield, CheckCircle, MapPin, Sparkles, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-junk.jpg";
 
 const services = [
@@ -88,6 +88,10 @@ const Espanol = () => {
               <div className="flex items-center gap-2">
                 <Recycle className="h-4 w-4 text-primary" />
                 Reciclaje Responsable
+              </div>
+              <div className="flex items-center gap-2">
+                <Heart className="h-4 w-4 text-primary" />
+                15% Descuento para Veteranos y Personas Mayores
               </div>
             </div>
           </div>

@@ -11,9 +11,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { User, CheckCircle2, Loader2 } from "lucide-react";
+import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
 import { BookingSlotPicker } from "@/components/BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Zod schema for booking form validation
 const bookingSchema = z.object({
@@ -60,6 +61,8 @@ export default function Book() {
     phone: "",
     message: "",
   });
+  const [isSenior, setIsSenior] = useState(false);
+  const [isVeteran, setIsVeteran] = useState(false);
   const { toast } = useToast();
   const { refetchBookings } = useBookingSlots();
 
@@ -107,12 +110,20 @@ export default function Book() {
       // Parse and sanitize form data
       const validatedData = bookingSchema.parse(formData);
       
+      // Build discount info for message
+      const discountInfo = [];
+      if (isSenior) discountInfo.push("Senior (65+)");
+      if (isVeteran) discountInfo.push("Veteran/Active Military");
+      const discountNote = discountInfo.length > 0 
+        ? `\n\n[15% DISCOUNT ELIGIBLE: ${discountInfo.join(", ")}]` 
+        : "";
+      
       // Insert booking into database
       const { error: bookingError } = await supabase.from("bookings").insert({
         name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone || null,
-        message: validatedData.message || null,
+        message: (validatedData.message || "") + discountNote || null,
         booking_date: format(selectedDate, "yyyy-MM-dd"),
         booking_time: selectedTime,
         status: "pending",
@@ -315,11 +326,56 @@ export default function Book() {
                     )}
                   </div>
 
+                  {/* Senior/Veteran Discount Checkboxes */}
+                  <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Heart className="h-4 w-4 text-primary" />
+                      <p className="text-sm font-medium text-foreground">15% Senior & Veteran Discount</p>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Check if applicable — no proof required, we trust you.
+                    </p>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="senior" 
+                          checked={isSenior}
+                          onCheckedChange={(checked) => setIsSenior(checked === true)}
+                        />
+                        <label
+                          htmlFor="senior"
+                          className="text-sm text-muted-foreground cursor-pointer"
+                        >
+                          I am a senior citizen (65+)
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="veteran" 
+                          checked={isVeteran}
+                          onCheckedChange={(checked) => setIsVeteran(checked === true)}
+                        />
+                        <label
+                          htmlFor="veteran"
+                          className="text-sm text-muted-foreground cursor-pointer"
+                        >
+                          I am a veteran or active military
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="bg-muted p-4 rounded-lg">
                     <p className="text-sm font-medium">Your Appointment</p>
                     <p className="text-primary font-semibold">
                       {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
                     </p>
+                    {(isSenior || isVeteran) && (
+                      <p className="text-sm text-primary mt-1 flex items-center gap-1">
+                        <Heart className="h-3 w-3" />
+                        15% discount will be applied
+                      </p>
+                    )}
                   </div>
 
                   <Button

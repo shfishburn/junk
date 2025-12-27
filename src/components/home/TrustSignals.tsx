@@ -1,4 +1,4 @@
-import { Clock, Shield, Leaf, Star, Award, Recycle } from "lucide-react";
+import { Clock, Shield, Leaf, Star, Award, Recycle, Heart } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const signals = [
@@ -18,9 +18,9 @@ const signals = [
     description: "Furniture gets donated. Metals get recycled. Landfill is our last resort—not our default.",
   },
   {
-    icon: Star,
-    title: "5-Star Rated",
-    description: "Our customers love us, and we think you will too.",
+    icon: Heart,
+    title: "Senior & Veteran Discount",
+    description: "15% off for those who've served our country and community. No paperwork—just let us know.",
   },
   {
     icon: Award,
