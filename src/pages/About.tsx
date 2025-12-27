@@ -129,10 +129,10 @@ const About = () => {
             </h2>
             <div className="space-y-4 text-muted-foreground text-lg">
               <p>
-                Junky Gurus started because we got tired of seeing people get ripped off by junk removal companies. Hidden fees? No-shows? Workers who leave your place messier than they found it? Hard pass.
+                Junky Gurus started when four friends with perfectly good day jobs looked around and said, "You know what? We could do this better." We'd all had our own nightmare experiences with junk removal—hidden fees, no-shows, workers who left places messier than they found them. Hard pass.
               </p>
               <p>
-                We figured there had to be a better way. Spoiler alert: there is, and you're looking at it.
+                So we pooled our skills, bought a truck, and built a company based on one simple idea: treat people the way we'd want to be treated. Revolutionary, we know.
               </p>
               <p>
                 We're based right here in Mount Vernon, and we serve the communities we live in. When you hire us, you're hiring your neighbors — folks who actually care whether your driveway gets scratched.
