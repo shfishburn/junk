@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Sparkles, Accessibility, Bot, Home, Trash2 } from "lucide-react";
 import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
 import habitatRestoreLogo from "@/assets/habitat-restore-logo.png";
+import mountVernonTulips from "@/assets/mount-vernon-tulips.jpg";
 
 const values = [
   {
@@ -322,16 +323,30 @@ const About = () => {
       {/* Community */}
       <section className="py-16 md:py-24">
         <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Rooted in Mount Vernon
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              We live here. We work here. Every dollar you spend with us stays in the community—supporting local families, local businesses, and local causes. We're the junk removal company your grandma would be proud of.
-            </p>
-            <Button asChild>
-              <Link to="/contact">Work With Us</Link>
-            </Button>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="rounded-xl overflow-hidden border border-border shadow-lg">
+                <img 
+                  src={mountVernonTulips} 
+                  alt="Skagit Valley tulip fields near Mount Vernon, Washington" 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <p className="mt-3 text-center text-sm text-muted-foreground">
+                Skagit Valley — our beautiful backyard
+              </p>
+            </div>
+            <div className="order-1 lg:order-2 text-center lg:text-left">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                Rooted in Mount Vernon
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                We live here. We work here. Every dollar you spend with us stays in the community—supporting local families, local businesses, and local causes. We're the junk removal company your grandma would be proud of.
+              </p>
+              <Button asChild>
+                <Link to="/contact">Work With Us</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
