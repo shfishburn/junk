@@ -110,8 +110,12 @@ export default {
           "50%": { backgroundPosition: "100% 50%" },
         },
         "slide-in-down": {
-          from: { transform: "translateY(-100%)", opacity: "0" },
-          to: { transform: "translateY(0)", opacity: "1" },
+          from: { transform: "translateY(-100%)" },
+          to: { transform: "translateY(0)" },
+        },
+        "slide-out-up": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(-100%)" },
         },
         "slide-in-right": {
           from: { transform: "translateX(100%)" },
@@ -132,6 +136,7 @@ export default {
         "confetti-fall": "confetti-fall 2s ease-in-out forwards",
         "gradient-shift": "gradient-shift 8s ease infinite",
         "slide-in-down": "slide-in-down 0.3s ease-out forwards",
+        "slide-out-up": "slide-out-up 0.3s ease-out forwards",
         "slide-in-right": "slide-in-right 0.3s ease-out forwards",
         "slide-out-right": "slide-out-right 0.3s ease-out forwards",
       },
