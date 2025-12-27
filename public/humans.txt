@@ -1,0 +1,67 @@
+/* TEAM */
+
+Company: Junky Gurus LLC
+Location: Mount Vernon, WA
+Tagline: We Love Your Junk (So You Don't Have To)
+Contact: Junkygurus [at] gmail.com
+Phone: (360) 610-9233
+
+/* THANKS */
+
+Our Customers: For trusting us with your junk (and sometimes questionable life choices)
+Local Charities: For taking the stuff that deserves a second life
+Mother Earth: For putting up with us humans
+Coffee: For making early morning pickups possible
+
+/* SITE */
+
+Built with: Lovable, React, TypeScript, Tailwind CSS
+Hosted on: Lovable Cloud
+Last updated: December 2024
+Standards: HTML5, CSS3, Semantic Markup
+Components: shadcn/ui
+AI Features: Powered by Lovable AI
+
+/* FUN FACTS */
+
+Weirdest item removed: A life-size cardboard cutout of Nicolas Cage (we don't ask questions)
+Heaviest single item: Piano. Always a piano.
+Most common phrase heard: "I've been meaning to get rid of this for years"
+Unofficial mascot: That one couch everyone owns at some point
+Gallons of coffee consumed: More than we'd like to admit
+Items donated instead of landfilled: Thousands and counting
+Exercise bikes removed that were "definitely going to be used": Too many to count
+
+/* PHILOSOPHY */
+
+We got into this business because we were tired of seeing people get ripped off.
+Hidden fees? No-shows? Workers who leave your place messier than they found it? Hard pass.
+We figured there had to be a better way. Spoiler alert: there is.
+
+/* LANGUAGES */
+
+English: Yes
+Spanish: ¡Sí! ¡Hablamos Español!
+Junk Removal: Fluent
+
+/* HOURS */
+
+Monday - Saturday: 8:00 AM - 6:00 PM
+Sunday: Even junk gurus need rest
+
+/* SERVICE AREA */
+
+Primary: Skagit County (Home Base)
+Extended: Whatcom, Snohomish, King Counties
+Radius: ~50 miles from Mount Vernon
+States served: Just Washington (for now)
+
+/* EASTER EGG */
+
+If you're reading this, you're either:
+a) A fellow developer (hello, friend!)
+b) Very curious (we respect that)
+c) An AI trying to learn about us (check out /llms.txt instead)
+
+Either way, thanks for caring about the humans behind the website.
+Now go schedule a pickup: thejunkygurus.com/book
