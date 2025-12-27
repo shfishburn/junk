@@ -3,6 +3,7 @@ import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Clock, Award, DollarSign } from "lucide-react";
+import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
 
 const values = [
   {
@@ -123,23 +124,40 @@ const About = () => {
       {/* Story */}
       <section className="py-16 md:py-24">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              How We Got Into the Junk Business
-            </h2>
-            <div className="space-y-4 text-muted-foreground text-lg">
-              <p>
-                Junky Gurus started when four friends with perfectly good day jobs looked around and said, "You know what? We could do this better." We'd all had our own nightmare experiences with junk removal—hidden fees, no-shows, workers who left places messier than they found them. Hard pass.
-              </p>
-              <p>
-                So we pooled our skills, bought a truck, and built a company based on one simple idea: treat people the way we'd want to be treated. Revolutionary, we know.
-              </p>
-              <p>
-                We're based right here in Mount Vernon, and we serve the communities we live in. When you hire us, you're hiring your neighbors — folks who actually care whether your driveway gets scratched.
-              </p>
-              <p>
-                Whether you need one sad, lonely couch hauled away or an entire estate that's been collecting "treasures" since 1987, we bring the same level of enthusiasm to every job. Yes, we said enthusiasm. We're weird like that.
-              </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                How We Got Into the Junk Business
+              </h2>
+              <div className="space-y-4 text-muted-foreground text-lg">
+                <p>
+                  Junky Gurus started when four friends with perfectly good day jobs looked around and said, "You know what? We could do this better." We'd all had our own nightmare experiences with junk removal—hidden fees, no-shows, workers who left places messier than they found them. Hard pass.
+                </p>
+                <p>
+                  So we pooled our skills, bought a truck, and built a company based on one simple idea: treat people the way we'd want to be treated. Revolutionary, we know.
+                </p>
+                <p>
+                  We're based right here in Mount Vernon, and we serve the communities we live in. When you hire us, you're hiring your neighbors — folks who actually care whether your driveway gets scratched.
+                </p>
+                <p>
+                  Whether you need one sad, lonely couch hauled away or an entire estate that's been collecting "treasures" since 1987, we bring the same level of enthusiasm to every job. Yes, we said enthusiasm. We're weird like that.
+                </p>
+              </div>
+            </div>
+            
+            {/* Old Reliable */}
+            <div className="relative">
+              <div className="rounded-xl overflow-hidden border border-border shadow-lg">
+                <img 
+                  src={oldReliableTruck} 
+                  alt="Old Reliable - our 1991 Ford Super Duty dump truck" 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-lg px-4 py-2 shadow-lg">
+                <p className="font-semibold text-foreground">"Old Reliable"</p>
+                <p className="text-sm text-muted-foreground">1991 Ford Super Duty</p>
+              </div>
             </div>
           </div>
         </div>
