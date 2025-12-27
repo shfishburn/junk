@@ -59,11 +59,11 @@ export function Header() {
     : "bg-background/95 backdrop-blur-md border-b border-border shadow-sm";
 
   const textColor = isHome && !isScrolled
-    ? "text-white"
+    ? "text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-foreground";
 
   const mutedColor = isHome && !isScrolled
-    ? "text-white/80"
+    ? "text-white/90 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-muted-foreground";
 
   return (
