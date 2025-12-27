@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLoadingDelay } from "@/hooks/use-loading-delay";
+import { ServiceCardSkeletonGrid } from "@/components/skeletons/ServiceCardSkeleton";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
 import yardWasteImg from "@/assets/service-yard-waste.jpg";
@@ -44,6 +46,7 @@ const services = [
 
 export function ServicesOverview() {
   const { ref, isVisible } = useScrollAnimation();
+  const isLoading = useLoadingDelay(300);
 
   return (
     <section ref={ref} className="py-16 md:py-24">
@@ -61,29 +64,33 @@ export function ServicesOverview() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className={`group overflow-hidden rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+        {isLoading ? (
+          <ServiceCardSkeletonGrid />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <div
+                key={service.title}
+                className={`group overflow-hidden rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
+              >
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-semibold text-card-foreground mb-2">{service.title}</h3>
+                  <p className="text-sm text-muted-foreground">{service.description}</p>
+                </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-semibold text-card-foreground mb-2">{service.title}</h3>
-                <p className="text-sm text-muted-foreground">{service.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div 
           className={`text-center mt-10 transition-all duration-700 delay-500 ${
