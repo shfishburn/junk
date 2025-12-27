@@ -36,10 +36,16 @@ export const SERVICE_AREA_DATA = {
     },
   ],
   cityLinks: {
+    "Mount Vernon": "/junk-removal-mount-vernon-wa",
     "Burlington": "/junk-removal-burlington-wa",
     "Anacortes": "/junk-removal-anacortes-wa",
     "Sedro-Woolley": "/junk-removal-sedro-woolley-wa",
+    "La Conner": "/junk-removal-la-conner-wa",
+    "Concrete": "/junk-removal-concrete-wa",
+    "Bow": "/junk-removal-bow-wa",
     "Bellingham": "/junk-removal-bellingham-wa",
+    "Marysville": "/junk-removal-marysville-wa",
+    "Stanwood": "/junk-removal-stanwood-wa",
   } as Record<string, string>,
 };
 
