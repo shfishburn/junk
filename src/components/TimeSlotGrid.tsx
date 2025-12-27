@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TIME_SLOTS } from "@/hooks/use-booking-slots";
+import { TIME_SLOTS } from "@/hooks";
 import { cn } from "@/lib/utils";
 
 interface TimeSlotGridProps {

@@ -1,5 +1,5 @@
 import { XCircle } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 
 const noSurprises = [
   "Hidden fees or 'oh, that's extra' surprises",

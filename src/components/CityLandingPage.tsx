@@ -3,7 +3,7 @@ import { SEO } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, CheckCircle, Truck, Clock, Shield, Recycle, Star } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 
 export interface CityData {
   name: string;

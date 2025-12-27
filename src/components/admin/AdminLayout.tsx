@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAdminAuth } from '@/hooks/use-admin-auth';
+import { useAdminAuth } from "@/hooks";
 import { Button } from '@/components/ui/button';
 import { 
   LayoutDashboard, 

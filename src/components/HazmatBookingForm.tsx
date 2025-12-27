@@ -4,7 +4,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { DateTimePicker, FormField, TextareaField } from "@/components/shared";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";

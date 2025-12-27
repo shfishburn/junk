@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useAdminAuth } from '@/hooks/use-admin-auth';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
+import { useToast, useAdminAuth } from "@/hooks";
 import { Loader2, Lock } from 'lucide-react';
 import { z } from 'zod';
 

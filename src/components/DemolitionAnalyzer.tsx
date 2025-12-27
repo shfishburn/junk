@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Upload, 
@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { BookingSlotPicker } from "@/components/shared";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
+
 
 interface DemolitionStructure {
   name: string;

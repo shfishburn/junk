@@ -1,5 +1,5 @@
 import { Clock, Shield, Leaf, Star, Award, Recycle, Heart } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollAnimation } from "@/hooks";
 
 const signals = [
   {

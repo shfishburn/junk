@@ -4,12 +4,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
+import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, FormField, TextareaField, BookingSlotPicker } from "@/components/shared";
 import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // Zod schema for booking form validation

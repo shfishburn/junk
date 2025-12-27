@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { TimeSlotGrid, BookingCalendar } from "@/components/shared";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
+import { useBookingSlots } from "@/hooks";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 

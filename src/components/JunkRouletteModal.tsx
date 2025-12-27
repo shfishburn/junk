@@ -10,7 +10,7 @@ import { JunkRoulette } from "./JunkRoulette";
 import { ReferralWidget } from "@/components/shared";
 import { hasSpunToday, getLastPrize, type Prize } from "@/lib/roulette-prizes";
 import { Copy, Check, PartyPopper, Gift } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 
 interface JunkRouletteModalProps {
   open: boolean;

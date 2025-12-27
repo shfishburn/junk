@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TimeSlotGrid } from "@/components/TimeSlotGrid";
 import { BookingCalendar } from "@/components/BookingCalendar";
 import { CalendarDays, Clock, Loader2 } from "lucide-react";
-import { useBookingSlots } from "@/hooks/use-booking-slots";
+import { useBookingSlots } from "@/hooks";
 
 interface BookingSlotPickerProps {
   selectedDate: Date | undefined;

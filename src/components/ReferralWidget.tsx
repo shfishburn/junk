@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { Copy, Check, MessageCircle, Mail, Facebook, Twitter, Gift } from "lucide-react";
 
 interface ReferralWidgetProps {
