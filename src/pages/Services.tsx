@@ -1,6 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart } from "lucide-react";

@@ -1,6 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
-import { ReferralWidget } from "@/components/ReferralWidget";
+import { SEO, ReferralWidget } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, DollarSign, Sparkles } from "lucide-react";

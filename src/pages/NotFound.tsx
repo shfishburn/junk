@@ -2,7 +2,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Home, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/shared";
 
 const NotFound = () => {
   const location = useLocation();

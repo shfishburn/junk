@@ -1,13 +1,11 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO, Breadcrumbs, DiscountBadge } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Helmet } from "react-helmet-async";
-import { DiscountBadge } from "@/components/DiscountBadge";
 
 const steps = [
   {

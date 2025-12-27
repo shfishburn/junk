@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CONTACT_INFO } from "@/lib/contact-info";
 import { BusinessHours } from "@/components/BusinessHours";
 import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 import { PhoneLink } from "@/components/PhoneLink";
@@ -14,12 +15,11 @@ interface ContactInfoCardProps {
   className?: string;
 }
 
-export const CONTACT_INFO = {
-  phones: [
-    { number: "+13606109233", display: "(360) 610-9233" },
-    { number: "+13604222428", display: "(360) 422-2428" },
-  ],
-  email: "Junkygurus@gmail.com",
+// Re-export CONTACT_INFO for backwards compatibility
+export { CONTACT_INFO } from "@/lib/contact-info";
+
+// Computed values that depend on SERVICE_AREA_DATA
+const locationInfo = {
   location: SERVICE_AREA_DATA.baseLocation,
   serviceArea: `Serving ${SERVICE_AREA_DATA.counties.map(c => c.name.replace(" County", "")).join(", ")} Counties`,
 };
@@ -55,7 +55,7 @@ export function ContactInfoCard({
         {showLocation && (
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
-            <span>{CONTACT_INFO.location}</span>
+            <span>{locationInfo.location}</span>
           </div>
         )}
       </div>
@@ -99,8 +99,8 @@ export function ContactInfoCard({
           </div>
           <div>
             <h3 className="font-semibold text-charcoal">Location</h3>
-            <p className="text-muted-foreground">Based in {CONTACT_INFO.location}</p>
-            <p className="text-muted-foreground text-sm">{CONTACT_INFO.serviceArea}</p>
+            <p className="text-muted-foreground">Based in {locationInfo.location}</p>
+            <p className="text-muted-foreground text-sm">{locationInfo.serviceArea}</p>
           </div>
         </div>
       )}

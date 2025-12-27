@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CONTACT_INFO } from "@/components/ContactInfoCard";
+import { CONTACT_INFO } from "@/lib/contact-info";
 
 interface EmailLinkProps {
   email?: string;

@@ -1,5 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, CheckCircle, Truck, Clock, Shield, Recycle, Star } from "lucide-react";

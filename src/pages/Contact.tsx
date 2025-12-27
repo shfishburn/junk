@@ -3,16 +3,12 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { z } from "zod";
 import { Layout } from "@/components/layout/Layout";
-import { SEO } from "@/components/SEO";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SEO, Breadcrumbs, DateTimePicker, FormField, TextareaField, ContactInfoCard } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { DateTimePicker } from "@/components/DateTimePicker";
-import { FormField, TextareaField } from "@/components/FormField";
 import { Loader2, Sparkles, Camera } from "lucide-react";
-import { ContactInfoCard } from "@/components/ContactInfoCard";
 import { supabase } from "@/integrations/supabase/client";
 import { JunkRouletteModal } from "@/components/JunkRouletteModal";
 
