@@ -230,6 +230,66 @@ Utility functions and constants used across the application.
 
 ---
 
+## 📁 `@/pages`
+**File:** `src/pages/index.ts`
+
+Page components for routing.
+
+### Main Pages
+| Export | Description |
+|--------|-------------|
+| `Index` | Home page |
+| `About` | About us page |
+| `Services` | Services listing page |
+| `Pricing` | Pricing information page |
+| `Book` | Booking page |
+| `Contact` | Contact page |
+| `FAQ` | Frequently asked questions |
+| `ServiceArea` | Service area information |
+
+### Feature Pages
+| Export | Description |
+|--------|-------------|
+| `AIEstimator` | AI junk estimation tool |
+| `Bingo` | Junk bingo game page |
+| `Discounts` | Discounts page |
+| `Referrals` | Referral program page |
+
+### Legal Pages
+| Export | Description |
+|--------|-------------|
+| `PrivacyPolicy` | Privacy policy page |
+| `TermsAndConditions` | Terms and conditions page |
+
+### Localized Pages
+| Export | Description |
+|--------|-------------|
+| `Espanol` | Spanish language page |
+
+### Error Pages
+| Export | Description |
+|--------|-------------|
+| `NotFound` | 404 error page |
+
+### Admin Pages
+| Export | Description |
+|--------|-------------|
+| `AdminLogin` | Admin login page |
+| `AdminDashboard` | Admin dashboard |
+| `AdminBookings` | Admin bookings management |
+| `AdminCalendarView` | Admin calendar view |
+| `AdminHazmatRequests` | Admin hazmat requests |
+
+### City Landing Pages
+| Export | Description |
+|--------|-------------|
+| `Anacortes` | Anacortes city page |
+| `Bellingham` | Bellingham city page |
+| `Burlington` | Burlington city page |
+| `SedroWoolley` | Sedro-Woolley city page |
+
+---
+
 ## Usage Examples
 
 ```tsx
@@ -253,6 +313,9 @@ import { useToast, useScrollAnimation, useBookingSlots } from "@/hooks";
 
 // Import from lib
 import { cn, CONTACT_INFO, getConsentPreferences, PRIZES } from "@/lib";
+
+// Import from pages
+import { Index, About, Services, AdminDashboard } from "@/pages";
 ```
 
 ---
