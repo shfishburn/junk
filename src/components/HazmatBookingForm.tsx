@@ -1,0 +1,405 @@
+import { useState } from "react";
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
+import { 
+  AlertTriangle, 
+  Loader2, 
+  CalendarIcon, 
+  Paintbrush, 
+  Battery, 
+  Lightbulb, 
+  Fuel,
+  Tv,
+  Flame,
+  Wind,
+  FlaskConical,
+  Plus,
+  Minus
+} from "lucide-react";
+
+const TIME_SLOTS = [
+  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
+];
+
+const HAZMAT_ITEMS = [
+  { id: "paint_gallon", label: "Paint (gallon cans)", icon: Paintbrush, unit: "cans" },
+  { id: "paint_bucket", label: "Paint (5-gallon buckets)", icon: Paintbrush, unit: "buckets" },
+  { id: "batteries", label: "Batteries (all types)", icon: Battery, unit: "lbs approx" },
+  { id: "fluorescent", label: "Fluorescent tubes / CFLs", icon: Lightbulb, unit: "bulbs" },
+  { id: "motor_oil", label: "Motor oil / Antifreeze", icon: Fuel, unit: "containers" },
+  { id: "chemicals", label: "Household chemicals", icon: FlaskConical, unit: "containers" },
+  { id: "ewaste", label: "Electronics / E-waste", icon: Tv, unit: "items" },
+  { id: "propane", label: "Propane tanks", icon: Flame, unit: "tanks" },
+  { id: "aerosol", label: "Aerosol cans", icon: Wind, unit: "cans" },
+];
+
+interface HazmatItem {
+  id: string;
+  selected: boolean;
+  quantity: number;
+}
+
+export function HazmatBookingForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [preferredDate, setPreferredDate] = useState<Date | undefined>();
+  const [preferredTime, setPreferredTime] = useState<string>("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    notes: "",
+  });
+  const [hazmatItems, setHazmatItems] = useState<HazmatItem[]>(
+    HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 }))
+  );
+  const { toast } = useToast();
+
+  const handleItemToggle = (itemId: string) => {
+    setHazmatItems(prev => 
+      prev.map(item => 
+        item.id === itemId 
+          ? { ...item, selected: !item.selected, quantity: item.selected ? 1 : item.quantity }
+          : item
+      )
+    );
+  };
+
+  const handleQuantityChange = (itemId: string, delta: number) => {
+    setHazmatItems(prev =>
+      prev.map(item =>
+        item.id === itemId
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
+      )
+    );
+  };
+
+  const getSelectedItemsSummary = () => {
+    return hazmatItems
+      .filter(item => item.selected)
+      .map(item => {
+        const itemDef = HAZMAT_ITEMS.find(h => h.id === item.id);
+        return `${itemDef?.label}: ${item.quantity} ${itemDef?.unit}`;
+      })
+      .join(", ");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const selectedItems = hazmatItems.filter(item => item.selected);
+    if (selectedItems.length === 0) {
+      toast({
+        title: "Please select at least one item",
+        description: "Check the materials you need picked up.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const appointmentInfo = preferredDate 
+        ? `${format(preferredDate, "EEEE, MMMM d, yyyy")}${preferredTime ? ` at ${preferredTime}` : ""}`
+        : null;
+
+      const itemsSummary = getSelectedItemsSummary();
+      const message = `HAZMAT PICKUP REQUEST\n\nPickup Address: ${formData.address}\n\nMaterials:\n${itemsSummary}\n\nAdditional Notes: ${formData.notes || "None"}`;
+
+      const { error } = await supabase.functions.invoke("send-contact-email", {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message,
+          preferredAppointment: appointmentInfo,
+          isHazmatRequest: true,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Hazmat pickup request received!",
+        description: "We'll contact you shortly to confirm your pickup.",
+      });
+
+      // Reset form
+      setFormData({ name: "", email: "", phone: "", address: "", notes: "" });
+      setPreferredDate(undefined);
+      setPreferredTime("");
+      setHazmatItems(HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 })));
+    } catch (error) {
+      console.error("Error sending hazmat request:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try calling us directly at (360) 610-9233.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const disabledDays = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today || date.getDay() === 0;
+  };
+
+  const selectedCount = hazmatItems.filter(item => item.selected).length;
+
+  return (
+    <div className="p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+          <AlertTriangle className="h-6 w-6 text-primary" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-foreground">Schedule Hazmat Pickup</h3>
+          <p className="text-sm text-muted-foreground">Tell us what you've got and we'll handle the rest</p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Item Checklist */}
+        <div>
+          <Label className="text-base font-semibold mb-3 block">
+            What materials do you have? *
+          </Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {HAZMAT_ITEMS.map((item) => {
+              const hazmatItem = hazmatItems.find(h => h.id === item.id);
+              const isSelected = hazmatItem?.selected || false;
+              
+              return (
+                <div
+                  key={item.id}
+                  className={cn(
+                    "p-4 rounded-lg border-2 transition-all cursor-pointer",
+                    isSelected 
+                      ? "border-primary bg-primary/5" 
+                      : "border-border hover:border-primary/30"
+                  )}
+                  onClick={() => handleItemToggle(item.id)}
+                >
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      checked={isSelected}
+                      onCheckedChange={() => handleItemToggle(item.id)}
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-0.5"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <item.icon className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="font-medium text-foreground text-sm">{item.label}</span>
+                      </div>
+                      
+                      {isSelected && (
+                        <div className="mt-3 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() => handleQuantityChange(item.id, -1)}
+                          >
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          <span className="w-12 text-center text-sm font-medium">
+                            {hazmatItem?.quantity || 1}
+                          </span>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() => handleQuantityChange(item.id, 1)}
+                          >
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                          <span className="text-xs text-muted-foreground">{item.unit}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {selectedCount > 0 && (
+            <p className="text-sm text-primary mt-3 font-medium">
+              {selectedCount} item type{selectedCount > 1 ? "s" : ""} selected
+            </p>
+          )}
+        </div>
+
+        {/* Contact Info */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="hazmat-name">Name *</Label>
+            <Input
+              id="hazmat-name"
+              name="name"
+              type="text"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your name"
+              className="mt-1"
+            />
+          </div>
+          <div>
+            <Label htmlFor="hazmat-phone">Phone *</Label>
+            <Input
+              id="hazmat-phone"
+              name="phone"
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="(360) 555-0000"
+              className="mt-1"
+            />
+          </div>
+        </div>
+
+        <div>
+          <Label htmlFor="hazmat-email">Email *</Label>
+          <Input
+            id="hazmat-email"
+            name="email"
+            type="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="your@email.com"
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="hazmat-address">Pickup Address *</Label>
+          <Input
+            id="hazmat-address"
+            name="address"
+            type="text"
+            required
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="123 Main St, Mount Vernon, WA"
+            className="mt-1"
+          />
+        </div>
+
+        {/* Date & Time Picker */}
+        <div className="space-y-3">
+          <Label>Preferred Pickup Date (Optional)</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !preferredDate && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {preferredDate ? format(preferredDate, "PPP") : "Pick a date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={preferredDate}
+                onSelect={(date) => {
+                  setPreferredDate(date);
+                  setPreferredTime("");
+                }}
+                disabled={disabledDays}
+                initialFocus
+                className="pointer-events-auto"
+              />
+            </PopoverContent>
+          </Popover>
+
+          {preferredDate && (
+            <div>
+              <Label className="text-sm text-muted-foreground mb-2 block">
+                Select a time slot
+              </Label>
+              <div className="grid grid-cols-5 gap-2">
+                {TIME_SLOTS.map((slot) => (
+                  <Button
+                    key={slot}
+                    type="button"
+                    variant={preferredTime === slot ? "default" : "outline"}
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => setPreferredTime(slot)}
+                  >
+                    {slot.replace(":00 ", "")}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="hazmat-notes">Additional Notes</Label>
+          <Textarea
+            id="hazmat-notes"
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            placeholder="Anything else we should know? (e.g., items are in garage, need help carrying, etc.)"
+            className="mt-1 min-h-[80px]"
+          />
+        </div>
+
+        <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            <>
+              <AlertTriangle className="mr-2 h-4 w-4" />
+              Request Hazmat Pickup
+            </>
+          )}
+        </Button>
+
+        <p className="text-xs text-muted-foreground text-center">
+          We'll confirm your pickup within 24 hours. For urgent requests, call us at{" "}
+          <a href="tel:+13606109233" className="text-primary hover:underline">(360) 610-9233</a>
+        </p>
+      </form>
+    </div>
+  );
+}
