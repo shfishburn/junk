@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, MessageCircle, Cookie } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Cookie, Shield } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
 
 export function Footer() {
@@ -29,13 +29,14 @@ export function Footer() {
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },
                 { href: "/referrals", label: "Refer a Friend 🎁" },
-                { href: "/admin/dashboard", label: "Admin" },
+                { href: "/admin/dashboard", label: "Admin", icon: Shield },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
                   >
+                    {link.icon && <link.icon className="h-3 w-3" />}
                     {link.label}
                   </Link>
                 </li>
