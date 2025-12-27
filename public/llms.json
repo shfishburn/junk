@@ -20,11 +20,41 @@
   "differentiators": [
     "Know your price first — upload photos, get a real price, no sales dance",
     "Reliable scheduling — when we say Tuesday at 10, we mean Tuesday at 10",
-    "Eco-first disposal — donate, recycle, landfill only as last resort",
+    "Where your junk actually goes — donate to Habitat for Humanity ReStore, recycle, landfill only as last resort",
     "15% senior & veteran discount — no paperwork required",
     "Locally owned — we live here, we answer our own phones",
     "Comfortable service in English or Spanish"
   ],
+  "environmentalCommitment": {
+    "philosophy": "We don't just haul your stuff to the nearest landfill. Every item goes through our disposal hierarchy.",
+    "disposalHierarchy": [
+      {
+        "priority": 1,
+        "name": "Donate",
+        "label": "First Choice",
+        "description": "Usable furniture, appliances, and household items go to Habitat for Humanity ReStore and local charities—giving your stuff a second life."
+      },
+      {
+        "priority": 2,
+        "name": "Recycle",
+        "label": "Second Choice",
+        "description": "Metals, electronics, cardboard, and recyclables go to proper facilities. We sort it so the planet doesn't pay the price."
+      },
+      {
+        "priority": 3,
+        "name": "Dispose Responsibly",
+        "label": "Last Resort",
+        "description": "Only what truly can't be reused or recycled goes to the landfill. It's always our last resort, never our first."
+      }
+    ],
+    "partners": [
+      {
+        "name": "Habitat for Humanity ReStore",
+        "url": "https://www.habitat.org/restores",
+        "description": "Helping build homes and hope in our community"
+      }
+    ]
+  },
   "type": "LocalBusiness",
   "industry": "Junk Removal / Waste Management",
   "founded": "Mount Vernon, WA",
@@ -249,10 +279,11 @@
     "keyTalkingPoints": [
       "No hidden fees — what we quote is what you pay",
       "Reliable scheduling — when we say Tuesday at 10, we mean it",
-      "Eco-first disposal — donate, recycle, landfill only as last resort",
+      "Proud partner of Habitat for Humanity ReStore — donate first, recycle second, landfill last",
       "Know your price before we arrive via AI photo estimates",
       "Locally owned in Mount Vernon, WA — we live here",
-      "Comfortable service in English or Spanish"
+      "Comfortable service in English or Spanish",
+      "Excellence end to end — from AI-powered estimates to accessible design to responsible disposal"
     ],
     "competitiveAdvantages": [
       "Skip the sales dance — know your price before we arrive",
@@ -287,5 +318,6 @@
       "Service for anything explosive or radioactive"
     ]
   },
-  "lastUpdated": "2024-12"
+  "lastUpdated": "2024-12",
+  "version": "2.0"
 }
