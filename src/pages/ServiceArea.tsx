@@ -6,6 +6,14 @@ import { MapPin, Phone } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
 
+// Cities with dedicated landing pages
+const cityLinks: Record<string, string> = {
+  "Burlington": "/junk-removal-burlington-wa",
+  "Anacortes": "/junk-removal-anacortes-wa",
+  "Sedro-Woolley": "/junk-removal-sedro-woolley-wa",
+  "Bellingham": "/junk-removal-bellingham-wa",
+};
+
 const areas = [
   {
     county: "Skagit County",
@@ -152,14 +160,25 @@ const ServiceArea = () => {
                 <div className="ml-9">
                   <h3 className="font-semibold text-charcoal mb-3">Cities We Serve:</h3>
                   <div className="flex flex-wrap gap-2">
-                    {area.cities.map((city) => (
-                      <span
-                        key={city}
-                        className="px-3 py-1 text-sm bg-background border border-border rounded-full text-muted-foreground"
-                      >
-                        {city}
-                      </span>
-                    ))}
+                    {area.cities.map((city) => {
+                      const cityUrl = cityLinks[city];
+                      return cityUrl ? (
+                        <Link
+                          key={city}
+                          to={cityUrl}
+                          className="px-3 py-1 text-sm bg-primary/10 border border-primary/30 rounded-full text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          {city} →
+                        </Link>
+                      ) : (
+                        <span
+                          key={city}
+                          className="px-3 py-1 text-sm bg-background border border-border rounded-full text-muted-foreground"
+                        >
+                          {city}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
