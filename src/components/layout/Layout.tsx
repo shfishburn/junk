@@ -4,7 +4,7 @@ import { Footer } from "./Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AIAssistant } from "@/components/AIAssistant";
 import { ExitIntentPopup } from "@/components/ExitIntentPopup";
-import { PageTransition } from "@/components/PageTransition";
+import { PageTransition } from "@/components/shared";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
 import { useExitIntent } from "@/hooks/use-exit-intent";
 
