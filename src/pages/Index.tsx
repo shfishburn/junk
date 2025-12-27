@@ -22,16 +22,36 @@ const Index = () => {
         pageType="homepage"
         pagePurpose="Main landing page for Junky Gurus junk removal services. Book appointments, get quotes, view services and pricing."
       />
-      <HeroSection />
-      <HowItWorks />
-      <ServicesOverview />
-      <AIEstimatorCTA />
-      <GamificationCTA />
-      <TestimonialsSection />
-      <NoSurprises />
-      <TrustSignals />
-      <ServiceAreaSection />
-      <CTASection />
+      <section id="hero">
+        <HeroSection />
+      </section>
+      <section id="how-it-works">
+        <HowItWorks />
+      </section>
+      <section id="services">
+        <ServicesOverview />
+      </section>
+      <section id="estimator">
+        <AIEstimatorCTA />
+      </section>
+      <section id="games">
+        <GamificationCTA />
+      </section>
+      <section id="testimonials">
+        <TestimonialsSection />
+      </section>
+      <section id="pricing">
+        <NoSurprises />
+      </section>
+      <section id="trust">
+        <TrustSignals />
+      </section>
+      <section id="service-area">
+        <ServiceAreaSection />
+      </section>
+      <section id="contact">
+        <CTASection />
+      </section>
     </Layout>
   );
 };
