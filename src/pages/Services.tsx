@@ -11,6 +11,7 @@ import cleanupsImg from "@/assets/service-cleanouts.jpg";
 import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
 import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
+import hazmatImg from "@/assets/service-hazmat.jpg";
 
 const services = [
   {
@@ -114,7 +115,7 @@ const services = [
     title: "Hazardous Materials Pickup",
     slug: "hazmat-pickup",
     description: "Got old paint cans staring at you? Batteries multiplying in a drawer? We'll pick them up and deliver them to the proper disposal sites so you don't have to figure out where they go.",
-    image: null,
+    image: hazmatImg,
     details: [
       "Latex & oil-based paint",
       "Household chemicals & cleaners",
