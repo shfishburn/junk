@@ -113,6 +113,10 @@ export default {
           from: { transform: "translateX(100%)" },
           to: { transform: "translateX(0)" },
         },
+        "slide-out-right": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -124,6 +128,7 @@ export default {
         "gradient-shift": "gradient-shift 8s ease infinite",
         "slide-in-down": "slide-in-down 0.3s ease-out forwards",
         "slide-in-right": "slide-in-right 0.3s ease-out forwards",
+        "slide-out-right": "slide-out-right 0.3s ease-out forwards",
       },
     },
   },
