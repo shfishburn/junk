@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Sparkles, CalendarDays, MessageCircle } from "lucide-react";
+import { Phone, Sparkles, CalendarDays, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
@@ -111,11 +111,30 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 -mr-2"
+          className="md:hidden p-2 -mr-2 relative w-10 h-10 flex items-center justify-center"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <div className="flex flex-col justify-center items-center w-6 h-6">
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out",
+                isOpen ? "rotate-45 translate-y-[5px]" : ""
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out my-[4px]",
+                isOpen ? "opacity-0 scale-0" : "opacity-100"
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out",
+                isOpen ? "-rotate-45 -translate-y-[5px]" : ""
+              )}
+            />
+          </div>
         </button>
       </div>
 
