@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Clock, Award, DollarSign } from "lucide-react";
+import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Clock, Award, DollarSign, Sparkles, Accessibility, Bot } from "lucide-react";
 import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
 
 const values = [
@@ -208,12 +208,52 @@ const About = () => {
         </div>
       </section>
 
+      {/* Technology Investment */}
+      <section className="py-16 md:py-24 bg-card border-y border-border">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Sparkles className="h-4 w-4" />
+              Excellence End to End
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              More Than Just Hauling Junk
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              We believe every part of your experience should be exceptional—from the moment you visit our website to the moment we drive away. That's why we've invested in technology that makes everything easier, faster, and more accessible.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="p-6 rounded-xl bg-background border border-border">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Bot className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">AI-Powered Estimates</h3>
+              <p className="text-muted-foreground">
+                Upload a photo and get an instant price estimate. No waiting around, no guessing games. Our AI technology analyzes your junk and gives you a real number in seconds—before we even arrive.
+              </p>
+            </div>
+            
+            <div className="p-6 rounded-xl bg-background border border-border">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Accessibility className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Accessible to Everyone</h3>
+              <p className="text-muted-foreground">
+                Our website is built with accessibility in mind—screen reader support, keyboard navigation, reduced motion options, and high-contrast design. Because everyone deserves a great experience.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Community */}
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              More Than Just Haulers
+              Invested in Our Community
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
               We're invested in making Mount Vernon and the Puget Sound Region a better place to live. We donate usable items to those in need and recycle like our planet depends on it (because it does). Basically, we're trying to be the junk removal company your grandma would be proud of.
