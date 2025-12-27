@@ -1,15 +1,17 @@
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
-import { HeroSection } from "@/components/home/HeroSection";
-import { HowItWorks } from "@/components/home/HowItWorks";
-import { ServicesOverview } from "@/components/home/ServicesOverview";
-import { AIEstimatorCTA } from "@/components/home/AIEstimatorCTA";
-import { GamificationCTA } from "@/components/home/GamificationCTA";
-import { TestimonialsSection } from "@/components/home/TestimonialsSection";
-import { NoSurprises } from "@/components/home/NoSurprises";
-import { TrustSignals } from "@/components/home/TrustSignals";
-import { ServiceAreaSection } from "@/components/home/ServiceAreaSection";
-import { CTASection } from "@/components/home/CTASection";
+import {
+  HeroSection,
+  HowItWorks,
+  ServicesOverview,
+  AIEstimatorCTA,
+  GamificationCTA,
+  TestimonialsSection,
+  NoSurprises,
+  TrustSignals,
+  ServiceAreaSection,
+  CTASection,
+} from "@/components/home";
 
 const Index = () => {
   return (
