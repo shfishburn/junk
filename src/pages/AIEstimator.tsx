@@ -3,64 +3,98 @@ import { SEO } from "@/components/shared";
 import { JunkAnalyzer, DemolitionAnalyzer } from "@/components/features";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Phone, Camera, Lightbulb, Ruler, Eye, Trash2, Hammer, XCircle, CheckCircle } from "lucide-react";
 
-const junkTips = [
-  {
-    icon: Lightbulb,
-    title: "Good Lighting",
-    description: "Natural light works best. Avoid harsh shadows.",
+const translations = {
+  en: {
+    seoTitle: "AI Photo Estimator - Skip the Sales Dance",
+    seoDescription: "Know your junk removal price before we arrive. Upload a photo, get a real price. No phone tag, no on-site upsells, no surprises.",
+    badge: "Skip the Sales Dance",
+    heroTitle: "Know Your Price Before We Arrive",
+    heroSubtitle: "Upload photos. Get a real price. No phone tag. No on-site upsells. No surprises.",
+    noMore: "No More:",
+    noMoreList: [
+      "Phone tag with sales reps",
+      "Waiting days for a callback",
+      "On-site upsells or surprises",
+    ],
+    youGet: "You Get:",
+    youGetList: [
+      "Real price in seconds",
+      "No obligation, no pressure",
+      "What we quote is what you pay",
+      "15% off for seniors & veterans",
+    ],
+    junkRemoval: "Junk Removal",
+    lightDemolition: "Light Demolition",
+    tipsTitle: "Tips for the Best Estimate",
+    junkTips: [
+      { title: "Good Lighting", description: "Natural light works best. Avoid harsh shadows." },
+      { title: "Show Scale", description: "Include something for size reference if possible." },
+      { title: "Capture Everything", description: "Make sure all items are visible in the frame." },
+    ],
+    demolitionTips: [
+      { title: "Full Structure", description: "Capture the entire structure from multiple angles." },
+      { title: "Show Condition", description: "Include close-ups of any damage or rot." },
+      { title: "Access Points", description: "Show how we'll access the demolition area." },
+    ],
+    ctaTitle: "Prefer to Talk to a Human?",
+    ctaSubtitle: "No problem! Give us a call or fill out our contact form.",
+    ctaNote: "Same deal — we'll give you a real price with no surprises.",
+    contactUs: "Contact Us",
   },
-  {
-    icon: Ruler,
-    title: "Show Scale",
-    description: "Include something for size reference if possible.",
+  es: {
+    seoTitle: "Estimador con Foto IA - Sin Juegos de Ventas",
+    seoDescription: "Conoce el precio de tu recolección de basura antes de que lleguemos. Sube una foto, obtén un precio real. Sin llamadas, sin ventas en sitio, sin sorpresas.",
+    badge: "Sin Juegos de Ventas",
+    heroTitle: "Conoce Tu Precio Antes de Que Lleguemos",
+    heroSubtitle: "Sube fotos. Obtén un precio real. Sin llamadas telefónicas. Sin ventas en sitio. Sin sorpresas.",
+    noMore: "Se Acabó:",
+    noMoreList: [
+      "Llamadas con vendedores",
+      "Esperar días por respuesta",
+      "Ventas adicionales o sorpresas",
+    ],
+    youGet: "Obtienes:",
+    youGetList: [
+      "Precio real en segundos",
+      "Sin obligación, sin presión",
+      "Lo que cotizamos es lo que pagas",
+      "15% de descuento para mayores y veteranos",
+    ],
+    junkRemoval: "Recolección de Basura",
+    lightDemolition: "Demolición Ligera",
+    tipsTitle: "Consejos para el Mejor Estimado",
+    junkTips: [
+      { title: "Buena Iluminación", description: "La luz natural funciona mejor. Evita sombras fuertes." },
+      { title: "Muestra la Escala", description: "Incluye algo para referencia de tamaño si es posible." },
+      { title: "Captura Todo", description: "Asegúrate de que todos los artículos sean visibles." },
+    ],
+    demolitionTips: [
+      { title: "Estructura Completa", description: "Captura la estructura completa desde varios ángulos." },
+      { title: "Muestra la Condición", description: "Incluye fotos de cerca de cualquier daño." },
+      { title: "Puntos de Acceso", description: "Muestra cómo accederemos al área de demolición." },
+    ],
+    ctaTitle: "¿Prefieres Hablar con una Persona?",
+    ctaSubtitle: "¡Sin problema! Llámanos o llena nuestro formulario de contacto.",
+    ctaNote: "Mismo trato — te daremos un precio real sin sorpresas.",
+    contactUs: "Contáctanos",
   },
-  {
-    icon: Eye,
-    title: "Capture Everything",
-    description: "Make sure all items are visible in the frame.",
-  },
-];
-
-const demolitionTips = [
-  {
-    icon: Ruler,
-    title: "Full Structure",
-    description: "Capture the entire structure from multiple angles.",
-  },
-  {
-    icon: Eye,
-    title: "Show Condition",
-    description: "Include close-ups of any damage or rot.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Access Points",
-    description: "Show how we'll access the demolition area.",
-  },
-];
-
-const noMoreList = [
-  "Phone tag with sales reps",
-  "Waiting days for a callback",
-  "On-site upsells or surprises",
-];
-
-const youGetList = [
-  "Real price in seconds",
-  "No obligation, no pressure",
-  "What we quote is what you pay",
-  "15% off for seniors & veterans",
-];
+};
 
 const AIEstimator = () => {
+  const location = useLocation();
+  const isSpanish = location.pathname === "/espanol" || location.pathname.startsWith("/espanol/");
+  const t = isSpanish ? translations.es : translations.en;
+
+  const tipIcons = [Lightbulb, Ruler, Eye];
+
   return (
     <Layout>
       <SEO
-        title="AI Photo Estimator - Skip the Sales Dance"
-        description="Know your junk removal price before we arrive. Upload a photo, get a real price. No phone tag, no on-site upsells, no surprises."
+        title={t.seoTitle}
+        description={t.seoDescription}
         keywords="AI junk estimate, instant junk removal quote, demolition estimate, photo estimate, no hidden fees"
         url="/ai-estimator"
         pageType="tool"
@@ -72,21 +106,21 @@ const AIEstimator = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Camera className="h-4 w-4" />
-              Skip the Sales Dance
+              {t.badge}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Know Your Price Before We Arrive
+              {t.heroTitle}
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Upload photos. Get a real price. No phone tag. No on-site upsells. No surprises.
+              {t.heroSubtitle}
             </p>
             
             {/* Anxiety Neutralizers */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
               <div className="flex-1 p-4 rounded-xl bg-destructive/5 border border-destructive/10">
-                <p className="text-sm font-medium text-destructive/80 mb-3">No More:</p>
+                <p className="text-sm font-medium text-destructive/80 mb-3">{t.noMore}</p>
                 <ul className="space-y-2">
-                  {noMoreList.map((item) => (
+                  {t.noMoreList.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <XCircle className="h-4 w-4 text-destructive/60 flex-shrink-0" />
                       {item}
@@ -95,9 +129,9 @@ const AIEstimator = () => {
                 </ul>
               </div>
               <div className="flex-1 p-4 rounded-xl bg-primary/5 border border-primary/10">
-                <p className="text-sm font-medium text-primary mb-3">You Get:</p>
+                <p className="text-sm font-medium text-primary mb-3">{t.youGet}</p>
                 <ul className="space-y-2">
-                  {youGetList.map((item) => (
+                  {t.youGetList.map((item) => (
                     <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <CheckCircle className="h-4 w-4 text-primary/60 flex-shrink-0" />
                       {item}
@@ -118,18 +152,18 @@ const AIEstimator = () => {
               <TabsList className="grid w-full grid-cols-2 mb-8">
                 <TabsTrigger value="junk" className="flex items-center gap-2">
                   <Trash2 className="h-4 w-4" />
-                  Junk Removal
+                  {t.junkRemoval}
                 </TabsTrigger>
                 <TabsTrigger value="demolition" className="flex items-center gap-2">
                   <Hammer className="h-4 w-4" />
-                  Light Demolition
+                  {t.lightDemolition}
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="junk">
-                <JunkAnalyzer />
+                <JunkAnalyzer isSpanish={isSpanish} />
               </TabsContent>
               <TabsContent value="demolition">
-                <DemolitionAnalyzer />
+                <DemolitionAnalyzer isSpanish={isSpanish} />
               </TabsContent>
             </Tabs>
           </div>
@@ -141,46 +175,52 @@ const AIEstimator = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-charcoal text-center mb-8">
-              Tips for the Best Estimate
+              {t.tipsTitle}
             </h2>
             
             <Tabs defaultValue="junk-tips" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="junk-tips">Junk Removal</TabsTrigger>
-                <TabsTrigger value="demolition-tips">Demolition</TabsTrigger>
+                <TabsTrigger value="junk-tips">{t.junkRemoval}</TabsTrigger>
+                <TabsTrigger value="demolition-tips">{t.lightDemolition}</TabsTrigger>
               </TabsList>
               
               <TabsContent value="junk-tips">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {junkTips.map((tip) => (
-                    <div
-                      key={tip.title}
-                      className="p-6 rounded-xl bg-card border border-border text-center"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <tip.icon className="h-6 w-6 text-primary" />
+                  {t.junkTips.map((tip, index) => {
+                    const Icon = tipIcons[index];
+                    return (
+                      <div
+                        key={tip.title}
+                        className="p-6 rounded-xl bg-card border border-border text-center"
+                      >
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                          <Icon className="h-6 w-6 text-primary" />
+                        </div>
+                        <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
+                        <p className="text-sm text-muted-foreground">{tip.description}</p>
                       </div>
-                      <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
-                      <p className="text-sm text-muted-foreground">{tip.description}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </TabsContent>
               
               <TabsContent value="demolition-tips">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {demolitionTips.map((tip) => (
-                    <div
-                      key={tip.title}
-                      className="p-6 rounded-xl bg-card border border-border text-center"
-                    >
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <tip.icon className="h-6 w-6 text-primary" />
+                  {t.demolitionTips.map((tip, index) => {
+                    const Icon = tipIcons[index];
+                    return (
+                      <div
+                        key={tip.title}
+                        className="p-6 rounded-xl bg-card border border-border text-center"
+                      >
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                          <Icon className="h-6 w-6 text-primary" />
+                        </div>
+                        <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
+                        <p className="text-sm text-muted-foreground">{tip.description}</p>
                       </div>
-                      <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
-                      <p className="text-sm text-muted-foreground">{tip.description}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </TabsContent>
             </Tabs>
@@ -193,17 +233,17 @@ const AIEstimator = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Prefer to Talk to a Human?
+              {t.ctaTitle}
             </h2>
             <p className="text-muted-foreground mb-2">
-              No problem! Give us a call or fill out our contact form.
+              {t.ctaSubtitle}
             </p>
             <p className="text-sm text-muted-foreground mb-8">
-              Same deal — we'll give you a real price with no surprises.
+              {t.ctaNote}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link to="/contact">Contact Us</Link>
+                <Link to={isSpanish ? "/espanol#contacto" : "/contact"}>{t.contactUs}</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <a href="tel:+13606109233">
