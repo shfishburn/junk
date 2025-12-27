@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +31,142 @@ import {
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { BookingSlotPicker } from "@/components/shared";
 
+const translations = {
+  en: {
+    invalidFileType: "Invalid file type",
+    notAnImage: "is not an image file",
+    fileTooLarge: "File too large",
+    largerThan10MB: "is larger than 10MB",
+    analysisFailed: "Analysis failed",
+    dontWorryCall: "Don't worry — just give us a call for a quote!",
+    selectDateTime: "Please select a date and time",
+    chooseWhen: "Choose when you'd like us to come for your demolition estimate.",
+    timeSlotUnavailable: "Time slot no longer available",
+    someoneJustBooked: "Someone just booked this slot. Please select another time.",
+    bookingConfirmed: "Booking confirmed!",
+    checkEmail: "Check your email for confirmation details.",
+    somethingWentWrong: "Something went wrong",
+    tryCallingUs: "Please try calling us directly at (360) 610-9233.",
+    estimatedTotal: "Estimated Total",
+    highConfidence: "High confidence estimate",
+    mediumConfidence: "Medium confidence — final price may vary",
+    roughEstimate: "Rough estimate — call for accurate quote",
+    labor: "Labor",
+    disposal: "Disposal",
+    hours: "Hours",
+    crew: "Crew",
+    truckLoads: "Truck Loads",
+    complexity: "Complexity",
+    simple: "Simple",
+    moderate: "Moderate",
+    complex: "Complex",
+    structuresIdentified: "Structures Identified",
+    equipmentNeeded: "Equipment Needed",
+    safetyConsiderations: "Safety Considerations",
+    bookYourQuote: "Book Your Demolition Quote",
+    yourDetails: "Your Details",
+    name: "Name *",
+    yourName: "Your name",
+    phone: "Phone *",
+    email: "Email *",
+    anythingElse: "Anything else we should know?",
+    addressPlaceholder: "Address, accessibility, timeline, etc.",
+    booking: "Booking...",
+    confirmBooking: "Confirm Booking",
+    bookingConfirmedTitle: "Booking Confirmed!",
+    quoteScheduled: "Your demolition quote is scheduled for",
+    at: "at",
+    newPhotos: "New Photos",
+    headsUp: "Heads up!",
+    disclaimer: "Our AI is smart, but demolition projects can be tricky! This estimate is for planning purposes only. Actual pricing depends on hidden factors like rotten wood, concrete footings, or surprise wasps' nests. We'll give you the real deal with an on-site quote. No surprises, pinky promise.",
+    oops: "Oops! Something went wrong",
+    tryAgain: "Try Again",
+    callForQuote: "Call for Quote",
+    uploadTitle: "Upload Demolition Photos",
+    dropHere: "Drop your photos here!",
+    dragDrop: "Drag & drop or click to upload photos of decks, sheds, fences, etc.",
+    fileTypes: "JPG, PNG, or HEIC • Max 10MB per image",
+    aiAnalysis: "Our AI will analyze your demolition project and provide an instant estimate. Perfect for decks, sheds, fences, and more!",
+    conditionGood: "Good",
+    conditionWeathered: "Weathered",
+    conditionDamaged: "Damaged",
+    conditionRotted: "Rotted",
+    loadingMessages: [
+      "Sizing up the demolition zone...",
+      "Calculating destruction levels...",
+      "Consulting the teardown experts...",
+      "Measuring the mayhem...",
+      "Estimating the rubble...",
+    ],
+  },
+  es: {
+    invalidFileType: "Tipo de archivo inválido",
+    notAnImage: "no es un archivo de imagen",
+    fileTooLarge: "Archivo muy grande",
+    largerThan10MB: "es mayor a 10MB",
+    analysisFailed: "Análisis falló",
+    dontWorryCall: "No te preocupes — ¡llámanos para una cotización!",
+    selectDateTime: "Por favor selecciona fecha y hora",
+    chooseWhen: "Elige cuándo te gustaría que lleguemos para tu estimado de demolición.",
+    timeSlotUnavailable: "Horario ya no disponible",
+    someoneJustBooked: "Alguien acaba de reservar este horario. Por favor selecciona otro.",
+    bookingConfirmed: "¡Reserva confirmada!",
+    checkEmail: "Revisa tu correo para los detalles de confirmación.",
+    somethingWentWrong: "Algo salió mal",
+    tryCallingUs: "Por favor intenta llamarnos directamente al (360) 610-9233.",
+    estimatedTotal: "Total Estimado",
+    highConfidence: "Estimado de alta confianza",
+    mediumConfidence: "Confianza media — el precio final puede variar",
+    roughEstimate: "Estimado aproximado — llama para cotización exacta",
+    labor: "Mano de Obra",
+    disposal: "Disposición",
+    hours: "Horas",
+    crew: "Equipo",
+    truckLoads: "Cargas de Camión",
+    complexity: "Complejidad",
+    simple: "Simple",
+    moderate: "Moderado",
+    complex: "Complejo",
+    structuresIdentified: "Estructuras Identificadas",
+    equipmentNeeded: "Equipo Necesario",
+    safetyConsiderations: "Consideraciones de Seguridad",
+    bookYourQuote: "Reserva Tu Cotización de Demolición",
+    yourDetails: "Tus Datos",
+    name: "Nombre *",
+    yourName: "Tu nombre",
+    phone: "Teléfono *",
+    email: "Correo *",
+    anythingElse: "¿Algo más que debamos saber?",
+    addressPlaceholder: "Dirección, accesibilidad, tiempo, etc.",
+    booking: "Reservando...",
+    confirmBooking: "Confirmar Reserva",
+    bookingConfirmedTitle: "¡Reserva Confirmada!",
+    quoteScheduled: "Tu cotización de demolición está programada para",
+    at: "a las",
+    newPhotos: "Nuevas Fotos",
+    headsUp: "¡Atención!",
+    disclaimer: "Nuestra IA es inteligente, ¡pero los proyectos de demolición pueden ser complicados! Este estimado es solo para planificación. El precio real depende de factores ocultos como madera podrida, cimientos de concreto o nidos de avispas sorpresa. Te daremos el precio real con una cotización en sitio. Sin sorpresas, lo prometemos.",
+    oops: "¡Ups! Algo salió mal",
+    tryAgain: "Intentar de Nuevo",
+    callForQuote: "Llamar para Cotización",
+    uploadTitle: "Subir Fotos de Demolición",
+    dropHere: "¡Suelta tus fotos aquí!",
+    dragDrop: "Arrastra y suelta o haz clic para subir fotos de terrazas, cobertizos, cercas, etc.",
+    fileTypes: "JPG, PNG o HEIC • Máximo 10MB por imagen",
+    aiAnalysis: "Nuestra IA analizará tu proyecto de demolición y proporcionará un estimado instantáneo. ¡Perfecto para terrazas, cobertizos, cercas y más!",
+    conditionGood: "Bueno",
+    conditionWeathered: "Desgastado",
+    conditionDamaged: "Dañado",
+    conditionRotted: "Podrido",
+    loadingMessages: [
+      "Evaluando la zona de demolición...",
+      "Calculando niveles de destrucción...",
+      "Consultando a los expertos...",
+      "Midiendo el caos...",
+      "Estimando los escombros...",
+    ],
+  },
+};
 
 interface DemolitionStructure {
   name: string;
@@ -68,20 +205,16 @@ interface DemolitionResult {
   recommendations: string[];
 }
 
-const loadingMessages = [
-  "Sizing up the demolition zone...",
-  "Calculating destruction levels...",
-  "Consulting the teardown experts...",
-  "Measuring the mayhem...",
-  "Estimating the rubble...",
-];
-
 interface DemolitionAnalyzerProps {
   variant?: "inline" | "compact";
   onAnalysisComplete?: () => void;
+  isSpanish?: boolean;
 }
 
-export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: DemolitionAnalyzerProps) {
+export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish = false }: DemolitionAnalyzerProps) {
+  const t = isSpanish ? translations.es : translations.en;
+  const loadingMessages = t.loadingMessages;
+
   const [isDragging, setIsDragging] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
@@ -101,6 +234,19 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: D
   });
   const { toast } = useToast();
   const { refetchBookings } = useBookingSlots();
+
+  const conditionLabels = {
+    good: t.conditionGood,
+    weathered: t.conditionWeathered,
+    damaged: t.conditionDamaged,
+    rotted: t.conditionRotted,
+  };
+
+  const complexityLabels = {
+    simple: t.simple,
+    moderate: t.moderate,
+    complex: t.complex,
+  };
 
   // Restore saved estimate from localStorage on mount
   useEffect(() => {
@@ -139,8 +285,8 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: D
       
       if (!file.type.startsWith("image/")) {
         toast({
-          title: "Invalid file type",
-          description: `${file.name} is not an image file`,
+          title: t.invalidFileType,
+          description: `${file.name} ${t.notAnImage}`,
           variant: "destructive",
         });
         continue;
@@ -148,8 +294,8 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: D
 
       if (file.size > 10 * 1024 * 1024) {
         toast({
-          title: "File too large",
-          description: `${file.name} is larger than 10MB`,
+          title: t.fileTooLarge,
+          description: `${file.name} ${t.largerThan10MB}`,
           variant: "destructive",
         });
         continue;
@@ -202,15 +348,15 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: D
       console.error("Analysis error:", err);
       setError(err instanceof Error ? err.message : "Failed to analyze image");
       toast({
-        title: "Analysis failed",
-        description: "Don't worry — just give us a call for a quote!",
+        title: t.analysisFailed,
+        description: t.dontWorryCall,
         variant: "destructive",
       });
     } finally {
       clearInterval(messageInterval);
       setIsAnalyzing(false);
     }
-  }, [toast, onAnalysisComplete]);
+  }, [toast, onAnalysisComplete, loadingMessages, t]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -251,8 +397,8 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete }: D
     
     if (!selectedDate || !selectedTime) {
       toast({
-        title: "Please select a date and time",
-        description: "Choose when you'd like us to come for your demolition estimate.",
+        title: t.selectDateTime,
+        description: t.chooseWhen,
         variant: "destructive",
       });
       return;
@@ -296,8 +442,8 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         // Handle unique constraint violation (double booking)
         if (bookingError.code === "23505") {
           toast({
-            title: "Time slot no longer available",
-            description: "Someone just booked this slot. Please select another time.",
+            title: t.timeSlotUnavailable,
+            description: t.someoneJustBooked,
             variant: "destructive",
           });
           refetchBookings();
@@ -315,23 +461,23 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           phone: formData.phone || "",
           message: estimateDetails,
           isBooking: true,
-          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
+          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined }),
           bookingTime: selectedTime,
         },
       });
 
       setRequestSubmitted(true);
       toast({
-        title: "Booking confirmed!",
-        description: "Check your email for confirmation details.",
+        title: t.bookingConfirmed,
+        description: t.checkEmail,
       });
       
       setShowRoulette(true);
     } catch (error) {
       console.error("Error creating booking:", error);
       toast({
-        title: "Something went wrong",
-        description: "Please try calling us directly at (360) 610-9233.",
+        title: t.somethingWentWrong,
+        description: t.tryCallingUs,
         variant: "destructive",
       });
     } finally {
@@ -351,13 +497,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
     complex: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
   };
 
-  const conditionLabels = {
-    good: "Good",
-    weathered: "Weathered",
-    damaged: "Damaged",
-    rotted: "Rotted",
-  };
-
   // Results view
   if (result) {
     return (
@@ -374,7 +513,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </div>
             <Button variant="secondary" size="sm" onClick={reset} className="absolute top-0 right-0">
               <RotateCcw className="h-4 w-4 mr-1" />
-              New Photos
+              {t.newPhotos}
             </Button>
           </div>
         )}
@@ -391,20 +530,20 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <div className="p-6 rounded-xl bg-primary/10 border-2 border-primary/30 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <DollarSign className="h-6 w-6 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Estimated Total</span>
+            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{t.estimatedTotal}</span>
           </div>
           <div className="text-4xl md:text-5xl font-bold text-primary">
             ${result.priceEstimate.totalMin.toLocaleString()} - ${result.priceEstimate.totalMax.toLocaleString()}
           </div>
           <p className={`text-sm mt-2 ${confidenceColors[result.confidence]}`}>
-            {result.confidence === "high" ? "High confidence estimate" : 
-             result.confidence === "medium" ? "Medium confidence — final price may vary" :
-             "Rough estimate — call for accurate quote"}
+            {result.confidence === "high" ? t.highConfidence : 
+             result.confidence === "medium" ? t.mediumConfidence :
+             t.roughEstimate}
           </p>
           <div className="flex justify-center gap-4 mt-4 text-sm text-muted-foreground">
-            <span>Labor: ${result.priceEstimate.laborMin}-${result.priceEstimate.laborMax}</span>
+            <span>{t.labor}: ${result.priceEstimate.laborMin}-${result.priceEstimate.laborMax}</span>
             <span>•</span>
-            <span>Disposal: ${result.priceEstimate.disposalMin}-${result.priceEstimate.disposalMax}</span>
+            <span>{t.disposal}: ${result.priceEstimate.disposalMin}-${result.priceEstimate.disposalMax}</span>
           </div>
         </div>
 
@@ -413,24 +552,24 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Clock className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.scopeOfWork.estimatedHours}</div>
-            <div className="text-xs text-muted-foreground">Hours</div>
+            <div className="text-xs text-muted-foreground">{t.hours}</div>
           </div>
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Users className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.scopeOfWork.crewSize}</div>
-            <div className="text-xs text-muted-foreground">Crew</div>
+            <div className="text-xs text-muted-foreground">{t.crew}</div>
           </div>
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Truck className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.debrisEstimate.truckLoads}</div>
-            <div className="text-xs text-muted-foreground">Truck Loads</div>
+            <div className="text-xs text-muted-foreground">{t.truckLoads}</div>
           </div>
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Hammer className="h-5 w-5 mx-auto mb-2 text-primary" />
             <span className={`text-xs px-2 py-1 rounded-full ${complexityColors[result.scopeOfWork.complexity]}`}>
-              {result.scopeOfWork.complexity.charAt(0).toUpperCase() + result.scopeOfWork.complexity.slice(1)}
+              {complexityLabels[result.scopeOfWork.complexity]}
             </span>
-            <div className="text-xs text-muted-foreground mt-1">Complexity</div>
+            <div className="text-xs text-muted-foreground mt-1">{t.complexity}</div>
           </div>
         </div>
 
@@ -438,7 +577,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <div className="p-4 rounded-lg bg-card border border-border">
           <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-primary" />
-            Structures Identified
+            {t.structuresIdentified}
           </h4>
           <div className="space-y-2">
             {result.structures.map((structure, i) => (
@@ -459,7 +598,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-4 rounded-lg bg-card border border-border">
             <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
               <Wrench className="h-4 w-4 text-primary" />
-              Equipment Needed
+              {t.equipmentNeeded}
             </h4>
             <div className="flex flex-wrap gap-2">
               {result.scopeOfWork.equipmentNeeded.map((equipment, i) => (
@@ -476,7 +615,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
             <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              Safety Considerations
+              {t.safetyConsiderations}
             </h4>
             <ul className="list-disc list-inside space-y-1 text-sm text-amber-700 dark:text-amber-300">
               {result.safetyConsiderations.map((item, i) => (
@@ -498,7 +637,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-6 rounded-xl bg-card border-2 border-primary/20">
             <h3 className="font-semibold text-charcoal text-lg mb-4 flex items-center gap-2">
               <CalendarDays className="h-5 w-5 text-primary" />
-              Book Your Demolition Quote
+              {t.bookYourQuote}
             </h3>
             <form onSubmit={handleRequestSubmit} className="space-y-6">
               {/* Booking Slot Picker */}
@@ -512,10 +651,10 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
               
               {/* Contact Details */}
               <div className="border-t border-border pt-4">
-                <h4 className="font-medium text-charcoal mb-3">Your Details</h4>
+                <h4 className="font-medium text-charcoal mb-3">{t.yourDetails}</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Name *</Label>
+                    <Label htmlFor="name">{t.name}</Label>
                     <Input
                       id="name"
                       name="name"
@@ -523,12 +662,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                       required
                       value={formData.name}
                       onChange={handleFormChange}
-                      placeholder="Your name"
+                      placeholder={t.yourName}
                       className="mt-1"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone *</Label>
+                    <Label htmlFor="phone">{t.phone}</Label>
                     <Input
                       id="phone"
                       name="phone"
@@ -542,7 +681,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                   </div>
                 </div>
                 <div className="mt-4">
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email">{t.email}</Label>
                   <Input
                     id="email"
                     name="email"
@@ -555,13 +694,13 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                   />
                 </div>
                 <div className="mt-4">
-                  <Label htmlFor="notes">Anything else we should know?</Label>
+                  <Label htmlFor="notes">{t.anythingElse}</Label>
                   <Textarea
                     id="notes"
                     name="notes"
                     value={formData.notes}
                     onChange={handleFormChange}
-                    placeholder="Address, accessibility, timeline, etc."
+                    placeholder={t.addressPlaceholder}
                     className="mt-1 min-h-[80px]"
                   />
                 </div>
@@ -576,12 +715,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                 {isSubmittingRequest ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Booking...
+                    {t.booking}
                   </>
                 ) : (
                   <>
                     <CalendarDays className="mr-2 h-4 w-4" />
-                    Confirm Booking
+                    {t.confirmBooking}
                   </>
                 )}
               </Button>
@@ -590,15 +729,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         ) : (
           <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
             <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
-            <h3 className="font-semibold text-charcoal text-lg mb-2">Booking Confirmed!</h3>
+            <h3 className="font-semibold text-charcoal text-lg mb-2">{t.bookingConfirmedTitle}</h3>
             <p className="text-muted-foreground">
-              Your demolition quote is scheduled for{" "}
+              {t.quoteScheduled}{" "}
               <strong className="text-foreground">
-                {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
+                {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined })} {t.at} {selectedTime}
               </strong>
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              Check your email for confirmation details.
+              {t.checkEmail}
             </p>
           </div>
         )}
@@ -629,9 +768,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
 
         <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
           <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
-            <strong>Heads up!</strong> Our AI is smart, but demolition projects can be tricky! This estimate is for planning purposes only. 
-            Actual pricing depends on hidden factors like rotten wood, concrete footings, or surprise wasps' nests. 
-            We'll give you the real deal with an on-site quote. No surprises, pinky promise.
+            <strong>{t.headsUp}</strong> {t.disclaimer}
           </p>
         </div>
       </div>
@@ -643,17 +780,17 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
     return (
       <div className="text-center p-6 space-y-4">
         <AlertCircle className="h-12 w-12 mx-auto text-destructive" />
-        <h3 className="font-semibold text-charcoal text-lg">Oops! Something went wrong</h3>
+        <h3 className="font-semibold text-charcoal text-lg">{t.oops}</h3>
         <p className="text-muted-foreground">{error}</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button onClick={reset}>
             <RotateCcw className="mr-2 h-4 w-4" />
-            Try Again
+            {t.tryAgain}
           </Button>
           <Button asChild variant="outline">
             <a href="tel:+13606109233">
               <Phone className="mr-2 h-4 w-4" />
-              Call for Quote
+              {t.callForQuote}
             </a>
           </Button>
         </div>
@@ -721,23 +858,22 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           
           <div>
             <h3 className="font-semibold text-charcoal mb-1">
-              {isDragging ? "Drop your photos here!" : "Upload Demolition Photos"}
+              {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
             <p className="text-sm text-muted-foreground">
-              Drag & drop or click to upload photos of decks, sheds, fences, etc.
+              {t.dragDrop}
             </p>
           </div>
 
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
             <Camera className="h-4 w-4" />
-            <span>JPG, PNG, or HEIC • Max 10MB per image</span>
+            <span>{t.fileTypes}</span>
           </div>
         </div>
       </div>
 
       <p className="text-xs text-center text-muted-foreground">
-        Our AI will analyze your demolition project and provide an instant estimate. 
-        Perfect for decks, sheds, fences, and more!
+        {t.aiAnalysis}
       </p>
     </div>
   );

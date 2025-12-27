@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,128 @@ import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "@/components/shared";
 
+const translations = {
+  en: {
+    invalidFileType: "Invalid file type",
+    notAnImage: "is not an image file",
+    fileTooLarge: "File too large",
+    largerThan10MB: "is larger than 10MB",
+    analysisFailed: "Analysis failed",
+    dontWorryCall: "Don't worry — just give us a call for a quote!",
+    selectDateTime: "Please select a date and time",
+    chooseWhen: "Choose when you'd like us to come pick up your junk.",
+    invalidInput: "Invalid input",
+    timeSlotUnavailable: "Time slot no longer available",
+    someoneJustBooked: "Someone just booked this slot. Please select another time.",
+    bookingConfirmed: "Booking confirmed!",
+    checkEmail: "Check your email for confirmation details.",
+    somethingWentWrong: "Something went wrong",
+    tryCallingUs: "Please try calling us directly at (360) 610-9233.",
+    estimatedPrice: "Estimated Price",
+    highConfidence: "High confidence estimate",
+    mediumConfidence: "Medium confidence — final price may vary",
+    roughEstimate: "Rough estimate — call for accurate quote",
+    items: "Items",
+    truck: "Truck",
+    lbs: "lbs",
+    itemsIdentified: "Items Identified",
+    bookYourPickup: "Book Your Pickup",
+    yourDetails: "Your Details",
+    name: "Name *",
+    yourName: "Your name",
+    phone: "Phone *",
+    email: "Email *",
+    anythingElse: "Anything else we should know?",
+    addressPlaceholder: "Address, access info, etc.",
+    booking: "Booking...",
+    confirmBooking: "Confirm Booking",
+    bookingConfirmedTitle: "Booking Confirmed!",
+    pickupScheduled: "Your pickup is scheduled for",
+    at: "at",
+    newPhotos: "New Photos",
+    headsUp: "Heads up!",
+    disclaimer: "Our AI is smart, but it's not psychic. This estimate is for entertainment and planning purposes only. The actual price depends on what we find when we show up — sometimes there's more junk hiding behind other junk. We'll give you the real deal on-site before we lift a finger. No surprises, pinky promise.",
+    oops: "Oops! Something went wrong",
+    tryAgain: "Try Again",
+    justCallUs: "Just Call Us",
+    analyzing: "Analyzing",
+    usuallyTakes: "This usually takes 5-10 seconds",
+    dropPhotos: "Drop photos here or tap to upload",
+    takePics: "Take pics of your junk pile — you can upload multiple images!",
+    poweredByAI: "Powered by AI · Upload multiple photos for better estimates",
+    conditionGood: "Good",
+    conditionFair: "Fair",
+    conditionPoor: "Poor",
+    conditionBroken: "Broken",
+    loadingMessages: [
+      "Consulting the junk spirits...",
+      "Squinting at your stuff...",
+      "Calculating clutter quotient...",
+      "Channeling our inner Marie Kondo...",
+      "Measuring chaos levels...",
+    ],
+  },
+  es: {
+    invalidFileType: "Tipo de archivo inválido",
+    notAnImage: "no es un archivo de imagen",
+    fileTooLarge: "Archivo muy grande",
+    largerThan10MB: "es mayor a 10MB",
+    analysisFailed: "Análisis falló",
+    dontWorryCall: "No te preocupes — ¡llámanos para una cotización!",
+    selectDateTime: "Por favor selecciona fecha y hora",
+    chooseWhen: "Elige cuándo te gustaría que recojamos tu basura.",
+    invalidInput: "Entrada inválida",
+    timeSlotUnavailable: "Horario ya no disponible",
+    someoneJustBooked: "Alguien acaba de reservar este horario. Por favor selecciona otro.",
+    bookingConfirmed: "¡Reserva confirmada!",
+    checkEmail: "Revisa tu correo para los detalles de confirmación.",
+    somethingWentWrong: "Algo salió mal",
+    tryCallingUs: "Por favor intenta llamarnos directamente al (360) 610-9233.",
+    estimatedPrice: "Precio Estimado",
+    highConfidence: "Estimado de alta confianza",
+    mediumConfidence: "Confianza media — el precio final puede variar",
+    roughEstimate: "Estimado aproximado — llama para cotización exacta",
+    items: "Artículos",
+    truck: "Camión",
+    lbs: "lbs",
+    itemsIdentified: "Artículos Identificados",
+    bookYourPickup: "Reserva Tu Recolección",
+    yourDetails: "Tus Datos",
+    name: "Nombre *",
+    yourName: "Tu nombre",
+    phone: "Teléfono *",
+    email: "Correo *",
+    anythingElse: "¿Algo más que debamos saber?",
+    addressPlaceholder: "Dirección, información de acceso, etc.",
+    booking: "Reservando...",
+    confirmBooking: "Confirmar Reserva",
+    bookingConfirmedTitle: "¡Reserva Confirmada!",
+    pickupScheduled: "Tu recolección está programada para",
+    at: "a las",
+    newPhotos: "Nuevas Fotos",
+    headsUp: "¡Atención!",
+    disclaimer: "Nuestra IA es inteligente, pero no es psíquica. Este estimado es solo para planificación. El precio real depende de lo que encontremos cuando lleguemos — a veces hay más basura escondida. Te daremos el precio real en sitio antes de empezar. Sin sorpresas, lo prometemos.",
+    oops: "¡Ups! Algo salió mal",
+    tryAgain: "Intentar de Nuevo",
+    justCallUs: "Llámanos",
+    analyzing: "Analizando",
+    usuallyTakes: "Esto usualmente toma 5-10 segundos",
+    dropPhotos: "Arrastra fotos aquí o toca para subir",
+    takePics: "Toma fotos de tu basura — ¡puedes subir múltiples imágenes!",
+    poweredByAI: "Impulsado por IA · Sube múltiples fotos para mejores estimados",
+    conditionGood: "Bueno",
+    conditionFair: "Regular",
+    conditionPoor: "Malo",
+    conditionBroken: "Roto",
+    loadingMessages: [
+      "Consultando los espíritus de la basura...",
+      "Examinando tus cosas...",
+      "Calculando el nivel de desorden...",
+      "Canalizando a Marie Kondo...",
+      "Midiendo niveles de caos...",
+    ],
+  },
+};
 
 // Validation schema for booking form
 const bookingFormSchema = z.object({
@@ -67,20 +190,16 @@ interface AnalysisResult {
   recommendations: string[];
 }
 
-const loadingMessages = [
-  "Consulting the junk spirits...",
-  "Squinting at your stuff...",
-  "Calculating clutter quotient...",
-  "Channeling our inner Marie Kondo...",
-  "Measuring chaos levels...",
-];
-
 interface JunkAnalyzerProps {
   variant?: "inline" | "compact";
   onAnalysisComplete?: () => void;
+  isSpanish?: boolean;
 }
 
-export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAnalyzerProps) {
+export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish = false }: JunkAnalyzerProps) {
+  const t = isSpanish ? translations.es : translations.en;
+  const loadingMessages = t.loadingMessages;
+  
   const [isDragging, setIsDragging] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
@@ -102,6 +221,13 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
   });
   const { toast } = useToast();
   const { refetchBookings } = useBookingSlots();
+
+  const conditionLabels = {
+    good: t.conditionGood,
+    fair: t.conditionFair,
+    poor: t.conditionPoor,
+    broken: t.conditionBroken,
+  };
 
   // Restore saved estimate from localStorage on mount
   useEffect(() => {
@@ -141,8 +267,8 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
       
       if (!file.type.startsWith("image/")) {
         toast({
-          title: "Invalid file type",
-          description: `${file.name} is not an image file`,
+          title: t.invalidFileType,
+          description: `${file.name} ${t.notAnImage}`,
           variant: "destructive",
         });
         continue;
@@ -150,8 +276,8 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
 
       if (file.size > 10 * 1024 * 1024) {
         toast({
-          title: "File too large",
-          description: `${file.name} is larger than 10MB`,
+          title: t.fileTooLarge,
+          description: `${file.name} ${t.largerThan10MB}`,
           variant: "destructive",
         });
         continue;
@@ -224,15 +350,15 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
       console.error("Analysis error:", err);
       setError(err instanceof Error ? err.message : "Failed to analyze image");
       toast({
-        title: "Analysis failed",
-        description: "Don't worry — just give us a call for a quote!",
+        title: t.analysisFailed,
+        description: t.dontWorryCall,
         variant: "destructive",
       });
     } finally {
       clearInterval(messageInterval);
       setIsAnalyzing(false);
     }
-  }, [toast, onAnalysisComplete]);
+  }, [toast, onAnalysisComplete, loadingMessages, t]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -278,8 +404,8 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
     
     if (!selectedDate || !selectedTime) {
       toast({
-        title: "Please select a date and time",
-        description: "Choose when you'd like us to come pick up your junk.",
+        title: t.selectDateTime,
+        description: t.chooseWhen,
         variant: "destructive",
       });
       return;
@@ -290,7 +416,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
     if (!validation.success) {
       const firstError = validation.error.errors[0];
       toast({
-        title: "Invalid input",
+        title: t.invalidInput,
         description: firstError.message,
         variant: "destructive",
       });
@@ -327,8 +453,8 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         // Handle unique constraint violation (double booking)
         if (bookingError.code === "23505") {
           toast({
-            title: "Time slot no longer available",
-            description: "Someone just booked this slot. Please select another time.",
+            title: t.timeSlotUnavailable,
+            description: t.someoneJustBooked,
             variant: "destructive",
           });
           refetchBookings();
@@ -346,15 +472,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           phone: formData.phone || "",
           message: estimateDetails,
           isBooking: true,
-          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
+          bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined }),
           bookingTime: selectedTime,
         },
       });
 
       setRequestSubmitted(true);
       toast({
-        title: "Booking confirmed!",
-        description: "Check your email for confirmation details.",
+        title: t.bookingConfirmed,
+        description: t.checkEmail,
       });
       
       // Show the roulette wheel!
@@ -362,8 +488,8 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
     } catch (error) {
       console.error("Error creating booking:", error);
       toast({
-        title: "Something went wrong",
-        description: "Please try calling us directly at (360) 610-9233.",
+        title: t.somethingWentWrong,
+        description: t.tryCallingUs,
         variant: "destructive",
       });
     } finally {
@@ -375,13 +501,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
     low: "text-amber-600",
     medium: "text-primary",
     high: "text-green-600",
-  };
-
-  const conditionLabels = {
-    good: "Good",
-    fair: "Fair",
-    poor: "Poor",
-    broken: "Broken",
   };
 
   // Results view
@@ -420,7 +539,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </div>
             <Button variant="secondary" size="sm" onClick={reset} className="absolute top-0 right-0">
               <RotateCcw className="h-4 w-4 mr-1" />
-              New Photos
+              {t.newPhotos}
             </Button>
           </div>
         )}
@@ -429,15 +548,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <div className="p-6 rounded-xl bg-primary/10 border-2 border-primary/30 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <DollarSign className="h-6 w-6 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Estimated Price</span>
+            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{t.estimatedPrice}</span>
           </div>
           <div className="text-4xl md:text-5xl font-bold text-primary">
             ${result.priceEstimate.min} - ${result.priceEstimate.max}
           </div>
           <p className={`text-sm mt-2 ${confidenceColors[result.confidence]}`}>
-            {result.confidence === "high" ? "High confidence estimate" : 
-             result.confidence === "medium" ? "Medium confidence — final price may vary" :
-             "Rough estimate — call for accurate quote"}
+            {result.confidence === "high" ? t.highConfidence : 
+             result.confidence === "medium" ? t.mediumConfidence :
+             t.roughEstimate}
           </p>
         </div>
 
@@ -446,17 +565,17 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Package className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.items.length}</div>
-            <div className="text-xs text-muted-foreground">Items</div>
+            <div className="text-xs text-muted-foreground">{t.items}</div>
           </div>
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Truck className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.estimatedVolume.truckPercentage}%</div>
-            <div className="text-xs text-muted-foreground">Truck</div>
+            <div className="text-xs text-muted-foreground">{t.truck}</div>
           </div>
           <div className="p-4 rounded-lg bg-card border border-border text-center">
             <Scale className="h-5 w-5 mx-auto mb-2 text-primary" />
             <div className="text-lg font-semibold text-charcoal">{result.estimatedWeight.value}</div>
-            <div className="text-xs text-muted-foreground">lbs</div>
+            <div className="text-xs text-muted-foreground">{t.lbs}</div>
           </div>
         </div>
 
@@ -464,7 +583,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <div className="p-4 rounded-lg bg-card border border-border">
           <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-primary" />
-            Items Identified
+            {t.itemsIdentified}
           </h4>
           <div className="flex flex-wrap gap-2">
             {result.items.map((item, i) => (
@@ -491,7 +610,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="p-6 rounded-xl bg-card border-2 border-primary/20">
             <h3 className="font-semibold text-charcoal text-lg mb-4 flex items-center gap-2">
               <CalendarDays className="h-5 w-5 text-primary" />
-              Book Your Pickup
+              {t.bookYourPickup}
             </h3>
             <form onSubmit={handleRequestSubmit} className="space-y-6">
               {/* Booking Slot Picker */}
@@ -505,10 +624,10 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
               
               {/* Contact Details */}
               <div className="border-t border-border pt-4">
-                <h4 className="font-medium text-charcoal mb-3">Your Details</h4>
+                <h4 className="font-medium text-charcoal mb-3">{t.yourDetails}</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Name *</Label>
+                    <Label htmlFor="name">{t.name}</Label>
                     <Input
                       id="name"
                       name="name"
@@ -516,12 +635,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                       required
                       value={formData.name}
                       onChange={handleFormChange}
-                      placeholder="Your name"
+                      placeholder={t.yourName}
                       className="mt-1"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone *</Label>
+                    <Label htmlFor="phone">{t.phone}</Label>
                     <Input
                       id="phone"
                       name="phone"
@@ -535,7 +654,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                   </div>
                 </div>
                 <div className="mt-4">
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email">{t.email}</Label>
                   <Input
                     id="email"
                     name="email"
@@ -548,13 +667,13 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                   />
                 </div>
                 <div className="mt-4">
-                  <Label htmlFor="notes">Anything else we should know?</Label>
+                  <Label htmlFor="notes">{t.anythingElse}</Label>
                   <Textarea
                     id="notes"
                     name="notes"
                     value={formData.notes}
                     onChange={handleFormChange}
-                    placeholder="Address, access info, etc."
+                    placeholder={t.addressPlaceholder}
                     className="mt-1 min-h-[80px]"
                   />
                 </div>
@@ -569,12 +688,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                 {isSubmittingRequest ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Booking...
+                    {t.booking}
                   </>
                 ) : (
                   <>
                     <CalendarDays className="mr-2 h-4 w-4" />
-                    Confirm Booking
+                    {t.confirmBooking}
                   </>
                 )}
               </Button>
@@ -583,15 +702,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         ) : (
           <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
             <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
-            <h3 className="font-semibold text-charcoal text-lg mb-2">Booking Confirmed!</h3>
+            <h3 className="font-semibold text-charcoal text-lg mb-2">{t.bookingConfirmedTitle}</h3>
             <p className="text-muted-foreground">
-              Your pickup is scheduled for{" "}
+              {t.pickupScheduled}{" "}
               <strong className="text-foreground">
-                {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
+                {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined })} {t.at} {selectedTime}
               </strong>
             </p>
             <p className="text-sm text-muted-foreground mt-2">
-              Check your email for confirmation details.
+              {t.checkEmail}
             </p>
           </div>
         )}
@@ -628,9 +747,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
 
         <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
           <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
-            <strong>Heads up!</strong> Our AI is smart, but it's not psychic. This estimate is for entertainment and planning purposes only. 
-            The actual price depends on what we find when we show up — sometimes there's more junk hiding behind other junk. 
-            We'll give you the real deal on-site before we lift a finger. No surprises, pinky promise.
+            <strong>{t.headsUp}</strong> {t.disclaimer}
           </p>
         </div>
       </div>
@@ -643,15 +760,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
       <div className="text-center p-6 space-y-4">
         <AlertCircle className="h-12 w-12 mx-auto text-destructive" />
         <div>
-          <h3 className="font-semibold text-charcoal mb-1">Oops! Something went wrong</h3>
+          <h3 className="font-semibold text-charcoal mb-1">{t.oops}</h3>
           <p className="text-muted-foreground text-sm">{error}</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button onClick={reset}>Try Again</Button>
+          <Button onClick={reset}>{t.tryAgain}</Button>
           <Button asChild variant="outline">
             <a href="tel:+13606109233">
               <Phone className="mr-2 h-4 w-4" />
-              Just Call Us
+              {t.justCallUs}
             </a>
           </Button>
         </div>
@@ -667,7 +784,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           <div className="flex justify-center gap-2 mb-4">
             {imagePreviews.slice(0, 3).map((preview, index) => (
               <div key={index} className="relative w-20 h-20 rounded-lg overflow-hidden">
-                <img src={preview} alt={`Analyzing ${index + 1}`} className="w-full h-full object-cover" />
+                <img src={preview} alt={`${t.analyzing} ${index + 1}`} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-primary/20 animate-pulse" />
               </div>
             ))}
@@ -680,7 +797,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         )}
         <Loader2 className="h-8 w-8 mx-auto animate-spin text-primary" />
         <p className="text-charcoal font-medium">{loadingMessage}</p>
-        <p className="text-muted-foreground text-sm">This usually takes 5-10 seconds</p>
+        <p className="text-muted-foreground text-sm">{t.usuallyTakes}</p>
       </div>
     );
   }
@@ -719,10 +836,10 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           
           <div>
             <p className="font-semibold text-charcoal">
-              Drop photos here or tap to upload
+              {t.dropPhotos}
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Take pics of your junk pile — you can upload multiple images!
+              {t.takePics}
             </p>
           </div>
         </div>
@@ -730,7 +847,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
 
       <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
         <Sparkles className="h-4 w-4 text-primary" />
-        <span>Powered by AI · Upload multiple photos for better estimates</span>
+        <span>{t.poweredByAI}</span>
       </div>
     </div>
   );
