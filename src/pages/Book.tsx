@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { User, CheckCircle2, Loader2 } from "lucide-react";
 import { BookingSlotPicker } from "@/components/BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
@@ -203,13 +204,19 @@ export default function Book() {
         description="Schedule your junk removal appointment online. Select a convenient date and time, and we'll take care of the rest."
       />
       
-      <div className="container py-12 md:py-20">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Book Your Appointment</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Select an available date and time that works best for you. We're open Monday through Saturday, 8 AM to 6 PM.
-          </p>
+      <section className="py-12 md:py-20 bg-section-alt">
+        <div className="container">
+          <Breadcrumbs items={[{ label: "Book Now" }]} />
+          <div className="text-center">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Book Your Appointment</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Select an available date and time that works best for you. We're open Monday through Saturday, 8 AM to 6 PM.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <div className="container py-12">
 
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Date & Time Selection - Using shared component */}

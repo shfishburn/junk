@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { z } from "zod";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -143,6 +144,7 @@ const Contact = () => {
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
         <div className="container">
+          <Breadcrumbs items={[{ label: "Contact" }]} />
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
               Let's Chat About Your Clutter
