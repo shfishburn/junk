@@ -146,7 +146,7 @@ const About = () => {
             </div>
             
             {/* Old Reliable */}
-            <div className="relative">
+            <div>
               <div className="rounded-xl overflow-hidden border border-border shadow-lg">
                 <img 
                   src={oldReliableTruck} 
@@ -154,7 +154,7 @@ const About = () => {
                   className="w-full h-auto object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-lg px-4 py-2 shadow-lg">
+              <div className="mt-3 text-center">
                 <p className="font-semibold text-foreground">"Old Reliable"</p>
                 <p className="text-sm text-muted-foreground">1991 Ford Super Duty</p>
               </div>
