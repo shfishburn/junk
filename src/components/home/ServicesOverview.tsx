@@ -65,7 +65,7 @@ export function ServicesOverview() {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`group overflow-hidden rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-500 ${
+              className={`group overflow-hidden rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}

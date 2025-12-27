@@ -100,10 +100,10 @@ export function CookieConsent() {
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={handleEssentialOnly}
-                  className="text-sm"
+                  className="text-sm text-muted-foreground hover:text-foreground"
                 >
                   Essential Only
                 </Button>
@@ -119,7 +119,7 @@ export function CookieConsent() {
                 <Button
                   size="sm"
                   onClick={handleAcceptAll}
-                  className="text-sm"
+                  className="text-sm shadow-sm"
                 >
                   Accept All
                 </Button>

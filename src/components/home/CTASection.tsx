@@ -21,10 +21,10 @@ export function CTASection() {
             Get a free quote and experience the sweet, sweet freedom of a clutter-free life. We're weirdly excited to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-base bg-on-primary text-primary hover:bg-on-primary/90">
+            <Button asChild size="lg" className="text-base bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl">
               <Link to="/contact">Get a Free Quote</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-base border-on-primary/30 text-on-primary hover:bg-on-primary/10 bg-transparent">
+            <Button asChild size="lg" variant="hero" className="text-base">
               <a href="tel:+13606109233">
                 <Phone className="mr-2 h-4 w-4" />
                 Call (360) 610-9233

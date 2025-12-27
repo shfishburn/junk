@@ -43,13 +43,13 @@ export function HeroSection() {
               animationDelay: "0.2s",
             }}
           >
-            <Button asChild size="lg" className="text-base">
+            <Button asChild size="lg" className="text-base shadow-lg hover:shadow-xl">
               <Link to="/book">
                 Book Pickup
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="secondary" size="lg" className="text-base">
+            <Button asChild size="lg" className="text-base bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl">
               <Link to="/ai-estimator">
                 <Sparkles className="mr-2 h-4 w-4" />
                 Get AI Quote

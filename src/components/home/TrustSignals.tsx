@@ -72,7 +72,7 @@ export function TrustSignals() {
           {signals.map((signal, index) => (
             <div
               key={signal.title}
-              className={`flex items-start gap-4 p-4 rounded-lg bg-card border border-border transition-all duration-700 ${
+              className={`flex items-start gap-4 p-4 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${(index + 4) * 100}ms` : "0ms" }}

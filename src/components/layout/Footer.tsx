@@ -39,32 +39,32 @@ export function Footer() {
             <h4 className="font-semibold text-charcoal mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link to="/referrals" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/referrals" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   Referral Program
                 </Link>
               </li>
               <li>
-                <Link to="/service-area" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/service-area" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
                   Service Area
                 </Link>
               </li>
@@ -136,14 +136,14 @@ export function Footer() {
             © {new Date().getFullYear()} Junky Gurus. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <Link to="/privacy-policy" className="hover:text-primary transition-colors">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors link-hover-underline inline-block">
               Privacy Policy
             </Link>
-            <span>|</span>
-            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors">
+            <span className="text-border">|</span>
+            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors link-hover-underline inline-block">
               Terms & Conditions
             </Link>
-            <span>|</span>
+            <span className="text-border">|</span>
             <button
               onClick={openCookiePreferences}
               className="hover:text-primary transition-colors inline-flex items-center gap-1"
