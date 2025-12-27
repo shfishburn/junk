@@ -180,7 +180,14 @@ export function Header() {
             <span className="hidden xl:inline">(360) 610-9233</span>
           </a>
 
-          <Button asChild size="sm" className="gap-2">
+          <Button 
+            asChild 
+            size="sm" 
+            className={cn(
+              "gap-2 transition-all duration-300",
+              isHome && !isScrolled && "shadow-[0_0_20px_rgba(34,197,94,0.5)] hover:shadow-[0_0_25px_rgba(34,197,94,0.7)]"
+            )}
+          >
             <Link to="/book">
               <CalendarDays className="h-4 w-4" />
               Book Now
