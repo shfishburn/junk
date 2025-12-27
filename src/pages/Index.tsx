@@ -1,9 +1,12 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroSection } from "@/components/home/HeroSection";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
-import { ServiceAreaSection } from "@/components/home/ServiceAreaSection";
+import { AIEstimatorCTA } from "@/components/home/AIEstimatorCTA";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { TrustSignals } from "@/components/home/TrustSignals";
+import { ServiceAreaSection } from "@/components/home/ServiceAreaSection";
 import { CTASection } from "@/components/home/CTASection";
 
 const Index = () => {
@@ -16,7 +19,10 @@ const Index = () => {
         url="/"
       />
       <HeroSection />
+      <HowItWorks />
       <ServicesOverview />
+      <AIEstimatorCTA />
+      <TestimonialsSection />
       <TrustSignals />
       <ServiceAreaSection />
       <CTASection />

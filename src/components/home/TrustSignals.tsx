@@ -1,4 +1,4 @@
-import { Clock, Shield, Leaf } from "lucide-react";
+import { Clock, Shield, Leaf, Star, Award, Recycle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const signals = [
@@ -9,14 +9,36 @@ const signals = [
   },
   {
     icon: Shield,
-    title: "Locally Owned & Operated",
-    description: "We're your neighbors. We've probably argued about the same potholes.",
+    title: "Licensed & Insured",
+    description: "Fully covered so you don't have to worry about a thing.",
   },
   {
     icon: Leaf,
-    title: "Responsible Disposal",
-    description: "We recycle, donate, and only dump what absolutely has to go. Planet Earth sends its thanks.",
+    title: "Eco-Friendly",
+    description: "We recycle and donate whenever possible. Mother Earth approves.",
   },
+  {
+    icon: Star,
+    title: "5-Star Rated",
+    description: "Our customers love us, and we think you will too.",
+  },
+  {
+    icon: Award,
+    title: "Locally Owned",
+    description: "We're your neighbors, not some faceless corporation.",
+  },
+  {
+    icon: Recycle,
+    title: "Responsible Disposal",
+    description: "Proper recycling, donations, and eco-friendly practices.",
+  },
+];
+
+const stats = [
+  { value: "500+", label: "Jobs Completed" },
+  { value: "4.9", label: "Star Rating" },
+  { value: "Same Day", label: "Service Available" },
+  { value: "100%", label: "Satisfaction" },
 ];
 
 export function TrustSignals() {
@@ -25,20 +47,43 @@ export function TrustSignals() {
   return (
     <section ref={ref} className="py-16 md:py-24 bg-section-alt">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Stats bar */}
+        <div
+          className={`grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 pb-12 border-b border-border transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          {stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className="text-center"
+              style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
+            >
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                {stat.value}
+              </div>
+              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Trust signals grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {signals.map((signal, index) => (
-            <div 
-              key={signal.title} 
-              className={`text-center transition-all duration-700 ${
+            <div
+              key={signal.title}
+              className={`flex items-start gap-4 p-4 rounded-lg bg-card border border-border transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
-              style={{ transitionDelay: isVisible ? `${index * 150}ms` : "0ms" }}
+              style={{ transitionDelay: isVisible ? `${(index + 4) * 100}ms` : "0ms" }}
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
-                <signal.icon className="h-7 w-7 text-primary" />
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <signal.icon className="h-5 w-5 text-primary" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">{signal.title}</h3>
-              <p className="text-sm text-muted-foreground">{signal.description}</p>
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">{signal.title}</h3>
+                <p className="text-sm text-muted-foreground">{signal.description}</p>
+              </div>
             </div>
           ))}
         </div>

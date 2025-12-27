@@ -8,11 +8,9 @@ import logo from "@/assets/logo.png";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/book", label: "Book Now", icon: CalendarDays },
-  { href: "/ai-estimator", label: "AI Estimator", icon: Sparkles },
+  { href: "/ai-estimator", label: "AI Quote", icon: Sparkles },
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/service-area", label: "Service Area" },
-  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
