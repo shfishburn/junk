@@ -69,6 +69,12 @@ export function CityLandingPage({ city }: { city: CityData }) {
     ]
   };
 
+  // Breadcrumb data for schema
+  const breadcrumbItems = [
+    { name: "Service Area", url: "/service-area" },
+    { name: city.name, url: `/junk-removal-${city.slug}-wa` }
+  ];
+
   return (
     <Layout>
       <SEO
@@ -76,6 +82,7 @@ export function CityLandingPage({ city }: { city: CityData }) {
         description={`Professional junk removal in ${city.name}, ${city.county}. Same-day service, upfront pricing, eco-friendly disposal. Call (360) 610-9233 for a free quote.`}
         keywords={`junk removal ${city.name}, ${city.name} WA hauling, furniture removal ${city.name}, appliance removal ${city.name}, yard waste ${city.name}, ${city.county} junk removal`}
         url={`/junk-removal-${city.slug}-wa`}
+        breadcrumbs={breadcrumbItems}
       />
       
       {/* Inject structured data */}

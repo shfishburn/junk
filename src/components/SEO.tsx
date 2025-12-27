@@ -1,5 +1,10 @@
 import { Helmet } from "react-helmet-async";
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface SEOProps {
   title?: string;
   description?: string;
@@ -10,6 +15,7 @@ interface SEOProps {
   noIndex?: boolean;
   pageType?: string;
   pagePurpose?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const SITE_NAME = "Junky Gurus LLC";
@@ -29,6 +35,7 @@ export function SEO({
   noIndex = false,
   pageType,
   pagePurpose,
+  breadcrumbs,
 }: SEOProps) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const canonicalUrl = url ? `${SITE_URL}${url}` : SITE_URL;
@@ -204,25 +211,58 @@ export function SEO({
     }
   };
 
-  // BreadcrumbList Schema
-  const breadcrumbSchema = url && url !== "/" ? {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": SITE_URL
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": title || "Page",
-        "item": canonicalUrl
-      }
-    ]
-  } : null;
+  // BreadcrumbList Schema - supports custom multi-level breadcrumbs
+  const generateBreadcrumbSchema = () => {
+    // If custom breadcrumbs provided, use them
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const items = [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": SITE_URL
+        },
+        ...breadcrumbs.map((crumb, index) => ({
+          "@type": "ListItem",
+          "position": index + 2,
+          "name": crumb.name,
+          "item": `${SITE_URL}${crumb.url}`
+        }))
+      ];
+      
+      return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": items
+      };
+    }
+    
+    // Default: auto-generate from URL if not homepage
+    if (url && url !== "/") {
+      return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": title || "Page",
+            "item": canonicalUrl
+          }
+        ]
+      };
+    }
+    
+    return null;
+  };
+
+  const breadcrumbSchema = generateBreadcrumbSchema();
 
   return (
     <Helmet>
