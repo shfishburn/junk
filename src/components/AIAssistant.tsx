@@ -600,6 +600,7 @@ export function AIAssistant() {
             <div className="flex flex-wrap gap-2">
               {[
                 { label: "Get a Quote", message: "I'd like to get a quote for junk removal" },
+                { label: "📅 Book Now", message: "How do I schedule a junk pickup appointment?" },
                 { label: "📸 AI Estimator", message: "Tell me about your AI Estimator tool where I can upload photos for an instant quote" },
                 { label: "Hazmat Pickup", message: "Do you handle hazardous materials like paint, chemicals, or batteries?" },
                 { label: "What do you haul?", message: "What types of items do you haul?" },
