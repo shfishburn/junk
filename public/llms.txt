@@ -44,9 +44,11 @@ We got into this business because we were tired of seeing people get ripped off.
 - [Home](/)
 - [All Services](/services)
 - [Pricing](/pricing) - Transparent, volume-based pricing from $125
+- [Discounts](/discounts) - All available savings: senior/veteran, referral, repeat customer
 - [Service Area](/service-area) - Skagit, Whatcom, Snohomish, King Counties
 - [Book Online](/book) - Schedule in 60 seconds
 - [AI Photo Estimator](/ai-estimator) - Skip the sales dance. Know your price before we arrive.
+- [Referral Program](/referrals) - Earn $25 for every friend you refer
 - [Contact](/contact)
 - [About Us](/about) - Meet the junk-obsessed humans behind the truck
 - [FAQ](/faq)
@@ -78,7 +80,24 @@ Volume-based pricing. What we quote is what you pay. No hidden fees. Ever.
 - Minimum Load: $125 - $190
 - Full Truck: $625 - $750
 - Includes: Labor, loading, hauling, disposal/donation/recycling
-- **15% off for seniors (65+) and veterans** — no paperwork required
+
+## Discounts & Savings
+
+We believe in rewarding those who deserve it:
+
+**Senior & Veteran Discount — 15% Off**
+- Seniors aged 65+, veterans, and active military
+- No paperwork, no proof required — just let us know
+- Applied automatically when you mention it
+
+**Referral Reward — $25 Off**
+- Refer a friend, you both get $25 off
+- No limit on referrals
+- Get your link at /referrals
+
+**Repeat Customer Appreciation — 10% Off**
+- Automatic discount on your second booking and beyond
+- We keep track, so you don't have to
 
 ## The Bottom Line
 
