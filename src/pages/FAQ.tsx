@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   Accordion,
   AccordionContent,
@@ -133,6 +134,7 @@ export default function FAQ() {
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16 md:py-24">
         <div className="container">
+          <Breadcrumbs items={[{ label: "FAQ" }]} />
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Frequently Asked Questions
