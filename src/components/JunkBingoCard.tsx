@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Check, Star } from "lucide-react";
 import {
@@ -11,6 +11,12 @@ import {
   DISCOUNT_TIERS,
   getCheckedCount,
 } from "@/lib/bingo-items";
+import {
+  playCheckSound,
+  playUncheckSound,
+  playLineCompleteSound,
+  playBlackoutSound,
+} from "@/lib/bingo-sounds";
 
 interface JunkBingoCardProps {
   card: BingoCard;
@@ -22,6 +28,8 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
   const [completedIndices, setCompletedIndices] = useState<Set<number>>(new Set());
   const [lastLineCount, setLastLineCount] = useState(0);
   const [recentlyChecked, setRecentlyChecked] = useState<number | null>(null);
+  const prevCheckedRef = useRef<boolean[]>(card.checked);
+  const wasBlackoutRef = useRef(false);
 
   const lineCount = getLineCount(card.checked);
   const currentTier = getCurrentTier(lineCount);
@@ -36,16 +44,34 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
     setCompletedIndices(newCompleted);
   }, [card.checked]);
 
-  // Notify when lines are completed
+  // Handle line completion sounds
   useEffect(() => {
     if (lineCount > lastLineCount) {
+      // Check if it's a blackout
+      if (blackout && !wasBlackoutRef.current) {
+        playBlackoutSound();
+        wasBlackoutRef.current = true;
+      } else {
+        playLineCompleteSound();
+      }
       onLineComplete?.(lineCount);
     }
     setLastLineCount(lineCount);
-  }, [lineCount, lastLineCount, onLineComplete]);
+  }, [lineCount, lastLineCount, blackout, onLineComplete]);
 
   const handleCheck = (index: number) => {
     if (card.items[index] === "FREE") return;
+    
+    // Determine if we're checking or unchecking
+    const wasChecked = card.checked[index];
+    
+    // Play appropriate sound
+    if (wasChecked) {
+      playUncheckSound();
+    } else {
+      playCheckSound();
+    }
+    
     setRecentlyChecked(index);
     setTimeout(() => setRecentlyChecked(null), 300);
     onCheck(index);
