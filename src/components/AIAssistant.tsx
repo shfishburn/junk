@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, Bot, User, Loader2, RefreshCw, Wifi, WifiOff, Trash2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2, RefreshCw, Wifi, WifiOff, Trash2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -508,6 +508,13 @@ export function AIAssistant() {
               </div>
             </div>
             <div className="flex items-center gap-1">
+              <a
+                href="tel:+13606109233"
+                className="inline-flex items-center justify-center h-9 w-9 rounded-md text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+                title="Call (360) 610-9233"
+              >
+                <Phone className="h-4 w-4" />
+              </a>
               <Button
                 variant="ghost"
                 size="icon"
