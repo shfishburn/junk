@@ -2,8 +2,7 @@ import { Phone, MessageCircle } from "lucide-react";
 
 export function MobileCallButton() {
   return (
-    <div className="flex justify-end md:hidden py-4">
-      <div className="flex flex-col gap-3">
+    <div className="fixed bottom-6 right-4 z-50 flex flex-col gap-3 md:hidden">
       <a
         href="sms:+13606109233"
         className="flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-3 rounded-full shadow-lg hover:opacity-90 transition-opacity"
@@ -20,7 +19,6 @@ export function MobileCallButton() {
         <Phone className="h-5 w-5" />
         <span className="font-medium">Call Now</span>
       </a>
-      </div>
     </div>
   );
 }
