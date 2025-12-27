@@ -31,7 +31,10 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border backdrop-blur supports-[backdrop-filter]:bg-background/80 bg-gradient-to-r from-background via-background/95 to-background bg-[length:200%_100%] animate-gradient-shift">
+    <header className={cn(
+      "sticky top-0 z-50 w-full border-b border-border backdrop-blur supports-[backdrop-filter]:bg-background/80 bg-gradient-to-r from-background via-background/95 to-background bg-[length:200%_100%] animate-gradient-shift transition-shadow duration-300",
+      showContactBar && "shadow-md"
+    )}>
       {/* Mobile Contact Bar - appears on scroll */}
       <div
         className={cn(
