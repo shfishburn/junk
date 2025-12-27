@@ -1,15 +1,27 @@
 # Junky Gurus LLC
 
-> Professional junk removal services in Mount Vernon, WA and the Puget Sound Region.
+> We Love Your Junk (So You Don't Have To)
 
-Junky Gurus is a locally owned junk removal company serving Skagit, Whatcom, Snohomish, and King Counties in Washington State. We provide fast, reliable junk removal with transparent pricing and responsible disposal practices.
+Professional junk removal in Mount Vernon, WA and the Puget Sound Region. We're the junk removal company your grandma would be proud of.
+
+## What Makes Us Different
+
+We got into this business because we were tired of seeing people get ripped off. Hidden fees? No-shows? Workers who leave your place messier than they found it? Hard pass.
+
+**Here's how we roll:**
+- **No Surprise Pricing**: What we quote is what you pay. Novel concept, we know.
+- **We Actually Show Up**: Revolutionary in this industry, apparently.
+- **Your Neighbors, Not a Franchise**: When you call, you get us — real humans who care if your driveway gets scratched.
+- **Eco-Conscious**: We donate, recycle, and only landfill what absolutely has to go. Mother Earth approves.
+- **Bilingual Service**: ¡Hablamos Español!
+- **AI Photo Estimates**: Snap a pic, get a price. It's 2024, after all.
 
 ## Services
 
 - [Residential Junk Removal](/services#residential): Furniture, mattresses, electronics, household items
 - [Appliance Removal](/services#appliances): Refrigerators, washers, dryers, stoves, water heaters
 - [Yard Waste & Debris](/services#yard-waste): Branches, leaves, brush, storm debris
-- [Garage & Estate Cleanouts](/services#cleanouts): Full property cleanouts, hoarding situations
+- [Garage & Estate Cleanouts](/services#cleanouts): Full property cleanouts, hoarding situations (handled with compassion)
 - [Construction Debris](/services#construction): Drywall, lumber, flooring, renovation waste
 - [Commercial Cleanouts](/services#commercial): Office furniture, equipment, retail fixtures
 - [Light Demolition](/services#light-demolition): Deck, shed, fence removal
@@ -19,47 +31,49 @@ Junky Gurus is a locally owned junk removal company serving Skagit, Whatcom, Sno
 
 - [Home](/)
 - [All Services](/services)
-- [Pricing](/pricing)
-- [Service Area](/service-area)
-- [Book Online](/book)
+- [Pricing](/pricing) - Transparent, volume-based pricing from $125
+- [Service Area](/service-area) - Skagit, Whatcom, Snohomish, King Counties
+- [Book Online](/book) - Schedule in 60 seconds
+- [AI Photo Estimator](/ai-estimator) - Upload photos, get instant pricing
 - [Contact](/contact)
-- [AI Photo Estimator](/ai-estimator)
-- [About Us](/about)
+- [About Us](/about) - Meet the junk-obsessed humans behind the truck
 - [FAQ](/faq)
-- [Spanish Version](/espanol)
+- [Spanish Version](/espanol) - ¡Servicio en español!
 
 ## Contact Information
 
-- Phone: (360) 610-9233
-- Secondary Phone: (360) 422-2428
+- Phone: (360) 610-9233 (call or text)
+- Secondary: (360) 422-2428
 - Email: Junkygurus@gmail.com
 - Location: Mount Vernon, WA
 
 ## Service Area
 
-We serve the following counties in Washington State:
-- Skagit County (Mount Vernon, Burlington, Anacortes, Sedro-Woolley)
-- Whatcom County (Bellingham, Lynden, Ferndale, Blaine)
-- Snohomish County (Everett, Marysville, Arlington, Lake Stevens)
-- King County (North Seattle, Shoreline, Kenmore, Bothell)
+We serve ~50 miles from Mount Vernon:
+- **Skagit County** (Home Base): Mount Vernon, Burlington, Anacortes, Sedro-Woolley
+- **Whatcom County**: Bellingham, Lynden, Ferndale, Blaine
+- **Snohomish County**: Everett, Marysville, Arlington, Lake Stevens
+- **King County**: North Seattle, Shoreline, Kenmore, Bothell
 
-## Hours of Operation
+## Hours
 
 Monday - Saturday: 8:00 AM - 6:00 PM
-Sunday: Closed
+Sunday: Closed (even junk gurus need rest)
 
-## Pricing Model
+## Pricing
 
-Volume-based pricing from $125 minimum load to $750 full truck load. Single item pricing available. Free on-site estimates. No hidden fees.
+Volume-based pricing. Includes labor, loading, hauling, and disposal. No hidden fees.
+- Minimum Load: $125 - $190
+- Full Truck: $625 - $750
+- Free on-site estimates available
 
-## Additional Information
+## The Bottom Line
 
-- Same-day service available
-- Bilingual service (English & Spanish)
-- Eco-friendly disposal with donation and recycling
-- Licensed and insured
-- AI-powered photo estimates available
+That old couch mocking you from the garage? That exercise bike turned clothes hanger? We'll make it disappear faster than your motivation to use it.
+
+Your junk is our jam. Let's make some magic happen.
 
 ## Optional
 
 - [Full LLM Context](/llms-full.txt)
+- [Structured Data](/llms.json)
