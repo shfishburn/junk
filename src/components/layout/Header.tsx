@@ -155,11 +155,22 @@ export function Header() {
         </button>
       </div>
 
+      {/* Mobile Navigation Backdrop */}
+      {isOpen && (
+        <div 
+          className={cn(
+            "md:hidden fixed inset-0 top-16 bg-foreground/50 z-40",
+            isClosing ? "animate-fade-out" : "animate-fade-in"
+          )}
+          onClick={handleMenuToggle}
+        />
+      )}
+
       {/* Mobile Navigation */}
       {isOpen && (
         <div 
           className={cn(
-            "md:hidden border-t border-border bg-background",
+            "md:hidden border-t border-border bg-background relative z-50",
             isClosing ? "animate-slide-out-right" : "animate-slide-in-right"
           )}
           onAnimationEnd={handleAnimationEnd}
