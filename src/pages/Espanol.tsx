@@ -49,12 +49,12 @@ const Espanol = () => {
               ¡Hablamos Español!
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-on-primary mb-6 leading-tight">
               Servicio de Remoción de Basura en{" "}
               <span className="text-primary">Mount Vernon</span>
             </h1>
 
-            <p className="text-xl text-white/90 mb-8 leading-relaxed">
+            <p className="text-xl text-on-primary-muted mb-8 leading-relaxed">
               Limpiamos su hogar o negocio — ¡Rápido, confiable y a buen precio!
               Servicio profesional con precios transparentes. Sin sorpresas.
             </p>
@@ -66,7 +66,7 @@ const Espanol = () => {
                   Llamar Ahora
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-white/10 border-white/30 text-white hover:bg-white/20" asChild>
+              <Button size="lg" variant="hero" className="text-lg px-8 py-6" asChild>
                 <a href="sms:+13606109233">
                   <MessageCircle className="mr-2 h-5 w-5" />
                   Enviar Texto
@@ -74,7 +74,7 @@ const Espanol = () => {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-6 text-white/80 text-sm">
+            <div className="flex flex-wrap gap-6 text-on-primary-muted text-sm">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 text-primary" />
                 Servicio el Mismo Día
@@ -230,13 +230,13 @@ const Espanol = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
+            <Button size="lg" variant="hero" asChild>
               <a href="sms:+13606109233">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Enviar Texto
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
+            <Button size="lg" variant="hero" asChild>
               <Link to="/book">
                 Reservar en Línea
               </Link>

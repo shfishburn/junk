@@ -62,6 +62,10 @@ export default {
           muted: "hsl(var(--on-primary-muted))",
         },
         overlay: "hsl(var(--overlay))",
+        invert: {
+          DEFAULT: "hsl(var(--invert))",
+          foreground: "hsl(var(--invert-foreground))",
+        },
         status: {
           pending: "hsl(var(--status-pending))",
           confirmed: "hsl(var(--status-confirmed))",

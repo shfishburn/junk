@@ -52,10 +52,14 @@
     
     /* Inverted surface (for primary-bg sections) */
     --on-primary: 0 0% 100%;
-    --on-primary-muted: 0 0% 100% / 0.9;
+    --on-primary-muted: 0 0% 90%;
     
     /* Overlay */
-    --overlay: 220 20% 10%;
+    --overlay: 0 0% 0%;
+    
+    /* Invert variant (white button on primary bg) */
+    --invert: 0 0% 100%;
+    --invert-foreground: 152 35% 42%;
     
     /* Status colors */
     --status-pending: 45 93% 47%;
@@ -101,10 +105,14 @@
     
     /* Inverted surface (for primary-bg sections) */
     --on-primary: 0 0% 100%;
-    --on-primary-muted: 0 0% 100% / 0.9;
+    --on-primary-muted: 0 0% 90%;
     
     /* Overlay */
     --overlay: 0 0% 0%;
+    
+    /* Invert variant (white button on primary bg) */
+    --invert: 0 0% 100%;
+    --invert-foreground: 152 40% 50%;
     
     /* Status colors (same in dark mode) */
     --status-pending: 45 93% 47%;

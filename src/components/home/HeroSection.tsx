@@ -49,7 +49,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild size="lg" className="text-base bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl">
+            <Button asChild size="lg" variant="invert" className="text-base">
               <Link to="/ai-estimator">
                 <Sparkles className="mr-2 h-4 w-4" />
                 Get AI Quote
