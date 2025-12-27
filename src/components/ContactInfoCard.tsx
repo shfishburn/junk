@@ -1,6 +1,7 @@
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BusinessHours } from "@/components/BusinessHours";
+import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 
 interface ContactInfoCardProps {
   variant?: "full" | "compact";
@@ -10,14 +11,14 @@ interface ContactInfoCardProps {
   className?: string;
 }
 
-const CONTACT_INFO = {
+export const CONTACT_INFO = {
   phones: [
     { number: "+13606109233", display: "(360) 610-9233" },
     { number: "+13604222428", display: "(360) 422-2428" },
   ],
   email: "Junkygurus@gmail.com",
-  location: "Mount Vernon, WA",
-  serviceArea: "Serving Skagit, Whatcom, Snohomish & King Counties",
+  location: SERVICE_AREA_DATA.baseLocation,
+  serviceArea: `Serving ${SERVICE_AREA_DATA.counties.map(c => c.name.replace(" County", "")).join(", ")} Counties`,
 };
 
 export function ContactInfoCard({
@@ -116,5 +117,3 @@ export function ContactInfoCard({
     </div>
   );
 }
-
-export { CONTACT_INFO };

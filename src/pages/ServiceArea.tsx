@@ -2,80 +2,10 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
-
-// Cities with dedicated landing pages
-const cityLinks: Record<string, string> = {
-  "Burlington": "/junk-removal-burlington-wa",
-  "Anacortes": "/junk-removal-anacortes-wa",
-  "Sedro-Woolley": "/junk-removal-sedro-woolley-wa",
-  "Bellingham": "/junk-removal-bellingham-wa",
-};
-
-const areas = [
-  {
-    county: "Skagit County",
-    description: "Our home turf! We know every back road, coffee shop, and suspiciously full garage in Skagit County.",
-    cities: [
-      "Mount Vernon",
-      "Burlington",
-      "Anacortes",
-      "Sedro-Woolley",
-      "La Conner",
-      "Concrete",
-      "Bow",
-      "Edison",
-    ],
-    highlight: true,
-  },
-  {
-    county: "Whatcom County",
-    description: "From Bellingham's hip neighborhoods to the Canadian border, we've got your junk covered. Maple bars optional but appreciated.",
-    cities: [
-      "Bellingham",
-      "Lynden",
-      "Ferndale",
-      "Blaine",
-      "Everson",
-      "Sumas",
-      "Nooksack",
-      "Birch Bay",
-    ],
-    highlight: false,
-  },
-  {
-    county: "Snohomish County",
-    description: "We serve northern Snohomish County with the same enthusiasm we bring everywhere. Your junk doesn't stand a chance.",
-    cities: [
-      "Everett",
-      "Marysville",
-      "Lake Stevens",
-      "Arlington",
-      "Stanwood",
-      "Granite Falls",
-      "Snohomish",
-      "Tulalip",
-    ],
-    highlight: false,
-  },
-  {
-    county: "King County",
-    description: "We venture into northern King County for bigger projects. Seattle traffic? Worth it for good junk.",
-    cities: [
-      "Shoreline",
-      "Kenmore",
-      "Bothell",
-      "Woodinville",
-      "North Seattle",
-      "Lake Forest Park",
-      "Mountlake Terrace",
-      "Edmonds",
-    ],
-    highlight: false,
-  },
-];
+import { SERVICE_AREA_DATA, CountyCard } from "@/components/ServiceAreaInfo";
 
 const ServiceArea = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
@@ -132,56 +62,8 @@ const ServiceArea = () => {
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="space-y-12">
-            {areas.map((area) => (
-              <div
-                key={area.county}
-                className={`p-8 rounded-lg border ${
-                  area.highlight
-                    ? "border-primary/30 bg-primary/5"
-                    : "border-border bg-card"
-                }`}
-              >
-                <div className="flex items-start gap-3 mb-4">
-                  <MapPin className={`h-6 w-6 mt-1 ${area.highlight ? "text-primary" : "text-muted-foreground"}`} />
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-charcoal">
-                      {area.county}
-                      {area.highlight && (
-                        <span className="ml-3 text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded">
-                          Home Base
-                        </span>
-                      )}
-                    </h2>
-                    <p className="text-lg text-muted-foreground mt-2">
-                      {area.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="ml-9">
-                  <h3 className="font-semibold text-charcoal mb-3">Cities We Serve:</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {area.cities.map((city) => {
-                      const cityUrl = cityLinks[city];
-                      return cityUrl ? (
-                        <Link
-                          key={city}
-                          to={cityUrl}
-                          className="px-3 py-1 text-sm bg-primary/10 border border-primary/30 rounded-full text-primary hover:bg-primary/20 transition-colors"
-                        >
-                          {city} →
-                        </Link>
-                      ) : (
-                        <span
-                          key={city}
-                          className="px-3 py-1 text-sm bg-background border border-border rounded-full text-muted-foreground"
-                        >
-                          {city}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+            {SERVICE_AREA_DATA.counties.map((county) => (
+              <CountyCard key={county.name} county={county} />
             ))}
           </div>
         </div>
