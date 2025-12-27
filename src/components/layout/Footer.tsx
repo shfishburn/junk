@@ -2,21 +2,11 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, MessageCircle, Cookie, Clock, Heart } from "lucide-react";
 import { openCookiePreferences } from "@/components/CookieConsent";
 
-const serviceAreas = [
-  "Mount Vernon",
-  "Burlington",
-  "Anacortes",
-  "Sedro-Woolley",
-  "Bellingham",
-  "Marysville",
-  "Everett",
-];
-
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Brand */}
           <div>
             <Link to="/" className="text-xl font-bold text-primary">
@@ -36,60 +26,6 @@ export function Footer() {
                 <p>Sunday: Closed</p>
               </div>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-charcoal mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/referrals" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  Referral Program
-                </Link>
-              </li>
-              <li>
-                <Link to="/service-area" className="text-muted-foreground hover:text-primary transition-colors link-hover-underline inline-block">
-                  Service Area
-                </Link>
-              </li>
-              <li>
-                <Link to="/espanol" className="text-primary hover:text-primary/80 transition-colors link-hover-underline inline-block flex items-center gap-1.5">
-                  <span>🇲🇽</span> Español
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Service Areas */}
-          <div>
-            <h4 className="font-semibold text-charcoal mb-4">Service Areas</h4>
-            <ul className="space-y-2 text-sm">
-              {serviceAreas.map((area) => (
-                <li key={area} className="text-muted-foreground">
-                  {area}, WA
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Contact */}
