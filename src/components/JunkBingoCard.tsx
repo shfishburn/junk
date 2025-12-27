@@ -127,7 +127,7 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
       )}
 
       {/* Bingo grid */}
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 p-3 bg-card rounded-xl border shadow-lg">
+      <div className="grid grid-cols-5 gap-1 sm:gap-1.5 p-2 sm:p-3 bg-card rounded-xl border shadow-lg">
         {card.items.map((item, index) => {
           const isFree = item === "FREE";
           const isChecked = card.checked[index];
@@ -140,9 +140,9 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
               onClick={() => handleCheck(index)}
               disabled={isFree}
               className={cn(
-                "aspect-square rounded-lg flex flex-col items-center justify-center p-1 transition-all duration-200 relative overflow-hidden",
-                "text-xs sm:text-sm font-medium",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                "aspect-square rounded-md sm:rounded-lg flex flex-col items-center justify-center p-0.5 sm:p-1 transition-all duration-200 relative overflow-hidden",
+                "font-medium",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1",
                 !isChecked && !isFree && "bg-muted hover:bg-muted/80 hover:scale-105 active:scale-95 cursor-pointer",
                 isChecked && !isFree && "bg-primary/20 text-primary",
                 isChecked && isInCompletedLine && "bg-primary text-primary-foreground",
@@ -155,7 +155,7 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Check 
                     className={cn(
-                      "w-8 h-8 sm:w-10 sm:h-10 opacity-20",
+                      "w-6 h-6 sm:w-10 sm:h-10 opacity-20",
                       isInCompletedLine ? "text-primary-foreground" : "text-primary"
                     )} 
                     strokeWidth={3}
@@ -163,12 +163,12 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
                 </div>
               )}
               
-              <span className="text-lg sm:text-xl leading-none relative z-10">
+              <span className="text-base sm:text-xl leading-none relative z-10">
                 {isFree ? "⭐" : (item as BingoItem).emoji}
               </span>
               <span className={cn(
-                "leading-tight text-center relative z-10 mt-0.5",
-                "text-[9px] sm:text-[10px]",
+                "leading-tight text-center relative z-10 mt-0.5 truncate w-full px-0.5",
+                "text-[7px] sm:text-[10px]",
                 isChecked && isInCompletedLine && "text-primary-foreground"
               )}>
                 {isFree ? "FREE" : (item as BingoItem).name}
