@@ -73,12 +73,14 @@ This project uses **barrel files** for centralized component exports, making imp
 | `layout/index.ts` | `@/components/layout` | Header, Footer, Layout wrapper |
 | `home/index.ts` | `@/components/home` | Home page section components |
 | `skeletons/index.ts` | `@/components/skeletons` | Loading skeleton components |
+| `hooks/index.ts` | `@/hooks` | Custom React hooks |
 
 **Example usage:**
 ```tsx
 import { Layout } from "@/components/layout";
 import { SEO, PhoneLink } from "@/components/shared";
 import { JunkAnalyzer } from "@/components/features";
+import { useToast, useScrollAnimation } from "@/hooks";
 ```
 
 📄 See [docs/BARREL_FILES.md](docs/BARREL_FILES.md) for complete documentation.
