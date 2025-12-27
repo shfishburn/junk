@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Sparkles, CalendarDays } from "lucide-react";
+import { Menu, X, Phone, Sparkles, CalendarDays, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
@@ -18,10 +18,53 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showContactBar, setShowContactBar] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowContactBar(window.scrollY > 150);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border backdrop-blur supports-[backdrop-filter]:bg-background/80 bg-gradient-to-r from-background via-background/95 to-background bg-[length:200%_100%] animate-gradient-shift">
+      {/* Mobile Contact Bar - appears on scroll */}
+      <div
+        className={cn(
+          "md:hidden bg-primary text-primary-foreground transition-all duration-300 overflow-hidden",
+          showContactBar ? "h-10" : "h-0"
+        )}
+      >
+        <div className="container flex items-center justify-center gap-4 h-10">
+          <a
+            href="tel:+13606109233"
+            className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+          >
+            <Phone className="h-4 w-4" />
+            Call
+          </a>
+          <span className="text-primary-foreground/50">|</span>
+          <a
+            href="sms:+13606109233"
+            className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Text
+          </a>
+          <span className="text-primary-foreground/50">|</span>
+          <Link
+            to="/contact"
+            className="text-sm font-medium hover:opacity-80 transition-opacity"
+          >
+            Get Quote
+          </Link>
+        </div>
+      </div>
+
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="Junky Gurus LLC" className="h-12 w-auto" />
