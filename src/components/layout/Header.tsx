@@ -37,6 +37,7 @@ export function Header() {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isSpanish = location.pathname === "/espanol";
+  const hasHero = isHome || isSpanish;
 
   const closeMenu = () => setIsOpen(false);
 
@@ -55,15 +56,15 @@ export function Header() {
     closeMenu();
   }, [location.pathname]);
 
-  const headerBg = isHome && !isScrolled
+  const headerBg = hasHero && !isScrolled
     ? "bg-transparent"
     : "bg-background/95 backdrop-blur-md border-b border-border shadow-sm";
 
-  const textColor = isHome && !isScrolled
+  const textColor = hasHero && !isScrolled
     ? "text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-foreground";
 
-  const mutedColor = isHome && !isScrolled
+  const mutedColor = hasHero && !isScrolled
     ? "text-white/90 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-muted-foreground";
 
@@ -80,7 +81,7 @@ export function Header() {
             alt="Junky Gurus LLC" 
             className={cn(
               "h-14 w-auto transition-all duration-300",
-              isHome && !isScrolled && "drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
+              hasHero && !isScrolled && "drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
             )}
           />
         </Link>
@@ -189,7 +190,7 @@ export function Header() {
             href="tel:+13606109233" 
             className={cn(
               "flex items-center gap-2 text-sm font-medium transition-all duration-300 px-3 py-1.5 rounded-full",
-              isHome && !isScrolled 
+              hasHero && !isScrolled 
                 ? "text-white bg-white/10 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
                 : "text-muted-foreground hover:text-primary"
             )}
@@ -203,7 +204,7 @@ export function Header() {
             size="sm" 
             className={cn(
               "gap-2 transition-all duration-300",
-              isHome && !isScrolled && "shadow-[0_0_20px_rgba(34,197,94,0.5)] hover:shadow-[0_0_25px_rgba(34,197,94,0.7)]"
+              hasHero && !isScrolled && "shadow-[0_0_20px_rgba(34,197,94,0.5)] hover:shadow-[0_0_25px_rgba(34,197,94,0.7)]"
             )}
           >
             <Link to="/book">
