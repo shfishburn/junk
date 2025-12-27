@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { MobileCallButton } from "./MobileCallButton";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AIAssistant } from "@/components/AIAssistant";
 import { useGoogleAnalytics } from "@/hooks/use-google-analytics";
@@ -19,7 +18,6 @@ export function Layout({ children }: LayoutProps) {
       <Header />
       <main className="flex-1 relative">
         {children}
-        <MobileCallButton />
       </main>
       <Footer />
       <CookieConsent />
