@@ -1,27 +1,48 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Sparkles } from "lucide-react";
-import heroImage from "@/assets/hero-junk.jpg";
+import { ArrowRight, Phone, Sparkles, Clock } from "lucide-react";
+
 export function HeroSection() {
-  return <section className="relative py-16 md:py-24 lg:py-32 bg-cover bg-center bg-no-repeat" style={{
-    backgroundImage: "url(\"/lovable-uploads/1a609a72-5d33-4187-a5ca-c308b7fc5c42.jpg\")"
-  }}>
+  return (
+    <section
+      className="relative py-16 md:py-24 lg:py-32 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage:
+          'url("/lovable-uploads/1a609a72-5d33-4187-a5ca-c308b7fc5c42.jpg")',
+      }}
+    >
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-overlay/60" />
-      
+
       <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
+          {/* Urgency Badge */}
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/90 text-primary-foreground text-sm font-medium mb-6 animate-fade-in"
+          >
+            <Clock className="h-4 w-4" />
+            Same-Day Service Available
+          </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-6 animate-fade-in">
             We Love Your Junk (So You Don't Have To)
           </h1>
-          <p className="text-lg md:text-xl text-on-primary-muted mb-8 animate-fade-in" style={{
-          animationDelay: "0.1s"
-        }}>
-            That old couch mocking you from the garage? That exercise bike turned clothes hanger? We'll make it disappear faster than your motivation to use it.
+          <p
+            className="text-lg md:text-xl text-on-primary-muted mb-8 animate-fade-in"
+            style={{
+              animationDelay: "0.1s",
+            }}
+          >
+            That old couch mocking you from the garage? That exercise bike
+            turned clothes hanger? We'll make it disappear faster than your
+            motivation to use it.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{
-          animationDelay: "0.2s"
-        }}>
+          <div
+            className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in"
+            style={{
+              animationDelay: "0.2s",
+            }}
+          >
             <Button asChild size="lg" className="text-base">
               <Link to="/book">
                 Book Pickup
@@ -43,5 +64,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }
