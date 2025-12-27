@@ -25,6 +25,10 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBookings from "./pages/admin/Bookings";
 import AdminCalendarView from "./pages/admin/CalendarView";
 import AdminHazmatRequests from "./pages/admin/HazmatRequests";
+import Burlington from "./pages/cities/Burlington";
+import Anacortes from "./pages/cities/Anacortes";
+import SedroWoolley from "./pages/cities/SedroWoolley";
+import Bellingham from "./pages/cities/Bellingham";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +60,10 @@ const App = () => (
           <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="/admin/hazmat" element={<AdminHazmatRequests />} />
           <Route path="/admin/calendar" element={<AdminCalendarView />} />
+          <Route path="/junk-removal-burlington-wa" element={<Burlington />} />
+          <Route path="/junk-removal-anacortes-wa" element={<Anacortes />} />
+          <Route path="/junk-removal-sedro-woolley-wa" element={<SedroWoolley />} />
+          <Route path="/junk-removal-bellingham-wa" element={<Bellingham />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
