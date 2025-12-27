@@ -14,7 +14,7 @@ import {
   generateExitDiscountCode,
   markExitPopupSeen,
   markExitDiscountClaimed,
-} from '@/lib/exit-intent';
+} from "@/lib";
 
 interface ExitIntentPopupProps {
   open: boolean;

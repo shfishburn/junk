@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { TimeSlotGrid, BookingCalendar } from "@/components/shared";
 import { useBookingSlots } from "@/hooks";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 interface DateTimePickerProps {
   /** The selected date */

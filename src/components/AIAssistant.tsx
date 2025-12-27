@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { MessageCircle, X, Send, Bot, User, Loader2, RefreshCw, Wifi, WifiOff, Trash2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { useToast } from "@/hooks";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

@@ -3,7 +3,7 @@ export { PhoneLink } from "./PhoneLink";
 export { EmailLink } from "./EmailLink";
 export { TextUsLink } from "./TextUsLink";
 export { ContactInfoCard } from "./ContactInfoCard";
-export { CONTACT_INFO } from "@/lib/contact-info";
+export { CONTACT_INFO } from "@/lib";
 
 // Business Info Components
 export { BusinessHours, BUSINESS_HOURS } from "./BusinessHours";

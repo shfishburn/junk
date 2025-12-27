@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { hasSeenExitPopup } from '@/lib/exit-intent';
+import { hasSeenExitPopup } from "@/lib";
 
 interface UseExitIntentOptions {
   delayMs?: number;

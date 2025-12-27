@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Cookie, Settings } from "lucide-react";
 import { 
+  cn,
   hasConsentBeenGiven, 
   acceptAllCookies, 
   acceptEssentialOnly 
-} from "@/lib/cookies";
+} from "@/lib";
 import { CookiePreferencesModal } from "./CookiePreferencesModal";
-import { cn } from "@/lib/utils";
 
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);

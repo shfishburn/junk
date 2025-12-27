@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
 import { Check, Star } from "lucide-react";
 import {
+  cn,
   type BingoCard,
   type BingoItem,
   getCompletedLines,
@@ -10,13 +10,11 @@ import {
   isBlackout,
   DISCOUNT_TIERS,
   getCheckedCount,
-} from "@/lib/bingo-items";
-import {
   playCheckSound,
   playUncheckSound,
   playLineCompleteSound,
   playBlackoutSound,
-} from "@/lib/bingo-sounds";
+} from "@/lib";
 
 interface JunkBingoCardProps {
   card: BingoCard;
