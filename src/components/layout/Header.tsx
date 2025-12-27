@@ -15,6 +15,12 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const anchorLinks = [
+  { href: "/#services", label: "Our Services" },
+  { href: "/#testimonials", label: "Reviews" },
+  { href: "/#contact", label: "Contact Us" },
+];
+
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showContactBar, setShowContactBar] = useState(false);
@@ -87,6 +93,18 @@ export function Header() {
               )}
             >
               {link.icon && <link.icon className="h-3.5 w-3.5" />}
+              {link.label}
+            </Link>
+          ))}
+          
+          {/* Anchor links for homepage sections */}
+          <span className="text-muted-foreground/30">|</span>
+          {anchorLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
               {link.label}
             </Link>
           ))}
@@ -171,6 +189,22 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
+              
+              {/* Anchor links for homepage sections */}
+              <div className="pt-2 mt-2 border-t border-border/50">
+                <p className="text-xs text-muted-foreground mb-2">Quick Links</p>
+                {anchorLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={closeMenu}
+                    className="py-2 text-base font-medium text-muted-foreground hover:text-foreground transition-colors block"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+              
               <Link
                 to="/espanol"
                 onClick={closeMenu}
