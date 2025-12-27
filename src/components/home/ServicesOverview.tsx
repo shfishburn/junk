@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
@@ -33,6 +33,11 @@ const services = [
     icon: Building2,
     title: "Light Commercial",
     description: "Office furniture doesn't deserve a funeral. Just a quick, dignified exit.",
+  },
+  {
+    icon: AlertTriangle,
+    title: "Hazmat Pickup",
+    description: "Paint, batteries, chemicals — we'll take them to proper disposal sites.",
   },
 ];
 

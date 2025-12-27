@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer } from "@/components/JunkAnalyzer";
 import { Helmet } from "react-helmet-async";
@@ -59,6 +59,18 @@ const constructionMaterialPricing = [
   { material: "Mixed Construction Debris", description: "Remodel or demo waste", price: "$200 – $500" },
 ];
 
+const hazmatPricing = [
+  { item: "Paint (per 5-gallon bucket)", description: "Latex or oil-based", price: "$25 – $40" },
+  { item: "Paint (per gallon can)", description: "Latex or oil-based", price: "$10 – $15" },
+  { item: "Household Chemicals", description: "Cleaners, solvents, etc.", price: "$15 – $30" },
+  { item: "Batteries (bag/box)", description: "All types", price: "$15 – $25" },
+  { item: "Fluorescent Tubes / CFLs", description: "Bulbs and tubes", price: "$10 – $20" },
+  { item: "Motor Oil / Antifreeze", description: "Per container", price: "$15 – $25" },
+  { item: "E-Waste (TV, computer)", description: "Electronics", price: "$25 – $75" },
+  { item: "Propane Tanks", description: "Small to medium", price: "$20 – $35" },
+  { item: "Mixed Hazardous Load", description: "Multiple items", price: "$75 – $150+" },
+];
+
 const pricingInfo = [
   {
     title: "Volume-Based Pricing",
@@ -106,6 +118,10 @@ const faqs = [
   {
     question: "Do you recycle or donate items?",
     answer: "Yes! We're committed to responsible disposal. We donate usable items to local charities, recycle what we can, and only landfill items that absolutely have to go."
+  },
+  {
+    question: "Do you take hazardous materials?",
+    answer: "Yes! We offer a hazardous materials pickup service for items like paint, batteries, chemicals, motor oil, and e-waste. We pick them up and deliver them to certified collection facilities so you don't have to figure out where they go. Pricing includes pickup, transport, and disposal fees."
   }
 ];
 
@@ -303,6 +319,43 @@ const Pricing = () => {
                 ))}
               </TableBody>
             </Table>
+          </div>
+
+          {/* Hazardous Materials Pricing */}
+          <div className="mt-8 bg-background rounded-xl border border-border overflow-hidden">
+            <div className="p-6 bg-primary/5 border-b border-border">
+              <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-primary" />
+                Hazardous Materials Pickup
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">We pick up and deliver to certified collection facilities</p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold">Item</TableHead>
+                  <TableHead className="text-right font-semibold">Price Range</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {hazmatPricing.map((item) => (
+                  <TableRow key={item.item}>
+                    <TableCell>
+                      <div>
+                        <span className="font-medium">{item.item}</span>
+                        <p className="text-xs text-muted-foreground">{item.description}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right font-medium text-primary">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className="p-4 bg-muted/50 border-t border-border">
+              <p className="text-xs text-muted-foreground">
+                * Pricing includes pickup, transport, and disposal fees. Some items may be subject to quantity limits.
+              </p>
+            </div>
           </div>
 
           <p className="text-center text-sm text-muted-foreground mt-8">
