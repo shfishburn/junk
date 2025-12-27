@@ -1,7 +1,7 @@
 import { Star, Quote } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLoadingDelay } from "@/hooks/use-loading-delay";
-import { TestimonialSkeletonGrid } from "@/components/skeletons/TestimonialCardSkeleton";
+import { TestimonialSkeletonGrid } from "@/components/skeletons";
 
 const testimonials = [
   {
