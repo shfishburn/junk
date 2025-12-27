@@ -6,7 +6,7 @@ import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRig
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
-import { HazmatBookingForm } from "@/components/HazmatBookingForm";
+import { HazmatBookingForm } from "@/components/features";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
 import yardWasteImg from "@/assets/service-yard-waste.jpg";
