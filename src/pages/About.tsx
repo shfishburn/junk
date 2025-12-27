@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Sparkles, Accessibility, Bot, Home, Trash2 } from "lucide-react";
 import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
+import habitatRestoreLogo from "@/assets/habitat-restore-logo.png";
 
 const values = [
   {
@@ -237,18 +238,21 @@ const About = () => {
             ))}
           </div>
           
-          <div className="mt-10 text-center">
-            <p className="text-muted-foreground">
-              Proud partner of{" "}
-              <a 
-                href="https://www.habitat.org/restores" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="font-semibold text-primary hover:underline"
-              >
-                Habitat for Humanity ReStore
-              </a>
-              {" "}— helping build homes and hope in our community.
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <a 
+              href="https://www.habitat.org/restores" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block transition-opacity hover:opacity-80"
+            >
+              <img 
+                src={habitatRestoreLogo} 
+                alt="Habitat for Humanity ReStore logo" 
+                className="h-16 md:h-20 w-auto"
+              />
+            </a>
+            <p className="text-muted-foreground text-sm">
+              Proud partner — helping build homes and hope in our community.
             </p>
           </div>
         </div>
