@@ -82,14 +82,18 @@ export function Header() {
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
       headerBg
     )}>
-      <div className="container flex h-20 items-center justify-between">
+      <div className={cn(
+        "container flex items-center justify-between transition-all duration-300",
+        isScrolled ? "h-16" : "h-20"
+      )}>
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 relative z-10">
           <img 
             src={logo} 
             alt="Junky Gurus LLC" 
             className={cn(
-              "h-14 w-auto transition-all duration-300",
+              "w-auto transition-all duration-300",
+              isScrolled ? "h-10" : "h-14",
               hasHero && !isScrolled && "drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
             )}
           />
@@ -247,7 +251,8 @@ export function Header() {
       <div 
         id="mobile-menu"
         className={cn(
-          "lg:hidden fixed inset-0 top-20 z-40 transition-all duration-300",
+          "lg:hidden fixed inset-0 z-40 transition-all duration-300",
+          isScrolled ? "top-16" : "top-20",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         aria-hidden={!isOpen}
@@ -261,7 +266,8 @@ export function Header() {
         
         <nav 
           className={cn(
-            "absolute top-0 right-0 w-80 max-w-[85vw] h-[calc(100vh-5rem)] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
+            "absolute top-0 right-0 w-80 max-w-[85vw] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
+            isScrolled ? "h-[calc(100vh-4rem)]" : "h-[calc(100vh-5rem)]",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
           aria-label="Mobile navigation"
