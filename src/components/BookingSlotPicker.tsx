@@ -1,10 +1,9 @@
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TimeSlotGrid } from "@/components/TimeSlotGrid";
 import { CalendarDays, Clock, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
+import { useBookingSlots } from "@/hooks/use-booking-slots";
 
 interface BookingSlotPickerProps {
   selectedDate: Date | undefined;
@@ -28,6 +27,22 @@ export function BookingSlotPicker({
     isDateDisabled,
   } = useBookingSlots();
 
+  const handleDateSelect = (date: Date | undefined) => {
+    onDateChange(date);
+    onTimeChange("");
+  };
+
+  const calendarModifiers = {
+    fullyBooked: (date: Date) => isDateFullyBooked(date),
+  };
+
+  const calendarModifiersStyles = {
+    fullyBooked: {
+      color: "hsl(var(--muted-foreground))",
+      textDecoration: "line-through",
+    },
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -36,6 +51,20 @@ export function BookingSlotPicker({
       </div>
     );
   }
+
+  // Appointment summary component
+  const AppointmentSummary = ({ className = "" }: { className?: string }) => (
+    selectedDate && selectedTime ? (
+      <div className={`bg-primary/10 p-3 rounded-lg ${className}`}>
+        <p className="text-sm text-muted-foreground">
+          {compact ? "Selected appointment:" : "Your Appointment"}
+        </p>
+        <p className="text-primary font-semibold">
+          {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
+        </p>
+      </div>
+    ) : null
+  );
 
   if (compact) {
     return (
@@ -50,21 +79,11 @@ export function BookingSlotPicker({
             <Calendar
               mode="single"
               selected={selectedDate}
-              onSelect={(date) => {
-                onDateChange(date);
-                onTimeChange("");
-              }}
+              onSelect={handleDateSelect}
               disabled={isDateDisabled}
               className="rounded-md border w-full"
-              modifiers={{
-                fullyBooked: (date) => isDateFullyBooked(date),
-              }}
-              modifiersStyles={{
-                fullyBooked: {
-                  color: "hsl(var(--muted-foreground))",
-                  textDecoration: "line-through",
-                },
-              }}
+              modifiers={calendarModifiers}
+              modifiersStyles={calendarModifiersStyles}
             />
           </div>
 
@@ -75,27 +94,14 @@ export function BookingSlotPicker({
               Select Time
             </label>
             {selectedDate ? (
-              <div className="grid grid-cols-2 gap-2">
-                {TIME_SLOTS.map((time) => {
-                  const isBooked = isTimeBooked(selectedDate, time);
-                  return (
-                    <Button
-                      key={time}
-                      type="button"
-                      variant={selectedTime === time ? "default" : "outline"}
-                      disabled={isBooked}
-                      onClick={() => onTimeChange(time)}
-                      className={cn(
-                        "w-full text-sm",
-                        isBooked && "opacity-50 line-through"
-                      )}
-                      size="sm"
-                    >
-                      {time}
-                    </Button>
-                  );
-                })}
-              </div>
+              <TimeSlotGrid
+                selectedDate={selectedDate}
+                selectedTime={selectedTime}
+                onTimeChange={onTimeChange}
+                isTimeBooked={isTimeBooked}
+                columns={2}
+                abbreviatedTime={false}
+              />
             ) : (
               <p className="text-muted-foreground text-sm py-4 text-center">
                 Please select a date first
@@ -104,15 +110,7 @@ export function BookingSlotPicker({
           </div>
         </div>
 
-        {/* Selected appointment summary */}
-        {selectedDate && selectedTime && (
-          <div className="bg-primary/10 p-3 rounded-lg text-center">
-            <p className="text-sm text-muted-foreground">Selected appointment:</p>
-            <p className="text-primary font-semibold">
-              {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
-            </p>
-          </div>
-        )}
+        <AppointmentSummary className="text-center" />
       </div>
     );
   }
@@ -132,21 +130,11 @@ export function BookingSlotPicker({
           <Calendar
             mode="single"
             selected={selectedDate}
-            onSelect={(date) => {
-              onDateChange(date);
-              onTimeChange("");
-            }}
+            onSelect={handleDateSelect}
             disabled={isDateDisabled}
             className="rounded-md border w-full"
-            modifiers={{
-              fullyBooked: (date) => isDateFullyBooked(date),
-            }}
-            modifiersStyles={{
-              fullyBooked: {
-                color: "hsl(var(--muted-foreground))",
-                textDecoration: "line-through",
-              },
-            }}
+            modifiers={calendarModifiers}
+            modifiersStyles={calendarModifiersStyles}
           />
           <div className="mt-4 flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-2">
@@ -171,40 +159,23 @@ export function BookingSlotPicker({
         </CardHeader>
         <CardContent>
           {selectedDate ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {TIME_SLOTS.map((time) => {
-                const isBooked = isTimeBooked(selectedDate, time);
-                return (
-                  <Button
-                    key={time}
-                    type="button"
-                    variant={selectedTime === time ? "default" : "outline"}
-                    disabled={isBooked}
-                    onClick={() => onTimeChange(time)}
-                    className={cn(
-                      "w-full",
-                      isBooked && "opacity-50 line-through"
-                    )}
-                  >
-                    {time}
-                  </Button>
-                );
-              })}
-            </div>
+            <TimeSlotGrid
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              onTimeChange={onTimeChange}
+              isTimeBooked={isTimeBooked}
+              columns={3}
+              abbreviatedTime={false}
+              size="default"
+            />
           ) : (
             <p className="text-muted-foreground text-center py-8">
               Please select a date first
             </p>
           )}
 
-          {/* Selected appointment summary */}
           {selectedDate && selectedTime && (
-            <div className="mt-4 bg-primary/10 p-4 rounded-lg">
-              <p className="text-sm font-medium">Your Appointment</p>
-              <p className="text-primary font-semibold">
-                {format(selectedDate, "EEEE, MMMM d, yyyy")} at {selectedTime}
-              </p>
-            </div>
+            <AppointmentSummary className="mt-4" />
           )}
         </CardContent>
       </Card>

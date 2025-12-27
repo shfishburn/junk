@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useBookingSlots, TIME_SLOTS } from "@/hooks/use-booking-slots";
+import { TimeSlotGrid } from "@/components/TimeSlotGrid";
+import { useBookingSlots } from "@/hooks/use-booking-slots";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,10 +19,10 @@ interface DateTimePickerProps {
   onTimeChange: (time: string) => void;
   /** Label text for the picker */
   label?: string;
-  /** Whether time selection is required after date selection */
+  /** Whether time selection is shown after date selection */
   showTimeSlots?: boolean;
   /** Number of columns for time slot grid (default: 5) */
-  timeSlotColumns?: 3 | 5;
+  timeSlotColumns?: 2 | 3 | 5;
   /** Show abbreviated time format (e.g., "8AM" vs "8:00 AM") */
   abbreviatedTime?: boolean;
 }
@@ -41,10 +42,6 @@ export function DateTimePicker({
   const handleDateSelect = (newDate: Date | undefined) => {
     onDateChange(newDate);
     onTimeChange(""); // Reset time when date changes
-  };
-
-  const formatTimeLabel = (slot: string) => {
-    return abbreviatedTime ? slot.replace(":00 ", "") : slot;
   };
 
   return (
@@ -81,30 +78,14 @@ export function DateTimePicker({
           <Label className="text-sm text-muted-foreground mb-2 block">
             Select a time slot
           </Label>
-          <div className={cn(
-            "grid gap-2",
-            timeSlotColumns === 5 ? "grid-cols-5" : "grid-cols-3"
-          )}>
-            {TIME_SLOTS.map((slot) => {
-              const isBooked = isTimeBooked(date, slot);
-              return (
-                <Button
-                  key={slot}
-                  type="button"
-                  variant={time === slot ? "default" : "outline"}
-                  size="sm"
-                  className={cn(
-                    "text-xs",
-                    isBooked && "opacity-50 line-through"
-                  )}
-                  disabled={isBooked}
-                  onClick={() => onTimeChange(slot)}
-                >
-                  {formatTimeLabel(slot)}
-                </Button>
-              );
-            })}
-          </div>
+          <TimeSlotGrid
+            selectedDate={date}
+            selectedTime={time}
+            onTimeChange={onTimeChange}
+            isTimeBooked={isTimeBooked}
+            columns={timeSlotColumns}
+            abbreviatedTime={abbreviatedTime}
+          />
         </div>
       )}
     </div>
