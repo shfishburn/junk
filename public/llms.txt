@@ -1,0 +1,65 @@
+# Junky Gurus LLC
+
+> Professional junk removal services in Mount Vernon, WA and the Puget Sound Region.
+
+Junky Gurus is a locally owned junk removal company serving Skagit, Whatcom, Snohomish, and King Counties in Washington State. We provide fast, reliable junk removal with transparent pricing and responsible disposal practices.
+
+## Services
+
+- [Residential Junk Removal](/services#residential): Furniture, mattresses, electronics, household items
+- [Appliance Removal](/services#appliances): Refrigerators, washers, dryers, stoves, water heaters
+- [Yard Waste & Debris](/services#yard-waste): Branches, leaves, brush, storm debris
+- [Garage & Estate Cleanouts](/services#cleanouts): Full property cleanouts, hoarding situations
+- [Construction Debris](/services#construction): Drywall, lumber, flooring, renovation waste
+- [Commercial Cleanouts](/services#commercial): Office furniture, equipment, retail fixtures
+- [Light Demolition](/services#light-demolition): Deck, shed, fence removal
+- [Hazardous Materials Pickup](/services#hazmat-pickup): Paint, batteries, chemicals, e-waste
+
+## Key Pages
+
+- [Home](/)
+- [All Services](/services)
+- [Pricing](/pricing)
+- [Service Area](/service-area)
+- [Book Online](/book)
+- [Contact](/contact)
+- [AI Photo Estimator](/ai-estimator)
+- [About Us](/about)
+- [FAQ](/faq)
+- [Spanish Version](/espanol)
+
+## Contact Information
+
+- Phone: (360) 610-9233
+- Secondary Phone: (360) 422-2428
+- Email: Junkygurus@gmail.com
+- Location: Mount Vernon, WA
+
+## Service Area
+
+We serve the following counties in Washington State:
+- Skagit County (Mount Vernon, Burlington, Anacortes, Sedro-Woolley)
+- Whatcom County (Bellingham, Lynden, Ferndale, Blaine)
+- Snohomish County (Everett, Marysville, Arlington, Lake Stevens)
+- King County (North Seattle, Shoreline, Kenmore, Bothell)
+
+## Hours of Operation
+
+Monday - Saturday: 8:00 AM - 6:00 PM
+Sunday: Closed
+
+## Pricing Model
+
+Volume-based pricing from $125 minimum load to $750 full truck load. Single item pricing available. Free on-site estimates. No hidden fees.
+
+## Additional Information
+
+- Same-day service available
+- Bilingual service (English & Spanish)
+- Eco-friendly disposal with donation and recycling
+- Licensed and insured
+- AI-powered photo estimates available
+
+## Optional
+
+- [Full LLM Context](/llms-full.txt)
