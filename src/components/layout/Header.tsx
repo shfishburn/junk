@@ -92,6 +92,13 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
+          <Link
+            to="/espanol"
+            className="flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            <span>🇲🇽</span>
+            Español
+          </Link>
           <div className="flex items-center gap-3 text-sm font-medium">
             <Phone className="h-4 w-4 text-primary" />
             <a href="tel:+13606109233" className="text-charcoal-light hover:text-primary transition-colors">
@@ -162,6 +169,14 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                to="/espanol"
+                onClick={closeMenu}
+                className="py-2 text-base font-medium text-primary flex items-center gap-2"
+              >
+                <span>🇲🇽</span>
+                Español
+              </Link>
               <div className="pt-4 mt-2 border-t border-border">
                 <Button asChild className="w-full">
                   <Link to="/contact" onClick={closeMenu}>
