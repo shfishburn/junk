@@ -1,9 +1,10 @@
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BusinessHours } from "@/components/BusinessHours";
 import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 import { PhoneLink } from "@/components/PhoneLink";
 import { EmailLink } from "@/components/EmailLink";
+import { TextUsLink } from "@/components/TextUsLink";
 
 interface ContactInfoCardProps {
   variant?: "full" | "compact";
@@ -42,13 +43,10 @@ export function ContactInfoCard({
           />
         ))}
         {showTextUs && (
-          <a
-            href={`sms:${CONTACT_INFO.phones[0].number}`}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            <MessageCircle className="h-4 w-4 flex-shrink-0" />
-            Text Us
-          </a>
+          <TextUsLink
+            showIcon
+            className="flex text-sm text-muted-foreground"
+          />
         )}
         <EmailLink
           showIcon
