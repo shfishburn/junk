@@ -68,6 +68,11 @@ export function Footer() {
                   Service Area
                 </Link>
               </li>
+              <li>
+                <Link to="/espanol" className="text-primary hover:text-primary/80 transition-colors link-hover-underline inline-block flex items-center gap-1.5">
+                  <span>🇲🇽</span> Español
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -86,6 +91,9 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 className="font-semibold text-charcoal mb-4">Contact Us</h4>
+            <div className="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+              <span>🇲🇽</span> ¡Hablamos Español!
+            </div>
             <ul className="space-y-3">
               <li>
                 <a
