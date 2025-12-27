@@ -147,6 +147,8 @@ const Pricing = () => {
         description="Transparent junk removal pricing in Mount Vernon, WA. Volume-based pricing, no hidden fees, free estimates. Get an instant AI quote!"
         keywords="junk removal pricing, junk removal cost, Mount Vernon hauling prices, free estimate"
         url="/pricing"
+        pageType="pricing"
+        pagePurpose="Pricing information for junk removal services. Volume-based truck load pricing from $125-$750. Single item prices. AI photo estimator available."
       />
       <Helmet>
         <script type="application/ld+json">

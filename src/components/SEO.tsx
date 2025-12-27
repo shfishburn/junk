@@ -8,6 +8,8 @@ interface SEOProps {
   url?: string;
   type?: "website" | "article" | "product";
   noIndex?: boolean;
+  pageType?: string;
+  pagePurpose?: string;
 }
 
 const SITE_NAME = "Junky Gurus LLC";
@@ -25,9 +27,15 @@ export function SEO({
   url,
   type = "website",
   noIndex = false,
+  pageType,
+  pagePurpose,
 }: SEOProps) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const canonicalUrl = url ? `${SITE_URL}${url}` : SITE_URL;
+  
+  // LLM context for page understanding
+  const llmContext = pagePurpose || `${title || "Home"} page for ${SITE_NAME} - Professional junk removal services`;
+  const llmPageType = pageType || (url === "/" ? "homepage" : "content");
 
   // Comprehensive Local Business Schema
   const localBusinessSchema = {
@@ -249,7 +257,17 @@ export function SEO({
       {/* Business Contact */}
       <meta name="author" content="Junky Gurus LLC" />
       <meta name="contact" content={PHONE_DISPLAY} />
-      <meta name="reply-to" content="info@junkygurus.com" />
+      <meta name="reply-to" content="Junkygurus@gmail.com" />
+
+      {/* LLM Discovery & Context */}
+      <meta name="ai:context" content={llmContext} />
+      <meta name="ai:page-type" content={llmPageType} />
+      <meta name="ai:business-type" content="Junk Removal Service" />
+      <meta name="ai:service-area" content="Mount Vernon, WA and Puget Sound Region" />
+      <meta name="ai:llms-txt" content={`${SITE_URL}/llms.txt`} />
+      <meta name="ai:llms-json" content={`${SITE_URL}/llms.json`} />
+      <link rel="ai-context" href={`${SITE_URL}/llms.json`} type="application/json" />
+      <link rel="ai-context-full" href={`${SITE_URL}/llms-full.txt`} type="text/plain" />
 
       {/* Structured Data - Local Business */}
       <script type="application/ld+json">

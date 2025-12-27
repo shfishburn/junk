@@ -1,0 +1,202 @@
+{
+  "name": "Junky Gurus LLC",
+  "tagline": "We Love Your Junk (So You Don't Have To)",
+  "description": "Professional junk removal services in Mount Vernon, WA and the Puget Sound Region. Fast, reliable service with transparent pricing and responsible disposal.",
+  "url": "https://junkygurus.com",
+  "logo": "https://junkygurus.com/favicon.png",
+  "type": "LocalBusiness",
+  "industry": "Junk Removal / Waste Management",
+  "founded": "Mount Vernon, WA",
+  "contact": {
+    "phone": {
+      "primary": "+1-360-610-9233",
+      "secondary": "+1-360-422-2428"
+    },
+    "email": "Junkygurus@gmail.com",
+    "text": "+1-360-610-9233"
+  },
+  "location": {
+    "city": "Mount Vernon",
+    "state": "WA",
+    "country": "US",
+    "zipCode": "98273",
+    "coordinates": {
+      "latitude": 48.4201,
+      "longitude": -122.3343
+    }
+  },
+  "hours": {
+    "monday": "8:00 AM - 6:00 PM",
+    "tuesday": "8:00 AM - 6:00 PM",
+    "wednesday": "8:00 AM - 6:00 PM",
+    "thursday": "8:00 AM - 6:00 PM",
+    "friday": "8:00 AM - 6:00 PM",
+    "saturday": "8:00 AM - 6:00 PM",
+    "sunday": "Closed"
+  },
+  "languages": ["English", "Spanish"],
+  "serviceArea": {
+    "radius": "50 miles",
+    "counties": [
+      {
+        "name": "Skagit County",
+        "primary": true,
+        "cities": ["Mount Vernon", "Burlington", "Anacortes", "Sedro-Woolley", "La Conner", "Concrete", "Bow", "Edison"]
+      },
+      {
+        "name": "Whatcom County",
+        "primary": false,
+        "cities": ["Bellingham", "Lynden", "Ferndale", "Blaine", "Everson", "Sumas", "Nooksack", "Birch Bay"]
+      },
+      {
+        "name": "Snohomish County",
+        "primary": false,
+        "cities": ["Everett", "Marysville", "Arlington", "Lake Stevens", "Stanwood", "Granite Falls"]
+      },
+      {
+        "name": "King County",
+        "primary": false,
+        "cities": ["North Seattle", "Shoreline", "Kenmore", "Bothell", "Woodinville"]
+      }
+    ]
+  },
+  "services": [
+    {
+      "id": "residential",
+      "name": "Residential Junk Removal",
+      "description": "Furniture, mattresses, electronics, household items removal",
+      "url": "/services#residential",
+      "items": ["Furniture", "Mattresses", "Electronics", "Appliances", "Exercise equipment", "Toys"]
+    },
+    {
+      "id": "appliances",
+      "name": "Appliance Removal",
+      "description": "Large appliance removal with proper disposal",
+      "url": "/services#appliances",
+      "items": ["Refrigerators", "Washers", "Dryers", "Stoves", "Dishwashers", "Water heaters", "AC units"]
+    },
+    {
+      "id": "yard-waste",
+      "name": "Yard Waste & Debris",
+      "description": "Outdoor cleanup and storm debris removal",
+      "url": "/services#yard-waste",
+      "items": ["Branches", "Leaves", "Brush", "Soil", "Storm debris"]
+    },
+    {
+      "id": "cleanouts",
+      "name": "Garage & Estate Cleanouts",
+      "description": "Complete property cleanout services",
+      "url": "/services#cleanouts",
+      "items": ["Garage cleanouts", "Basement clearing", "Estate cleanouts", "Storage units", "Hoarding situations"]
+    },
+    {
+      "id": "construction",
+      "name": "Construction & Renovation Debris",
+      "description": "Contractor and DIY project cleanup",
+      "url": "/services#construction",
+      "items": ["Drywall", "Lumber", "Flooring", "Roofing", "Demolition waste"]
+    },
+    {
+      "id": "commercial",
+      "name": "Light Commercial Cleanouts",
+      "description": "Business and office junk removal",
+      "url": "/services#commercial",
+      "items": ["Office furniture", "Cubicles", "Equipment", "Retail fixtures", "Warehouse items"]
+    },
+    {
+      "id": "light-demolition",
+      "name": "Light Demolition",
+      "description": "Small structure removal",
+      "url": "/services#light-demolition",
+      "items": ["Decks", "Patios", "Sheds", "Playhouses", "Fences"]
+    },
+    {
+      "id": "hazmat-pickup",
+      "name": "Hazardous Materials Pickup",
+      "description": "Safe household hazardous waste disposal",
+      "url": "/services#hazmat-pickup",
+      "items": ["Paint", "Chemicals", "Batteries", "Fluorescent bulbs", "Motor oil", "E-waste", "Aerosol cans", "Propane tanks"],
+      "restrictions": ["No explosives", "No ammunition", "No radioactive materials", "No medical waste", "No asbestos"]
+    }
+  ],
+  "pricing": {
+    "model": "Volume-based",
+    "currency": "USD",
+    "truckLoads": [
+      { "name": "Minimum Load", "description": "1-2 small items", "priceRange": "$125 - $190" },
+      { "name": "1/8 Truck", "description": "A couple items", "priceRange": "$190 - $250" },
+      { "name": "1/4 Truck", "description": "Small room cleanout", "priceRange": "$250 - $375" },
+      { "name": "1/2 Truck", "description": "Garage or bedroom set", "priceRange": "$375 - $500" },
+      { "name": "3/4 Truck", "description": "Large room or multiple rooms", "priceRange": "$500 - $625" },
+      { "name": "Full Truck", "description": "Major cleanout", "priceRange": "$625 - $750" }
+    ],
+    "singleItems": [
+      { "item": "Couch/Sofa", "priceRange": "$75 - $150" },
+      { "item": "Mattress", "priceRange": "$50 - $100" },
+      { "item": "Refrigerator", "priceRange": "$75 - $125" },
+      { "item": "Washer/Dryer", "priceRange": "$65 - $100" },
+      { "item": "Hot Tub", "priceRange": "$300 - $500" },
+      { "item": "Piano", "priceRange": "$200 - $400" }
+    ],
+    "includes": ["Labor", "Loading", "Hauling", "Disposal"],
+    "paymentMethods": ["Cash", "Credit cards", "Debit cards", "Digital payments"]
+  },
+  "features": {
+    "sameDayService": true,
+    "freeEstimates": true,
+    "licensedInsured": true,
+    "bilingual": true,
+    "ecoFriendly": true,
+    "aiPhotoEstimates": true
+  },
+  "pages": [
+    { "path": "/", "name": "Home", "purpose": "Main landing page with service overview and booking CTAs" },
+    { "path": "/services", "name": "Services", "purpose": "Detailed list of all junk removal services offered" },
+    { "path": "/pricing", "name": "Pricing", "purpose": "Transparent pricing information and AI photo estimator" },
+    { "path": "/book", "name": "Book Online", "purpose": "Schedule a junk removal appointment" },
+    { "path": "/contact", "name": "Contact", "purpose": "Contact form and business information" },
+    { "path": "/ai-estimator", "name": "AI Estimator", "purpose": "Upload photos to get instant price estimates" },
+    { "path": "/service-area", "name": "Service Area", "purpose": "Map and list of cities served" },
+    { "path": "/about", "name": "About Us", "purpose": "Company story and values" },
+    { "path": "/faq", "name": "FAQ", "purpose": "Frequently asked questions" },
+    { "path": "/referrals", "name": "Referral Program", "purpose": "Earn $25 by referring friends" },
+    { "path": "/espanol", "name": "Spanish", "purpose": "Full site content in Spanish" },
+    { "path": "/bingo", "name": "Junk Bingo", "purpose": "Interactive game to earn discounts" }
+  ],
+  "actions": {
+    "primary": {
+      "label": "Book Now",
+      "url": "/book",
+      "description": "Schedule a junk removal appointment online"
+    },
+    "secondary": [
+      { "label": "Get AI Estimate", "url": "/ai-estimator", "description": "Upload photos for instant pricing" },
+      { "label": "Call", "url": "tel:+13606109233", "description": "Speak with us directly" },
+      { "label": "Text", "url": "sms:+13606109233", "description": "Send us a text message" }
+    ]
+  },
+  "llmInstructions": {
+    "primaryUseCase": "Help users understand junk removal services, get pricing estimates, and book appointments",
+    "keyFacts": [
+      "Locally owned business in Mount Vernon, WA",
+      "Serves 4 counties in Washington State",
+      "Volume-based transparent pricing",
+      "Same-day service often available",
+      "Bilingual English/Spanish service",
+      "Eco-friendly with donation and recycling"
+    ],
+    "commonQuestions": [
+      "What items do you remove?",
+      "How much does junk removal cost?",
+      "Do you offer same-day service?",
+      "What areas do you serve?",
+      "Do you speak Spanish?"
+    ],
+    "doNotAssume": [
+      "Specific availability without checking",
+      "Exact prices without photos or on-site estimate",
+      "Service for hazardous industrial materials"
+    ]
+  },
+  "lastUpdated": "2024-12"
+}

@@ -51,6 +51,8 @@ const AIEstimator = () => {
         description="Get an instant junk removal or demolition estimate with AI. Upload a photo and receive a price quote in seconds. Free and easy!"
         keywords="AI junk estimate, instant junk removal quote, demolition estimate, photo estimate, junk removal calculator"
         url="/ai-estimator"
+        pageType="tool"
+        pagePurpose="AI-powered photo estimator tool. Upload photos of junk or demolition projects to get instant price estimates."
       />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">

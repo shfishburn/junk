@@ -200,9 +200,11 @@ export default function Book() {
   return (
     <Layout>
       <SEO
-        title="Book an Appointment | Junky Gurus"
+        title="Book an Appointment"
         description="Schedule your junk removal appointment online. Select a convenient date and time, and we'll take care of the rest."
         url="/book"
+        pageType="booking"
+        pagePurpose="Online appointment booking form. Select date and time for junk removal pickup. Mon-Sat 8AM-6PM."
       />
       
       <section className="py-12 md:py-20 bg-section-alt">
