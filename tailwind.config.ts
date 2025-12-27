@@ -105,6 +105,10 @@ export default {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "slide-in-down": {
+          from: { transform: "translateY(-100%)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -114,6 +118,7 @@ export default {
         "fade-in-scale": "fade-in-scale 0.5s ease-out forwards",
         "confetti-fall": "confetti-fall 2s ease-in-out forwards",
         "gradient-shift": "gradient-shift 8s ease infinite",
+        "slide-in-down": "slide-in-down 0.3s ease-out forwards",
       },
     },
   },
