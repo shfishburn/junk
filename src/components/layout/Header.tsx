@@ -18,74 +18,29 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
   const [showContactBar, setShowContactBar] = useState(false);
-  const [isContactBarVisible, setIsContactBarVisible] = useState(false);
-  const [isContactBarClosing, setIsContactBarClosing] = useState(false);
   const location = useLocation();
 
-  const handleMenuToggle = () => {
-    if (isOpen) {
-      setIsClosing(true);
-    } else {
-      setIsOpen(true);
-    }
-  };
-
-  const handleAnimationEnd = () => {
-    if (isClosing) {
-      setIsOpen(false);
-      setIsClosing(false);
-    }
-  };
-
-  const handleContactBarAnimationEnd = () => {
-    if (isContactBarClosing) {
-      setIsContactBarVisible(false);
-      setIsContactBarClosing(false);
-    }
-  };
-
-  const handleLinkClick = () => {
-    setIsClosing(true);
-  };
+  const closeMenu = () => setIsOpen(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Close mobile menu on scroll
-      if (isOpen && !isClosing) {
-        setIsClosing(true);
-      }
-
-      const shouldShow = window.scrollY > 150;
-      setShowContactBar(shouldShow);
-      
-      if (shouldShow && !isContactBarVisible) {
-        setIsContactBarVisible(true);
-        setIsContactBarClosing(false);
-      } else if (!shouldShow && isContactBarVisible && !isContactBarClosing) {
-        setIsContactBarClosing(true);
-      }
+      if (isOpen) closeMenu();
+      setShowContactBar(window.scrollY > 150);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isContactBarVisible, isContactBarClosing, isOpen, isClosing]);
+  }, [isOpen]);
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full border-b border-border backdrop-blur supports-[backdrop-filter]:bg-background/80 bg-gradient-to-r from-background via-background/95 to-background bg-[length:200%_100%] animate-gradient-shift transition-shadow duration-300",
+      "sticky top-0 z-50 w-full border-b border-border bg-background transition-shadow duration-300",
       showContactBar && "shadow-md"
     )}>
       {/* Mobile Contact Bar - appears on scroll */}
-      {isContactBarVisible && (
-        <div 
-          className={cn(
-            "md:hidden bg-primary text-primary-foreground h-10",
-            isContactBarClosing ? "animate-slide-out-up" : "animate-slide-in-down"
-          )}
-          onAnimationEnd={handleContactBarAnimationEnd}
-        >
+      {showContactBar && (
+        <div className="md:hidden bg-primary text-primary-foreground h-10">
           <div className="container flex items-center justify-center gap-4 h-10">
             <a
               href="tel:+13606109233"
@@ -157,25 +112,25 @@ export function Header() {
         {/* Mobile Menu Button */}
         <button
           className="md:hidden p-2 -mr-2 relative w-10 h-10 flex items-center justify-center"
-          onClick={handleMenuToggle}
+          onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
           <div className="flex flex-col justify-center items-center w-6 h-6">
             <span
               className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out",
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300",
                 isOpen ? "rotate-45 translate-y-[5px]" : ""
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out my-[4px]",
-                isOpen ? "opacity-0 scale-0" : "opacity-100"
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 my-[4px]",
+                isOpen ? "opacity-0" : ""
               )}
             />
             <span
               className={cn(
-                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300 ease-in-out",
+                "block h-0.5 w-6 bg-foreground rounded-full transition-all duration-300",
                 isOpen ? "-rotate-45 -translate-y-[5px]" : ""
               )}
             />
@@ -183,61 +138,42 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation Backdrop */}
-      {isOpen && (
-        <div 
-          className={cn(
-            "md:hidden fixed inset-0 top-16 bg-black/30 backdrop-blur-md z-40",
-            isClosing ? "animate-fade-out" : "animate-fade-in"
-          )}
-          onClick={handleMenuToggle}
-        />
-      )}
-
       {/* Mobile Navigation */}
       {isOpen && (
-        <div 
-          className={cn(
-            "md:hidden border-t border-border bg-background relative z-50",
-            isClosing ? "animate-slide-out-right" : "animate-slide-in-right"
-          )}
-          onAnimationEnd={handleAnimationEnd}
-        >
-          <nav className="container py-4 flex flex-col gap-2">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={handleLinkClick}
-                className={cn(
-                  "py-2 text-base font-medium transition-colors flex items-center gap-2 opacity-0",
-                  location.pathname === link.href
-                    ? "text-primary"
-                    : "text-muted-foreground",
-                  link.icon && "text-primary",
-                  !isClosing && "animate-fade-in-up"
-                )}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                {link.icon && <link.icon className="h-4 w-4" />}
-                {link.label}
-              </Link>
-            ))}
-            <div 
-              className={cn(
-                "pt-4 mt-2 border-t border-border opacity-0",
-                !isClosing && "animate-fade-in-up"
-              )}
-              style={{ animationDelay: `${navLinks.length * 50}ms` }}
-            >
-              <Button asChild className="w-full">
-                <Link to="/contact" onClick={handleLinkClick}>
-                  Get a Free Quote
+        <>
+          <div 
+            className="md:hidden fixed inset-0 top-16 bg-black/40 z-40"
+            onClick={closeMenu}
+          />
+          <nav className="md:hidden absolute left-0 right-0 top-full bg-background border-b border-border z-50 shadow-lg">
+            <div className="container py-4 flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={closeMenu}
+                  className={cn(
+                    "py-2 text-base font-medium transition-colors flex items-center gap-2",
+                    location.pathname === link.href
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-foreground",
+                    link.icon && "text-primary"
+                  )}
+                >
+                  {link.icon && <link.icon className="h-4 w-4" />}
+                  {link.label}
                 </Link>
-              </Button>
+              ))}
+              <div className="pt-4 mt-2 border-t border-border">
+                <Button asChild className="w-full">
+                  <Link to="/contact" onClick={closeMenu}>
+                    Get a Free Quote
+                  </Link>
+                </Button>
+              </div>
             </div>
           </nav>
-        </div>
+        </>
       )}
     </header>
   );
