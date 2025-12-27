@@ -2,13 +2,12 @@ import { Link } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { SERVICE_AREA_DATA } from "@/components/ServiceAreaInfo";
 
-const counties = [
-  { name: "Skagit County", cities: "Mount Vernon, Burlington, Anacortes, Sedro-Woolley" },
-  { name: "Whatcom County", cities: "Bellingham, Lynden, Ferndale, Blaine" },
-  { name: "Snohomish County", cities: "Everett, Marysville, Lake Stevens, Arlington" },
-  { name: "King County", cities: "North Seattle, Shoreline, Kenmore, Bothell" },
-];
+const counties = SERVICE_AREA_DATA.counties.map(c => ({
+  name: c.name,
+  cities: c.citiesSummary,
+}));
 
 export function ServiceAreaSection() {
   const { ref, isVisible } = useScrollAnimation();
