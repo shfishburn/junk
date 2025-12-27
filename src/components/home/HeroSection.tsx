@@ -7,14 +7,14 @@ export function HeroSection() {
     backgroundImage: "url(\"/lovable-uploads/1a609a72-5d33-4187-a5ca-c308b7fc5c42.jpg\")"
   }}>
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-overlay/60" />
       
       <div className="container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-6 animate-fade-in">
             We Love Your Junk (So You Don't Have To)
           </h1>
-          <p className="text-lg md:text-xl text-white/90 mb-8 animate-fade-in" style={{
+          <p className="text-lg md:text-xl text-on-primary-muted mb-8 animate-fade-in" style={{
           animationDelay: "0.1s"
         }}>
             That old couch mocking you from the garage? That exercise bike turned clothes hanger? We'll make it disappear faster than your motivation to use it.

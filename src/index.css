@@ -49,6 +49,21 @@
     --section-alt: 220 14% 97%;
     --charcoal: 220 20% 20%;
     --charcoal-light: 220 15% 35%;
+    
+    /* Inverted surface (for primary-bg sections) */
+    --on-primary: 0 0% 100%;
+    --on-primary-muted: 0 0% 100% / 0.9;
+    
+    /* Overlay */
+    --overlay: 220 20% 10%;
+    
+    /* Status colors */
+    --status-pending: 45 93% 47%;
+    --status-confirmed: 152 35% 42%;
+    --status-completed: 217 91% 60%;
+    --status-cancelled: 0 72% 51%;
+    --status-scheduled: 280 65% 60%;
+    --status-default: 220 14% 46%;
   }
 
   .dark {
@@ -83,6 +98,21 @@
     --section-alt: 220 20% 12%;
     --charcoal: 220 14% 90%;
     --charcoal-light: 220 10% 70%;
+    
+    /* Inverted surface (for primary-bg sections) */
+    --on-primary: 0 0% 100%;
+    --on-primary-muted: 0 0% 100% / 0.9;
+    
+    /* Overlay */
+    --overlay: 0 0% 0%;
+    
+    /* Status colors (same in dark mode) */
+    --status-pending: 45 93% 47%;
+    --status-confirmed: 152 40% 50%;
+    --status-completed: 217 91% 60%;
+    --status-cancelled: 0 72% 51%;
+    --status-scheduled: 280 65% 60%;
+    --status-default: 220 14% 60%;
   }
 }
 

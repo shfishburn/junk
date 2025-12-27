@@ -57,6 +57,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "on-primary": {
+          DEFAULT: "hsl(var(--on-primary))",
+          muted: "hsl(var(--on-primary-muted))",
+        },
+        overlay: "hsl(var(--overlay))",
+        status: {
+          pending: "hsl(var(--status-pending))",
+          confirmed: "hsl(var(--status-confirmed))",
+          completed: "hsl(var(--status-completed))",
+          cancelled: "hsl(var(--status-cancelled))",
+          scheduled: "hsl(var(--status-scheduled))",
+          DEFAULT: "hsl(var(--status-default))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
