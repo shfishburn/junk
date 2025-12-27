@@ -1,5 +1,6 @@
-import { Phone, Mail, Clock, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BusinessHours } from "@/components/BusinessHours";
 
 interface ContactInfoCardProps {
   variant?: "full" | "compact";
@@ -17,10 +18,6 @@ const CONTACT_INFO = {
   email: "Junkygurus@gmail.com",
   location: "Mount Vernon, WA",
   serviceArea: "Serving Skagit, Whatcom, Snohomish & King Counties",
-  hours: {
-    weekday: "Monday - Saturday: 8am - 6pm",
-    weekend: "Sunday: Closed",
-  },
 };
 
 export function ContactInfoCard({
@@ -102,18 +99,7 @@ export function ContactInfoCard({
         </div>
       </a>
 
-      {showHours && (
-        <div className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <Clock className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-charcoal">Business Hours</h3>
-            <p className="text-muted-foreground">{CONTACT_INFO.hours.weekday}</p>
-            <p className="text-muted-foreground">{CONTACT_INFO.hours.weekend}</p>
-          </div>
-        </div>
-      )}
+      {showHours && <BusinessHours />}
 
       {showLocation && (
         <div className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border">
