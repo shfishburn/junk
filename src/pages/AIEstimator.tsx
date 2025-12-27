@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
-import { JunkAnalyzer } from "@/components/JunkAnalyzer";
-import { DemolitionAnalyzer } from "@/components/DemolitionAnalyzer";
+import { JunkAnalyzer, DemolitionAnalyzer } from "@/components/features";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
