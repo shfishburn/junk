@@ -120,12 +120,12 @@ export default {
           to: { transform: "translateY(-100%)" },
         },
         "slide-in-right": {
-          from: { transform: "translateX(100%)" },
-          to: { transform: "translateX(0)" },
+          from: { transform: "translateX(100%) scale(0.95)", opacity: "0" },
+          to: { transform: "translateX(0) scale(1)", opacity: "1" },
         },
         "slide-out-right": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(100%)" },
+          from: { transform: "translateX(0) scale(1)", opacity: "1" },
+          to: { transform: "translateX(100%) scale(0.95)", opacity: "0" },
         },
       },
       animation: {
