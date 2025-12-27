@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
@@ -109,6 +109,23 @@ const services = [
       "Fence removal",
     ],
   },
+  {
+    icon: AlertTriangle,
+    title: "Hazardous Materials Pickup",
+    slug: "hazmat-pickup",
+    description: "Got old paint cans staring at you? Batteries multiplying in a drawer? We'll pick them up and deliver them to the proper disposal sites so you don't have to figure out where they go.",
+    image: null,
+    details: [
+      "Latex & oil-based paint",
+      "Household chemicals & cleaners",
+      "Batteries (all types)",
+      "Fluorescent bulbs & CFLs",
+      "Motor oil & antifreeze",
+      "Electronics & e-waste",
+      "Aerosol cans",
+      "Propane tanks",
+    ],
+  },
 ];
 
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
@@ -178,8 +195,8 @@ const Services = () => {
     <Layout>
       <SEO
         title="Junk Removal Services"
-        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, and commercial cleanouts in Mount Vernon, WA and the Puget Sound Region."
-        keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal"
+        description="Residential junk removal, appliance hauling, yard waste, estate cleanouts, construction debris, hazardous materials pickup, and commercial cleanouts in Mount Vernon, WA and the Puget Sound Region."
+        keywords="junk removal services, appliance removal, furniture hauling, estate cleanout, construction debris, yard waste removal, hazardous materials pickup, paint disposal, battery recycling"
         url="/services"
       />
       {/* Hero */}
