@@ -327,7 +327,7 @@ const Services = () => {
             <p className="text-lg text-primary-foreground/90 mb-8">
               We've hauled hot tubs, pianos, and things we still can't identify. Give us a call — we love a good mystery.
             </p>
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
+            <Button asChild size="lg" className="bg-on-primary text-primary hover:bg-on-primary/90">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>

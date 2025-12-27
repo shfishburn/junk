@@ -44,25 +44,25 @@ export function ReferralWidget({
       icon: MessageCircle,
       label: "Text",
       href: `sms:?body=${shareMessage}`,
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-primary hover:bg-primary/90",
     },
     {
       icon: Mail,
       label: "Email",
       href: `mailto:?subject=Get 10% off junk removal!&body=${shareMessage}`,
-      color: "bg-blue-600 hover:bg-blue-700",
+      color: "bg-secondary hover:bg-secondary/80 text-secondary-foreground",
     },
     {
       icon: Facebook,
       label: "Facebook",
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${shareMessage}`,
-      color: "bg-[#1877F2] hover:bg-[#166FE5]",
+      color: "bg-[#1877F2] hover:bg-[#166FE5]", // Brand color exception
     },
     {
       icon: Twitter,
       label: "Twitter",
       href: `https://twitter.com/intent/tweet?text=${shareMessage}&url=${encodeURIComponent(referralLink)}`,
-      color: "bg-[#1DA1F2] hover:bg-[#1A8CD8]",
+      color: "bg-[#1DA1F2] hover:bg-[#1A8CD8]", // Brand color exception
     },
   ];
 
@@ -96,7 +96,7 @@ export function ReferralWidget({
               href={btn.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex flex-col items-center justify-center p-3 rounded-lg text-white transition-colors ${btn.color}`}
+              className={`flex flex-col items-center justify-center p-3 rounded-lg text-primary-foreground transition-colors ${btn.color}`}
             >
               <btn.icon className="h-5 w-5 mb-1" />
               <span className="text-xs">{btn.label}</span>
@@ -185,7 +185,7 @@ export function ReferralWidget({
               href={btn.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center justify-center gap-2 p-3 rounded-lg text-white transition-colors ${btn.color}`}
+              className={`flex items-center justify-center gap-2 p-3 rounded-lg text-primary-foreground transition-colors ${btn.color}`}
             >
               <btn.icon className="h-5 w-5" />
               <span className="font-medium">{btn.label}</span>
