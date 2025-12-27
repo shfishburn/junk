@@ -1,25 +1,74 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2, RefreshCw, Wifi, WifiOff, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 type Message = {
+  id: string;
   role: "user" | "assistant";
   content: string;
+  timestamp: number;
+  status?: "sending" | "sent" | "error";
 };
 
+type ConnectionStatus = "connected" | "connecting" | "error" | "idle";
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-assistant`;
+const STORAGE_KEY = "junkguru-chat-history";
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000;
+
+// Generate unique ID
+const generateId = () => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+// Load messages from localStorage
+const loadMessages = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Check if messages are less than 24 hours old
+      if (parsed.length > 0 && Date.now() - parsed[0].timestamp < 24 * 60 * 60 * 1000) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.error("Error loading chat history:", e);
+  }
+  return [];
+};
+
+// Save messages to localStorage
+const saveMessages = (messages: Message[]) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  } catch (e) {
+    console.error("Error saving chat history:", e);
+  }
+};
+
+// Initial greeting message
+const getGreetingMessage = (): Message => ({
+  id: generateId(),
+  role: "assistant",
+  content: "Hey there! 👋 I'm Junk Guru, your friendly guide to all things junk removal. How can I help you today?",
+  timestamp: Date.now(),
+  status: "sent",
+});
 
 async function streamChat({
   messages,
   onDelta,
   onDone,
   onError,
+  signal,
 }: {
   messages: Message[];
   onDelta: (deltaText: string) => void;
   onDone: () => void;
-  onError: (error: string) => void;
+  onError: (error: string, isRetryable: boolean) => void;
+  signal?: AbortSignal;
 }) {
   try {
     const resp = await fetch(CHAT_URL, {
@@ -28,17 +77,28 @@ async function streamChat({
         "Content-Type": "application/json",
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({ 
+        messages: messages.map(m => ({ role: m.role, content: m.content }))
+      }),
+      signal,
     });
 
     if (!resp.ok) {
       const errorData = await resp.json().catch(() => ({}));
-      onError(errorData.error || "Failed to get response");
+      const isRetryable = resp.status >= 500 || resp.status === 429;
+      
+      if (resp.status === 429) {
+        onError("Too many requests. Please wait a moment before trying again.", isRetryable);
+      } else if (resp.status === 402) {
+        onError("Service temporarily unavailable. Please try again later.", false);
+      } else {
+        onError(errorData.error || "Failed to get response", isRetryable);
+      }
       return;
     }
 
     if (!resp.body) {
-      onError("No response body");
+      onError("No response body", true);
       return;
     }
 
@@ -46,6 +106,7 @@ async function streamChat({
     const decoder = new TextDecoder();
     let textBuffer = "";
     let streamDone = false;
+    let hasReceivedContent = false;
 
     while (!streamDone) {
       const { done, value } = await reader.read();
@@ -70,7 +131,10 @@ async function streamChat({
         try {
           const parsed = JSON.parse(jsonStr);
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) onDelta(content);
+          if (content) {
+            hasReceivedContent = true;
+            onDelta(content);
+          }
         } catch {
           textBuffer = line + "\n" + textBuffer;
           break;
@@ -78,6 +142,7 @@ async function streamChat({
       }
     }
 
+    // Flush remaining buffer
     if (textBuffer.trim()) {
       for (let raw of textBuffer.split("\n")) {
         if (!raw) continue;
@@ -89,37 +154,58 @@ async function streamChat({
         try {
           const parsed = JSON.parse(jsonStr);
           const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) onDelta(content);
+          if (content) {
+            hasReceivedContent = true;
+            onDelta(content);
+          }
         } catch { /* ignore */ }
       }
     }
 
+    if (!hasReceivedContent) {
+      onError("No response received. Please try again.", true);
+      return;
+    }
+
     onDone();
   } catch (error) {
-    onError(error instanceof Error ? error.message : "Connection error");
+    if (error instanceof Error && error.name === "AbortError") {
+      onError("Request cancelled", false);
+      return;
+    }
+    onError(error instanceof Error ? error.message : "Connection error", true);
   }
 }
 
 export function AIAssistant() {
+  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Hey there! 👋 I'm Junk Guru, your friendly guide to all things junk removal. How can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const loaded = loadMessages();
+    return loaded.length > 0 ? loaded : [getGreetingMessage()];
+  });
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("idle");
+  const [retryCount, setRetryCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
+
+  // Save messages whenever they change
+  useEffect(() => {
+    if (messages.length > 1 || messages[0]?.content !== getGreetingMessage().content) {
+      saveMessages(messages);
+    }
+  }, [messages]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, scrollToBottom]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -127,41 +213,161 @@ export function AIAssistant() {
     }
   }, [isOpen]);
 
-  const sendMessage = useCallback(async () => {
-    if (!input.trim() || isLoading) return;
+  // Cleanup abort controller on unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
-    const userMsg: Message = { role: "user", content: input.trim() };
-    const newMessages = [...messages, userMsg];
-    setMessages(newMessages);
-    setInput("");
+  const clearHistory = useCallback(() => {
+    setMessages([getGreetingMessage()]);
+    localStorage.removeItem(STORAGE_KEY);
+    toast({
+      title: "Chat cleared",
+      description: "Your conversation history has been cleared.",
+    });
+  }, [toast]);
+
+  const retryLastMessage = useCallback(async () => {
+    // Find the last user message that failed
+    let lastUserMsgIndex = -1;
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].role === "user") {
+        lastUserMsgIndex = i;
+        break;
+      }
+    }
+    if (lastUserMsgIndex === -1) return;
+
+    const lastUserMsg = messages[lastUserMsgIndex];
+    
+    // Remove the error response if it exists
+    const messagesUpToUser = messages.slice(0, lastUserMsgIndex + 1).map(m => 
+      m.id === lastUserMsg.id ? { ...m, status: "sending" as const } : m
+    );
+    
+    setMessages(messagesUpToUser);
+    setRetryCount(prev => prev + 1);
+    
+    await sendMessageWithRetry(messagesUpToUser, lastUserMsg);
+  }, [messages]);
+
+  const sendMessageWithRetry = useCallback(async (
+    currentMessages: Message[],
+    userMessage: Message,
+    attempt = 0
+  ) => {
     setIsLoading(true);
+    setConnectionStatus("connecting");
+
+    // Cancel any existing request
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = new AbortController();
 
     let assistantContent = "";
+    const assistantId = generateId();
 
     const updateAssistant = (chunk: string) => {
       assistantContent += chunk;
+      setConnectionStatus("connected");
       setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        if (last?.role === "assistant" && prev.length > 1 && prev[prev.length - 2]?.role === "user") {
-          return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantContent } : m));
+        const existingAssistant = prev.find(m => m.id === assistantId);
+        if (existingAssistant) {
+          return prev.map((m) => m.id === assistantId ? { ...m, content: assistantContent } : m);
         }
-        return [...prev, { role: "assistant", content: assistantContent }];
+        return [...prev, { 
+          id: assistantId, 
+          role: "assistant", 
+          content: assistantContent, 
+          timestamp: Date.now(),
+          status: "sending"
+        }];
       });
     };
 
     await streamChat({
-      messages: newMessages,
+      messages: currentMessages,
+      signal: abortControllerRef.current.signal,
       onDelta: updateAssistant,
-      onDone: () => setIsLoading(false),
-      onError: (error) => {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: `Sorry, I encountered an error: ${error}. Please try again or call us at (360) 610-9233.` },
-        ]);
+      onDone: () => {
         setIsLoading(false);
+        setConnectionStatus("idle");
+        setRetryCount(0);
+        // Update statuses to sent
+        setMessages(prev => prev.map(m => ({
+          ...m,
+          status: m.id === userMessage.id || m.id === assistantId ? "sent" : m.status
+        })));
+      },
+      onError: async (error, isRetryable) => {
+        if (isRetryable && attempt < MAX_RETRIES - 1) {
+          // Auto-retry with exponential backoff
+          setConnectionStatus("connecting");
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * Math.pow(2, attempt)));
+          await sendMessageWithRetry(currentMessages, userMessage, attempt + 1);
+          return;
+        }
+
+        setConnectionStatus("error");
+        setIsLoading(false);
+        
+        // Mark user message as error and add error response
+        setMessages(prev => {
+          const updated = prev.map(m => 
+            m.id === userMessage.id ? { ...m, status: "error" as const } : m
+          );
+          
+          // Add error message if no assistant response exists
+          const hasAssistantResponse = updated.find(m => m.id === assistantId);
+          if (!hasAssistantResponse) {
+            updated.push({
+              id: assistantId,
+              role: "assistant",
+              content: `Sorry, I ran into an issue: ${error}. You can try again or call us at (360) 610-9233 for immediate help!`,
+              timestamp: Date.now(),
+              status: "sent"
+            });
+          }
+          
+          return updated;
+        });
+
+        if (attempt >= MAX_RETRIES - 1) {
+          toast({
+            variant: "destructive",
+            title: "Connection issue",
+            description: "Unable to get a response. You can retry or contact us directly.",
+          });
+        }
       },
     });
-  }, [input, isLoading, messages]);
+  }, [toast]);
+
+  const sendMessage = useCallback(async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMsg: Message = { 
+      id: generateId(),
+      role: "user", 
+      content: input.trim(),
+      timestamp: Date.now(),
+      status: "sending"
+    };
+    
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
+    setInput("");
+    setRetryCount(0);
+
+    await sendMessageWithRetry(newMessages, userMsg);
+  }, [input, isLoading, messages, sendMessageWithRetry]);
+
+  const cancelRequest = useCallback(() => {
+    abortControllerRef.current?.abort();
+    setIsLoading(false);
+    setConnectionStatus("idle");
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -169,6 +375,8 @@ export function AIAssistant() {
       sendMessage();
     }
   };
+
+  const hasFailedMessage = messages.some(m => m.status === "error");
 
   return (
     <>
@@ -195,22 +403,53 @@ export function AIAssistant() {
       >
         {/* Header */}
         <div className="p-4 border-b border-border bg-primary text-primary-foreground rounded-t-lg">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary-foreground/20 rounded-full">
-              <Bot className="h-5 w-5" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary-foreground/20 rounded-full">
+                <Bot className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Junk Guru</h3>
+                <div className="flex items-center gap-1.5 text-xs opacity-80">
+                  {connectionStatus === "connected" && (
+                    <>
+                      <Wifi className="h-3 w-3" />
+                      <span>Connected</span>
+                    </>
+                  )}
+                  {connectionStatus === "connecting" && (
+                    <>
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                      <span>Connecting...</span>
+                    </>
+                  )}
+                  {connectionStatus === "error" && (
+                    <>
+                      <WifiOff className="h-3 w-3" />
+                      <span>Connection issue</span>
+                    </>
+                  )}
+                  {connectionStatus === "idle" && <span>AI Assistant</span>}
+                </div>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold">Junk Guru</h3>
-              <p className="text-xs opacity-80">AI Assistant</p>
-            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
+              onClick={clearHistory}
+              title="Clear chat history"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((msg, idx) => (
+          {messages.map((msg) => (
             <div
-              key={idx}
+              key={msg.id}
               className={cn(
                 "flex gap-2",
                 msg.role === "user" ? "justify-end" : "justify-start"
@@ -221,15 +460,30 @@ export function AIAssistant() {
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
               )}
-              <div
-                className={cn(
-                  "max-w-[80%] p-3 rounded-lg text-sm",
-                  msg.role === "user"
-                    ? "bg-primary text-primary-foreground rounded-br-none"
-                    : "bg-muted text-foreground rounded-bl-none"
+              <div className="flex flex-col gap-1 max-w-[80%]">
+                <div
+                  className={cn(
+                    "p-3 rounded-lg text-sm whitespace-pre-wrap",
+                    msg.role === "user"
+                      ? "bg-primary text-primary-foreground rounded-br-none"
+                      : "bg-muted text-foreground rounded-bl-none",
+                    msg.status === "error" && msg.role === "user" && "opacity-70"
+                  )}
+                >
+                  {msg.content}
+                </div>
+                {msg.status === "sending" && msg.role === "user" && (
+                  <span className="text-xs text-muted-foreground self-end">Sending...</span>
                 )}
-              >
-                {msg.content}
+                {msg.status === "error" && msg.role === "user" && (
+                  <button
+                    onClick={retryLastMessage}
+                    className="text-xs text-destructive hover:underline self-end flex items-center gap-1"
+                  >
+                    <RefreshCw className="h-3 w-3" />
+                    Retry
+                  </button>
+                )}
               </div>
               {msg.role === "user" && (
                 <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
@@ -238,13 +492,17 @@ export function AIAssistant() {
               )}
             </div>
           ))}
-          {isLoading && messages[messages.length - 1]?.role === "user" && (
+          {isLoading && messages[messages.length - 1]?.role === "user" && !messages.find(m => m.role === "assistant" && m.status === "sending") && (
             <div className="flex gap-2 justify-start">
               <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
                 <Bot className="h-4 w-4 text-primary" />
               </div>
-              <div className="bg-muted p-3 rounded-lg rounded-bl-none">
-                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+              <div className="bg-muted p-3 rounded-lg rounded-bl-none flex items-center gap-2">
+                <div className="flex gap-1">
+                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
               </div>
             </div>
           )}
@@ -253,6 +511,15 @@ export function AIAssistant() {
 
         {/* Input */}
         <div className="p-4 border-t border-border">
+          {isLoading && (
+            <button
+              onClick={cancelRequest}
+              className="w-full mb-2 text-xs text-muted-foreground hover:text-foreground flex items-center justify-center gap-1"
+            >
+              <X className="h-3 w-3" />
+              Cancel response
+            </button>
+          )}
           <div className="flex gap-2">
             <input
               ref={inputRef}
@@ -264,14 +531,26 @@ export function AIAssistant() {
               className="flex-1 px-3 py-2 text-sm bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
               disabled={isLoading}
             />
-            <Button
-              onClick={sendMessage}
-              disabled={!input.trim() || isLoading}
-              size="icon"
-              className="shrink-0"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+            {hasFailedMessage && !isLoading ? (
+              <Button
+                onClick={retryLastMessage}
+                size="icon"
+                variant="outline"
+                className="shrink-0"
+                title="Retry failed message"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={sendMessage}
+                disabled={!input.trim() || isLoading}
+                size="icon"
+                className="shrink-0"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
       </div>
