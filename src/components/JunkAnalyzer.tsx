@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { format } from "date-fns";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +30,14 @@ import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "./BookingSlotPicker";
 import { useBookingSlots } from "@/hooks/use-booking-slots";
+
+// Validation schema for booking form
+const bookingFormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters"),
+  notes: z.string().max(1000, "Notes must be less than 1000 characters").optional(),
+});
 
 interface JunkItem {
   name: string;
@@ -271,6 +280,18 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete }: JunkAna
       toast({
         title: "Please select a date and time",
         description: "Choose when you'd like us to come pick up your junk.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate form data
+    const validation = bookingFormSchema.safeParse(formData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Invalid input",
+        description: firstError.message,
         variant: "destructive",
       });
       return;

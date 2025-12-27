@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,15 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
+
+// Validation schema for hazmat booking form
+const hazmatFormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters"),
+  address: z.string().trim().min(1, "Address is required").max(500, "Address must be less than 500 characters"),
+  notes: z.string().max(1000, "Notes must be less than 1000 characters").optional(),
+});
 import { 
   AlertTriangle, 
   Loader2, 
@@ -108,6 +118,18 @@ export function HazmatBookingForm() {
       return;
     }
 
+    // Validate form data
+    const validation = hazmatFormSchema.safeParse(formData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Invalid input",
+        description: firstError.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -116,7 +138,7 @@ export function HazmatBookingForm() {
         : null;
 
       const itemsSummary = getSelectedItemsSummary();
-      const message = `HAZMAT PICKUP REQUEST\n\nPickup Address: ${formData.address}\n\nMaterials:\n${itemsSummary}\n\nAdditional Notes: ${formData.notes || "None"}`;
+      const message = `HAZMAT PICKUP REQUEST\n\nPickup Address: ${validation.data.address}\n\nMaterials:\n${itemsSummary}\n\nAdditional Notes: ${validation.data.notes || "None"}`;
 
       const { error } = await supabase.functions.invoke("send-contact-email", {
         body: {
