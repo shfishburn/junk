@@ -28,7 +28,6 @@ export function JunkBingoCard({ card, onCheck, onLineComplete }: JunkBingoCardPr
   const [completedIndices, setCompletedIndices] = useState<Set<number>>(new Set());
   const [lastLineCount, setLastLineCount] = useState(0);
   const [recentlyChecked, setRecentlyChecked] = useState<number | null>(null);
-  const prevCheckedRef = useRef<boolean[]>(card.checked);
   const wasBlackoutRef = useRef(false);
 
   const lineCount = getLineCount(card.checked);
