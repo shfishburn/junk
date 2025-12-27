@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Header height variables for consistent spacing */
+:root {
+  --header-height-expanded: 5rem;  /* 80px - h-20 */
+  --header-height-collapsed: 4rem; /* 64px - h-16 */
+}
+
 /* Junky Gurus Design System - Apple-inspired with muted green accent */
 
 @layer base {

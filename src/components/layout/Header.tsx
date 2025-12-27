@@ -51,9 +51,17 @@ export function Header() {
     // Set initial state immediately on mount
     setIsScrolled(window.scrollY > 20);
     
+    let ticking = false;
     const handleScroll = () => {
-      if (isOpen) closeMenu();
-      setIsScrolled(window.scrollY > 20);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY > 20;
+        // Only update state if it actually changed
+        setIsScrolled(prev => prev !== scrolled ? scrolled : prev);
+        if (isOpen) closeMenu();
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -82,10 +90,10 @@ export function Header() {
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
       headerBg
     )}>
-      <div className={cn(
-        "container flex items-center justify-between transition-all duration-300",
-        isScrolled ? "h-16" : "h-20"
-      )}>
+      <div 
+        className="container flex items-center justify-between transition-all duration-300"
+        style={{ height: isScrolled ? 'var(--header-height-collapsed)' : 'var(--header-height-expanded)' }}
+      >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 relative z-10">
           <img 
@@ -101,20 +109,26 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-1">
-          {mainNavLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                location.pathname === link.href
-                  ? "text-primary bg-primary/10"
-                  : cn(mutedColor, "hover:text-primary hover:bg-primary/5")
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {mainNavLinks.map((link) => {
+            const isActive = location.pathname === link.href;
+            const isHeroMode = hasHero && !isScrolled;
+            return (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  isActive
+                    ? isHeroMode
+                      ? "text-white bg-white/20 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
+                      : "text-primary bg-primary/10"
+                    : cn(mutedColor, "hover:text-primary hover:bg-primary/5")
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
 
           {/* Services Dropdown */}
           <DropdownMenu>
@@ -252,9 +266,11 @@ export function Header() {
         id="mobile-menu"
         className={cn(
           "lg:hidden fixed inset-0 z-40 transition-all duration-300",
-          isScrolled ? "top-16" : "top-20",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
+        style={{
+          top: isScrolled ? 'var(--header-height-collapsed)' : 'var(--header-height-expanded)'
+        }}
         aria-hidden={!isOpen}
       >
         {/* Backdrop */}
@@ -267,9 +283,11 @@ export function Header() {
         <nav 
           className={cn(
             "absolute top-0 right-0 w-80 max-w-[85vw] bg-background shadow-2xl transition-transform duration-300 overflow-y-auto",
-            isScrolled ? "h-[calc(100vh-4rem)]" : "h-[calc(100vh-5rem)]",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
+          style={{
+            height: isScrolled ? 'calc(100vh - var(--header-height-collapsed))' : 'calc(100vh - var(--header-height-expanded))'
+          }}
           aria-label="Mobile navigation"
         >
           <div className="p-6 flex flex-col gap-1">

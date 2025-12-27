@@ -5,10 +5,15 @@ import { ArrowRight, Phone, Sparkles, Clock } from "lucide-react";
 export function HeroSection() {
   return (
     <section
-      className="relative py-16 md:py-24 lg:py-32 bg-cover bg-center bg-no-repeat"
+      className="relative bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage:
           'url("/lovable-uploads/1a609a72-5d33-4187-a5ca-c308b7fc5c42.jpg")',
+        // Pull hero up behind the fixed header so background fills viewport top
+        marginTop: 'calc(-1 * var(--header-height-expanded))',
+        // Add padding so content stays visible below header
+        paddingTop: 'calc(var(--header-height-expanded) + 4rem)',
+        paddingBottom: '4rem',
       }}
     >
       {/* Dark overlay for text readability */}

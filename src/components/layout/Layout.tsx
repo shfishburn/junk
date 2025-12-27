@@ -23,7 +23,7 @@ export function Layout({ children }: LayoutProps) {
         Skip to main content
       </a>
       <Header />
-      <main id="main-content" className="flex-1 relative pt-20" tabIndex={-1}>
+      <main id="main-content" className="flex-1 relative" style={{ paddingTop: 'var(--header-height-expanded)' }} tabIndex={-1}>
         <PageTransition>
           {children}
         </PageTransition>
