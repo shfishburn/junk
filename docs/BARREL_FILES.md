@@ -147,6 +147,89 @@ Custom React hooks for shared functionality.
 
 ---
 
+## 📁 `@/lib`
+**File:** `src/lib/index.ts`
+
+Utility functions and constants used across the application.
+
+### Core Utilities
+| Export | Description |
+|--------|-------------|
+| `cn` | Tailwind class name merge utility |
+
+### Contact Information
+| Export | Description |
+|--------|-------------|
+| `CONTACT_INFO` | Contact data constant |
+| `PhoneInfo` | Phone info type |
+
+### Cookie Management
+| Export | Description |
+|--------|-------------|
+| `CookieCategory` | Cookie category type |
+| `CookiePreferences` | Cookie preferences type |
+| `defaultPreferences` | Default cookie preferences |
+| `getConsentPreferences` | Get current consent preferences |
+| `setConsentPreferences` | Set consent preferences |
+| `hasConsentBeenGiven` | Check if consent was given |
+| `isCategoryConsented` | Check if category is consented |
+| `acceptAllCookies` | Accept all cookies |
+| `acceptEssentialOnly` | Accept essential cookies only |
+| `resetCookieConsent` | Reset cookie consent |
+
+### Exit Intent
+| Export | Description |
+|--------|-------------|
+| `hasSeenExitPopup` | Check if exit popup was seen |
+| `markExitPopupSeen` | Mark exit popup as seen |
+| `hasClaimedExitDiscount` | Check if discount was claimed |
+| `markExitDiscountClaimed` | Mark discount as claimed |
+| `getExitDiscountCode` | Get exit discount code |
+| `generateExitDiscountCode` | Generate new discount code |
+
+### Roulette Game
+| Export | Description |
+|--------|-------------|
+| `Prize` | Prize type |
+| `PRIZES` | Available prizes constant |
+| `getWeightedRandomPrize` | Get random weighted prize |
+| `generateDiscountCode` | Generate discount code |
+| `hasSpunToday` | Check if user spun today |
+| `recordSpin` | Record a spin |
+| `getLastPrize` | Get last won prize |
+
+### Bingo Game
+| Export | Description |
+|--------|-------------|
+| `BingoItem` | Bingo item type |
+| `BingoCard` | Bingo card type |
+| `DiscountTier` | Discount tier type |
+| `BINGO_ITEMS` | Bingo items constant |
+| `DISCOUNT_TIERS` | Discount tiers constant |
+| `generateBingoCard` | Generate bingo card |
+| `getCompletedLines` | Get completed lines |
+| `getLineCount` | Get line count |
+| `getCurrentTier` | Get current discount tier |
+| `isBlackout` | Check for blackout |
+| `generateBingoCode` | Generate bingo code |
+| `saveBingoState` | Save bingo state |
+| `loadBingoState` | Load bingo state |
+| `clearBingoState` | Clear bingo state |
+| `getCheckedCount` | Get checked count |
+| `wasBingoShownForEstimate` | Check if bingo was shown |
+| `markBingoShown` | Mark bingo as shown |
+| `resetBingoShown` | Reset bingo shown state |
+
+### Bingo Sounds
+| Export | Description |
+|--------|-------------|
+| `playCheckSound` | Play check sound |
+| `playUncheckSound` | Play uncheck sound |
+| `playLineCompleteSound` | Play line complete sound |
+| `playBlackoutSound` | Play blackout sound |
+
+---
+
 ## Usage Examples
 
 ```tsx
@@ -167,6 +250,9 @@ import { ServiceCardSkeletonGrid } from "@/components/skeletons";
 
 // Import from hooks
 import { useToast, useScrollAnimation, useBookingSlots } from "@/hooks";
+
+// Import from lib
+import { cn, CONTACT_INFO, getConsentPreferences, PRIZES } from "@/lib";
 ```
 
 ---
