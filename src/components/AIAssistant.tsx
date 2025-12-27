@@ -578,15 +578,18 @@ export function AIAssistant() {
             </div>
           ))}
           {isLoading && messages[messages.length - 1]?.role === "user" && !messages.find(m => m.role === "assistant" && m.status === "sending") && (
-            <div className="flex gap-2 justify-start">
+            <div className="flex gap-2 justify-start animate-fade-in">
               <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                <Bot className="h-4 w-4 text-primary" />
+                <Bot className="h-4 w-4 text-primary animate-pulse" />
               </div>
-              <div className="bg-muted p-3 rounded-lg rounded-bl-none flex items-center gap-2">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              <div className="bg-muted p-3 rounded-lg rounded-bl-none">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">Typing</span>
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0ms", animationDuration: "0.6s" }} />
+                    <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "150ms", animationDuration: "0.6s" }} />
+                    <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "300ms", animationDuration: "0.6s" }} />
+                  </div>
                 </div>
               </div>
             </div>
