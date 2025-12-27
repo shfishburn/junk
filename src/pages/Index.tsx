@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
 import { AIEstimatorCTA } from "@/components/home/AIEstimatorCTA";
+import { GamificationCTA } from "@/components/home/GamificationCTA";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { TrustSignals } from "@/components/home/TrustSignals";
 import { ServiceAreaSection } from "@/components/home/ServiceAreaSection";
@@ -22,6 +23,7 @@ const Index = () => {
       <HowItWorks />
       <ServicesOverview />
       <AIEstimatorCTA />
+      <GamificationCTA />
       <TestimonialsSection />
       <TrustSignals />
       <ServiceAreaSection />
