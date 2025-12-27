@@ -36,6 +36,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const isSpanish = location.pathname === "/espanol";
 
   const closeMenu = () => setIsOpen(false);
 
@@ -158,16 +159,31 @@ export function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-3">
-          <Link
-            to="/espanol"
-            className={cn(
-              "text-sm font-medium transition-colors flex items-center gap-1",
-              mutedColor, "hover:text-primary"
-            )}
-            title="Servicio disponible en español"
-          >
-            <span aria-hidden="true">🇲🇽</span>
-          </Link>
+          {isSpanish ? (
+            <Link
+              to="/"
+              className={cn(
+                "text-sm font-medium transition-colors flex items-center gap-1.5 px-2 py-1 rounded-md",
+                mutedColor, "hover:text-primary hover:bg-primary/5"
+              )}
+              title="View in English"
+            >
+              <span aria-hidden="true">🇺🇸</span>
+              <span className="hidden xl:inline">English</span>
+            </Link>
+          ) : (
+            <Link
+              to="/espanol"
+              className={cn(
+                "text-sm font-medium transition-colors flex items-center gap-1.5 px-2 py-1 rounded-md",
+                mutedColor, "hover:text-primary hover:bg-primary/5"
+              )}
+              title="Servicio disponible en español"
+            >
+              <span aria-hidden="true">🇲🇽</span>
+              <span className="hidden xl:inline">Español</span>
+            </Link>
+          )}
           
           <a 
             href="tel:+13606109233" 
@@ -292,15 +308,26 @@ export function Header() {
               </Link>
             ))}
 
-            {/* Spanish Link */}
-            <Link
-              to="/espanol"
-              onClick={closeMenu}
-              className="py-3 px-4 text-base font-medium text-primary bg-primary/10 rounded-lg mt-6 flex items-center gap-2"
-            >
-              <span aria-hidden="true">🇲🇽</span>
-              ¿Hablas español?
-            </Link>
+            {/* Language Link */}
+            {isSpanish ? (
+              <Link
+                to="/"
+                onClick={closeMenu}
+                className="py-3 px-4 text-base font-medium text-primary bg-primary/10 rounded-lg mt-6 flex items-center gap-2"
+              >
+                <span aria-hidden="true">🇺🇸</span>
+                View in English
+              </Link>
+            ) : (
+              <Link
+                to="/espanol"
+                onClick={closeMenu}
+                className="py-3 px-4 text-base font-medium text-primary bg-primary/10 rounded-lg mt-6 flex items-center gap-2"
+              >
+                <span aria-hidden="true">🇲🇽</span>
+                ¿Hablas español?
+              </Link>
+            )}
 
             {/* CTAs */}
             <div className="mt-6 pt-6 border-t border-border space-y-3">

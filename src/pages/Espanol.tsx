@@ -35,6 +35,20 @@ const Espanol = () => {
         pagePurpose="Spanish language version of the site. Servicios de remoción de basura. Contact: (360) 610-9233. ¡Hablamos Español!"
       />
 
+      {/* Language Toggle Banner */}
+      <div className="bg-muted border-b border-border">
+        <div className="container py-2 flex items-center justify-center gap-2 text-sm">
+          <span className="text-muted-foreground">This page is in Spanish.</span>
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-1.5 text-primary font-medium hover:underline"
+          >
+            <span aria-hidden="true">🇺🇸</span>
+            View in English
+          </Link>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center">
         <div
