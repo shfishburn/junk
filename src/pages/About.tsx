@@ -61,7 +61,7 @@ const antiPromises = [
 ];
 
 const stats = [
-  { value: "500+", label: "Jobs Completed" },
+  { value: "100+", label: "Jobs Completed" },
   { value: "4.9★", label: "Customer Rating" },
   { value: "Same Day", label: "Service Available" },
 ];
