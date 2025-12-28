@@ -17,11 +17,10 @@ const authSchema = z.object({
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   
-  const { user, isAdmin, isLoading, signIn, signUp } = useAdminAuth();
+  const { user, isAdmin, isLoading, signIn } = useAdminAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -57,37 +56,13 @@ export default function AdminLogin() {
     setIsSubmitting(true);
 
     try {
-      if (isSignUp) {
-        const { error } = await signUp(email, password);
-        if (error) {
-          if (error.message.includes('already registered')) {
-            toast({
-              title: 'Account exists',
-              description: 'This email is already registered. Please sign in instead.',
-              variant: 'destructive'
-            });
-          } else {
-            toast({
-              title: 'Sign up failed',
-              description: error.message,
-              variant: 'destructive'
-            });
-          }
-        } else {
-          toast({
-            title: 'Account created',
-            description: 'Please contact an administrator to grant admin access.'
-          });
-        }
-      } else {
-        const { error } = await signIn(email, password);
-        if (error) {
-          toast({
-            title: 'Sign in failed',
-            description: 'Invalid email or password.',
-            variant: 'destructive'
-          });
-        }
+      const { error } = await signIn(email, password);
+      if (error) {
+        toast({
+          title: 'Sign in failed',
+          description: 'Invalid email or password.',
+          variant: 'destructive'
+        });
       }
     } catch (err) {
       toast({
@@ -143,7 +118,7 @@ export default function AdminLogin() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Admin Portal</CardTitle>
           <CardDescription>
-            {isSignUp ? 'Create an account to request admin access' : 'Sign in to access the dashboard'}
+            Sign in to access the dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -182,23 +157,13 @@ export default function AdminLogin() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isSignUp ? 'Creating account...' : 'Signing in...'}
+                  Signing in...
                 </>
               ) : (
-                isSignUp ? 'Create Account' : 'Sign In'
+                'Sign In'
               )}
             </Button>
           </form>
-
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
-              {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
-            </button>
-          </div>
         </CardContent>
       </Card>
     </div>
