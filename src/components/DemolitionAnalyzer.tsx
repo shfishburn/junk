@@ -249,14 +249,15 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
   };
 
   // Restore saved estimate from localStorage on mount
+  // NOTE: We only store the result, NOT images (to avoid localStorage quota issues)
   useEffect(() => {
     const saved = localStorage.getItem('demolition-estimate');
     if (saved) {
       try {
-        const { result: savedResult, imagePreviews: savedPreviews, timestamp } = JSON.parse(saved);
+        const { result: savedResult, timestamp } = JSON.parse(saved);
         if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
           setResult(savedResult);
-          setImagePreviews(savedPreviews || []);
+          // Images are not restored - user will need to re-upload if they want to modify
         } else {
           localStorage.removeItem('demolition-estimate');
         }
@@ -266,16 +267,20 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
     }
   }, []);
 
-  // Save estimate to localStorage when result changes
+  // Save estimate to localStorage when result changes (without images to avoid quota issues)
   useEffect(() => {
-    if (result && imagePreviews.length > 0) {
-      localStorage.setItem('demolition-estimate', JSON.stringify({
-        result,
-        imagePreviews,
-        timestamp: Date.now()
-      }));
+    if (result) {
+      try {
+        localStorage.setItem('demolition-estimate', JSON.stringify({
+          result,
+          timestamp: Date.now()
+        }));
+      } catch (e) {
+        // If storage fails, just continue without persistence
+        console.warn('Could not save estimate to localStorage:', e);
+      }
     }
-  }, [result, imagePreviews]);
+  }, [result]);
 
   const handleFiles = useCallback(async (files: FileList) => {
     const validFiles: File[] = [];
