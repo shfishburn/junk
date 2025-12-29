@@ -6,6 +6,7 @@ import { Heart, Recycle, Users, Shield, XCircle, CheckCircle, Sparkles, Accessib
 import oldReliableTruck from "@/assets/old-reliable-truck.jpg";
 import habitatRestoreLogo from "@/assets/habitat-restore-logo.png";
 import mountVernonTulips from "@/assets/mount-vernon-tulips.jpg";
+import aboutCtaBg from "@/assets/about-cta-bg.jpg";
 
 const values = [
   {
@@ -352,9 +353,14 @@ const About = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
-        <div className="container">
-          <div className="max-w-2xl mx-auto text-center">
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${aboutCtaBg})` }}
+        />
+        <div className="absolute inset-0 bg-primary/85" />
+        <div className="container relative z-10">
+          <div className="max-w-2xl mx-auto text-center text-primary-foreground">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Reclaim Your Space?
             </h2>
