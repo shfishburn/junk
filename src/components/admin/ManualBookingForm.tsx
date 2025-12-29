@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/select';
 import { BookingSlotPicker } from '@/components/BookingSlotPicker';
 import { Phone, MessageSquare, UserPlus } from 'lucide-react';
+import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from '@/components/AddressInput';
 
 interface ManualBookingFormProps {
   onBookingCreated?: () => void;
@@ -33,7 +34,7 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [message, setMessage] = useState('');
   const [source, setSource] = useState<BookingSource>('phone');
   const [status, setStatus] = useState<string>('confirmed');
@@ -46,7 +47,7 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
     setName('');
     setEmail('');
     setPhone('');
-    setAddress('');
+    setAddress(getEmptyAddress());
     setMessage('');
     setSource('phone');
     setStatus('confirmed');
@@ -91,13 +92,14 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
       // Add source prefix
       fullMessage = `[Created by Admin via ${source === 'phone' ? 'Phone Call' : source === 'text' ? 'Text Message' : 'Walk-in'}]\n\n${fullMessage}`;
 
+      const formattedAddress = formatAddressForStorage(address);
       const { error: insertError } = await supabase
         .from('bookings')
         .insert({
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
-          address: address.trim() || null,
+          address: formattedAddress || null,
           booking_date: bookingDate,
           booking_time: selectedTime,
           message: fullMessage || null,
@@ -240,12 +242,10 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
 
       {/* Address */}
       <div className="space-y-2">
-        <Label htmlFor="manual-address">Pickup Address</Label>
-        <Input
-          id="manual-address"
+        <Label className="mb-2 block">Pickup Address</Label>
+        <AddressInput
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="123 Main St, Mount Vernon, WA 98273"
+          onChange={setAddress}
         />
       </div>
 

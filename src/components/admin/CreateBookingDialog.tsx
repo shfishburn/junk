@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select';
 import { BookingSlotPicker } from '@/components/BookingSlotPicker';
 import { Plus, Phone, MessageSquare, UserPlus } from 'lucide-react';
+import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from '@/components/AddressInput';
 
 interface CreateBookingDialogProps {
   onBookingCreated?: () => void;
@@ -42,7 +43,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [message, setMessage] = useState('');
   const [source, setSource] = useState<BookingSource>('phone');
   const [status, setStatus] = useState<string>('confirmed');
@@ -55,7 +56,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
     setName('');
     setEmail('');
     setPhone('');
-    setAddress('');
+    setAddress(getEmptyAddress());
     setMessage('');
     setSource('phone');
     setStatus('confirmed');
@@ -98,13 +99,14 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
       }
       fullMessage = `[Created by Admin via ${source === 'phone' ? 'Phone Call' : source === 'text' ? 'Text Message' : 'Walk-in'}]\n\n${fullMessage}`;
 
+      const formattedAddress = formatAddressForStorage(address);
       const { error: insertError } = await supabase
         .from('bookings')
         .insert({
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
-          address: address.trim() || null,
+          address: formattedAddress || null,
           booking_date: bookingDate,
           booking_time: selectedTime,
           message: fullMessage || null,
@@ -241,15 +243,15 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
                 placeholder="(360) 555-1234"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="address">Pickup Address</Label>
-              <Input
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="123 Main St, Mount Vernon, WA"
-              />
-            </div>
+          </div>
+
+          {/* Address with Verification */}
+          <div className="space-y-2">
+            <Label className="mb-2 block">Pickup Address</Label>
+            <AddressInput
+              value={address}
+              onChange={setAddress}
+            />
           </div>
 
           {/* Message */}
