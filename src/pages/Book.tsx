@@ -11,6 +11,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, FormField, TextareaField, BookingSlotPicker } from "@/components/shared";
 import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "@/components/AddressInput";
 
 // Zod schema for booking form validation
 const bookingSchema = z.object({
@@ -57,6 +58,7 @@ export default function Book() {
     phone: "",
     message: "",
   });
+  const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [isSenior, setIsSenior] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
   const { toast } = useToast();
@@ -115,10 +117,12 @@ export default function Book() {
         : "";
       
       // Insert booking into database
+      const formattedAddress = formatAddressForStorage(address);
       const { error: bookingError } = await supabase.from("bookings").insert({
         name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone || null,
+        address: formattedAddress || null,
         message: (validatedData.message || "") + discountNote || null,
         booking_date: format(selectedDate, "yyyy-MM-dd"),
         booking_time: selectedTime,
@@ -297,6 +301,15 @@ export default function Book() {
                     maxLength={20}
                     error={formErrors.phone}
                   />
+                  {/* Address Fields */}
+                  <div className="pt-2">
+                    <AddressInput
+                      value={address}
+                      onChange={setAddress}
+                      required
+                    />
+                  </div>
+
                   <TextareaField
                     id="message"
                     name="message"
