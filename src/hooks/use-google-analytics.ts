@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { isCategoryConsented, type CookiePreferences } from "@/lib";
 
-// Replace with your GA4 Measurement ID when ready
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || '';
+const GA_MEASUREMENT_ID = 'G-Y7VZGP6Y8G';
 
 declare global {
   interface Window {
