@@ -4,11 +4,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
 import StatsCards from '@/components/admin/StatsCards';
-import CreateBookingDialog from '@/components/admin/CreateBookingDialog';
+import ManualBookingForm from '@/components/admin/ManualBookingForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Loader2, Calendar, Clock, AlertTriangle, Plus } from 'lucide-react';
+import { Loader2, Calendar, Clock, AlertTriangle, LayoutDashboard, PlusCircle } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -113,97 +114,115 @@ export default function AdminDashboard() {
           <p className="text-muted-foreground">Overview of your booking activity</p>
         </div>
 
-        <StatsCards bookings={bookings} />
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="overview" className="flex items-center gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="manual-booking" className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" />
+              Manual Booking
+            </TabsTrigger>
+          </TabsList>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
-                Upcoming Appointments
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {upcomingBookings.length === 0 ? (
-                <p className="text-muted-foreground text-center py-4">
-                  No upcoming appointments
-                </p>
-              ) : (
-                <div className="space-y-3">
-                  {upcomingBookings.map((booking) => (
-                    <div
-                      key={booking.id}
-                      className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
-                    >
-                      <div className="space-y-1">
-                        <p className="font-medium">{booking.name}</p>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {getDateLabel(booking.booking_date)} at {booking.booking_time}
-                        </div>
-                      </div>
-                      <Badge className={getStatusColor(booking.status)}>
-                        {booking.status}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <TabsContent value="overview" className="space-y-6">
+            <StatsCards bookings={bookings} />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CreateBookingDialog 
-                onBookingCreated={fetchBookings}
-                trigger={
-                  <button className="w-full text-left p-3 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors border border-primary/20">
-                    <p className="font-medium flex items-center gap-2">
-                      <Plus className="h-4 w-4 text-primary" />
-                      Create Booking
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5" />
+                    Upcoming Appointments
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {upcomingBookings.length === 0 ? (
+                    <p className="text-muted-foreground text-center py-4">
+                      No upcoming appointments
                     </p>
+                  ) : (
+                    <div className="space-y-3">
+                      {upcomingBookings.map((booking) => (
+                        <div
+                          key={booking.id}
+                          className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+                        >
+                          <div className="space-y-1">
+                            <p className="font-medium">{booking.name}</p>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              {getDateLabel(booking.booking_date)} at {booking.booking_time}
+                            </div>
+                          </div>
+                          <Badge className={getStatusColor(booking.status)}>
+                            {booking.status}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Quick Actions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <button
+                    onClick={() => navigate('/admin/bookings')}
+                    className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                  >
+                    <p className="font-medium">View All Bookings</p>
                     <p className="text-sm text-muted-foreground">
-                      Add booking from phone call or text
+                      Manage and update booking statuses
                     </p>
                   </button>
-                }
-              />
-              <button
-                onClick={() => navigate('/admin/bookings')}
-                className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
-              >
-                <p className="font-medium">View All Bookings</p>
+                  <button
+                    onClick={() => navigate('/admin/calendar')}
+                    className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                  >
+                    <p className="font-medium">Calendar View</p>
+                    <p className="text-sm text-muted-foreground">
+                      See your schedule at a glance
+                    </p>
+                  </button>
+                  <button
+                    onClick={() => navigate('/admin/hazmat')}
+                    className="w-full text-left p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors border border-amber-200"
+                  >
+                    <p className="font-medium flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4 text-amber-500" />
+                      Hazmat Requests
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Manage hazardous material pickups
+                    </p>
+                  </button>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="manual-booking">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <PlusCircle className="h-5 w-5" />
+                  Create Manual Booking
+                </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Manage and update booking statuses
+                  Add a booking from a phone call, text message, or walk-in customer
                 </p>
-              </button>
-              <button
-                onClick={() => navigate('/admin/calendar')}
-                className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
-              >
-                <p className="font-medium">Calendar View</p>
-                <p className="text-sm text-muted-foreground">
-                  See your schedule at a glance
-                </p>
-              </button>
-              <button
-                onClick={() => navigate('/admin/hazmat')}
-                className="w-full text-left p-3 rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors border border-amber-200"
-              >
-                <p className="font-medium flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-500" />
-                  Hazmat Requests
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Manage hazardous material pickups
-                </p>
-              </button>
-            </CardContent>
-          </Card>
-        </div>
+              </CardHeader>
+              <CardContent>
+                <ManualBookingForm onBookingCreated={fetchBookings} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </AdminLayout>
   );
