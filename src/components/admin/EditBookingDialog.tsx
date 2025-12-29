@@ -26,6 +26,7 @@ interface Booking {
   name: string;
   email: string;
   phone: string | null;
+  address: string | null;
   booking_date: string;
   booking_time: string;
   status: string;
@@ -55,6 +56,7 @@ export default function EditBookingDialog({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<string>('pending');
 
@@ -66,6 +68,7 @@ export default function EditBookingDialog({
       setName(booking.name);
       setEmail(booking.email);
       setPhone(booking.phone || '');
+      setAddress(booking.address || '');
       setMessage(booking.message || '');
       setStatus(booking.status);
     }
@@ -105,6 +108,7 @@ export default function EditBookingDialog({
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
+          address: address.trim() || null,
           booking_date: bookingDate,
           booking_time: selectedTime,
           message: message.trim() || null,
@@ -175,7 +179,7 @@ export default function EditBookingDialog({
                 required
               />
             </div>
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <Label htmlFor="edit-phone">Phone</Label>
               <Input
                 id="edit-phone"
@@ -183,6 +187,15 @@ export default function EditBookingDialog({
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(360) 555-1234"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-address">Pickup Address</Label>
+              <Input
+                id="edit-address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="123 Main St, Mount Vernon, WA"
               />
             </div>
           </div>
