@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
-import { wasBingoShownForEstimate, markBingoShown, resetBingoShown, trackAIEstimatorUse } from "@/lib";
+import { wasBingoShownForEstimate, markBingoShown, resetBingoShown, trackAIEstimatorUse, trackAIEstimatorBooking, trackBookingSubmit } from "@/lib";
 import { 
   Upload, 
   Camera, 
@@ -486,6 +486,12 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
       });
 
       setRequestSubmitted(true);
+      
+      // Track successful AI estimator booking in GA
+      const priceRange = result ? `$${result.priceEstimate.min}-$${result.priceEstimate.max}` : 'unknown';
+      trackAIEstimatorBooking(priceRange);
+      trackBookingSubmit(format(selectedDate, "yyyy-MM-dd"), selectedTime);
+      
       toast({
         title: t.bookingConfirmed,
         description: t.checkEmail,

@@ -80,5 +80,10 @@ export {
   trackBookingSubmit,
   trackContactFormSubmit,
   trackAIEstimatorUse,
+  trackAIEstimatorBooking,
   trackRouletteWin,
+  trackHazmatRequest,
+  trackBingoComplete,
+  trackServicePageView,
+  trackCityPageView,
 } from "./analytics";

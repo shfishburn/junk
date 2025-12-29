@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks";
 import { DateTimePicker, FormField, TextareaField } from "@/components/shared";
 import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib";
+import { cn, trackHazmatRequest } from "@/lib";
 import { 
   AlertTriangle, 
   Loader2, 
@@ -143,6 +143,9 @@ export function HazmatBookingForm() {
       });
 
       if (error) throw error;
+
+      // Track successful hazmat request in GA
+      trackHazmatRequest(selectedItems.length);
 
       toast({
         title: "Hazmat pickup request received!",
