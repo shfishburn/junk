@@ -11,6 +11,7 @@ import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
 import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 import hazmatImg from "@/assets/service-hazmat.jpg";
+import somethingElseImg from "@/assets/service-something-else.jpg";
 
 const services = [
   {
@@ -53,6 +54,12 @@ const services = [
     description: "Paint, batteries, chemicals — we handle the scary stuff so you don't have to.",
     image: hazmatImg,
   },
+  {
+    title: "Something Else?",
+    description: "Got something weird? We've probably seen weirder. Give us a call.",
+    image: somethingElseImg,
+    isContactCTA: true,
+  },
 ];
 
 export function ServicesOverview() {
@@ -80,11 +87,12 @@ export function ServicesOverview() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-              <div
+              <Link
                 key={service.title}
+                to={service.isContactCTA ? "/contact" : "/services"}
                 className={`group overflow-hidden rounded-lg bg-card border border-border hover:border-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
+                } ${service.isContactCTA ? "ring-2 ring-primary/20" : ""}`}
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
               >
                 <div className="aspect-[16/10] overflow-hidden">
@@ -95,10 +103,17 @@ export function ServicesOverview() {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-semibold text-card-foreground mb-2">{service.title}</h3>
+                  <h3 className="font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
                   <p className="text-sm text-muted-foreground">{service.description}</p>
+                  {service.isContactCTA && (
+                    <span className="inline-flex items-center text-sm text-primary font-medium mt-3">
+                      Contact Us <ArrowRight className="ml-1 h-3 w-3" />
+                    </span>
+                  )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

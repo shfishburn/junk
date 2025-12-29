@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart, MessageSquare } from "lucide-react";
 import { useScrollAnimation } from "@/hooks";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
@@ -15,6 +15,7 @@ import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
 import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 import hazmatImg from "@/assets/service-hazmat.jpg";
+import somethingElseImg from "@/assets/service-something-else.jpg";
 
 const services = [
   {
@@ -130,6 +131,20 @@ const services = [
       "Propane tanks (small)",
     ],
     note: "We handle household quantities. Industrial chemicals, asbestos, and medical waste require specialized services—ask us and we'll point you in the right direction.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Something Else?",
+    slug: "something-else",
+    description: "Got something weird? Something we didn't list? We've probably seen weirder. Give us a call or shoot us a message—we'll figure it out together.",
+    image: somethingElseImg,
+    details: [
+      "Unusual or oversized items",
+      "One-off pickups you can't categorize",
+      "Questions about what we can take",
+      "Custom requests and special situations",
+    ],
+    isContactCTA: true,
   },
 ];
 
@@ -265,12 +280,21 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             <strong>Note:</strong> {service.note}
           </p>
         )}
-        <Button asChild>
-          <Link to="/ai-estimator">
-            Know Your Price
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
+        {'isContactCTA' in service && service.isContactCTA ? (
+          <Button asChild>
+            <Link to="/contact">
+              Contact Us
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        ) : (
+          <Button asChild>
+            <Link to="/ai-estimator">
+              Know Your Price
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        )}
       </div>
       <div 
         className={`rounded-lg aspect-[4/3] overflow-hidden border border-border transition-all duration-700 delay-200 ${
