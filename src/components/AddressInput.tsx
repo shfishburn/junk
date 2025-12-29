@@ -1,10 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle2, AlertCircle, Loader2, MapPin } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, MapPin, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RlcGhlbmhmaXNoYnVybiIsImEiOiJjbWppenpwZm8xdjMxM2hwc2szaHY4NGM4In0.wQOiDt0ksVfZqEirVEw1jw';
+
+// Service area center (Marysville, WA)
+const SERVICE_CENTER = {
+  lat: 48.0519,
+  lng: -122.1505,
+};
+const SERVICE_RADIUS_MILES = 50;
 
 interface AddressData {
   street: string;
@@ -13,6 +20,9 @@ interface AddressData {
   zip: string;
   fullAddress: string;
   isVerified: boolean;
+  coordinates?: { lat: number; lng: number };
+  isInServiceArea?: boolean;
+  distanceFromCenter?: number;
 }
 
 interface AddressInputProps {
@@ -26,6 +36,7 @@ interface MapboxSuggestion {
   id: string;
   place_name: string;
   text: string;
+  center: [number, number]; // [lng, lat]
   context?: Array<{
     id: string;
     text: string;
@@ -36,11 +47,31 @@ interface MapboxSuggestion {
   };
 }
 
+// Calculate distance between two points using Haversine formula
+function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 3959; // Earth's radius in miles
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function checkServiceArea(lat: number, lng: number): { isInArea: boolean; distance: number } {
+  const distance = calculateDistance(SERVICE_CENTER.lat, SERVICE_CENTER.lng, lat, lng);
+  return {
+    isInArea: distance <= SERVICE_RADIUS_MILES,
+    distance: Math.round(distance),
+  };
+}
+
 export function AddressInput({ value, onChange, required = false, className }: AddressInputProps) {
   const [suggestions, setSuggestions] = useState<MapboxSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const wrapperRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<NodeJS.Timeout>();
 
@@ -80,11 +111,13 @@ export function AddressInput({ value, onChange, required = false, className }: A
   };
 
   const handleStreetChange = (newStreet: string) => {
-    setSearchQuery(newStreet);
     onChange({
       ...value,
       street: newStreet,
       isVerified: false,
+      coordinates: undefined,
+      isInServiceArea: undefined,
+      distanceFromCenter: undefined,
     });
 
     // Debounce search
@@ -115,6 +148,10 @@ export function AddressInput({ value, onChange, required = false, className }: A
       }
     }
 
+    // Get coordinates and check service area
+    const [lng, lat] = suggestion.center;
+    const serviceCheck = checkServiceArea(lat, lng);
+
     const newAddress: AddressData = {
       street,
       city,
@@ -122,10 +159,12 @@ export function AddressInput({ value, onChange, required = false, className }: A
       zip,
       fullAddress: suggestion.place_name,
       isVerified: true,
+      coordinates: { lat, lng },
+      isInServiceArea: serviceCheck.isInArea,
+      distanceFromCenter: serviceCheck.distance,
     };
 
     onChange(newAddress);
-    setSearchQuery(street);
     setSuggestions([]);
     setShowSuggestions(false);
   };
@@ -135,6 +174,9 @@ export function AddressInput({ value, onChange, required = false, className }: A
       ...value,
       [field]: fieldValue,
       isVerified: false,
+      coordinates: undefined,
+      isInServiceArea: undefined,
+      distanceFromCenter: undefined,
     });
   };
 
@@ -153,10 +195,16 @@ export function AddressInput({ value, onChange, required = false, className }: A
         const feature = data.features[0];
         // Check if the result is a close match (relevance score > 0.8)
         if (feature.relevance > 0.8) {
+          const [lng, lat] = feature.center;
+          const serviceCheck = checkServiceArea(lat, lng);
+          
           onChange({
             ...value,
             fullAddress: feature.place_name,
             isVerified: true,
+            coordinates: { lat, lng },
+            isInServiceArea: serviceCheck.isInArea,
+            distanceFromCenter: serviceCheck.distance,
           });
         }
       }
@@ -193,19 +241,31 @@ export function AddressInput({ value, onChange, required = false, className }: A
         {/* Suggestions Dropdown */}
         {showSuggestions && suggestions.length > 0 && (
           <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg max-h-60 overflow-auto">
-            {suggestions.map((suggestion) => (
-              <button
-                key={suggestion.id}
-                type="button"
-                className="w-full text-left px-3 py-2 hover:bg-accent text-sm transition-colors"
-                onClick={() => handleSuggestionSelect(suggestion)}
-              >
-                <div className="font-medium">{suggestion.text}</div>
-                <div className="text-xs text-muted-foreground truncate">
-                  {suggestion.place_name}
-                </div>
-              </button>
-            ))}
+            {suggestions.map((suggestion) => {
+              const [lng, lat] = suggestion.center;
+              const serviceCheck = checkServiceArea(lat, lng);
+              
+              return (
+                <button
+                  key={suggestion.id}
+                  type="button"
+                  className="w-full text-left px-3 py-2 hover:bg-accent text-sm transition-colors"
+                  onClick={() => handleSuggestionSelect(suggestion)}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="font-medium">{suggestion.text}</div>
+                    {!serviceCheck.isInArea && (
+                      <span className="text-xs text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded whitespace-nowrap">
+                        {serviceCheck.distance} mi away
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs text-muted-foreground truncate">
+                    {suggestion.place_name}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
@@ -255,23 +315,47 @@ export function AddressInput({ value, onChange, required = false, className }: A
         </div>
       </div>
 
+      {/* Service Area Warning */}
+      {value.isVerified && value.isInServiceArea === false && (
+        <div className="flex items-start gap-2 text-sm px-3 py-2 rounded-md bg-amber-50 border border-amber-200 text-amber-800">
+          <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-medium">Outside Service Area</p>
+            <p className="text-xs">
+              This address is approximately {value.distanceFromCenter} miles from our service center. 
+              Our standard service area is within {SERVICE_RADIUS_MILES} miles. 
+              Please call us to discuss service availability and potential travel fees.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Verification Status */}
       {(value.street || value.city) && (
         <div className={cn(
           "flex items-center gap-2 text-sm px-3 py-2 rounded-md",
-          value.isVerified 
+          value.isVerified && value.isInServiceArea
             ? "bg-primary/10 text-primary" 
-            : "bg-muted text-muted-foreground"
+            : value.isVerified 
+              ? "bg-muted text-muted-foreground"
+              : "bg-muted text-muted-foreground"
         )}>
           {value.isVerified ? (
-            <>
-              <CheckCircle2 className="h-4 w-4" />
-              <span>Address verified</span>
-            </>
+            value.isInServiceArea ? (
+              <>
+                <CheckCircle2 className="h-4 w-4" />
+                <span>Address verified — within service area</span>
+              </>
+            ) : (
+              <>
+                <AlertCircle className="h-4 w-4" />
+                <span>Address verified — outside standard service area</span>
+              </>
+            )
           ) : (
             <>
               <AlertCircle className="h-4 w-4" />
-              <span>Address not yet verified - select from suggestions or complete all fields</span>
+              <span>Address not yet verified — select from suggestions or complete all fields</span>
             </>
           )}
         </div>
@@ -288,6 +372,9 @@ export function getEmptyAddress(): AddressData {
     zip: '',
     fullAddress: '',
     isVerified: false,
+    coordinates: undefined,
+    isInServiceArea: undefined,
+    distanceFromCenter: undefined,
   };
 }
 
