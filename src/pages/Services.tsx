@@ -89,7 +89,7 @@ const services = [
   },
   {
     icon: Building2,
-    title: "Light Commercial Cleanouts",
+    title: "Commercial Cleanouts",
     slug: "commercial",
     description: "Office move? Closing down? That furniture won't vanish on its own. We handle commercial cleanouts efficiently—show up when scheduled, no corporate runaround.",
     image: commercialImg,
