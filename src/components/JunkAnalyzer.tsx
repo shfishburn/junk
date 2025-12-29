@@ -512,9 +512,9 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
   };
 
   const confidenceColors = {
-    low: "text-amber-600",
+    low: "text-warning",
     medium: "text-primary",
-    high: "text-green-600",
+    high: "text-success",
   };
 
   // Results view
@@ -714,8 +714,8 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </form>
           </div>
         ) : (
-          <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
-            <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
+          <div className="p-6 rounded-xl bg-success/10 border-2 border-success/30 text-center">
+            <CheckCircle2 className="h-12 w-12 mx-auto text-success mb-3" />
             <h3 className="font-semibold text-charcoal text-lg mb-2">{t.bookingConfirmedTitle}</h3>
             <p className="text-muted-foreground">
               {t.pickupScheduled}{" "}

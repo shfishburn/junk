@@ -64,11 +64,11 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete, onSen
   const getSourceInfo = (source?: string) => {
     switch (source) {
       case 'phone':
-        return { icon: <Phone className="h-3 w-3" />, label: 'Phone', color: 'text-blue-600' };
+        return { icon: <Phone className="h-3 w-3" />, label: 'Phone', color: 'text-info' };
       case 'text':
-        return { icon: <MessageSquare className="h-3 w-3" />, label: 'Text', color: 'text-green-600' };
+        return { icon: <MessageSquare className="h-3 w-3" />, label: 'Text', color: 'text-success' };
       case 'walkin':
-        return { icon: <UserPlus className="h-3 w-3" />, label: 'Walk-in', color: 'text-purple-600' };
+        return { icon: <UserPlus className="h-3 w-3" />, label: 'Walk-in', color: 'text-status-scheduled' };
       case 'online':
       default:
         return { icon: <Globe className="h-3 w-3" />, label: 'Online', color: 'text-muted-foreground' };

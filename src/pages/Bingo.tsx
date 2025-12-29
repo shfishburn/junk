@@ -120,25 +120,25 @@ export default function Bingo() {
       name: "Text",
       icon: MessageCircle,
       href: `sms:?body=${encodeURIComponent(shareText)}`,
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-brand-sms hover:bg-brand-sms/90",
     },
     {
       name: "Email",
       icon: Mail,
       href: `mailto:?subject=${encodeURIComponent("Check out JUNK BINGO!")}&body=${encodeURIComponent(shareText)}`,
-      color: "bg-blue-600 hover:bg-blue-700",
+      color: "bg-info hover:bg-info/90",
     },
     {
       name: "Facebook",
       icon: Facebook,
       href: `https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(shareText)}`,
-      color: "bg-[#1877F2] hover:bg-[#166FE5]",
+      color: "bg-brand-facebook hover:bg-brand-facebook/90",
     },
     {
       name: "Twitter",
       icon: Twitter,
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
-      color: "bg-[#1DA1F2] hover:bg-[#1A8CD8]",
+      color: "bg-brand-twitter hover:bg-brand-twitter/90",
     },
   ];
 
@@ -217,7 +217,7 @@ export default function Bingo() {
                             className="shrink-0"
                           >
                             {copied ? (
-                              <Check className="w-4 h-4 text-green-600" />
+                              <Check className="w-4 h-4 text-success" />
                             ) : (
                               <Copy className="w-4 h-4" />
                             )}
@@ -256,7 +256,7 @@ export default function Bingo() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
-                              "p-3 rounded-full text-white transition-transform hover:scale-110",
+                              "p-3 rounded-full text-on-primary transition-transform hover:scale-110",
                               button.color
                             )}
                             title={`Share via ${button.name}`}

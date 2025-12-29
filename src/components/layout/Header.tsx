@@ -99,11 +99,11 @@ export function Header({ announcementVisible = false }: HeaderProps) {
     : "bg-background/95 backdrop-blur-md border-b border-border";
 
   const textColor = hasHero && !isScrolled
-    ? "text-white [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
+    ? "text-on-primary [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-foreground";
 
   const mutedColor = hasHero && !isScrolled
-    ? "text-white/90 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
+    ? "text-on-primary/90 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
     : "text-muted-foreground";
 
   // Calculate header top position based on announcement bar
@@ -150,7 +150,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
                   "px-3 py-2 text-sm font-medium rounded-md transition-colors",
                   isActive
                     ? isHeroMode
-                      ? "text-white bg-white/20 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
+                      ? "text-on-primary bg-on-primary/20 [text-shadow:_0_1px_3px_rgba(0,0,0,0.4)]"
                       : "text-primary bg-primary/10"
                     : cn(mutedColor, "hover:text-primary hover:bg-primary/5")
                 )}
@@ -248,7 +248,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
             className={cn(
               "flex items-center gap-2 text-sm font-medium transition-all duration-300 px-3 py-1.5 rounded-full",
               hasHero && !isScrolled 
-                ? "text-white bg-white/10 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                ? "text-on-primary bg-on-primary/10 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
                 : "text-muted-foreground hover:text-primary"
             )}
             aria-label="Call us at (360) 610-9233"
@@ -305,7 +305,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
       >
         {/* Backdrop */}
         <div 
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-overlay/50 backdrop-blur-sm"
           onClick={closeMenu}
           aria-hidden="true"
         />

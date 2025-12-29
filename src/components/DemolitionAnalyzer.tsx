@@ -491,15 +491,15 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
   };
 
   const confidenceColors = {
-    low: "text-amber-600",
+    low: "text-warning",
     medium: "text-primary",
-    high: "text-green-600",
+    high: "text-success",
   };
 
   const complexityColors = {
-    simple: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-    moderate: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
-    complex: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+    simple: "bg-success/10 text-success",
+    moderate: "bg-warning/10 text-warning",
+    complex: "bg-destructive/10 text-destructive",
   };
 
   // Results view
@@ -732,8 +732,8 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </form>
           </div>
         ) : (
-          <div className="p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800 text-center">
-            <CheckCircle2 className="h-12 w-12 mx-auto text-green-600 mb-3" />
+          <div className="p-6 rounded-xl bg-success/10 border-2 border-success/30 text-center">
+            <CheckCircle2 className="h-12 w-12 mx-auto text-success mb-3" />
             <h3 className="font-semibold text-charcoal text-lg mb-2">{t.bookingConfirmedTitle}</h3>
             <p className="text-muted-foreground">
               {t.quoteScheduled}{" "}

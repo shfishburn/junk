@@ -121,7 +121,7 @@ export function ExitIntentPopup({ open, onClose }: ExitIntentPopupProps) {
                 className="shrink-0"
               >
                 {copied ? (
-                  <Check className="w-5 h-5 text-green-500" />
+                  <Check className="w-5 h-5 text-success" />
                 ) : (
                   <Copy className="w-5 h-5" />
                 )}
