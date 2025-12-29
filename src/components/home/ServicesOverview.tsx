@@ -39,7 +39,7 @@ const services = [
     image: constructionImg,
   },
   {
-    title: "Light Commercial",
+    title: "Commercial Cleanouts",
     description: "Office furniture doesn't deserve a funeral. Just a quick, dignified exit.",
     image: commercialImg,
   },
