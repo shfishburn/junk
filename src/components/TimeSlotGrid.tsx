@@ -36,8 +36,8 @@ export function TimeSlotGrid({
     switch (columns) {
       case 2: return "grid-cols-2";
       case 3: return "grid-cols-2 sm:grid-cols-3";
-      case 5: return "grid-cols-5";
-      default: return "grid-cols-5";
+      case 5: return "grid-cols-2 sm:grid-cols-3 md:grid-cols-5";
+      default: return "grid-cols-2 sm:grid-cols-3 md:grid-cols-5";
     }
   };
 

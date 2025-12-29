@@ -270,9 +270,9 @@ export function AddressInput({ value, onChange, required = false, className }: A
         )}
       </div>
 
-      {/* City, State, ZIP in a row */}
-      <div className="grid grid-cols-6 gap-3">
-        <div className="col-span-3 space-y-2">
+      {/* City, State, ZIP - responsive grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
+        <div className="col-span-2 sm:col-span-3 space-y-2">
           <Label htmlFor="city">
             City {required && <span className="text-destructive">*</span>}
           </Label>
@@ -299,9 +299,9 @@ export function AddressInput({ value, onChange, required = false, className }: A
             required={required}
           />
         </div>
-        <div className="col-span-2 space-y-2">
+        <div className="col-span-1 sm:col-span-2 space-y-2">
           <Label htmlFor="zip">
-            ZIP Code {required && <span className="text-destructive">*</span>}
+            ZIP {required && <span className="text-destructive">*</span>}
           </Label>
           <Input
             id="zip"
