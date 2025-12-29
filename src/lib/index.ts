@@ -70,3 +70,15 @@ export {
   playLineCompleteSound,
   playBlackoutSound,
 } from "./bingo-sounds";
+
+// Analytics
+export {
+  trackEvent,
+  trackPhoneClick,
+  trackTextClick,
+  trackEmailClick,
+  trackBookingSubmit,
+  trackContactFormSubmit,
+  trackAIEstimatorUse,
+  trackRouletteWin,
+} from "./analytics";

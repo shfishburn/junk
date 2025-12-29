@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast, useBookingSlots } from "@/hooks";
+import { trackBookingSubmit } from "@/lib";
 import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, FormField, TextareaField, BookingSlotPicker } from "@/components/shared";
@@ -152,6 +153,12 @@ export default function Book() {
           bookingTime: selectedTime,
         },
       });
+
+      // Track successful booking in GA
+      trackBookingSubmit(
+        format(selectedDate, "yyyy-MM-dd"),
+        selectedTime
+      );
 
       setBookingConfirmed(true);
       toast({

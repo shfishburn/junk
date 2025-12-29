@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
-import { wasBingoShownForEstimate, markBingoShown, resetBingoShown } from "@/lib";
+import { wasBingoShownForEstimate, markBingoShown, resetBingoShown, trackAIEstimatorUse } from "@/lib";
 import { 
   Upload, 
   Camera, 
@@ -337,6 +337,9 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
       if (data.error) throw new Error(data.error);
 
       setResult(data);
+      
+      // Track AI estimator usage in GA
+      trackAIEstimatorUse();
       
       // Show confetti celebration!
       setShowConfetti(true);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Mail } from "lucide-react";
-import { cn, CONTACT_INFO } from "@/lib";
+import { cn, CONTACT_INFO, trackEmailClick } from "@/lib";
 import {
   Popover,
   PopoverContent,
@@ -58,6 +58,7 @@ export function EmailLink({
   };
 
   const handleProviderClick = (provider: typeof EMAIL_PROVIDERS[0]) => {
+    trackEmailClick(email);
     const url = provider.getUrl(email);
     if (provider.isMailto) {
       window.location.href = url;
