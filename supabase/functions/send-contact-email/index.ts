@@ -198,7 +198,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Admin notification for hazmat
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [adminEmail],
         subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}`,
         html: `
@@ -247,7 +247,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Customer confirmation for hazmat
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [email],
         subject: "Your Hazmat Pickup Request is Received! ♻️",
         html: `
@@ -300,7 +300,7 @@ const handler = async (req: Request): Promise<Response> => {
       
       // Booking-specific emails
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [adminEmail],
         subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
         html: `
@@ -328,7 +328,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Admin booking notification sent:", businessEmail);
 
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [email],
         subject: "Your Booking is Confirmed! 🗓️",
         html: `
@@ -365,7 +365,7 @@ const handler = async (req: Request): Promise<Response> => {
       
       // Standard contact form emails
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [adminEmail],
         subject: `New Quote Request from ${validatedData.name}`,
         html: `
@@ -382,7 +382,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Business notification email sent:", businessEmail);
 
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@junkygurus.com>",
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [email],
         subject: "We Got Your Junk Request! 🗑️",
         html: `
