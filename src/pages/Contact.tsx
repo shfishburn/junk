@@ -124,7 +124,7 @@ const Contact = () => {
         keywords="junk removal quote, contact junky gurus, Mount Vernon junk removal, free estimate"
         url="/contact"
         pageType="contact"
-        pagePurpose="Contact form for quotes and inquiries. Phone: (360) 610-9233. Email: Junkygurus@gmail.com. Also available via text."
+        pagePurpose="Contact form for quotes and inquiries. Phone: (360) 610-9233. Email: contact@thejunkygurus.com. Also available via text."
       />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
