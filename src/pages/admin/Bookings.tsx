@@ -248,6 +248,7 @@ export default function AdminBookings() {
           bookings={filteredBookings}
           onStatusUpdate={handleStatusUpdate}
           onDelete={handleDelete}
+          onBookingUpdated={fetchBookings}
         />
       </div>
     </AdminLayout>

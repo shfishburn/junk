@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { format, parseISO } from 'date-fns';
 import {
   Table,
@@ -16,8 +17,9 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Mail, Phone, MessageSquare, UserPlus, Globe } from 'lucide-react';
+import { Trash2, Mail, Phone, MessageSquare, UserPlus, Globe, Pencil } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
+import EditBookingDialog from './EditBookingDialog';
 
 interface Booking {
   id: string;
@@ -36,9 +38,17 @@ interface BookingTableProps {
   bookings: Booking[];
   onStatusUpdate: (id: string, status: string) => void;
   onDelete: (id: string) => void;
+  onBookingUpdated?: () => void;
 }
 
-export default function BookingTable({ bookings, onStatusUpdate, onDelete }: BookingTableProps) {
+export default function BookingTable({ bookings, onStatusUpdate, onDelete, onBookingUpdated }: BookingTableProps) {
+  const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  const handleEdit = (booking: Booking) => {
+    setEditingBooking(booking);
+    setEditDialogOpen(true);
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'confirmed': return 'bg-status-confirmed/15 text-status-confirmed';
@@ -161,14 +171,24 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete }: Boo
                     )}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => onDelete(booking.id)}
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleEdit(booking)}
+                        className="text-muted-foreground hover:text-primary"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDelete(booking.id)}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               );
@@ -176,6 +196,13 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete }: Boo
           </TableBody>
         </Table>
       </div>
+
+      <EditBookingDialog
+        booking={editingBooking}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onBookingUpdated={onBookingUpdated}
+      />
     </TooltipProvider>
   );
 }
