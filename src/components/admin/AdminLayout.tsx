@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAdminAuth } from "@/hooks";
 import { Button } from '@/components/ui/button';
 import { 
@@ -13,6 +13,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { useState } from 'react';
+import logo from "@/assets/logo.png";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -44,7 +45,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
@@ -52,6 +53,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <button
               className="md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -59,7 +61,17 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 <Menu className="h-6 w-6" />
               )}
             </button>
-            <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+            <Link to="/admin" className="flex items-center gap-3">
+              <img 
+                src={logo} 
+                alt="Junky Gurus" 
+                className="h-10 w-auto"
+              />
+              <div className="hidden sm:block">
+                <h1 className="text-lg font-semibold leading-tight">Admin Portal</h1>
+                <p className="text-xs text-muted-foreground">Junky Gurus LLC</p>
+              </div>
+            </Link>
           </div>
           
           <div className="flex items-center gap-2">
@@ -75,6 +87,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               variant="ghost"
               size="sm"
               onClick={handleSignOut}
+              className="text-destructive hover:text-destructive hover:bg-destructive/10"
             >
               <LogOut className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">Sign Out</span>
@@ -83,18 +96,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex flex-1">
         {/* Sidebar - Desktop */}
-        <aside className="hidden md:flex w-64 flex-col border-r min-h-[calc(100vh-4rem)]">
+        <aside className="hidden md:flex w-64 flex-col border-r bg-muted/30">
           <nav className="flex-1 p-4 space-y-1">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => navigate(item.href)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive(item.href)
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-muted'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                 }`}
               >
                 <item.icon className="h-4 w-4" />
@@ -102,6 +115,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               </button>
             ))}
           </nav>
+          
+          {/* Sidebar Footer */}
+          <div className="p-4 border-t">
+            <p className="text-xs text-muted-foreground text-center">
+              Need help? Call (360) 610-9233
+            </p>
+          </div>
         </aside>
 
         {/* Mobile Menu */}
@@ -120,10 +140,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       navigate(item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(item.href)
                         ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-muted'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     }`}
                   >
                     <item.icon className="h-4 w-4" />
@@ -136,10 +156,26 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
+        <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-auto">
           {children}
         </main>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t bg-muted/30 py-4 px-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} Junky Gurus LLC. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-border">|</span>
+            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors">
+              Terms
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
