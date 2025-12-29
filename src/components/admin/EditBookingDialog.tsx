@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { format, parseISO } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -59,11 +60,20 @@ export default function EditBookingDialog({
   const [address, setAddress] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<string>('pending');
+  const [sendUpdateEmail, setSendUpdateEmail] = useState(false);
+
+  // Track original values to detect changes
+  const originalValuesRef = useRef<{
+    date: string;
+    time: string;
+    status: string;
+  } | null>(null);
 
   // Populate form when booking changes
   useEffect(() => {
     if (booking) {
-      setSelectedDate(parseISO(booking.booking_date));
+      const parsedDate = parseISO(booking.booking_date);
+      setSelectedDate(parsedDate);
       setSelectedTime(booking.booking_time);
       setName(booking.name);
       setEmail(booking.email);
@@ -71,8 +81,33 @@ export default function EditBookingDialog({
       setAddress(booking.address || '');
       setMessage(booking.message || '');
       setStatus(booking.status);
+      
+      // Store original values
+      originalValuesRef.current = {
+        date: booking.booking_date,
+        time: booking.booking_time,
+        status: booking.status,
+      };
+      
+      // Default sendUpdateEmail to false initially
+      setSendUpdateEmail(false);
     }
   }, [booking]);
+
+  // Auto-enable email when date/time/status changes significantly
+  useEffect(() => {
+    if (!originalValuesRef.current || !selectedDate) return;
+    
+    const currentDate = format(selectedDate, 'yyyy-MM-dd');
+    const dateChanged = currentDate !== originalValuesRef.current.date;
+    const timeChanged = selectedTime !== originalValuesRef.current.time;
+    const statusChangedToConfirmed = status === 'confirmed' && originalValuesRef.current.status !== 'confirmed';
+    
+    // Auto-check email if date/time changed OR status changed to confirmed
+    if (dateChanged || timeChanged || statusChangedToConfirmed) {
+      setSendUpdateEmail(true);
+    }
+  }, [selectedDate, selectedTime, status]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,10 +153,57 @@ export default function EditBookingDialog({
 
       if (updateError) throw updateError;
 
-      toast({
-        title: "Booking updated",
-        description: `Booking for ${name} has been updated.`,
-      });
+      // Send update email if requested
+      let emailSent = false;
+      let emailError: string | null = null;
+      
+      if (sendUpdateEmail) {
+        try {
+          const { error: invokeError } = await supabase.functions.invoke('send-contact-email', {
+            body: {
+              isBooking: true,
+              name: name.trim(),
+              email: email.trim().toLowerCase(),
+              phone: phone.trim() || '',
+              message: `[Updated by staff]\n\n${message.trim() || ''}`,
+              bookingDate: format(selectedDate, 'EEEE, MMMM d, yyyy'),
+              bookingTime: selectedTime,
+              skipAdminNotification: true,
+            },
+          });
+          
+          if (invokeError) {
+            console.error('Email error:', invokeError);
+            emailError = invokeError.message || 'Failed to send email';
+          } else {
+            emailSent = true;
+          }
+        } catch (err: any) {
+          console.error('Email send error:', err);
+          emailError = err.message || 'Failed to send email';
+        }
+      }
+
+      // Show consolidated toast based on outcome
+      if (sendUpdateEmail) {
+        if (emailSent) {
+          toast({
+            title: "Booking updated + email sent",
+            description: `Updated to ${format(selectedDate, 'MMM d')} at ${selectedTime}. Update sent to ${email.trim().toLowerCase()}.`,
+          });
+        } else {
+          toast({
+            title: "Booking updated, but email failed",
+            description: emailError || "Update email could not be sent.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Booking updated",
+          description: `Booking for ${name} has been updated. No email sent.`,
+        });
+      }
 
       onOpenChange(false);
       onBookingUpdated?.();
@@ -226,6 +308,18 @@ export default function EditBookingDialog({
                 <SelectItem value="cancelled">Cancelled</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Send Update Email Checkbox */}
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="send-update-email"
+              checked={sendUpdateEmail}
+              onCheckedChange={(checked) => setSendUpdateEmail(checked === true)}
+            />
+            <Label htmlFor="send-update-email" className="text-sm font-normal cursor-pointer">
+              Send update email to customer
+            </Label>
           </div>
 
           {/* Submit */}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
 import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -165,6 +166,39 @@ export default function AdminBookings() {
     }
   };
 
+  const handleSendEmail = async (booking: Booking) => {
+    if (!confirm(`Send confirmation email to ${booking.email}?`)) return;
+
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          isBooking: true,
+          name: booking.name,
+          email: booking.email,
+          phone: booking.phone || '',
+          message: booking.message || '',
+          bookingDate: format(parseISO(booking.booking_date), 'EEEE, MMMM d, yyyy'),
+          bookingTime: booking.booking_time,
+          skipAdminNotification: true,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Email sent",
+        description: `Confirmation sent to ${booking.email}`,
+      });
+    } catch (err: any) {
+      console.error('Error sending email:', err);
+      toast({
+        title: "Email failed",
+        description: err.message || "Failed to send confirmation email",
+        variant: "destructive",
+      });
+    }
+  };
+
   const exportToCSV = () => {
     const headers = ['ID', 'Date', 'Time', 'Name', 'Email', 'Phone', 'Address', 'Status', 'Source', 'Message', 'Created At'];
     
@@ -265,6 +299,7 @@ export default function AdminBookings() {
           bookings={filteredBookings}
           onStatusUpdate={handleStatusUpdate}
           onDelete={handleDelete}
+          onSendEmail={handleSendEmail}
           onBookingUpdated={fetchBookings}
         />
       </div>
