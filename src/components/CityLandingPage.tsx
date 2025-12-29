@@ -38,7 +38,7 @@ export function CityLandingPage({ city }: { city: CityData }) {
     description: `Professional junk removal services in ${city.name}, WA. Same-day service available.`,
     url: `https://thejunkygurus.com/junk-removal-${city.slug}-wa`,
     telephone: "+1-360-610-9233",
-    email: "contact@thejunkygurus.com",
+    email: "booking@thejunkygurus.com",
     areaServed: {
       "@type": "City",
       name: city.name,
