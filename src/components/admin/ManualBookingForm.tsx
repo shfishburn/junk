@@ -180,12 +180,15 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
       {/* Date/Time Selection */}
       <div className="space-y-2">
         <Label>Date & Time *</Label>
-        <BookingSlotPicker
-          selectedDate={selectedDate}
-          selectedTime={selectedTime}
-          onDateChange={setSelectedDate}
-          onTimeChange={setSelectedTime}
-        />
+        <div className="border rounded-lg p-4 bg-muted/30">
+          <BookingSlotPicker
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onDateChange={setSelectedDate}
+            onTimeChange={setSelectedTime}
+            compact
+          />
+        </div>
       </div>
 
       {/* Customer Info */}
