@@ -22,11 +22,17 @@ export function EmailLink({
     lg: "h-6 w-6",
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.location.href = `mailto:${email}`;
+  };
+
   return (
     <a
       href={`mailto:${email}`}
+      onClick={handleClick}
       className={cn(
-        "hover:text-primary transition-colors",
+        "hover:text-primary transition-colors cursor-pointer",
         showIcon && "inline-flex items-center gap-2",
         className
       )}
