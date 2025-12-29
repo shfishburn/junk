@@ -179,7 +179,7 @@ const handler = async (req: Request): Promise<Response> => {
       isHazmatRequest 
     });
 
-    const adminEmail = "Junkygurus@gmail.com";
+    const adminEmail = "contact@thejunkygurus.com";
 
     if (isHazmatRequest) {
       // Parse hazmat items from message (sanitize for parsing, then sanitize output)
