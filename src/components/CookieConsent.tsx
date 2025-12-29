@@ -123,10 +123,10 @@ export function CookieConsent() {
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={handleEssentialOnly}
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm"
                 >
                   {t.essentialOnly}
                 </Button>
