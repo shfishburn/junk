@@ -35,7 +35,6 @@ const signals = [
 ];
 
 const stats = [
-  { value: "500+", label: "Jobs Completed" },
   { value: "4.9", label: "Star Rating" },
   { value: "Same Day", label: "Service Available" },
   { value: "100%", label: "Satisfaction" },
