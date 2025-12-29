@@ -23,7 +23,7 @@ export function ReferralWidget({
     ? `JUNK-${referrerName.toUpperCase().slice(0, 4)}${Math.random().toString(36).slice(2, 5).toUpperCase()}`
     : `JUNK-FRIEND-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
 
-  const referralLink = `https://junkygurus.com?ref=${referralCode}`;
+  const referralLink = `https://thejunkygurus.com?ref=${referralCode}`;
 
   const shareMessage = encodeURIComponent(
     `I just booked with Junky Gurus and they're awesome! Use my code ${referralCode} for 10% off your first junk removal. 🗑️✨`
