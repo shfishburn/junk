@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Cookie, Heart } from "lucide-react";
+import { Cookie, Heart, Instagram, Facebook } from "lucide-react";
 import { openCookiePreferences } from "@/components/features";
 import { ContactInfoCard, BusinessHours } from "@/components/shared";
 
@@ -21,6 +21,28 @@ export function Footer() {
               <span>15% off for seniors & veterans</span>
             </div>
             <BusinessHours variant="compact" className="mt-3" />
+            
+            {/* Social Links */}
+            <div className="mt-4 flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/junkygurus/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Follow us on Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61584519197833"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                aria-label="Follow us on Facebook"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
           {/* Contact */}
