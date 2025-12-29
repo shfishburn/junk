@@ -166,19 +166,34 @@ export default function AdminBookings() {
   };
 
   const exportToCSV = () => {
-    const headers = ['Date', 'Time', 'Name', 'Email', 'Phone', 'Status', 'Message'];
+    const headers = ['ID', 'Date', 'Time', 'Name', 'Email', 'Phone', 'Address', 'Status', 'Source', 'Message', 'Created At'];
+    
+    // Helper to escape CSV values (handle commas, quotes, newlines)
+    const escapeCSV = (value: string | null | undefined): string => {
+      if (!value) return '';
+      const str = String(value);
+      if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
+    };
+    
     const rows = filteredBookings.map((b) => [
-      b.booking_date,
-      b.booking_time,
-      b.name,
-      b.email,
-      b.phone || '',
-      b.status,
-      b.message || ''
+      escapeCSV(b.id),
+      escapeCSV(b.booking_date),
+      escapeCSV(b.booking_time),
+      escapeCSV(b.name),
+      escapeCSV(b.email),
+      escapeCSV(b.phone),
+      escapeCSV(b.address),
+      escapeCSV(b.status),
+      escapeCSV(b.source),
+      escapeCSV(b.message),
+      escapeCSV(b.created_at),
     ]);
 
-    const csv = [headers, ...rows].map((row) => row.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const csv = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
