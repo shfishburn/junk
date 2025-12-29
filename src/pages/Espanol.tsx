@@ -377,13 +377,13 @@ const Espanol = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6" asChild>
+            <Button size="lg" variant="hero" className="text-lg px-8 py-6" asChild>
               <a href="tel:+13606109233">
                 <Phone className="mr-2 h-5 w-5" />
                 (360) 610-9233
               </a>
             </Button>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6" asChild>
+            <Button size="lg" variant="hero" className="text-lg px-8 py-6" asChild>
               <a href="sms:+13606109233">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Enviar Texto

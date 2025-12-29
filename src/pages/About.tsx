@@ -361,7 +361,7 @@ const About = () => {
             <p className="text-lg opacity-90 mb-8">
               Your junk is our jam. Let's make some magic happen (by which we mean: making your stuff disappear).
             </p>
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="lg" variant="invert">
               <Link to="/contact">Get a Free Quote</Link>
             </Button>
           </div>
