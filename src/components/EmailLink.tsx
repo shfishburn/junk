@@ -23,8 +23,10 @@ export function EmailLink({
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Don't prevent default - let the native mailto: behavior work
-    // The anchor href will handle opening the email client
+    e.preventDefault();
+    // Open Gmail compose with email pre-filled
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+    window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
