@@ -107,10 +107,8 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete }: Boo
                   value={booking.status}
                   onValueChange={(value) => onStatusUpdate(booking.id, value)}
                 >
-                  <SelectTrigger className="w-32">
-                    <Badge className={getStatusColor(booking.status)}>
-                      {booking.status}
-                    </Badge>
+                  <SelectTrigger className={`w-32 ${getStatusColor(booking.status)}`}>
+                    <SelectValue>{booking.status}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pending">Pending</SelectItem>

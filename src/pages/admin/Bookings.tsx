@@ -126,12 +126,27 @@ export default function AdminBookings() {
     if (!confirm('Are you sure you want to delete this booking?')) return;
 
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('bookings')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .select();
 
       if (error) throw error;
+
+      // Check if anything was actually deleted (RLS may block silently)
+      if (!data || data.length === 0) {
+        console.error('Delete failed: No rows affected. Possible RLS or auth issue.');
+        toast({
+          title: 'Delete failed',
+          description: 'Unable to delete booking. Please try logging out and back in.',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      // Optimistic UI update - remove from local state immediately
+      setBookings(prev => prev.filter(b => b.id !== id));
 
       toast({
         title: 'Booking deleted',
