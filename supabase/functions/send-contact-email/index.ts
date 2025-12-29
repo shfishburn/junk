@@ -85,6 +85,7 @@ const contactSchema = z.object({
   bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
   isHazmatRequest: z.boolean().optional().default(false),
   serviceType: z.string().max(50, "Service type must be less than 50 characters").optional().nullable(),
+  skipAdminNotification: z.boolean().optional().default(false),
 });
 
 // HTML sanitization function to prevent XSS in email templates
@@ -229,6 +230,7 @@ const handler = async (req: Request): Promise<Response> => {
     const bookingDate = sanitizeHtml(validatedData.bookingDate);
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
+    const skipAdminNotification = validatedData.skipAdminNotification;
 
     console.log("Validated submission:", { 
       name: validatedData.name, 
@@ -237,7 +239,8 @@ const handler = async (req: Request): Promise<Response> => {
       isBooking, 
       bookingDate: validatedData.bookingDate, 
       bookingTime: validatedData.bookingTime, 
-      isHazmatRequest 
+      isHazmatRequest,
+      skipAdminNotification 
     });
 
     const adminEmail = "booking@thejunkygurus.com";
@@ -355,32 +358,36 @@ const handler = async (req: Request): Promise<Response> => {
     } else if (isBooking && bookingDate && bookingTime) {
       const sanitizedMessage = sanitizeHtml(message);
       
-      // Booking-specific emails
-      const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
-        to: [adminEmail],
-        subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
-        html: `
-          ${emailHeader()}
-            <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
-            
-            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
-              <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
-              <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
-              <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
-            </div>
-            
-            <h2 style="color: #374151;">Customer Information</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-            
-            ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
-          ${emailFooter()}
-        `,
-      });
+      // Only send admin notification if not skipped (e.g., admin-created bookings skip this)
+      if (!skipAdminNotification) {
+        const businessEmail = await resend.emails.send({
+          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          to: [adminEmail],
+          subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
+          html: `
+            ${emailHeader()}
+              <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
+              
+              <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+                <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
+                <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
+                <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+              </div>
+              
+              <h2 style="color: #374151;">Customer Information</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+              
+              ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
+            ${emailFooter()}
+          `,
+        });
 
-      console.log("Admin booking notification sent:", businessEmail);
+        console.log("Admin booking notification sent:", businessEmail);
+      } else {
+        console.log("Skipping admin notification (admin-created booking)");
+      }
 
       const customerEmail = await resend.emails.send({
         from: "Junky Gurus <bookings@thejunkygurus.com>",

@@ -112,19 +112,39 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
       // Optionally send confirmation email
       if (sendConfirmation && email) {
         try {
-          await supabase.functions.invoke('send-contact-email', {
+          const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
             body: {
-              type: 'booking',
+              isBooking: true,
               name: name.trim(),
               email: email.trim().toLowerCase(),
               phone: phone.trim() || '',
               message: message.trim() || 'Booking created by staff.',
-              bookingDate,
+              bookingDate: format(selectedDate, 'EEEE, MMMM d, yyyy'),
               bookingTime: selectedTime,
+              skipAdminNotification: true,
             },
           });
+          
+          if (emailError) {
+            console.error('Failed to send confirmation email:', emailError);
+            toast({
+              title: "Booking created",
+              description: "Booking saved, but confirmation email failed to send.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Confirmation sent",
+              description: "Customer will receive a confirmation email.",
+            });
+          }
         } catch (emailError) {
           console.error('Failed to send confirmation email:', emailError);
+          toast({
+            title: "Booking created",
+            description: "Booking saved, but confirmation email failed to send.",
+            variant: "destructive",
+          });
         }
       }
 
