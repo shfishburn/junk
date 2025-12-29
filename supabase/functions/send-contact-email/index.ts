@@ -110,6 +110,67 @@ function sanitizeText(input: string | undefined | null): string {
     .replace(/'/g, "&#039;");
 }
 
+// Branded email header template
+function emailHeader(): string {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+      <!-- Header with Logo -->
+      <div style="text-align: center; padding: 30px 20px 20px 20px;">
+        <a href="https://thejunkygurus.com" target="_blank" style="text-decoration: none;">
+          <img src="https://thejunkygurus.com/logo.png" alt="Junky Gurus" style="max-width: 180px; height: auto;" />
+        </a>
+      </div>
+      <!-- Green accent bar -->
+      <div style="height: 4px; background: linear-gradient(90deg, #16a34a, #22c55e); margin: 0 20px 30px 20px; border-radius: 2px;"></div>
+      <!-- Content wrapper -->
+      <div style="padding: 0 20px;">
+  `;
+}
+
+// Branded email footer template
+function emailFooter(): string {
+  const currentYear = new Date().getFullYear();
+  return `
+      </div>
+      <!-- Footer -->
+      <div style="margin-top: 40px; padding: 30px 20px; background-color: #f9fafb; border-top: 1px solid #e5e7eb;">
+        <!-- Social Media Links -->
+        <div style="text-align: center; margin-bottom: 20px;">
+          <a href="https://www.instagram.com/junkygurus/" target="_blank" style="display: inline-block; margin: 0 10px; text-decoration: none;">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="width: 24px; height: 24px; filter: invert(40%) sepia(8%) saturate(428%) hue-rotate(182deg) brightness(93%) contrast(89%);" />
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61584519197833" target="_blank" style="display: inline-block; margin: 0 10px; text-decoration: none;">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" style="width: 24px; height: 24px; filter: invert(40%) sepia(8%) saturate(428%) hue-rotate(182deg) brightness(93%) contrast(89%);" />
+          </a>
+        </div>
+        <!-- Contact Info -->
+        <div style="text-align: center; margin-bottom: 15px;">
+          <p style="margin: 0; color: #374151; font-size: 14px;">
+            <a href="tel:+13606109233" style="color: #16a34a; text-decoration: none; font-weight: 600;">(360) 610-9233</a>
+            <span style="color: #9ca3af; margin: 0 10px;">|</span>
+            <a href="mailto:contact@thejunkygurus.com" style="color: #16a34a; text-decoration: none;">contact@thejunkygurus.com</a>
+          </p>
+        </div>
+        <!-- Location -->
+        <div style="text-align: center; margin-bottom: 20px;">
+          <p style="margin: 0; color: #6b7280; font-size: 13px;">
+            📍 Serving Mount Vernon, WA &amp; Skagit County
+          </p>
+        </div>
+        <!-- Copyright -->
+        <div style="text-align: center; border-top: 1px solid #e5e7eb; padding-top: 20px;">
+          <p style="margin: 0; color: #9ca3af; font-size: 12px;">
+            © ${currentYear} Junky Gurus. All rights reserved.
+          </p>
+          <p style="margin: 8px 0 0 0; color: #9ca3af; font-size: 11px;">
+            <a href="https://thejunkygurus.com" target="_blank" style="color: #9ca3af; text-decoration: underline;">thejunkygurus.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -202,7 +263,7 @@ const handler = async (req: Request): Promise<Response> => {
         to: [adminEmail],
         subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          ${emailHeader()}
             <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
               <h1 style="color: #92400e; margin: 0; font-size: 24px;">⚠️ Hazardous Materials Pickup Request</h1>
             </div>
@@ -234,12 +295,12 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
             ` : ''}
             
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              <p style="color: #6b7280; font-size: 12px; margin: 0;">
+            <div style="margin-top: 30px; padding: 15px; background: #fef3c7; border-radius: 8px;">
+              <p style="color: #92400e; font-size: 12px; margin: 0;">
                 ⚠️ Remember: Verify items are acceptable for transport before confirming pickup.
               </p>
             </div>
-          </div>
+          ${emailFooter()}
         `,
       });
 
@@ -251,8 +312,8 @@ const handler = async (req: Request): Promise<Response> => {
         to: [email],
         subject: "Your Hazmat Pickup Request is Received! ♻️",
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">Thanks for your hazmat pickup request, ${name}!</h1>
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">Thanks for your hazmat pickup request, ${name}!</h1>
             <p>We've received your request to pick up hazardous materials and we're on it!</p>
             
             <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
@@ -286,11 +347,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <li>Keep items accessible for easy pickup</li>
               </ul>
             </div>
-            
-            <p><strong>Questions?</strong> Give us a call at <strong>(360) 610-9233</strong></p>
-            
-            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">— The Junky Gurus Team</p>
-          </div>
+          ${emailFooter()}
         `,
       });
 
@@ -304,8 +361,8 @@ const handler = async (req: Request): Promise<Response> => {
         to: [adminEmail],
         subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">New Booking Request</h1>
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
             
             <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
               <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
@@ -319,9 +376,7 @@ const handler = async (req: Request): Promise<Response> => {
             <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
             
             ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
-            
-            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">— Junky Gurus Booking System</p>
-          </div>
+          ${emailFooter()}
         `,
       });
 
@@ -332,8 +387,8 @@ const handler = async (req: Request): Promise<Response> => {
         to: [email],
         subject: "Your Booking is Confirmed! 🗓️",
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">Booking Confirmed!</h1>
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">Booking Confirmed!</h1>
             <p>Hey ${name}, your junk removal appointment is all set!</p>
             
             <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
@@ -353,9 +408,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <p><strong>Need to reschedule or cancel?</strong></p>
             <p>Give us a call at <strong>(360) 610-9233</strong> at least 24 hours before your appointment.</p>
-            
-            <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">— The Junky Gurus Team</p>
-          </div>
+          ${emailFooter()}
         `,
       });
 
@@ -369,13 +422,22 @@ const handler = async (req: Request): Promise<Response> => {
         to: [adminEmail],
         subject: `New Quote Request from ${validatedData.name}`,
         html: `
-          <h1>New Quote Request</h1>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-          ${preferredAppointment ? `<p><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
-          <h2>Message:</h2>
-          <p>${sanitizedMessage}</p>
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">New Quote Request</h1>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #374151;">👤 Customer Information</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+              <p><strong>Phone:</strong> ${phone ? `<a href="tel:${validatedData.phone}">${phone}</a>` : "Not provided"}</p>
+              ${preferredAppointment ? `<p><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
+            </div>
+            
+            <h2 style="color: #374151;">📝 Message</h2>
+            <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
+              <p style="margin: 0;">${sanitizedMessage}</p>
+            </div>
+          ${emailFooter()}
         `,
       });
 
@@ -386,8 +448,8 @@ const handler = async (req: Request): Promise<Response> => {
         to: [email],
         subject: "We Got Your Junk Request! 🗑️",
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">Thanks for reaching out, ${name}!</h1>
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">Thanks for reaching out, ${name}!</h1>
             <p>We've received your quote request and we're already getting excited about your junk (yes, we're weird like that).</p>
             
             <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -400,11 +462,7 @@ const handler = async (req: Request): Promise<Response> => {
             </div>
             
             ${preferredAppointment ? `<p><strong>Your preferred time:</strong> ${preferredAppointment}</p>` : ""}
-            
-            <p>Can't wait? Give us a call at <strong>(360) 610-9233</strong></p>
-            
-            <p style="color: #6b7280; font-size: 14px;">— The Junky Gurus Team</p>
-          </div>
+          ${emailFooter()}
         `,
       });
 
