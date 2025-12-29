@@ -74,6 +74,23 @@ export default {
           scheduled: "hsl(var(--status-scheduled))",
           DEFAULT: "hsl(var(--status-default))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
+        brand: {
+          facebook: "hsl(var(--brand-facebook))",
+          twitter: "hsl(var(--brand-twitter))",
+          sms: "hsl(var(--brand-sms))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

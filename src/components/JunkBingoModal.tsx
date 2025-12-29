@@ -134,25 +134,25 @@ export function JunkBingoModal({ open, onOpenChange }: JunkBingoModalProps) {
       name: "Text",
       icon: MessageCircle,
       href: `sms:?body=${encodeURIComponent(shareText)}`,
-      color: "bg-green-600 hover:bg-green-700",
+      color: "bg-brand-sms hover:bg-brand-sms/90",
     },
     {
       name: "Email",
       icon: Mail,
       href: `mailto:?subject=${encodeURIComponent("Check out JUNK BINGO!")}&body=${encodeURIComponent(shareText)}`,
-      color: "bg-blue-600 hover:bg-blue-700",
+      color: "bg-info hover:bg-info/90",
     },
     {
       name: "Facebook",
       icon: Facebook,
       href: `https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(shareText)}`,
-      color: "bg-[#1877F2] hover:bg-[#166FE5]",
+      color: "bg-brand-facebook hover:bg-brand-facebook/90",
     },
     {
       name: "Twitter",
       icon: Twitter,
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
-      color: "bg-[#1DA1F2] hover:bg-[#1A8CD8]",
+      color: "bg-brand-twitter hover:bg-brand-twitter/90",
     },
   ];
 

@@ -56,13 +56,13 @@ export function ReferralWidget({
       icon: Facebook,
       label: "Facebook",
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${shareMessage}`,
-      color: "bg-[#1877F2] hover:bg-[#166FE5]", // Brand color exception
+      color: "bg-brand-facebook hover:bg-brand-facebook/90 text-on-primary",
     },
     {
       icon: Twitter,
       label: "Twitter",
       href: `https://twitter.com/intent/tweet?text=${shareMessage}&url=${encodeURIComponent(referralLink)}`,
-      color: "bg-[#1DA1F2] hover:bg-[#1A8CD8]", // Brand color exception
+      color: "bg-brand-twitter hover:bg-brand-twitter/90 text-on-primary",
     },
   ];
 
@@ -81,7 +81,7 @@ export function ReferralWidget({
             />
             <Button variant="ghost" size="icon" onClick={copyLink}>
               {copied ? (
-                <Check className="h-4 w-4 text-green-600" />
+                <Check className="h-4 w-4 text-success" />
               ) : (
                 <Copy className="h-4 w-4" />
               )}
