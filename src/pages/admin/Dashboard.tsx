@@ -4,10 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
 import StatsCards from '@/components/admin/StatsCards';
+import CreateBookingDialog from '@/components/admin/CreateBookingDialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, isToday, isTomorrow, parseISO } from 'date-fns';
-import { Loader2, Calendar, Clock, AlertTriangle } from 'lucide-react';
+import { Loader2, Calendar, Clock, AlertTriangle, Plus } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -156,6 +157,20 @@ export default function AdminDashboard() {
               <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
+              <CreateBookingDialog 
+                onBookingCreated={fetchBookings}
+                trigger={
+                  <button className="w-full text-left p-3 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors border border-primary/20">
+                    <p className="font-medium flex items-center gap-2">
+                      <Plus className="h-4 w-4 text-primary" />
+                      Create Booking
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Add booking from phone call or text
+                    </p>
+                  </button>
+                }
+              />
               <button
                 onClick={() => navigate('/admin/bookings')}
                 className="w-full text-left p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
