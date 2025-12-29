@@ -178,16 +178,40 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Rate limiting check
+    const rawData = await req.json();
+    
+    // Validate input with Zod first
+    const parseResult = contactSchema.safeParse(rawData);
+    
+    if (!parseResult.success) {
+      console.error("Validation failed:", parseResult.error.flatten());
+      return new Response(
+        JSON.stringify({ 
+          error: "Invalid input", 
+          details: parseResult.error.flatten(),
+          stage: "validation"
+        }),
+        { 
+          status: 400, 
+          headers: { "Content-Type": "application/json", ...corsHeaders } 
+        }
+      );
+    }
+    
+    const validatedData = parseResult.data;
+    
+    // Rate limiting check - use email as fallback if IP is unknown
     const clientIP = getClientIP(req);
-    const rateLimitResult = checkRateLimit(clientIP);
+    const rateLimitIdentifier = clientIP !== "unknown" ? clientIP : validatedData.email;
+    const rateLimitResult = checkRateLimit(rateLimitIdentifier);
     
     if (!rateLimitResult.allowed) {
-      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
+      console.warn(`Rate limit exceeded for: ${rateLimitIdentifier}`);
       return new Response(
         JSON.stringify({ 
           error: "Too many requests. Please try again later.",
-          retryAfter: rateLimitResult.retryAfter 
+          retryAfter: rateLimitResult.retryAfter,
+          stage: "rate_limit"
         }),
         { 
           status: 429, 
@@ -199,26 +223,6 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-    const rawData = await req.json();
-    
-    // Validate input with Zod
-    const parseResult = contactSchema.safeParse(rawData);
-    
-    if (!parseResult.success) {
-      console.error("Validation failed:", parseResult.error.flatten());
-      return new Response(
-        JSON.stringify({ 
-          error: "Invalid input", 
-          details: parseResult.error.flatten() 
-        }),
-        { 
-          status: 400, 
-          headers: { "Content-Type": "application/json", ...corsHeaders } 
-        }
-      );
-    }
-    
-    const validatedData = parseResult.data;
     
     // Sanitize all user inputs for HTML email templates
     const name = sanitizeHtml(validatedData.name);
@@ -476,7 +480,11 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Customer confirmation email sent:", customerEmail);
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ 
+      success: true,
+      type: isHazmatRequest ? 'hazmat' : isBooking ? 'booking' : 'contact',
+      skipAdminNotification: skipAdminNotification || false,
+    }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -486,7 +494,11 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in send-contact-email function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        stage: "send_email",
+        timestamp: new Date().toISOString()
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

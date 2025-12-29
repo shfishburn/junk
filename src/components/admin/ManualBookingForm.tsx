@@ -38,7 +38,7 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
   const [message, setMessage] = useState('');
   const [source, setSource] = useState<BookingSource>('phone');
   const [status, setStatus] = useState<string>('confirmed');
-  const [sendConfirmation, setSendConfirmation] = useState(false);
+  const [sendConfirmation, setSendConfirmation] = useState(true);
   const [isSeniorVeteran, setIsSeniorVeteran] = useState(false);
 
   const resetForm = () => {
@@ -109,10 +109,13 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
 
       if (insertError) throw insertError;
 
-      // Optionally send confirmation email
+      // Send confirmation email if requested
+      let emailSent = false;
+      let emailError: string | null = null;
+      
       if (sendConfirmation && email) {
         try {
-          const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+          const { error: invokeError } = await supabase.functions.invoke('send-contact-email', {
             body: {
               isBooking: true,
               name: name.trim(),
@@ -125,33 +128,38 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
             },
           });
           
-          if (emailError) {
-            console.error('Failed to send confirmation email:', emailError);
-            toast({
-              title: "Booking created",
-              description: "Booking saved, but confirmation email failed to send.",
-              variant: "destructive",
-            });
+          if (invokeError) {
+            console.error('Email error:', invokeError);
+            emailError = invokeError.message || 'Failed to send email';
           } else {
-            toast({
-              title: "Confirmation sent",
-              description: "Customer will receive a confirmation email.",
-            });
+            emailSent = true;
           }
-        } catch (emailError) {
-          console.error('Failed to send confirmation email:', emailError);
-          toast({
-            title: "Booking created",
-            description: "Booking saved, but confirmation email failed to send.",
-            variant: "destructive",
-          });
+        } catch (err: any) {
+          console.error('Email send error:', err);
+          emailError = err.message || 'Failed to send email';
         }
       }
 
-      toast({
-        title: "Booking created",
-        description: `Booking for ${name} on ${format(selectedDate, 'MMM d, yyyy')} at ${selectedTime} has been created.`,
-      });
+      // Show consolidated toast based on outcome
+      if (sendConfirmation) {
+        if (emailSent) {
+          toast({
+            title: "Booking created + email sent",
+            description: `${name} on ${format(selectedDate, 'MMM d')} at ${selectedTime}. Confirmation sent to ${email.trim().toLowerCase()}.`,
+          });
+        } else {
+          toast({
+            title: "Booking created, but email failed",
+            description: emailError || "Confirmation email could not be sent.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Booking created",
+          description: `${name} on ${format(selectedDate, 'MMM d')} at ${selectedTime}. No email sent.`,
+        });
+      }
 
       resetForm();
       onBookingCreated?.();
@@ -300,7 +308,7 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
             onCheckedChange={(checked) => setSendConfirmation(checked === true)}
           />
           <Label htmlFor="manual-sendEmail" className="text-sm font-normal cursor-pointer">
-            Send confirmation email to customer
+            Email confirmation to customer (recommended)
           </Label>
         </div>
       </div>
