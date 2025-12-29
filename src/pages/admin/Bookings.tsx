@@ -4,11 +4,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAdminAuth } from "@/hooks";
 import AdminLayout from '@/components/admin/AdminLayout';
 import BookingTable from '@/components/admin/BookingTable';
+import CreateBookingDialog from '@/components/admin/CreateBookingDialog';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/hooks";
-import { Loader2, Search, Download } from 'lucide-react';
+import { Loader2, Search, Download, Plus } from 'lucide-react';
 
 interface Booking {
   id: string;
@@ -202,10 +203,21 @@ export default function AdminBookings() {
               {filteredBookings.length} booking{filteredBookings.length !== 1 ? 's' : ''}
             </p>
           </div>
-          <Button onClick={exportToCSV} variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export CSV
-          </Button>
+          <div className="flex gap-2">
+            <CreateBookingDialog 
+              onBookingCreated={fetchBookings}
+              trigger={
+                <Button size="sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Booking
+                </Button>
+              }
+            />
+            <Button onClick={exportToCSV} variant="outline" size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Export CSV
+            </Button>
+          </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
