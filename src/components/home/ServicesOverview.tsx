@@ -9,6 +9,7 @@ import yardWasteImg from "@/assets/service-yard-waste.jpg";
 import cleanupsImg from "@/assets/service-cleanouts.jpg";
 import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
+import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 import hazmatImg from "@/assets/service-hazmat.jpg";
 
 const services = [
@@ -41,6 +42,11 @@ const services = [
     title: "Light Commercial",
     description: "Office furniture doesn't deserve a funeral. Just a quick, dignified exit.",
     image: commercialImg,
+  },
+  {
+    title: "Light Demolition",
+    description: "Decks, sheds, fences — we tear it down and haul it away. No drama.",
+    image: lightDemolitionImg,
   },
   {
     title: "Hazardous Materials",
