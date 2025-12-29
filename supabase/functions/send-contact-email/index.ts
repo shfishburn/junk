@@ -137,10 +137,10 @@ function emailFooter(): string {
         <!-- Social Media Links -->
         <div style="text-align: center; margin-bottom: 20px;">
           <a href="https://www.instagram.com/junkygurus/" target="_blank" style="display: inline-block; margin: 0 10px; text-decoration: none;">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="width: 24px; height: 24px; filter: invert(40%) sepia(8%) saturate(428%) hue-rotate(182deg) brightness(93%) contrast(89%);" />
+            <img src="https://cdn-icons-png.flaticon.com/24/174/174855.png" alt="Instagram" style="width: 24px; height: 24px;" />
           </a>
           <a href="https://www.facebook.com/profile.php?id=61584519197833" target="_blank" style="display: inline-block; margin: 0 10px; text-decoration: none;">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" style="width: 24px; height: 24px; filter: invert(40%) sepia(8%) saturate(428%) hue-rotate(182deg) brightness(93%) contrast(89%);" />
+            <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="width: 24px; height: 24px;" />
           </a>
         </div>
         <!-- Contact Info -->
