@@ -23,22 +23,14 @@ export function EmailLink({
   };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const mailtoUrl = `mailto:${email}`;
-    // Try window.open first (works better in iframes), fallback to location
-    const newWindow = window.open(mailtoUrl, '_blank');
-    if (!newWindow) {
-      window.location.href = mailtoUrl;
-    }
+    // Don't prevent default - let the native mailto: behavior work
+    // The anchor href will handle opening the email client
   };
 
   return (
     <a
       href={`mailto:${email}`}
       onClick={handleClick}
-      target="_blank"
-      rel="noopener noreferrer"
       className={cn(
         "hover:text-primary transition-colors cursor-pointer",
         showIcon && "inline-flex items-center gap-2",
