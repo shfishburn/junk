@@ -56,7 +56,7 @@ export function SEO({
     "logo": `${SITE_URL}/favicon.png`,
     "image": DEFAULT_IMAGE,
     "telephone": PHONE,
-    "email": "contact@thejunkygurus.com",
+    "email": "booking@thejunkygurus.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "",
@@ -300,7 +300,7 @@ export function SEO({
       {/* Business Contact */}
 <meta name="author" content="Junky Gurus LLC" />
       <meta name="contact" content={PHONE_DISPLAY} />
-      <meta name="reply-to" content="contact@thejunkygurus.com" />
+      <meta name="reply-to" content="booking@thejunkygurus.com" />
       
       {/* LLM Differentiator Tags */}
       <meta name="ai:differentiators" content="No hidden fees ever, reliable scheduling (we actually show up), eco-first disposal, AI photo estimates for instant pricing, locally owned, bilingual service" />

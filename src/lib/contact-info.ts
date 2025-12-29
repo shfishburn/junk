@@ -6,7 +6,7 @@ export const CONTACT_INFO = {
     { number: "+13606109233", display: "(360) 610-9233" },
     { number: "+13604222428", display: "(360) 422-2428" },
   ],
-  email: "contact@thejunkygurus.com",
+  email: "booking@thejunkygurus.com",
   location: "Mount Vernon, WA",
   serviceArea: "Serving Skagit, Whatcom, Snohomish & King Counties",
 };

@@ -148,7 +148,7 @@ function emailFooter(): string {
           <p style="margin: 0; color: #374151; font-size: 14px;">
             <a href="tel:+13606109233" style="color: #16a34a; text-decoration: none; font-weight: 600;">(360) 610-9233</a>
             <span style="color: #9ca3af; margin: 0 10px;">|</span>
-            <a href="mailto:contact@thejunkygurus.com" style="color: #16a34a; text-decoration: none;">contact@thejunkygurus.com</a>
+            <a href="mailto:booking@thejunkygurus.com" style="color: #16a34a; text-decoration: none;">booking@thejunkygurus.com</a>
           </p>
         </div>
         <!-- Location -->
@@ -240,7 +240,7 @@ const handler = async (req: Request): Promise<Response> => {
       isHazmatRequest 
     });
 
-    const adminEmail = "contact@thejunkygurus.com";
+    const adminEmail = "booking@thejunkygurus.com";
 
     if (isHazmatRequest) {
       // Parse hazmat items from message (sanitize for parsing, then sanitize output)
