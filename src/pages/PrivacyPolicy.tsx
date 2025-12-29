@@ -17,14 +17,30 @@ export default function PrivacyPolicy() {
           <section className="mb-8">
             <h2 className="text-xl font-semibold text-foreground mb-4">Information We Collect</h2>
             <p className="text-muted-foreground mb-4">
-              When you use our junk removal services or contact us, we may collect the following information:
+              When you use our junk removal services, book an appointment, or contact us, we may collect the following information:
             </p>
+            <h3 className="text-lg font-medium text-foreground mt-4 mb-2">Personal Information</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
+              <li><strong>Contact details:</strong> Name, phone number, and email address</li>
+              <li><strong>Physical address:</strong> Service/pickup address including street address, city, state, and ZIP code</li>
+              <li><strong>Booking information:</strong> Preferred appointment dates, times, and service requests</li>
+            </ul>
+            <h3 className="text-lg font-medium text-foreground mt-4 mb-2">Service-Related Information</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
+              <li><strong>Photos and descriptions:</strong> Images of items for estimation purposes (when you use our AI estimator or send photos)</li>
+              <li><strong>Service notes:</strong> Details about items to be removed, special instructions, and access information</li>
+              <li><strong>Communication records:</strong> Messages, emails, texts, and call logs related to your service</li>
+            </ul>
+            <h3 className="text-lg font-medium text-foreground mt-4 mb-2">Technical Information</h3>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
+              <li><strong>Device data:</strong> Browser type, IP address, and device identifiers</li>
+              <li><strong>Usage data:</strong> Pages visited, time on site, and interaction with our booking system</li>
+              <li><strong>Location data:</strong> General geographic location based on IP address (used for service area verification)</li>
+            </ul>
+            <h3 className="text-lg font-medium text-foreground mt-4 mb-2">Payment Information</h3>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-              <li>Name and contact information (phone number, email address)</li>
-              <li>Service address and location details</li>
-              <li>Photos of items for estimation purposes</li>
-              <li>Communication records and service history</li>
-              <li>Payment information (processed securely through third-party providers)</li>
+              <li>Payment details are processed securely through third-party payment processors</li>
+              <li>We do not store full credit card numbers on our servers</li>
             </ul>
           </section>
 
@@ -32,11 +48,13 @@ export default function PrivacyPolicy() {
             <h2 className="text-xl font-semibold text-foreground mb-4">How We Use Your Information</h2>
             <p className="text-muted-foreground mb-4">We use the information we collect to:</p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-              <li>Provide and improve our junk removal services</li>
-              <li>Communicate with you about appointments and quotes</li>
-              <li>Process payments and maintain service records</li>
-              <li>Send promotional materials (with your consent)</li>
-              <li>Comply with legal obligations</li>
+              <li><strong>Provide services:</strong> Schedule appointments, navigate to your location, and complete junk removal</li>
+              <li><strong>Communicate:</strong> Send booking confirmations, appointment reminders, and service updates via email or text</li>
+              <li><strong>Estimate pricing:</strong> Analyze photos and descriptions to provide accurate quotes</li>
+              <li><strong>Improve our services:</strong> Understand service patterns and optimize our operations</li>
+              <li><strong>Process payments:</strong> Complete transactions and maintain billing records</li>
+              <li><strong>Promotional materials:</strong> Send offers and updates (only with your consent, and you can opt out anytime)</li>
+              <li><strong>Legal compliance:</strong> Meet regulatory requirements and respond to legal requests</li>
             </ul>
           </section>
 
@@ -46,17 +64,43 @@ export default function PrivacyPolicy() {
               We do not sell your personal information. We may share information with:
             </p>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-              <li>Service providers who assist in our operations</li>
-              <li>Legal authorities when required by law</li>
-              <li>Business partners with your explicit consent</li>
+              <li><strong>Service providers:</strong> Third-party services that help us operate (email delivery, payment processing, analytics)</li>
+              <li><strong>Navigation services:</strong> Your address may be used with mapping services to route our team to your location</li>
+              <li><strong>Donation partners:</strong> When donating items to charities on your behalf (no personal data shared beyond the donation itself)</li>
+              <li><strong>Legal authorities:</strong> When required by law, court order, or to protect our legal rights</li>
+              <li><strong>Business partners:</strong> Only with your explicit consent</li>
             </ul>
           </section>
 
           <section className="mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Data Retention</h2>
+            <p className="text-muted-foreground mb-4">
+              We retain your personal information for as long as necessary to:
+            </p>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+              <li>Provide our services and maintain your booking history</li>
+              <li>Comply with legal, accounting, or reporting requirements</li>
+              <li>Resolve disputes and enforce our agreements</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              Typically, we retain booking records for up to 7 years for tax and legal purposes. You may request deletion 
+              of your data at any time, subject to legal retention requirements.
+            </p>
+          </section>
+
+          <section className="mb-8">
             <h2 className="text-xl font-semibold text-foreground mb-4">Data Security</h2>
-            <p className="text-muted-foreground">
-              We implement appropriate security measures to protect your personal information from unauthorized access, 
-              alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+            <p className="text-muted-foreground mb-4">
+              We implement appropriate security measures to protect your personal information:
+            </p>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+              <li>Encryption of data in transit (HTTPS) and at rest</li>
+              <li>Secure cloud-based storage with access controls</li>
+              <li>Regular security reviews of our systems</li>
+              <li>Limited employee access to personal data on a need-to-know basis</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
             </p>
           </section>
 

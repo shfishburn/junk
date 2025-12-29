@@ -76,12 +76,32 @@ export default function TermsAndConditions() {
           <section className="mb-8">
             <h2 className="text-xl font-semibold text-foreground mb-4">Customer Responsibilities</h2>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-              <li>Ensure clear access to items for removal</li>
+              <li>Provide accurate contact information and physical address for service</li>
+              <li>Ensure clear and safe access to items for removal</li>
               <li>Accurately describe items to be removed when requesting a quote</li>
-              <li>Notify us of any hazardous conditions or materials</li>
-              <li>Secure pets and valuables during service</li>
+              <li>Notify us of any hazardous conditions, materials, or access restrictions</li>
+              <li>Secure pets, valuables, and items not intended for removal during service</li>
               <li>Be present or have an authorized representative present during service</li>
+              <li>Confirm that you have authority to dispose of items at the service address</li>
             </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Information You Provide</h2>
+            <p className="text-muted-foreground mb-4">
+              When booking our services, you agree to provide accurate and complete information including:
+            </p>
+            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+              <li>Your name, phone number, and email address for communication purposes</li>
+              <li>The physical address where service will be performed</li>
+              <li>Description or photos of items to be removed for estimation</li>
+              <li>Any special instructions or access information</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              You represent that the information you provide is accurate, that you are authorized to request service at 
+              the address provided, and that you have the right to dispose of the items being removed. See our 
+              Privacy Policy for details on how we use and protect this information.
+            </p>
           </section>
 
           <section className="mb-8">
