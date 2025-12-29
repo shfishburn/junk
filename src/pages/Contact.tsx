@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks";
+import { trackContactFormSubmit } from "@/lib";
 import { Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { JunkRouletteModal } from "@/components/features";
@@ -83,6 +84,9 @@ const Contact = () => {
       });
 
       if (error) throw error;
+
+      // Track successful submission in GA
+      trackContactFormSubmit(formData.serviceType || undefined);
 
       // Save customer info before clearing form
       setSubmittedCustomer({ name: formData.name, email: formData.email });

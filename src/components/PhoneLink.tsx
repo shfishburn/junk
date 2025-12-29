@@ -1,5 +1,5 @@
 import { Phone } from "lucide-react";
-import { cn, CONTACT_INFO, type PhoneInfo } from "@/lib";
+import { cn, CONTACT_INFO, type PhoneInfo, trackPhoneClick } from "@/lib";
 
 type PhoneType = "primary" | "secondary";
 
@@ -28,9 +28,14 @@ export function PhoneLink({
     lg: "h-6 w-6",
   };
 
+  const handleClick = () => {
+    trackPhoneClick(phoneData.number);
+  };
+
   return (
     <a
       href={`tel:${phoneData.number}`}
+      onClick={handleClick}
       className={cn(
         "hover:text-primary transition-colors",
         showIcon && "inline-flex items-center gap-2",
@@ -59,9 +64,14 @@ export function PhoneButton({
 }: PhoneButtonProps) {
   const phoneData = CONTACT_INFO.phones[phone === "primary" ? 0 : 1];
 
+  const handleClick = () => {
+    trackPhoneClick(phoneData.number);
+  };
+
   return (
     <a
       href={`tel:${phoneData.number}`}
+      onClick={handleClick}
       className={cn(
         "inline-flex items-center justify-center gap-2",
         className

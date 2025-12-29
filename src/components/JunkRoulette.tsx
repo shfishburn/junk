@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { PRIZES, getWeightedRandomPrize, generateDiscountCode, recordSpin, type Prize } from "@/lib";
+import { PRIZES, getWeightedRandomPrize, generateDiscountCode, recordSpin, trackRouletteWin, type Prize } from "@/lib";
 
 interface JunkRouletteProps {
   onComplete: (prize: Prize, code: string) => void;
@@ -112,6 +112,9 @@ export function JunkRoulette({ onComplete }: JunkRouletteProps) {
       recordSpin(prize, code);
       setSelectedPrize(prize);
       setIsSpinning(false);
+      
+      // Track the win in GA
+      trackRouletteWin(prize.label);
       
       // Slight delay for confetti effect
       setTimeout(() => {

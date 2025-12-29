@@ -1,5 +1,5 @@
 import { MessageCircle } from "lucide-react";
-import { cn, CONTACT_INFO } from "@/lib";
+import { cn, CONTACT_INFO, trackTextClick } from "@/lib";
 
 interface TextUsLinkProps {
   phone?: string;
@@ -22,9 +22,14 @@ export function TextUsLink({
     lg: "h-6 w-6",
   };
 
+  const handleClick = () => {
+    trackTextClick(phone);
+  };
+
   return (
     <a
       href={`sms:${phone}`}
+      onClick={handleClick}
       className={cn(
         "hover:text-primary transition-colors",
         showIcon && "inline-flex items-center gap-2",
