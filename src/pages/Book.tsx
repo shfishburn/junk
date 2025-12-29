@@ -61,6 +61,8 @@ export default function Book() {
   const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [isSenior, setIsSenior] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
+  // Honeypot field - invisible to users, but bots will fill it
+  const [honeypot, setHoneypot] = useState("");
   const { toast } = useToast();
   const { refetchBookings } = useBookingSlots();
 
@@ -85,6 +87,13 @@ export default function Book() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bots fill hidden fields)
+    if (honeypot) {
+      // Fake success to not alert the bot
+      setBookingConfirmed(true);
+      return;
+    }
     
     if (!selectedDate || !selectedTime) {
       toast({
@@ -258,6 +267,20 @@ export default function Book() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Honeypot field - hidden from users, bots will fill it */}
+                  <div className="absolute -left-[9999px] opacity-0 h-0 w-0 overflow-hidden" aria-hidden="true">
+                    <label htmlFor="website">Website</label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+                  
                   <FormField
                     id="name"
                     name="name"
