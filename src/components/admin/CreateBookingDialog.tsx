@@ -42,6 +42,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [message, setMessage] = useState('');
   const [source, setSource] = useState<BookingSource>('phone');
   const [status, setStatus] = useState<string>('confirmed');
@@ -54,6 +55,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
     setName('');
     setEmail('');
     setPhone('');
+    setAddress('');
     setMessage('');
     setSource('phone');
     setStatus('confirmed');
@@ -102,6 +104,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
+          address: address.trim() || null,
           booking_date: bookingDate,
           booking_time: selectedTime,
           message: fullMessage || null,
@@ -228,7 +231,7 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
                 required
               />
             </div>
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
               <Input
                 id="phone"
@@ -236,6 +239,15 @@ export default function CreateBookingDialog({ onBookingCreated, trigger }: Creat
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(360) 555-1234"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="address">Pickup Address</Label>
+              <Input
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="123 Main St, Mount Vernon, WA"
               />
             </div>
           </div>
