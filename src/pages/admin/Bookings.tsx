@@ -16,11 +16,13 @@ interface Booking {
   name: string;
   email: string;
   phone: string | null;
+  address: string | null;
   booking_date: string;
   booking_time: string;
   status: string;
   message: string | null;
   created_at: string;
+  source?: string;
 }
 
 export default function AdminBookings() {

@@ -26,6 +26,7 @@ interface Booking {
   name: string;
   email: string;
   phone: string | null;
+  address: string | null;
   booking_date: string;
   booking_time: string;
   status: string;
@@ -111,6 +112,11 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete, onBoo
                   </TableCell>
                   <TableCell>
                     <div className="font-medium">{booking.name}</div>
+                    {booking.address && (
+                      <div className="text-sm text-muted-foreground truncate max-w-[200px]">
+                        {booking.address}
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-col gap-1">

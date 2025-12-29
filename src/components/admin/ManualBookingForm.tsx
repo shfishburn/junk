@@ -80,18 +80,8 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
     try {
       const bookingDate = format(selectedDate, 'yyyy-MM-dd');
       
-      // Build message with address and discount info
-      let fullMessage = '';
-      
-      // Add address to message
-      if (address.trim()) {
-        fullMessage += `Address: ${address.trim()}\n\n`;
-      }
-      
-      // Add notes
-      if (message.trim()) {
-        fullMessage += message.trim();
-      }
+      // Build message with discount info
+      let fullMessage = message.trim();
       
       // Add discount info
       if (isSeniorVeteran) {
@@ -107,6 +97,7 @@ export default function ManualBookingForm({ onBookingCreated }: ManualBookingFor
           name: name.trim(),
           email: email.trim().toLowerCase(),
           phone: phone.trim() || null,
+          address: address.trim() || null,
           booking_date: bookingDate,
           booking_time: selectedTime,
           message: fullMessage || null,
