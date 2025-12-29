@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { isCategoryConsented, type CookiePreferences } from "@/lib";
 
-const GA_MEASUREMENT_ID = 'G-Y7VZGP6Y8G';
-
 declare global {
   interface Window {
     dataLayer: unknown[];
@@ -10,57 +8,31 @@ declare global {
   }
 }
 
-function injectGAScript(measurementId: string): void {
-  if (!measurementId || document.getElementById('ga-script')) return;
-
-  // Create and inject the GA script
-  const script = document.createElement('script');
-  script.id = 'ga-script';
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-  document.head.appendChild(script);
-
-  // Initialize dataLayer and gtag
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer.push(args);
-  };
-
-  window.gtag('js', new Date());
-  window.gtag('config', measurementId, {
-    anonymize_ip: true,
-  });
-}
-
-function updateGAConsent(granted: boolean): void {
-  if (!window.gtag) return;
+function updateGAConsent(analyticsGranted: boolean, marketingGranted: boolean): void {
+  if (typeof window.gtag !== 'function') return;
   
   window.gtag('consent', 'update', {
-    analytics_storage: granted ? 'granted' : 'denied',
+    'analytics_storage': analyticsGranted ? 'granted' : 'denied',
+    'ad_storage': marketingGranted ? 'granted' : 'denied',
+    'ad_user_data': marketingGranted ? 'granted' : 'denied',
+    'ad_personalization': marketingGranted ? 'granted' : 'denied',
   });
 }
 
 export function useGoogleAnalytics(): void {
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID) return;
-
-    // Check initial consent
+    // Check if user has already consented and update GA
     const hasAnalyticsConsent = isCategoryConsented('analytics');
+    const hasMarketingConsent = isCategoryConsented('marketing');
     
-    if (hasAnalyticsConsent) {
-      injectGAScript(GA_MEASUREMENT_ID);
+    if (hasAnalyticsConsent || hasMarketingConsent) {
+      updateGAConsent(hasAnalyticsConsent, hasMarketingConsent);
     }
 
     // Listen for consent changes
     const handleConsentChange = (event: CustomEvent<CookiePreferences>) => {
-      const { analytics } = event.detail;
-      
-      if (analytics) {
-        injectGAScript(GA_MEASUREMENT_ID);
-        updateGAConsent(true);
-      } else {
-        updateGAConsent(false);
-      }
+      const { analytics, marketing } = event.detail;
+      updateGAConsent(analytics, marketing);
     };
 
     window.addEventListener('cookieConsentChanged', handleConsentChange as EventListener);
