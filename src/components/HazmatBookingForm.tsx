@@ -64,6 +64,8 @@ export function HazmatBookingForm() {
   const [hazmatItems, setHazmatItems] = useState<HazmatItem[]>(
     HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 }))
   );
+  // Honeypot field - invisible to users, but bots will fill it
+  const [honeypot, setHoneypot] = useState("");
   const { toast } = useToast();
 
   const handleItemToggle = (itemId: string) => {
@@ -98,6 +100,15 @@ export function HazmatBookingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bots fill hidden fields)
+    if (honeypot) {
+      toast({
+        title: "Hazmat pickup request received!",
+        description: "We'll contact you shortly to confirm your pickup.",
+      });
+      return;
+    }
     
     const selectedItems = hazmatItems.filter(item => item.selected);
     if (selectedItems.length === 0) {
@@ -194,6 +205,20 @@ export function HazmatBookingForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Honeypot field - hidden from users, bots will fill it */}
+        <div className="absolute -left-[9999px] opacity-0 h-0 w-0 overflow-hidden" aria-hidden="true">
+          <label htmlFor="company">Company</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+        
         {/* Item Checklist */}
         <div>
           <Label className="text-base font-semibold mb-3 block">
