@@ -508,8 +508,14 @@ const handler = async (req: Request): Promise<Response> => {
                 
                 <h2 style="color: #374151;">Customer Information</h2>
                 <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+                <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #16a34a;">${email}</a></p>
+                <p style="margin-bottom: 12px;"><strong>Phone:</strong> ${phone || "Not provided"}</p>
+                ${validatedData.phone ? `
+                  <p style="margin: 0;">
+                    <a href="tel:${validatedData.phone}" style="display: inline-block; background: #2563eb; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">📞 Call Customer</a>
+                    <a href="sms:${validatedData.phone}" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">💬 Text Customer</a>
+                  </p>
+                ` : ''}
                 
                 ${photosHtml}
                 
