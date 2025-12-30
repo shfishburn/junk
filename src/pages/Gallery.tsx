@@ -13,8 +13,10 @@ import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
 import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 import hazmatImg from "@/assets/service-hazmat.jpg";
-import heroImg from "@/assets/hero-junk.jpg";
 import truckImg from "@/assets/old-reliable-truck.jpg";
+import teamGroup1 from "@/assets/team-group-1.jpg";
+import teamOwner from "@/assets/team-owner.jpg";
+import teamGroup2 from "@/assets/team-group-2.jpg";
 
 interface GalleryImage {
   src: string;
@@ -23,7 +25,9 @@ interface GalleryImage {
 }
 
 const galleryImages: GalleryImage[] = [
-  { src: heroImg, alt: "Junky Gurus team at work", category: "Team" },
+  { src: teamGroup1, alt: "The Junky Gurus crew with our truck", category: "Team" },
+  { src: teamOwner, alt: "Owner ready for work", category: "Team" },
+  { src: teamGroup2, alt: "Team after a successful job", category: "Team" },
   { src: truckImg, alt: "Our reliable junk removal truck", category: "Equipment" },
   { src: residentialImg, alt: "Residential junk removal in action", category: "Residential" },
   { src: appliancesImg, alt: "Appliance removal service", category: "Appliances" },
