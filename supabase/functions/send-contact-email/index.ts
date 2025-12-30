@@ -82,6 +82,7 @@ const contactSchema = z.object({
   preferredAppointment: z.string().max(100, "Preferred appointment must be less than 100 characters").optional().nullable(),
   isBooking: z.boolean().optional().default(false),
   isCancellation: z.boolean().optional().default(false),
+  isCompletion: z.boolean().optional().default(false),
   bookingDate: z.string().max(50, "Booking date must be less than 50 characters").optional().nullable(),
   bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
   isHazmatRequest: z.boolean().optional().default(false),
@@ -233,6 +234,7 @@ const handler = async (req: Request): Promise<Response> => {
     const preferredAppointment = sanitizeHtml(validatedData.preferredAppointment);
     const isBooking = validatedData.isBooking;
     const isCancellation = validatedData.isCancellation;
+    const isCompletion = validatedData.isCompletion;
     const bookingDate = sanitizeHtml(validatedData.bookingDate);
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
@@ -243,7 +245,8 @@ const handler = async (req: Request): Promise<Response> => {
       email, 
       phone: validatedData.phone, 
       isBooking,
-      isCancellation, 
+      isCancellation,
+      isCompletion, 
       bookingDate: validatedData.bookingDate, 
       bookingTime: validatedData.bookingTime, 
       isHazmatRequest,
@@ -398,6 +401,47 @@ const handler = async (req: Request): Promise<Response> => {
         });
 
         console.log("Customer cancellation email sent:", customerEmail);
+      } else if (isCompletion) {
+        // Handle completion emails
+        const customerEmail = await resend.emails.send({
+          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          to: [email],
+          subject: "Thanks for Choosing Junky Gurus! 🎉",
+          html: `
+            ${emailHeader()}
+              <h1 style="color: #16a34a; margin-top: 0;">Job Complete! 🎉</h1>
+              <p>Hey ${name}, thanks for letting us haul your junk!</p>
+              
+              <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+                <h2 style="margin-top: 0; color: #166534;">✅ Completed Appointment</h2>
+                <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
+                <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+              </div>
+              
+              <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f59e0b;">
+                <h2 style="margin-top: 0; color: #92400e;">⭐ Love Our Service?</h2>
+                <p>We'd be thrilled if you could share your experience! Your reviews help other folks find us.</p>
+                <p style="margin-bottom: 0;">
+                  <a href="https://g.page/r/CdqCw3DZwCCLEAE/review" style="display: inline-block; background: #16a34a; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;">Leave a Google Review</a>
+                </p>
+              </div>
+              
+              <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h2 style="margin-top: 0;">Got More Junk?</h2>
+                <p>We're always here when you need us! Book your next pickup:</p>
+                <ul>
+                  <li>Online at <a href="https://thejunkygurus.com/book" style="color: #16a34a;">thejunkygurus.com/book</a></li>
+                  <li>Call us at <strong>(360) 610-9233</strong></li>
+                  <li>Text us at <strong>(360) 610-9233</strong></li>
+                </ul>
+              </div>
+              
+              <p>Thanks again for being awesome! 🙌</p>
+            ${emailFooter()}
+          `,
+        });
+
+        console.log("Customer completion email sent:", customerEmail);
       } else {
         // Only send admin notification if not skipped (e.g., admin-created bookings skip this)
         if (!skipAdminNotification) {
