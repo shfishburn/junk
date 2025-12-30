@@ -13,6 +13,7 @@ import { Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { JunkRouletteModal } from "@/components/features";
 import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
+import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "@/components/AddressInput";
 
 const SERVICE_TYPES = [
   { value: "residential", label: "Residential Junk Removal" },
@@ -43,6 +44,7 @@ const Contact = () => {
   const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -77,9 +79,12 @@ const Contact = () => {
 
       const serviceLabel = SERVICE_TYPES.find(s => s.value === formData.serviceType)?.label;
 
+      const formattedAddress = formatAddressForStorage(address);
+      
       const { error } = await supabase.functions.invoke("send-contact-email", {
         body: {
           ...formData,
+          address: formattedAddress,
           serviceType: serviceLabel || formData.serviceType,
           preferredAppointment: appointmentInfo,
           photoUrls: photoUrls,
@@ -101,6 +106,7 @@ const Contact = () => {
       setPreferredDate(undefined);
       setPreferredTime("");
       setPhotoUrls([]);
+      setAddress(getEmptyAddress());
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
@@ -228,6 +234,12 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="(360) 555-0000"
+                  />
+
+                  {/* Address */}
+                  <AddressInput
+                    value={address}
+                    onChange={setAddress}
                   />
 
                   <div>
