@@ -159,7 +159,60 @@ export function SEO({
         }
       ]
     },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Sarah M."
+        },
+        "datePublished": "2024-11-15",
+        "reviewBody": "These guys were amazing! They cleared out my entire garage in under 2 hours. Professional, friendly, and way more affordable than I expected.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Mike T."
+        },
+        "datePublished": "2024-10-22",
+        "reviewBody": "Called in the morning, they were at my house by noon. The old hot tub that's been haunting my backyard for 3 years is finally gone. Highly recommend!",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Linda K."
+        },
+        "datePublished": "2024-09-30",
+        "reviewBody": "Estate cleanout after my mom passed was overwhelming. The Junky Gurus team was respectful, efficient, and made a hard situation so much easier.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      }
+    ],
     "sameAs": [
+      "https://www.facebook.com/JunkyGurus",
+      "https://www.instagram.com/junkygurus/",
       `${SITE_URL}/llms.txt`,
       `${SITE_URL}/llms.json`
     ],
@@ -184,7 +237,7 @@ export function SEO({
     }
   };
 
-  // Organization Schema
+  // Organization Schema with social profiles
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -192,16 +245,20 @@ export function SEO({
     "name": "Junky Gurus LLC",
     "url": SITE_URL,
     "logo": `${SITE_URL}/favicon.png`,
+    "sameAs": [
+      "https://www.facebook.com/JunkyGurus",
+      "https://www.instagram.com/junkygurus/"
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": PHONE,
       "contactType": "customer service",
       "areaServed": "US",
-      "availableLanguage": "English"
+      "availableLanguage": ["English", "Spanish"]
     }
   };
 
-  // Website Schema
+  // Website Schema with SearchAction for sitelinks searchbox
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -211,8 +268,28 @@ export function SEO({
     "description": DEFAULT_DESCRIPTION,
     "publisher": {
       "@id": `${SITE_URL}/#organization`
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${SITE_URL}/services?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
     }
   };
+
+  // Speakable schema for voice search optimization
+  const speakableSchema = url === "/" ? {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": fullTitle,
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": ["#hero h1", "#hero p", "#how-it-works h2"]
+    },
+    "url": SITE_URL
+  } : null;
 
   // BreadcrumbList Schema - supports custom multi-level breadcrumbs
   const generateBreadcrumbSchema = () => {
@@ -337,6 +414,13 @@ export function SEO({
       {breadcrumbSchema && (
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
+
+      {/* Structured Data - Speakable (homepage only) */}
+      {speakableSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(speakableSchema)}
         </script>
       )}
     </Helmet>
