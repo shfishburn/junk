@@ -88,6 +88,7 @@ const contactSchema = z.object({
   isHazmatRequest: z.boolean().optional().default(false),
   serviceType: z.string().max(50, "Service type must be less than 50 characters").optional().nullable(),
   skipAdminNotification: z.boolean().optional().default(false),
+  photoUrls: z.array(z.string().url()).max(10).optional(),
 });
 
 // HTML sanitization function to prevent XSS in email templates
@@ -239,6 +240,7 @@ const handler = async (req: Request): Promise<Response> => {
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
     const skipAdminNotification = validatedData.skipAdminNotification;
+    const photoUrls = validatedData.photoUrls || [];
 
     console.log("Validated submission:", { 
       name: validatedData.name, 
@@ -445,10 +447,24 @@ const handler = async (req: Request): Promise<Response> => {
       } else {
         // Only send admin notification if not skipped (e.g., admin-created bookings skip this)
         if (!skipAdminNotification) {
+          // Build photos HTML for email
+          const photosHtml = photoUrls.length > 0 ? `
+            <div style="margin: 20px 0;">
+              <h2 style="color: #374151;">📷 Customer Photos</h2>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                ${photoUrls.map((url, i) => `
+                  <a href="${url}" target="_blank" style="display: block;">
+                    <img src="${url}" alt="Photo ${i + 1}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;" />
+                  </a>
+                `).join('')}
+              </div>
+            </div>
+          ` : '';
+
           const businessEmail = await resend.emails.send({
             from: "Junky Gurus <bookings@thejunkygurus.com>",
             to: [adminEmail],
-            subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
+            subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}${photoUrls.length > 0 ? ' 📷' : ''}`,
             html: `
               ${emailHeader()}
                 <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
@@ -463,6 +479,8 @@ const handler = async (req: Request): Promise<Response> => {
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
                 <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+                
+                ${photosHtml}
                 
                 ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
               ${emailFooter()}
