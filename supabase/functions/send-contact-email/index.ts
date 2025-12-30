@@ -321,9 +321,15 @@ const handler = async (req: Request): Promise<Response> => {
             <h2 style="color: #374151;">👤 Customer Information</h2>
             <table style="width: 100%; border-collapse: collapse;">
               <tr><td style="padding: 8px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
-              <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td><a href="tel:${validatedData.phone || ''}">${phone || 'Not provided'}</a></td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}" style="color: #16a34a;">${email}</a></td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td>${phone || 'Not provided'}</td></tr>
             </table>
+            ${validatedData.phone ? `
+              <p style="margin: 12px 0 0 0;">
+                <a href="tel:${validatedData.phone}" style="display: inline-block; background: #2563eb; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">📞 Call Customer</a>
+                <a href="sms:${validatedData.phone}" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">💬 Text Customer</a>
+              </p>
+            ` : ''}
             
             ${hazmatPhotosHtml}
             
