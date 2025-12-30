@@ -31,6 +31,7 @@ import {
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { BookingSlotPicker } from "@/components/shared";
 import { BookingPhotoUpload } from "./BookingPhotoUpload";
+import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "./AddressInput";
 
 const translations = {
   en: {
@@ -228,6 +229,7 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [bookingPhotoUrls, setBookingPhotoUrls] = useState<string[]>([]);
+  const [addressData, setAddressData] = useState<AddressData>(getEmptyAddress());
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -388,6 +390,7 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
     setSelectedDate(undefined);
     setSelectedTime("");
     setBookingPhotoUrls([]);
+    setAddressData(getEmptyAddress());
     setFormData({ name: "", email: "", phone: "", notes: "" });
   };
 
@@ -436,10 +439,12 @@ ${result.structures.map(s => `- ${s.name} (${s.material}, ${s.condition}): ${s.e
 Customer Notes: ${formData.notes || "None"}` : formData.notes;
 
       // Create booking record in database
+      const formattedAddress = formatAddressForStorage(addressData);
       const { error: bookingError } = await supabase.from("bookings").insert({
         name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
+        address: formattedAddress || null,
         message: estimateDetails,
         booking_date: format(selectedDate, "yyyy-MM-dd"),
         booking_time: selectedTime,
@@ -467,6 +472,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           name: formData.name,
           email: formData.email,
           phone: formData.phone || "",
+          address: formattedAddress || undefined,
           message: estimateDetails,
           isBooking: true,
           bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined }),
@@ -702,6 +708,16 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                     className="mt-1"
                   />
                 </div>
+                
+                {/* Address Input */}
+                <div className="mt-4 border-t border-border pt-4">
+                  <AddressInput
+                    value={addressData}
+                    onChange={setAddressData}
+                    required
+                  />
+                </div>
+                
                 <div className="mt-4">
                   <Label htmlFor="notes">{t.anythingElse}</Label>
                   <Textarea
@@ -709,7 +725,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                     name="notes"
                     value={formData.notes}
                     onChange={handleFormChange}
-                    placeholder={t.addressPlaceholder}
+                    placeholder="Access info, special instructions, etc."
                     className="mt-1 min-h-[80px]"
                   />
                 </div>
