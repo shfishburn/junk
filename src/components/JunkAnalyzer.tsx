@@ -30,6 +30,7 @@ import {
 import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "@/components/shared";
+import { BookingPhotoUpload } from "./BookingPhotoUpload";
 
 const translations = {
   en: {
@@ -213,6 +214,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
+  const [bookingPhotoUrls, setBookingPhotoUrls] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -395,6 +397,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
     setRequestSubmitted(false);
     setSelectedDate(undefined);
     setSelectedTime("");
+    setBookingPhotoUrls([]);
     setFormData({ name: "", email: "", phone: "", notes: "" });
   };
 
@@ -482,6 +485,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           isBooking: true,
           bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy", { locale: isSpanish ? es : undefined }),
           bookingTime: selectedTime,
+          photoUrls: bookingPhotoUrls.length > 0 ? bookingPhotoUrls : undefined,
         },
       });
 
@@ -689,6 +693,14 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                     onChange={handleFormChange}
                     placeholder={t.addressPlaceholder}
                     className="mt-1 min-h-[80px]"
+                  />
+                </div>
+                
+                {/* Photo Upload */}
+                <div className="mt-4">
+                  <BookingPhotoUpload
+                    onPhotosChange={setBookingPhotoUrls}
+                    maxPhotos={10}
                   />
                 </div>
               </div>
