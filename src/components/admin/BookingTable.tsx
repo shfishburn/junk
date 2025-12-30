@@ -85,7 +85,7 @@ export default function BookingTable({ bookings, onStatusUpdate, onDelete, onSen
 
   return (
     <TooltipProvider>
-      <div className="rounded-md border overflow-x-auto">
+      <div className="rounded-md border overflow-x-auto overflow-y-visible">
         <Table>
           <TableHeader>
             <TableRow>
