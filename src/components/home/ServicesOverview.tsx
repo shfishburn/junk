@@ -28,6 +28,7 @@ const services = [
     title: "Yard Waste & Debris",
     description: "Mother Nature's mess, met by our muscle.",
     image: yardWasteImg,
+    objectPosition: "bottom",
   },
   {
     title: "Garage & Estate Cleanouts",
@@ -100,6 +101,7 @@ export function ServicesOverview() {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    style={service.objectPosition ? { objectPosition: service.objectPosition } : undefined}
                   />
                 </div>
                 <div className="p-5">
