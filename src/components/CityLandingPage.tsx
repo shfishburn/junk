@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, CheckCircle, Truck, Clock, Shield, Recycle, Star } from "lucide-react";
 import { useScrollAnimation } from "@/hooks";
+import { Helmet } from "react-helmet-async";
 
 export interface CityData {
   name: string;
@@ -82,11 +83,15 @@ export function CityLandingPage({ city }: { city: CityData }) {
         description={`Professional junk removal in ${city.name}, ${city.county}. Same-day service, upfront pricing, eco-friendly disposal. Call (360) 610-9233 for a free quote.`}
         keywords={`junk removal ${city.name}, ${city.name} WA hauling, furniture removal ${city.name}, appliance removal ${city.name}, yard waste ${city.name}, ${city.county} junk removal`}
         url={`/junk-removal-${city.slug}-wa`}
+        pageType="local-landing"
+        pagePurpose={`Local junk removal services page for ${city.name}, WA. Covers neighborhoods, landmarks, and service offerings specific to ${city.county}.`}
         breadcrumbs={breadcrumbItems}
       />
-      
-      {/* Inject structured data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
 
       {/* Hero */}
       <section className="py-16 md:py-24 bg-section-alt">

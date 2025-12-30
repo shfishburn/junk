@@ -74,6 +74,8 @@ const About = () => {
         description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA. We believe in hard work, honest pricing, and responsible disposal. 15% discount for seniors and veterans."
         keywords="about junky gurus, Mount Vernon junk removal, local junk removal company, responsible disposal, senior discount, veteran discount"
         url="/about"
+        pageType="about"
+        pagePurpose="Company history, team values, environmental responsibility, and community commitment. Learn about our eco-friendly disposal practices and senior/veteran discounts."
       />
       {/* Hero */}
       <section className="py-12 md:py-20 bg-section-alt">
