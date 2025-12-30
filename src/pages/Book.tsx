@@ -166,6 +166,7 @@ export default function Book() {
           isBooking: true,
           bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
           bookingTime: selectedTime,
+          address: formattedAddress || undefined,
           photoUrls: photoUrls.length > 0 ? photoUrls : undefined,
         },
       });

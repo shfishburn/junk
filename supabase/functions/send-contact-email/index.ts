@@ -241,6 +241,7 @@ const handler = async (req: Request): Promise<Response> => {
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
     const skipAdminNotification = validatedData.skipAdminNotification;
+    const pickupAddress = sanitizeHtml(validatedData.address);
     const photoUrls = validatedData.photoUrls || [];
 
     console.log("Validated submission:", { 
@@ -490,6 +491,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
                   <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
                   <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+                  ${pickupAddress ? `<p style="font-size: 18px; margin: 8px 0 0 0;"><strong>📍 Address:</strong> ${pickupAddress}</p>` : ''}
                 </div>
                 
                 <h2 style="color: #374151;">Customer Information</h2>
@@ -522,6 +524,7 @@ const handler = async (req: Request): Promise<Response> => {
                 <h2 style="margin-top: 0; color: #166534;">📅 Your Appointment</h2>
                 <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
                 <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+                ${pickupAddress ? `<p style="font-size: 18px; margin: 8px 0 0 0;"><strong>📍 Address:</strong> ${pickupAddress}</p>` : ''}
               </div>
               
               <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
