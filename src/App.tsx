@@ -21,6 +21,7 @@ import {
   NotFound,
   Espanol,
   Discounts,
+  Gallery,
   AdminLogin,
   AdminDashboard,
   AdminBookings,
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/service-area" element={<ServiceArea />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/ai-estimator" element={<AIEstimator />} />
           <Route path="/referrals" element={<Referrals />} />

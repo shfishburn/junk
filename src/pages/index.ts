@@ -9,6 +9,7 @@ export { default as Book } from "./Book";
 export { default as Contact } from "./Contact";
 export { default as FAQ } from "./FAQ";
 export { default as ServiceArea } from "./ServiceArea";
+export { default as Gallery } from "./Gallery";
 
 // Feature Pages
 export { default as AIEstimator } from "./AIEstimator";
