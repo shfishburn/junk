@@ -12,6 +12,7 @@ import { trackContactFormSubmit } from "@/lib";
 import { Loader2, Sparkles, Camera } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { JunkRouletteModal } from "@/components/features";
+import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
 
 const SERVICE_TYPES = [
   { value: "residential", label: "Residential Junk Removal" },
@@ -41,6 +42,7 @@ const Contact = () => {
   const [showRoulette, setShowRoulette] = useState(false);
   const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -80,6 +82,7 @@ const Contact = () => {
           ...formData,
           serviceType: serviceLabel || formData.serviceType,
           preferredAppointment: appointmentInfo,
+          photoUrls: photoUrls,
         },
       });
 
@@ -97,6 +100,7 @@ const Contact = () => {
       setFormData({ name: "", email: "", phone: "", serviceType: "", message: "" });
       setPreferredDate(undefined);
       setPreferredTime("");
+      setPhotoUrls([]);
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
@@ -264,6 +268,9 @@ const Contact = () => {
                     error={errors.message}
                     rows={4}
                   />
+
+                  {/* Photo Upload */}
+                  <BookingPhotoUpload onPhotosChange={setPhotoUrls} maxPhotos={10} />
 
                   <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? (
