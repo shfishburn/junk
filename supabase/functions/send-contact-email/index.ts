@@ -87,6 +87,7 @@ const contactSchema = z.object({
   bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
   isHazmatRequest: z.boolean().optional().default(false),
   serviceType: z.string().max(50, "Service type must be less than 50 characters").optional().nullable(),
+  address: z.string().max(500, "Address must be less than 500 characters").optional().nullable(),
   skipAdminNotification: z.boolean().optional().default(false),
   photoUrls: z.array(z.string().url()).max(10).optional(),
 });
@@ -571,6 +572,7 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>Name:</strong> ${name}</p>
               <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
               <p><strong>Phone:</strong> ${phone ? `<a href="tel:${validatedData.phone}">${phone}</a>` : "Not provided"}</p>
+              ${validatedData.address ? `<p><strong>Address:</strong> ${sanitizeHtml(validatedData.address)}</p>` : ""}
               ${preferredAppointment ? `<p><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
             </div>
             
