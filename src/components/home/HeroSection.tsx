@@ -75,24 +75,24 @@ export function HeroSection() {
             motivation to use it.
           </p>
           <div
-            className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in"
+            className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center items-center animate-fade-in px-4 sm:px-0"
             style={{
               animationDelay: "0.2s",
             }}
           >
-            <Button asChild size="lg" className="text-base shadow-lg hover:shadow-xl">
+            <Button asChild size="lg" className="w-full sm:w-auto text-base shadow-lg hover:shadow-xl min-h-[48px]">
               <Link to="/book">
                 Book Pickup
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="invert" className="text-base">
+            <Button asChild size="lg" variant="invert" className="w-full sm:w-auto text-base min-h-[48px]">
               <Link to="/ai-estimator">
                 <Sparkles className="mr-2 h-4 w-4" />
                 Know Your Price First
               </Link>
             </Button>
-            <Button asChild variant="hero" size="lg" className="text-base">
+            <Button asChild variant="hero" size="lg" className="w-full sm:w-auto text-base min-h-[48px]">
               <a href="tel:+13606109233">
                 <Phone className="mr-2 h-4 w-4" />
                 (360) 610-9233

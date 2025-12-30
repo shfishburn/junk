@@ -317,11 +317,12 @@ export function Header({ announcementVisible = false }: HeaderProps) {
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
           style={{
-            height: isScrolled ? 'calc(100vh - var(--header-height-collapsed))' : 'calc(100vh - var(--header-height-expanded))'
+            height: isScrolled ? 'calc(100vh - var(--header-height-collapsed))' : 'calc(100vh - var(--header-height-expanded))',
+            paddingBottom: 'env(safe-area-inset-bottom, 20px)'
           }}
           aria-label="Mobile navigation"
         >
-          <div className="p-6 flex flex-col gap-1">
+          <div className="p-6 pb-8 flex flex-col gap-1">
             {/* Main Links */}
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
               Navigation
@@ -332,10 +333,10 @@ export function Header({ announcementVisible = false }: HeaderProps) {
                 to={link.href}
                 onClick={closeMenu}
                 className={cn(
-                  "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                  "py-3 px-4 text-base font-medium rounded-lg transition-colors min-h-[48px] flex items-center",
                   location.pathname === link.href
                     ? "text-primary bg-primary/10"
-                    : "text-foreground hover:bg-muted"
+                    : "text-foreground hover:bg-muted active:bg-muted/80"
                 )}
               >
                 {link.label}
@@ -345,10 +346,10 @@ export function Header({ announcementVisible = false }: HeaderProps) {
               to="/contact"
               onClick={closeMenu}
               className={cn(
-                "py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                "py-3 px-4 text-base font-medium rounded-lg transition-colors min-h-[48px] flex items-center",
                 location.pathname === "/contact"
                   ? "text-primary bg-primary/10"
-                  : "text-foreground hover:bg-muted"
+                  : "text-foreground hover:bg-muted active:bg-muted/80"
               )}
             >
               Contact
@@ -363,7 +364,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
                 key={link.href}
                 to={link.href}
                 onClick={closeMenu}
-                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted rounded-lg transition-colors flex items-center gap-2"
+                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted active:bg-muted/80 rounded-lg transition-colors flex items-center gap-2 min-h-[48px]"
               >
                 {link.icon && <link.icon className="h-4 w-4 text-primary" />}
                 {link.label}
@@ -379,7 +380,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
                 key={link.href}
                 to={link.href}
                 onClick={closeMenu}
-                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
+                className="py-3 px-4 text-base font-medium text-foreground hover:bg-muted active:bg-muted/80 rounded-lg transition-colors min-h-[48px] flex items-center"
               >
                 {link.label}
               </Link>
@@ -410,12 +411,12 @@ export function Header({ announcementVisible = false }: HeaderProps) {
             <div className="mt-6 pt-6 border-t border-border space-y-3">
               <a
                 href="tel:+13606109233"
-                className="flex items-center justify-center gap-2 py-3 px-4 text-base font-medium text-foreground bg-muted rounded-lg"
+                className="flex items-center justify-center gap-2 py-3 px-4 text-base font-medium text-foreground bg-muted rounded-lg min-h-[52px] active:bg-muted/80 transition-colors"
               >
                 <Phone className="h-4 w-4" />
                 (360) 610-9233
               </a>
-              <Button asChild className="w-full" size="lg">
+              <Button asChild className="w-full min-h-[52px]" size="lg">
                 <Link to="/book" onClick={closeMenu}>
                   <CalendarDays className="h-4 w-4 mr-2" />
                   Book Now

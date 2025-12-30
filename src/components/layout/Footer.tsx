@@ -55,28 +55,28 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-12 pt-6 border-t border-border flex flex-col items-center gap-4">
+          <p className="text-sm text-muted-foreground text-center">
             © {new Date().getFullYear()} Junky Gurus. All rights reserved.
           </p>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <Link to="/privacy-policy" className="hover:text-primary transition-colors link-hover-underline inline-block">
+          <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors link-hover-underline inline-block py-1 min-h-[44px] flex items-center">
               Privacy Policy
             </Link>
-            <span className="text-border">|</span>
-            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors link-hover-underline inline-block">
+            <span className="text-border hidden sm:inline">|</span>
+            <Link to="/terms-and-conditions" className="hover:text-primary transition-colors link-hover-underline inline-block py-1 min-h-[44px] flex items-center">
               Terms & Conditions
             </Link>
-            <span className="text-border">|</span>
+            <span className="text-border hidden sm:inline">|</span>
             <button
               onClick={openCookiePreferences}
-              className="hover:text-primary transition-colors inline-flex items-center gap-1"
+              className="hover:text-primary transition-colors inline-flex items-center gap-1 py-1 min-h-[44px]"
             >
               <Cookie className="h-3 w-3" />
               Cookie Settings
             </button>
-            <span className="text-border">|</span>
-            <Link to="/admin" className="hover:text-primary transition-colors link-hover-underline inline-block">
+            <span className="text-border hidden sm:inline">|</span>
+            <Link to="/admin" className="hover:text-primary transition-colors link-hover-underline inline-block py-1 min-h-[44px] flex items-center">
               Admin
             </Link>
           </div>
