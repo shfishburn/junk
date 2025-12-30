@@ -491,7 +491,12 @@ const handler = async (req: Request): Promise<Response> => {
                   <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
                   <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
                   <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
-                  ${pickupAddress ? `<p style="font-size: 18px; margin: 8px 0 0 0;"><strong>📍 Address:</strong> ${pickupAddress}</p>` : ''}
+                  ${pickupAddress ? `
+                    <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>📍 Address:</strong> ${pickupAddress}</p>
+                    <p style="margin: 12px 0 0 0;">
+                      <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(validatedData.address || '')}" target="_blank" style="display: inline-block; background: #16a34a; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">🧭 Get Directions</a>
+                    </p>
+                  ` : ''}
                 </div>
                 
                 <h2 style="color: #374151;">Customer Information</h2>
