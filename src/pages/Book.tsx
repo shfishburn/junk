@@ -12,6 +12,7 @@ import { SEO, Breadcrumbs, FormField, TextareaField, BookingSlotPicker } from "@
 import { User, CheckCircle2, Loader2, Heart } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "@/components/AddressInput";
+import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
 
 // Zod schema for booking form validation
 const bookingSchema = z.object({
@@ -61,6 +62,7 @@ export default function Book() {
   const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [isSenior, setIsSenior] = useState(false);
   const [isVeteran, setIsVeteran] = useState(false);
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   // Honeypot field - invisible to users, but bots will fill it
   const [honeypot, setHoneypot] = useState("");
   const { toast } = useToast();
@@ -164,6 +166,7 @@ export default function Book() {
           isBooking: true,
           bookingDate: format(selectedDate, "EEEE, MMMM d, yyyy"),
           bookingTime: selectedTime,
+          photoUrls: photoUrls.length > 0 ? photoUrls : undefined,
         },
       });
 
@@ -347,6 +350,14 @@ export default function Book() {
                     maxLength={1000}
                     error={formErrors.message}
                   />
+
+                  {/* Photo Upload */}
+                  <div className="pt-2">
+                    <BookingPhotoUpload
+                      onPhotosChange={setPhotoUrls}
+                      maxPhotos={10}
+                    />
+                  </div>
 
                   {/* Senior/Veteran Discount Checkboxes */}
                   <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
