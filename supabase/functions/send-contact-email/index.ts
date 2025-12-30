@@ -543,11 +543,25 @@ const handler = async (req: Request): Promise<Response> => {
     } else {
       const sanitizedMessage = sanitizeHtml(message);
       
+      // Build photos HTML for contact form email
+      const contactPhotosHtml = photoUrls.length > 0 ? `
+        <div style="margin: 20px 0;">
+          <h2 style="color: #374151;">📷 Customer Photos</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            ${photoUrls.map((url, i) => `
+              <a href="${url}" target="_blank" style="display: block;">
+                <img src="${url}" alt="Photo ${i + 1}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;" />
+              </a>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
       // Standard contact form emails
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [adminEmail],
-        subject: `New Quote Request from ${validatedData.name}`,
+        subject: `New Quote Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">New Quote Request</h1>
@@ -564,6 +578,8 @@ const handler = async (req: Request): Promise<Response> => {
             <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
               <p style="margin: 0;">${sanitizedMessage}</p>
             </div>
+            
+            ${contactPhotosHtml}
           ${emailFooter()}
         `,
       });
