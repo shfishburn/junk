@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks";
 import { DateTimePicker, FormField, TextareaField } from "@/components/shared";
+import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
 import { supabase } from "@/integrations/supabase/client";
 import { cn, trackHazmatRequest } from "@/lib";
 import { 
@@ -66,6 +67,7 @@ export function HazmatBookingForm() {
   );
   // Honeypot field - invisible to users, but bots will fill it
   const [honeypot, setHoneypot] = useState("");
+  const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const { toast } = useToast();
 
   const handleItemToggle = (itemId: string) => {
@@ -140,7 +142,10 @@ export function HazmatBookingForm() {
         : null;
 
       const itemsSummary = getSelectedItemsSummary();
-      const message = `HAZMAT PICKUP REQUEST\n\nPickup Address: ${validation.data.address}\n\nMaterials:\n${itemsSummary}\n\nAdditional Notes: ${validation.data.notes || "None"}`;
+      const photosSection = photoUrls.length > 0 
+        ? `\n\nPhotos: ${photoUrls.length} photo(s) attached\n${photoUrls.join('\n')}`
+        : '';
+      const message = `HAZMAT PICKUP REQUEST\n\nPickup Address: ${validation.data.address}\n\nMaterials:\n${itemsSummary}\n\nAdditional Notes: ${validation.data.notes || "None"}${photosSection}`;
 
       const { error } = await supabase.functions.invoke("send-contact-email", {
         body: {
@@ -167,6 +172,7 @@ export function HazmatBookingForm() {
       setFormData({ name: "", email: "", phone: "", address: "", notes: "" });
       setPreferredDate(undefined);
       setPreferredTime("");
+      setPhotoUrls([]);
       setHazmatItems(HAZMAT_ITEMS.map(item => ({ id: item.id, selected: false, quantity: 1 })));
     } catch (error) {
       console.error("Error sending hazmat request:", error);
@@ -354,6 +360,9 @@ export function HazmatBookingForm() {
           placeholder="Anything else we should know? (e.g., items are in garage, need help carrying, etc.)"
           rows={3}
         />
+
+        {/* Photo Upload */}
+        <BookingPhotoUpload onPhotosChange={setPhotoUrls} maxPhotos={10} />
 
         <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
           {isSubmitting ? (
