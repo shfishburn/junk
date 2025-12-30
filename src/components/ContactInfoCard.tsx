@@ -76,15 +76,23 @@ export function ContactInfoCard({
         </div>
       </div>
 
-      <EmailLink className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors cursor-pointer">
+      <div className="flex items-start gap-4 p-4 rounded-lg bg-card border border-border">
         <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
           <Mail className="h-5 w-5 text-primary" />
         </div>
         <div>
           <h3 className="font-semibold text-foreground">Email</h3>
-          <p className="text-primary font-medium underline-offset-2 hover:underline">{CONTACT_INFO.email}</p>
+          {CONTACT_INFO.emails.map((emailInfo) => (
+            <a
+              key={emailInfo.address}
+              href={`mailto:${emailInfo.address}`}
+              className="text-primary font-medium underline-offset-2 hover:underline block"
+            >
+              {emailInfo.address}
+            </a>
+          ))}
         </div>
-      </EmailLink>
+      </div>
 
       {showHours && <BusinessHours />}
 
