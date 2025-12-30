@@ -81,6 +81,7 @@ const contactSchema = z.object({
   message: z.string().trim().max(2000, "Message must be less than 2000 characters").optional().default(""),
   preferredAppointment: z.string().max(100, "Preferred appointment must be less than 100 characters").optional().nullable(),
   isBooking: z.boolean().optional().default(false),
+  isCancellation: z.boolean().optional().default(false),
   bookingDate: z.string().max(50, "Booking date must be less than 50 characters").optional().nullable(),
   bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
   isHazmatRequest: z.boolean().optional().default(false),
@@ -231,6 +232,7 @@ const handler = async (req: Request): Promise<Response> => {
     const message = validatedData.message || "";
     const preferredAppointment = sanitizeHtml(validatedData.preferredAppointment);
     const isBooking = validatedData.isBooking;
+    const isCancellation = validatedData.isCancellation;
     const bookingDate = sanitizeHtml(validatedData.bookingDate);
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
@@ -240,7 +242,8 @@ const handler = async (req: Request): Promise<Response> => {
       name: validatedData.name, 
       email, 
       phone: validatedData.phone, 
-      isBooking, 
+      isBooking,
+      isCancellation, 
       bookingDate: validatedData.bookingDate, 
       bookingTime: validatedData.bookingTime, 
       isHazmatRequest,
@@ -362,68 +365,103 @@ const handler = async (req: Request): Promise<Response> => {
     } else if (isBooking && bookingDate && bookingTime) {
       const sanitizedMessage = sanitizeHtml(message);
       
-      // Only send admin notification if not skipped (e.g., admin-created bookings skip this)
-      if (!skipAdminNotification) {
-        const businessEmail = await resend.emails.send({
+      // Handle cancellation emails
+      if (isCancellation) {
+        const customerEmail = await resend.emails.send({
           from: "Junky Gurus <bookings@thejunkygurus.com>",
-          to: [adminEmail],
-          subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
+          to: [email],
+          subject: "Your Booking Has Been Cancelled",
           html: `
             ${emailHeader()}
-              <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
+              <h1 style="color: #dc2626; margin-top: 0;">Booking Cancelled</h1>
+              <p>Hey ${name}, we're sorry to see you go!</p>
               
-              <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
-                <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
+              <div style="background: #fef2f2; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #dc2626;">
+                <h2 style="margin-top: 0; color: #991b1b;">❌ Cancelled Appointment</h2>
                 <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
                 <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
               </div>
               
-              <h2 style="color: #374151;">Customer Information</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+              <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h2 style="margin-top: 0;">Need to Reschedule?</h2>
+                <p>No worries! We're here whenever you're ready. You can:</p>
+                <ul>
+                  <li>Book a new appointment at <a href="https://thejunkygurus.com/book" style="color: #16a34a;">thejunkygurus.com/book</a></li>
+                  <li>Call us at <strong>(360) 610-9233</strong></li>
+                  <li>Text us at <strong>(360) 610-9233</strong></li>
+                </ul>
+              </div>
               
-              ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
+              <p>We hope to help you haul your junk soon!</p>
             ${emailFooter()}
           `,
         });
 
-        console.log("Admin booking notification sent:", businessEmail);
+        console.log("Customer cancellation email sent:", customerEmail);
       } else {
-        console.log("Skipping admin notification (admin-created booking)");
+        // Only send admin notification if not skipped (e.g., admin-created bookings skip this)
+        if (!skipAdminNotification) {
+          const businessEmail = await resend.emails.send({
+            from: "Junky Gurus <bookings@thejunkygurus.com>",
+            to: [adminEmail],
+            subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}`,
+            html: `
+              ${emailHeader()}
+                <h1 style="color: #16a34a; margin-top: 0;">New Booking Request</h1>
+                
+                <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+                  <h2 style="margin-top: 0; color: #166534;">📅 Appointment Details</h2>
+                  <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
+                  <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+                </div>
+                
+                <h2 style="color: #374151;">Customer Information</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+                
+                ${sanitizedMessage ? `<h2 style="color: #374151;">Additional Notes</h2><p>${sanitizedMessage}</p>` : ""}
+              ${emailFooter()}
+            `,
+          });
+
+          console.log("Admin booking notification sent:", businessEmail);
+        } else {
+          console.log("Skipping admin notification (admin-created booking)");
+        }
+
+        const customerEmail = await resend.emails.send({
+          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          to: [email],
+          subject: "Your Booking is Confirmed! 🗓️",
+          html: `
+            ${emailHeader()}
+              <h1 style="color: #16a34a; margin-top: 0;">Booking Confirmed!</h1>
+              <p>Hey ${name}, your junk removal appointment is all set!</p>
+              
+              <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+                <h2 style="margin-top: 0; color: #166534;">📅 Your Appointment</h2>
+                <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
+                <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
+              </div>
+              
+              <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h2 style="margin-top: 0;">What to Expect</h2>
+                <ul>
+                  <li>Our team will arrive during your scheduled time slot</li>
+                  <li>We'll assess your items and provide a final quote</li>
+                  <li>Once approved, we'll haul everything away!</li>
+                </ul>
+              </div>
+              
+              <p><strong>Need to reschedule or cancel?</strong></p>
+              <p>Give us a call at <strong>(360) 610-9233</strong> at least 24 hours before your appointment.</p>
+            ${emailFooter()}
+          `,
+        });
+
+        console.log("Customer booking confirmation sent:", customerEmail);
       }
-
-      const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
-        to: [email],
-        subject: "Your Booking is Confirmed! 🗓️",
-        html: `
-          ${emailHeader()}
-            <h1 style="color: #16a34a; margin-top: 0;">Booking Confirmed!</h1>
-            <p>Hey ${name}, your junk removal appointment is all set!</p>
-            
-            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
-              <h2 style="margin-top: 0; color: #166534;">📅 Your Appointment</h2>
-              <p style="font-size: 18px; margin: 0;"><strong>Date:</strong> ${bookingDate}</p>
-              <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Time:</strong> ${bookingTime}</p>
-            </div>
-            
-            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="margin-top: 0;">What to Expect</h2>
-              <ul>
-                <li>Our team will arrive during your scheduled time slot</li>
-                <li>We'll assess your items and provide a final quote</li>
-                <li>Once approved, we'll haul everything away!</li>
-              </ul>
-            </div>
-            
-            <p><strong>Need to reschedule or cancel?</strong></p>
-            <p>Give us a call at <strong>(360) 610-9233</strong> at least 24 hours before your appointment.</p>
-          ${emailFooter()}
-        `,
-      });
-
-      console.log("Customer booking confirmation sent:", customerEmail);
     } else {
       const sanitizedMessage = sanitizeHtml(message);
       

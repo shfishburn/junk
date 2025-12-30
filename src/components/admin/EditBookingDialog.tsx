@@ -102,9 +102,10 @@ export default function EditBookingDialog({
     const dateChanged = currentDate !== originalValuesRef.current.date;
     const timeChanged = selectedTime !== originalValuesRef.current.time;
     const statusChangedToConfirmed = status === 'confirmed' && originalValuesRef.current.status !== 'confirmed';
+    const statusChangedToCancelled = status === 'cancelled' && originalValuesRef.current.status !== 'cancelled';
     
-    // Auto-check email if date/time changed OR status changed to confirmed
-    if (dateChanged || timeChanged || statusChangedToConfirmed) {
+    // Auto-check email if date/time changed OR status changed to confirmed/cancelled
+    if (dateChanged || timeChanged || statusChangedToConfirmed || statusChangedToCancelled) {
       setSendUpdateEmail(true);
     }
   }, [selectedDate, selectedTime, status]);
@@ -159,9 +160,12 @@ export default function EditBookingDialog({
       
       if (sendUpdateEmail) {
         try {
+          const isCancellation = status === 'cancelled' && originalValuesRef.current?.status !== 'cancelled';
+          
           const { error: invokeError } = await supabase.functions.invoke('send-contact-email', {
             body: {
               isBooking: true,
+              isCancellation,
               name: name.trim(),
               email: email.trim().toLowerCase(),
               phone: phone.trim() || '',
