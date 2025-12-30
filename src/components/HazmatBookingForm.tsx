@@ -155,6 +155,7 @@ export function HazmatBookingForm() {
           message,
           preferredAppointment: appointmentInfo,
           isHazmatRequest: true,
+          photoUrls: photoUrls,
         },
       });
 

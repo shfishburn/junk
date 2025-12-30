@@ -272,11 +272,25 @@ const handler = async (req: Request): Promise<Response> => {
         ? materialsText.split(', ').map(item => `<li style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">${sanitizeHtml(item)}</li>`).join('')
         : '<li>No specific items listed</li>';
 
+      // Build photos HTML for hazmat email
+      const hazmatPhotosHtml = photoUrls.length > 0 ? `
+        <div style="margin: 20px 0;">
+          <h2 style="color: #374151;">📷 Customer Photos</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            ${photoUrls.map((url, i) => `
+              <a href="${url}" target="_blank" style="display: block;">
+                <img src="${url}" alt="Photo ${i + 1}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;" />
+              </a>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
       // Admin notification for hazmat
       const businessEmail = await resend.emails.send({
         from: "Junky Gurus <bookings@thejunkygurus.com>",
         to: [adminEmail],
-        subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}`,
+        subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
           ${emailHeader()}
             <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
@@ -302,6 +316,8 @@ const handler = async (req: Request): Promise<Response> => {
               <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
               <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td><a href="tel:${validatedData.phone || ''}">${phone || 'Not provided'}</a></td></tr>
             </table>
+            
+            ${hazmatPhotosHtml}
             
             ${additionalNotes !== 'None' ? `
               <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 20px;">
