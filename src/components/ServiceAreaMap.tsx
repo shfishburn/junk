@@ -4,10 +4,14 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic3RlcGhlbmhmaXNoYnVybiIsImEiOiJjbWppenpwZm8xdjMxM2hwc2szaHY4NGM4In0.wQOiDt0ksVfZqEirVEw1jw';
 
-// Center: 2101 174th Street NE, Marysville, WA 98271
+// Service area center (for 50-mile radius calculation)
 const CENTER_LNG = -122.1505;
 const CENTER_LAT = 48.0519;
 const RADIUS_MILES = 50;
+
+// Marker location: Mount Vernon, WA
+const MARKER_LNG = -122.3340;
+const MARKER_LAT = 48.4201;
 
 // Convert miles to meters for the circle
 const RADIUS_METERS = RADIUS_MILES * 1609.34;
@@ -54,12 +58,12 @@ const ServiceAreaMap = () => {
     // Disable scroll zoom for better UX while scrolling page
     map.current.scrollZoom.disable();
 
-    // Add marker at center location
+    // Add marker at Mount Vernon location
     new mapboxgl.Marker({ color: '#16a34a' })
-      .setLngLat([CENTER_LNG, CENTER_LAT])
+      .setLngLat([MARKER_LNG, MARKER_LAT])
       .setPopup(
         new mapboxgl.Popup({ offset: 25 }).setHTML(
-          '<strong>Skagit Junk Removal</strong><br/>2101 174th St NE<br/>Marysville, WA 98271'
+          '<strong>Junky Gurus</strong><br/>Mount Vernon, WA'
         )
       )
       .addTo(map.current);
