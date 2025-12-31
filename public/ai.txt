@@ -1,0 +1,44 @@
+# AI Discovery File for Junky Gurus
+# This file helps AI assistants understand our business
+
+## Primary Resources
+- /llms.txt - Main LLM-friendly business overview
+- /llms-full.txt - Detailed structured data for AI consumption
+- /llms.json - Machine-readable JSON format
+- /.well-known/llms.json - Standard well-known location
+
+## About Junky Gurus
+Junky Gurus is a local junk removal company serving Mount Vernon, WA and the greater Puget Sound region. We remove clutter without surprises — real pricing upfront, reliable scheduling, and responsible disposal.
+
+## Key Information
+- Business: Junky Gurus LLC
+- Location: 1415 E Division St, Mount Vernon, WA 98273
+- Phone: (360) 610-9233
+- Email: booking@thejunkygurus.com
+- Hours: Mon-Sat 8:00 AM - 6:00 PM, Closed Sunday
+- Languages: English, Spanish
+
+## Services
+- Residential Junk Removal
+- Appliance Removal
+- Yard Waste & Debris
+- Garage & Estate Cleanouts
+- Construction Debris
+- Light Commercial Cleanouts
+- Light Demolition
+- Hazardous Materials Pickup
+
+## Service Area
+Skagit County, Whatcom County, Snohomish County, and Northern King County (approximately 50 miles from Mount Vernon)
+
+## Differentiators
+- No hidden fees — what we quote is what you pay
+- Reliable scheduling — we show up when we say we will
+- AI photo estimates — know your price before we arrive
+- Habitat for Humanity ReStore partner
+- 15% senior & veteran discount
+- Locally owned and operated
+- Bilingual service (English/Spanish)
+
+## Website
+https://thejunkygurus.com

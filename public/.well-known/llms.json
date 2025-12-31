@@ -1,0 +1,60 @@
+{
+  "name": "Junky Gurus LLC",
+  "tagline": "We Love Your Junk (So You Don't Have To)",
+  "positioning": "Junky Gurus removes clutter without surprises — real pricing upfront, reliable scheduling, and responsible disposal, from a local team that actually shows up.",
+  "description": "Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Know your price before we arrive.",
+  "url": "https://thejunkygurus.com",
+  "logo": "https://thejunkygurus.com/favicon.png",
+  "type": "LocalBusiness",
+  "industry": "Junk Removal / Waste Management",
+  "contact": {
+    "phone": "+1-360-610-9233",
+    "email": "booking@thejunkygurus.com",
+    "text": "+1-360-610-9233"
+  },
+  "location": {
+    "street": "1415 E Division St",
+    "city": "Mount Vernon",
+    "state": "WA",
+    "postalCode": "98273",
+    "country": "US",
+    "coordinates": {
+      "latitude": 48.4201,
+      "longitude": -122.3343
+    }
+  },
+  "hours": {
+    "monday": "8:00 AM - 6:00 PM",
+    "tuesday": "8:00 AM - 6:00 PM",
+    "wednesday": "8:00 AM - 6:00 PM",
+    "thursday": "8:00 AM - 6:00 PM",
+    "friday": "8:00 AM - 6:00 PM",
+    "saturday": "8:00 AM - 6:00 PM",
+    "sunday": "Closed"
+  },
+  "languages": ["English", "Spanish"],
+  "serviceArea": ["Skagit County, WA", "Whatcom County, WA", "Snohomish County, WA", "King County, WA"],
+  "services": [
+    "Residential Junk Removal",
+    "Appliance Removal",
+    "Yard Waste & Debris",
+    "Garage & Estate Cleanouts",
+    "Construction Debris",
+    "Light Commercial Cleanouts",
+    "Light Demolition",
+    "Hazardous Materials Pickup"
+  ],
+  "discounts": [
+    { "name": "Senior & Veteran", "amount": "15% off" },
+    { "name": "Referral", "amount": "$25 off" },
+    { "name": "Repeat Customer", "amount": "10% off" }
+  ],
+  "discovery": {
+    "llms_txt": "/llms.txt",
+    "llms_full_txt": "/llms-full.txt",
+    "llms_json": "/llms.json",
+    "ai_txt": "/ai.txt",
+    "robots_txt": "/robots.txt",
+    "sitemap_xml": "/sitemap.xml"
+  }
+}

@@ -68,10 +68,16 @@
     "text": "+1-360-610-9233"
   },
   "location": {
+    "street": "1415 E Division St",
     "city": "Mount Vernon",
     "state": "WA",
     "country": "US",
     "zipCode": "98273",
+    "coordinates": {
+      "latitude": 48.4201,
+      "longitude": -122.3343
+    }
+  },
     "coordinates": {
       "latitude": 48.4201,
       "longitude": -122.3343
