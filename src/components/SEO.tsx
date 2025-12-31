@@ -59,7 +59,7 @@ export function SEO({
     "email": "booking@thejunkygurus.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "",
+      "streetAddress": "1415 E Division St",
       "addressLocality": "Mount Vernon",
       "addressRegion": "WA",
       "postalCode": "98273",
@@ -214,7 +214,7 @@ export function SEO({
       "https://www.facebook.com/JunkyGurus",
       "https://www.instagram.com/junkygurus/",
       `${SITE_URL}/llms.txt`,
-      `${SITE_URL}/llms.json`
+      `${SITE_URL}/.well-known/llms.json`
     ],
     "knowsAbout": [
       "Junk Removal",

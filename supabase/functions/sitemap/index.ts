@@ -81,6 +81,18 @@ ${urlEntries}
 </urlset>`;
 }
 
+function generateSitemapIndex(): string {
+  const today = new Date().toISOString().split('T')[0];
+  
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITE_BASE_URL}/sitemap.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+</sitemapindex>`;
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -88,6 +100,21 @@ serve(async (req) => {
   }
 
   try {
+    const url = new URL(req.url);
+    const isIndex = url.pathname.includes('sitemap_index') || url.searchParams.get('type') === 'index';
+    
+    if (isIndex) {
+      console.log('Generating sitemap index...');
+      const sitemapIndex = generateSitemapIndex();
+      return new Response(sitemapIndex, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/xml; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600',
+        },
+      });
+    }
+    
     console.log('Generating dynamic sitemap...');
     const sitemap = generateSitemap();
     console.log(`Generated sitemap with ${siteRoutes.filter(r => !r.exclude).length} URLs`);

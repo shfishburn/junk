@@ -1,0 +1,27 @@
+{
+  "name": "Junky Gurus - Junk Removal Without Surprises",
+  "short_name": "Junky Gurus",
+  "description": "Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Know your price before we arrive.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr"
+}
