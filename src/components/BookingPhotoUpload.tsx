@@ -172,10 +172,11 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
 
       {/* Upload area */}
       {photos.length < maxPhotos && (
-        <div
+        <label
+          htmlFor="photo-upload"
           className={`
-            relative border-2 border-dashed rounded-lg p-4 text-center cursor-pointer
-            transition-colors duration-200
+            relative block border-2 border-dashed rounded-lg p-4 text-center cursor-pointer
+            transition-colors duration-200 min-h-[100px]
             ${isDragging 
               ? "border-primary bg-primary/5" 
               : "border-border hover:border-primary/50 hover:bg-muted/50"
@@ -184,28 +185,28 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          onClick={() => document.getElementById('photo-upload')?.click()}
         >
           <input
             id="photo-upload"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif"
             multiple
             onChange={handleInputChange}
-            className="hidden"
+            className="sr-only"
+            aria-label="Upload photos"
           />
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center justify-center gap-2 pointer-events-none">
             <div className="p-2 bg-muted rounded-full">
               <ImageIcon className="h-5 w-5 text-muted-foreground" />
             </div>
             <p className="text-sm text-muted-foreground">
               {photos.length > 0 
                 ? `Add more photos (${photos.length}/${maxPhotos})`
-                : "Drop photos here or tap to upload"
+                : "Tap to select photos"
               }
             </p>
           </div>
-        </div>
+        </label>
       )}
     </div>
   );
