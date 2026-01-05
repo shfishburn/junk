@@ -1004,11 +1004,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </div>
           </div>
           
-          <div className="space-y-2 text-center">
-            <p className="font-semibold text-charcoal text-base">
+          <div className="space-y-1.5 text-center px-2">
+            <p className="font-semibold text-charcoal text-base leading-snug">
               {t.dropPhotos}
             </p>
-            <p className="text-sm text-muted-foreground font-normal leading-relaxed max-w-[280px]">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed">
               {t.takePics}
             </p>
           </div>
