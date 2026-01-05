@@ -894,7 +894,7 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <Button
           type="button"
           variant="ghost"
-          className="w-full h-full min-h-[120px] flex flex-col items-center justify-center gap-4 hover:bg-secondary/50"
+          className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-5 hover:bg-secondary/50 px-6 py-8"
           onClick={() => {
             const input = document.getElementById('demolition-upload-input') as HTMLInputElement;
             if (input) input.click();
@@ -908,11 +908,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             )}
           </div>
           
-          <div>
-            <h3 className="font-semibold text-charcoal mb-1">
+          <div className="space-y-2 text-center">
+            <h3 className="font-semibold text-charcoal text-base">
               {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
-            <p className="text-sm text-muted-foreground font-normal">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed max-w-[280px]">
               {t.dragDrop}
             </p>
           </div>
