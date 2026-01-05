@@ -49,41 +49,41 @@ serve(async (req) => {
               content: `You are a light demolition pricing expert for Junky Gurus. Recalculate based on the edited structures.
               
               STRUCTURE-SPECIFIC PRICING (labor + disposal included):
-              - Small deck (under 100 sq ft): $400-650
-              - Medium deck (100-200 sq ft): $650-1,000
-              - Large deck (200-400 sq ft): $1,000-1,500
-              - Extra large deck (400+ sq ft): $1,500-2,500
-              - Small shed (under 64 sq ft): $300-500
-              - Medium shed (64-120 sq ft): $500-850
-              - Large shed (120+ sq ft): $850-1,400
-              - Fence (per 50 linear ft): $200-400
-              - Fence (100+ linear ft): $400-750
-              - Playset/Swing Set: $300-550
-              - Trampoline: $150-275
-              - Hot Tub: $500-850
-              - Gazebo (small): $400-750
-              - Gazebo (large): $750-1,250
-              - Pergola: $350-650
-              - Patio/Concrete (per 100 sq ft): $400-750
-              - Flooring removal (per 100 sq ft): $200-400
-              - Cabinet removal (kitchen set): $300-550
-              - Drywall removal (per room): $300-500
-              - Bathroom demo (full): $550-1,000
-              - Built-in shelving: $150-325
-              - Stairs/railing: $225-450
+              - Small deck (under 100 sq ft): $500-800
+              - Medium deck (100-200 sq ft): $800-1,250
+              - Large deck (200-400 sq ft): $1,250-1,850
+              - Extra large deck (400+ sq ft): $1,850-3,000
+              - Small shed (under 64 sq ft): $375-625
+              - Medium shed (64-120 sq ft): $625-1,050
+              - Large shed (120+ sq ft): $1,050-1,750
+              - Fence (per 50 linear ft): $250-500
+              - Fence (100+ linear ft): $500-950
+              - Playset/Swing Set: $375-700
+              - Trampoline: $200-350
+              - Hot Tub: $625-1,050
+              - Gazebo (small): $500-950
+              - Gazebo (large): $950-1,550
+              - Pergola: $450-800
+              - Patio/Concrete (per 100 sq ft): $500-950
+              - Flooring removal (per 100 sq ft): $250-500
+              - Cabinet removal (kitchen set): $375-700
+              - Drywall removal (per room): $375-625
+              - Bathroom demo (full): $700-1,250
+              - Built-in shelving: $200-400
+              - Stairs/railing: $300-575
               
               MATERIAL SURCHARGES:
-              - Composite/Trex: +25-35%
-              - Concrete: +30-50%
-              - Pressure-treated lumber: +15-25%
-              - Rotted/unsafe: +20-30%
-              - Brick/stone: +25-40%
+              - Composite/Trex: +30-40%
+              - Concrete: +35-55%
+              - Pressure-treated lumber: +20-30%
+              - Rotted/unsafe: +25-35%
+              - Brick/stone: +30-45%
               
               DEBRIS DISPOSAL:
-              - 1/4 Truck: $275-400
-              - 1/2 Truck: $400-550
-              - 3/4 Truck: $550-700
-              - Full Truck: $700-900
+              - 1/4 Truck: $325-475
+              - 1/2 Truck: $475-675
+              - 3/4 Truck: $675-875
+              - Full Truck: $875-1,100
               
               Calculate total = structure demolition cost + material surcharges + additional disposal.`,
             },
@@ -327,43 +327,43 @@ serve(async (req) => {
             - Rotted: Wood rot, decay, unsafe, may crumble
             
             STRUCTURE-SPECIFIC PRICING (labor + disposal included):
-            - Small deck (under 100 sq ft): $400-650
-            - Medium deck (100-200 sq ft): $650-1,000
-            - Large deck (200-400 sq ft): $1,000-1,500
-            - Extra large deck (400+ sq ft): $1,500-2,500
-            - Small shed (under 64 sq ft): $300-500
-            - Medium shed (64-120 sq ft): $500-850
-            - Large shed (120+ sq ft): $850-1,400
-            - Fence (per 50 linear ft): $200-400
-            - Fence (100+ linear ft): $400-750
-            - Playset/Swing Set: $300-550
-            - Trampoline: $150-275
-            - Hot Tub removal: $500-850
-            - Gazebo (small): $400-750
-            - Gazebo (large): $750-1,250
-            - Pergola: $350-650
-            - Patio/Concrete (per 100 sq ft): $400-750
-            - Flooring removal (per 100 sq ft): $200-400
-            - Cabinet removal (kitchen set): $300-550
-            - Drywall removal (per room): $300-500
-            - Bathroom demolition (full): $550-1,000
-            - Built-in shelving/closet organizer: $150-325
-            - Interior door removal: $40-75 each
-            - Stairs/railing removal: $225-450
+            - Small deck (under 100 sq ft): $500-800
+            - Medium deck (100-200 sq ft): $800-1,250
+            - Large deck (200-400 sq ft): $1,250-1,850
+            - Extra large deck (400+ sq ft): $1,850-3,000
+            - Small shed (under 64 sq ft): $375-625
+            - Medium shed (64-120 sq ft): $625-1,050
+            - Large shed (120+ sq ft): $1,050-1,750
+            - Fence (per 50 linear ft): $250-500
+            - Fence (100+ linear ft): $500-950
+            - Playset/Swing Set: $375-700
+            - Trampoline: $200-350
+            - Hot Tub removal: $625-1,050
+            - Gazebo (small): $500-950
+            - Gazebo (large): $950-1,550
+            - Pergola: $450-800
+            - Patio/Concrete (per 100 sq ft): $500-950
+            - Flooring removal (per 100 sq ft): $250-500
+            - Cabinet removal (kitchen set): $375-700
+            - Drywall removal (per room): $375-625
+            - Bathroom demolition (full): $700-1,250
+            - Built-in shelving/closet organizer: $200-400
+            - Interior door removal: $50-100 each
+            - Stairs/railing removal: $300-575
             
             MATERIAL SURCHARGES (add to base price):
-            - Composite/Trex decking: +25-35%
-            - Concrete structures: +30-50%
-            - Pressure-treated/heavy lumber: +15-25%
-            - Rotted/unsafe structures: +20-30% (extra safety measures)
-            - Second story or difficult access: +20-30%
-            - Brick/stone: +25-40%
+            - Composite/Trex decking: +30-40%
+            - Concrete structures: +35-55%
+            - Pressure-treated/heavy lumber: +20-30%
+            - Rotted/unsafe structures: +25-35% (extra safety measures)
+            - Second story or difficult access: +25-40%
+            - Brick/stone: +30-45%
             
             DEBRIS DISPOSAL (if additional loads needed):
-            - 1/4 Truck: $275-400
-            - 1/2 Truck: $400-550
-            - 3/4 Truck: $550-700
-            - Full Truck: $700-900
+            - 1/4 Truck: $325-475
+            - 1/2 Truck: $475-675
+            - 3/4 Truck: $675-875
+            - Full Truck: $875-1,100
             - Multiple loads: multiply accordingly
             
             IMPORTANT: Use specific structure names from vocabulary above. Estimate dimensions carefully. Note materials and conditions accurately.
