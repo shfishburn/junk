@@ -46,27 +46,45 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `You are a light demolition expert for Junky Gurus. The customer has edited their structures list. Recalculate the demolition estimate.
+              content: `You are a light demolition pricing expert for Junky Gurus. Recalculate based on the edited structures.
               
-              LABOR PRICING GUIDELINES:
-              - Simple projects (1-2 hours, 1-2 crew): $150-350
-              - Small projects (2-4 hours): $350-600
-              - Medium projects (4-6 hours): $600-1,000
-              - Large projects (full day, 6-8 hours): $1,000-1,500
-              - Multi-day projects: $1,500+ per day
+              STRUCTURE-SPECIFIC PRICING (labor + disposal included):
+              - Small deck (under 100 sq ft): $300-500
+              - Medium deck (100-200 sq ft): $500-800
+              - Large deck (200-400 sq ft): $800-1,200
+              - Extra large deck (400+ sq ft): $1,200-2,000
+              - Small shed (under 64 sq ft): $200-400
+              - Medium shed (64-120 sq ft): $400-700
+              - Large shed (120+ sq ft): $700-1,200
+              - Fence (per 50 linear ft): $150-300
+              - Fence (100+ linear ft): $300-600
+              - Playset/Swing Set: $200-450
+              - Trampoline: $100-200
+              - Hot Tub: $400-700
+              - Gazebo (small): $300-600
+              - Gazebo (large): $600-1,000
+              - Pergola: $250-500
+              - Patio/Concrete (per 100 sq ft): $300-600
+              - Flooring removal (per 100 sq ft): $150-300
+              - Cabinet removal (kitchen set): $200-400
               
-              DEBRIS DISPOSAL (add to labor):
-              - 1/4 Truck debris: $250-375
-              - 1/2 Truck debris: $375-500
-              - 3/4 Truck debris: $500-625
-              - Full Truck debris: $625-815
-              - Multiple loads: multiply accordingly
+              MATERIAL SURCHARGES:
+              - Composite/Trex decking: +20-30%
+              - Concrete structures: +25-40%
+              - Pressure-treated/heavy lumber: +10-20%
+              - Rotted/unsafe structures: +15-25% (extra care needed)
               
-              Calculate total = labor + disposal costs.`,
+              DEBRIS DISPOSAL (if not included above):
+              - 1/4 Truck: $250-375
+              - 1/2 Truck: $375-500
+              - 3/4 Truck: $500-625
+              - Full Truck: $625-815
+              
+              Calculate total = structure demolition cost + any additional disposal.`,
             },
             {
               role: "user",
-              content: `Recalculate the demolition estimate for these structures: ${structuresList}. Provide updated labor, debris, and price estimates.`,
+              content: `Recalculate the demolition estimate for these structures: ${structuresList}. Use the structure-specific pricing.`,
             },
           ],
           tools: [
@@ -190,9 +208,9 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are a light demolition expert for Junky Gurus, a professional junk removal and light demolition service in Washington State. 
-            Analyze the image and estimate the demolition project scope, labor, materials to remove, and pricing.
-            Be helpful and slightly humorous in your notes. 
+            content: `You are a light demolition pricing expert for Junky Gurus in Washington State.
+            Analyze the image and provide accurate structure identification and pricing.
+            Be helpful and slightly humorous in your notes.
             
             Light demolition services we offer:
             - Deck and patio removal
@@ -202,28 +220,43 @@ serve(async (req) => {
             - Cabinet removal
             - Small structure demolition
             
-            LABOR PRICING (be accurate):
-            - Simple projects (1-2 hours, 1-2 crew): $150-350
-            - Small projects (2-4 hours): $350-600
-            - Medium projects (4-6 hours): $600-1,000
-            - Large projects (full day, 6-8 hours): $1,000-1,500
-            - Multi-day projects: $1,500+ per day
+            STRUCTURE-SPECIFIC PRICING (labor + disposal included):
+            - Small deck (under 100 sq ft): $300-500
+            - Medium deck (100-200 sq ft): $500-800
+            - Large deck (200-400 sq ft): $800-1,200
+            - Extra large deck (400+ sq ft): $1,200-2,000
+            - Small shed (under 64 sq ft): $200-400
+            - Medium shed (64-120 sq ft): $400-700
+            - Large shed (120+ sq ft): $700-1,200
+            - Fence (per 50 linear ft): $150-300
+            - Fence (100+ linear ft): $300-600
+            - Playset/Swing Set: $200-450
+            - Trampoline: $100-200
+            - Hot Tub removal: $400-700
+            - Gazebo (small): $300-600
+            - Gazebo (large): $600-1,000
+            - Pergola: $250-500
+            - Patio/Concrete (per 100 sq ft): $300-600
+            - Flooring removal (per 100 sq ft): $150-300
+            - Cabinet removal (kitchen set): $200-400
+            - Drywall removal (per room): $200-400
             
-            DEBRIS DISPOSAL COSTS (add to labor):
-            - 1/4 Truck debris: $250-375
-            - 1/2 Truck debris: $375-500
-            - 3/4 Truck debris: $500-625
-            - Full Truck debris: $625-815
-            - Multiple truck loads: multiply accordingly
+            MATERIAL SURCHARGES (add to base price):
+            - Composite/Trex decking: +20-30%
+            - Concrete structures: +25-40%
+            - Pressure-treated/heavy lumber: +10-20%
+            - Rotted/unsafe structures: +15-25% (extra safety measures)
+            - Second story or difficult access: +15-25%
             
-            TOTAL ESTIMATE = Labor Cost + Disposal Cost
+            DEBRIS DISPOSAL (if additional loads needed):
+            - 1/4 Truck: $250-375
+            - 1/2 Truck: $375-500
+            - 3/4 Truck: $500-625
+            - Full Truck: $625-815
+            - Multiple loads: multiply accordingly
             
-            Factors that affect price:
-            - Size and complexity of structure
-            - Material type (wood, concrete, composite)
-            - Accessibility
-            - Disposal requirements (number of truck loads)
-            - Heavy equipment needs`,
+            IMPORTANT: Estimate structure sizes from the image. Be accurate with dimensions.
+            Total = Sum of all structure costs + material surcharges + extra disposal if needed.`,
           },
           {
             role: "user",

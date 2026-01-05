@@ -46,28 +46,66 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State.
-              The customer has edited their items list. Recalculate the volume, weight, and removal price.
+              content: `You are a junk removal pricing expert for Junky Gurus in Washington State.
+              Recalculate the estimate based on the edited items list.
               
-              TRUCK LOAD PRICING (be accurate with these tiers):
-              - Minimum Load (1-2 small items): $125 – $190
-              - 1/8 Truck Load (couple items like chair + TV): $190 – $250
-              - 1/4 Truck Load (small room cleanout): $250 – $375
-              - 1/2 Truck Load (garage cleanout or bedroom set): $375 – $500
-              - 3/4 Truck Load (large room or multiple rooms): $500 – $625
-              - Full Truck Load (whole house or estate cleanout): $625 – $815
+              PRICING STRATEGY:
+              1. For 1-3 single items: Use SINGLE ITEM pricing (sum individual items)
+              2. For 4+ items or large volumes: Use TRUCK LOAD pricing based on total volume
+              3. Always use whichever method gives the HIGHER price (minimum viable rate)
               
-              SINGLE ITEM REFERENCE:
-              - Couch/Sofa: $75-150, Mattress: $50-100, Recliner: $50-85
-              - TV: $35-75, Refrigerator/Freezer: $75-125, Washer/Dryer: $65-100
-              - Hot Tub: $300-500, Piano: $200-400
+              SINGLE ITEM PRICES (use for small jobs):
+              - Couch/Sofa/Sectional: $75-150 (large sectionals up to $200)
+              - Loveseat: $60-100
+              - Mattress (any size): $50-100
+              - Box Spring: $40-75
+              - Recliner/Armchair: $50-85
+              - Office Chair: $25-50
+              - Dining Table: $50-100
+              - Dining Chairs (each): $15-30
+              - Desk: $50-100
+              - Dresser/Chest: $50-100
+              - Nightstand: $25-50
+              - Bookshelf: $35-75
+              - TV (any size): $35-75
+              - Refrigerator/Freezer: $75-125
+              - Washer or Dryer (each): $65-100
+              - Dishwasher: $50-85
+              - Microwave: $25-45
+              - Stove/Oven: $65-100
+              - Treadmill/Elliptical: $75-125
+              - Exercise Bike: $50-85
+              - Hot Tub: $300-500
+              - Piano (upright): $200-350
+              - Piano (grand): $350-500
+              - Grill/BBQ: $50-100
+              - Patio Furniture Set: $75-150
+              - Swing Set: $150-300
+              - Trampoline: $100-200
+              - Shed (small): $200-400
+              - Boxes/Bags (each): $10-25
               
-              Heavy items like concrete or appliances may add 10-20% to the base price.
-              Calculate the truck percentage based on total volume of all items.`,
+              TRUCK LOAD PRICING (for larger jobs by volume):
+              - Minimum Load (~5%, 1-2 small items): $125-190
+              - 1/8 Truck (~12.5%): $190-250
+              - 1/4 Truck (~25%): $250-375
+              - 1/2 Truck (~50%): $375-500
+              - 3/4 Truck (~75%): $500-625
+              - Full Truck (100%): $625-815
+              
+              VOLUME GUIDE (cubic yards):
+              - Couch: 1-1.5 cy, Mattress: 0.5-0.75 cy, Dresser: 0.5-0.75 cy
+              - Refrigerator: 0.75-1 cy, Washer/Dryer: 0.5-0.75 cy each
+              - Full truck = ~15 cubic yards
+              
+              WEIGHT SURCHARGES (add 10-20%):
+              - Concrete/brick, safes, pianos, hot tubs, heavy appliances
+              
+              Be accurate and fair - don't overestimate or underestimate.`,
             },
             {
               role: "user",
-              content: `Recalculate the junk removal estimate for these items: ${itemsList}. Provide updated volume, weight, and price estimates.`,
+              content: `Recalculate the junk removal estimate for these items: ${itemsList}. Calculate both single-item total and truck-load price, use the appropriate method.`,
             },
           ],
           tools: [
@@ -182,31 +220,66 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State. 
-            Analyze the image and estimate the items, volume, weight, and removal price.
+            content: `You are a junk removal pricing expert for Junky Gurus in Washington State.
+            Analyze the image and provide accurate item identification and pricing.
             Be helpful and slightly humorous in your notes.
             
-            TRUCK LOAD PRICING (use these exact tiers for accurate estimates):
-            - Minimum Load (1-2 small items, ~5% truck): $125 – $190
-            - 1/8 Truck Load (~12.5% truck): $190 – $250
-            - 1/4 Truck Load (~25% truck): $250 – $375
-            - 1/2 Truck Load (~50% truck): $375 – $500
-            - 3/4 Truck Load (~75% truck): $500 – $625
-            - Full Truck Load (100% truck): $625 – $815
+            PRICING STRATEGY:
+            1. For 1-3 single items: Use SINGLE ITEM pricing (sum individual items)
+            2. For 4+ items or large volumes: Use TRUCK LOAD pricing based on total volume
+            3. Always use whichever method gives the HIGHER price (minimum viable rate)
             
-            SINGLE ITEM REFERENCE PRICES:
-            - Couch/Sofa: $75-150, Mattress/Box Spring: $50-100, Recliner/Armchair: $50-85
-            - TV (any size): $35-75, Refrigerator/Freezer: $75-125, Washer/Dryer each: $65-100
-            - Desk/Table: $50-100, Treadmill/Exercise Bike: $75-125
-            - Hot Tub: $300-500, Piano: $200-400
+            SINGLE ITEM PRICES (memorize these):
+            - Couch/Sofa/Sectional: $75-150 (large sectionals up to $200)
+            - Loveseat: $60-100
+            - Mattress (any size): $50-100
+            - Box Spring: $40-75
+            - Recliner/Armchair: $50-85
+            - Office Chair: $25-50
+            - Dining Table: $50-100
+            - Dining Chairs (each): $15-30
+            - Desk: $50-100
+            - Dresser/Chest: $50-100
+            - Nightstand: $25-50
+            - Bookshelf: $35-75
+            - TV (any size): $35-75
+            - Refrigerator/Freezer: $75-125
+            - Washer or Dryer (each): $65-100
+            - Dishwasher: $50-85
+            - Microwave: $25-45
+            - Stove/Oven: $65-100
+            - Treadmill/Elliptical: $75-125
+            - Exercise Bike: $50-85
+            - Hot Tub: $300-500
+            - Piano (upright): $200-350
+            - Piano (grand): $350-500
+            - Grill/BBQ: $50-100
+            - Patio Furniture Set: $75-150
+            - Swing Set: $150-300
+            - Trampoline: $100-200
+            - Shed (small): $200-400
+            - Boxes/Bags (each): $10-25
+            - Miscellaneous small items: $15-40
             
-            CONSTRUCTION MATERIALS:
-            - Drywall: $15-30 per sheet, Lumber/Wood: $75-200
-            - Concrete/Brick: $150-400, Tile/Flooring: $100-250
-            - Mixed Construction Debris: $200-500
+            TRUCK LOAD PRICING (for larger jobs):
+            - Minimum Load (~5%, 1-2 small items): $125-190
+            - 1/8 Truck (~12.5%): $190-250
+            - 1/4 Truck (~25%): $250-375
+            - 1/2 Truck (~50%): $375-500
+            - 3/4 Truck (~75%): $500-625
+            - Full Truck (100%): $625-815
             
-            Calculate truck percentage accurately based on total volume, then price accordingly.
-            Heavy items like concrete or appliances may add 10-20% to the base price.`,
+            VOLUME REFERENCE (cubic yards):
+            - Couch: 1-1.5 cy, Loveseat: 0.75 cy, Mattress: 0.5-0.75 cy
+            - Dresser: 0.5-0.75 cy, Refrigerator: 0.75-1 cy
+            - Washer/Dryer: 0.5-0.75 cy each, Desk: 0.5-0.75 cy
+            - Boxes/Bags: 0.1-0.25 cy each
+            - Full truck capacity = ~15 cubic yards
+            
+            WEIGHT SURCHARGES (add 10-20% for):
+            - Concrete/brick, safes, pianos, hot tubs, cast iron
+            
+            IMPORTANT: Be accurate! Count items carefully, estimate sizes properly.`,
           },
           {
             role: "user",
