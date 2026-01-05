@@ -58,6 +58,10 @@ const translations = {
     truck: "Truck",
     lbs: "lbs",
     itemsIdentified: "Items Identified",
+    editItems: "Edit Items",
+    addItem: "Add item",
+    removeItem: "Remove",
+    itemsEdited: "Items updated! Your estimate may vary based on actual items.",
     bookYourPickup: "Book Your Pickup",
     yourDetails: "Your Details",
     name: "Name *",
@@ -118,6 +122,10 @@ const translations = {
     truck: "Camión",
     lbs: "lbs",
     itemsIdentified: "Artículos Identificados",
+    editItems: "Editar Artículos",
+    addItem: "Agregar artículo",
+    removeItem: "Quitar",
+    itemsEdited: "¡Artículos actualizados! Tu estimado puede variar según los artículos reales.",
     bookYourPickup: "Reserva Tu Recolección",
     yourDetails: "Tus Datos",
     name: "Nombre *",
@@ -217,6 +225,9 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [bookingPhotoUrls, setBookingPhotoUrls] = useState<string[]>([]);
   const [addressData, setAddressData] = useState<AddressData>(getEmptyAddress());
+  const [editedItems, setEditedItems] = useState<JunkItem[] | null>(null);
+  const [newItemName, setNewItemName] = useState("");
+  const [isEditingItems, setIsEditingItems] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -711,23 +722,106 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           </div>
         </div>
 
-        {/* Items list */}
+        {/* Items list - Editable */}
         <div className="p-4 rounded-lg bg-card border border-border">
-          <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-primary" />
-            {t.itemsIdentified}
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {result.items.map((item, i) => (
-              <span 
-                key={i} 
-                className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
-              >
-                {item.quantity > 1 ? `${item.quantity}x ` : ""}{item.name}
-                <span className="text-muted-foreground ml-1">({conditionLabels[item.condition]})</span>
-              </span>
-            ))}
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-semibold text-charcoal flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-primary" />
+              {t.itemsIdentified}
+            </h4>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                if (!isEditingItems) {
+                  setEditedItems(editedItems || [...result.items]);
+                }
+                setIsEditingItems(!isEditingItems);
+              }}
+              className="text-xs text-primary hover:text-primary/80"
+            >
+              {isEditingItems ? <CheckCircle2 className="h-3 w-3 mr-1" /> : null}
+              {isEditingItems ? "Done" : t.editItems}
+            </Button>
           </div>
+          
+          {isEditingItems && editedItems ? (
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-2">
+                {editedItems.map((item, i) => (
+                  <span 
+                    key={i} 
+                    className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm flex items-center gap-2 group"
+                  >
+                    {item.quantity > 1 ? `${item.quantity}x ` : ""}{item.name}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newItems = editedItems.filter((_, index) => index !== i);
+                        setEditedItems(newItems);
+                      }}
+                      className="text-destructive hover:text-destructive/80 opacity-70 group-hover:opacity-100 transition-opacity"
+                      aria-label={t.removeItem}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+              
+              {/* Add new item */}
+              <div className="flex gap-2 mt-3">
+                <Input
+                  type="text"
+                  value={newItemName}
+                  onChange={(e) => setNewItemName(e.target.value)}
+                  placeholder={t.addItem}
+                  className="flex-1 h-9 text-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newItemName.trim()) {
+                      e.preventDefault();
+                      setEditedItems([...editedItems, { name: newItemName.trim(), quantity: 1, condition: "fair" }]);
+                      setNewItemName("");
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (newItemName.trim()) {
+                      setEditedItems([...editedItems, { name: newItemName.trim(), quantity: 1, condition: "fair" }]);
+                      setNewItemName("");
+                    }
+                  }}
+                  disabled={!newItemName.trim()}
+                  className="h-9"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              {editedItems.length !== result.items.length && (
+                <p className="text-xs text-muted-foreground mt-2 italic">
+                  {t.itemsEdited}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {(editedItems || result.items).map((item, i) => (
+                <span 
+                  key={i} 
+                  className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
+                >
+                  {item.quantity > 1 ? `${item.quantity}x ` : ""}{item.name}
+                  <span className="text-muted-foreground ml-1">({conditionLabels[item.condition]})</span>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Notes */}
