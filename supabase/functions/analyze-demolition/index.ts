@@ -11,11 +11,13 @@ serve(async (req) => {
   }
 
   try {
-    const { imageBase64 } = await req.json();
+    const body = await req.json();
+    const { imageBase64, recalculateStructures } = body;
     
-    if (!imageBase64) {
+    // Either image analysis or recalculation with edited structures
+    if (!imageBase64 && !recalculateStructures) {
       return new Response(
-        JSON.stringify({ error: "No image provided" }),
+        JSON.stringify({ error: "No image or structures provided" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -25,6 +27,145 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // If recalculating with edited structures (no image needed)
+    if (recalculateStructures && recalculateStructures.length > 0) {
+      console.log("Recalculating demolition estimate with edited structures:", recalculateStructures);
+      
+      const structuresList = recalculateStructures.map((s: { name: string; material: string; condition: string; estimatedSize: string }) => 
+        `${s.name} (${s.material}, ${s.condition}, ~${s.estimatedSize})`
+      ).join(", ");
+
+      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            {
+              role: "system",
+              content: `You are a light demolition expert for Junky Gurus. The customer has edited their structures list. Recalculate the demolition estimate.
+              Base pricing guidelines:
+              - Small projects (1-2 hours): $250-500
+              - Medium projects (3-5 hours): $500-1,000
+              - Large projects (full day): $1,000-2,000
+              - Multi-day projects: $2,000+`,
+            },
+            {
+              role: "user",
+              content: `Recalculate the demolition estimate for these structures: ${structuresList}. Provide updated labor, debris, and price estimates.`,
+            },
+          ],
+          tools: [
+            {
+              type: "function",
+              function: {
+                name: "analyze_demolition",
+                description: "Provide demolition estimates for the given structures",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    projectType: { type: "string" },
+                    structures: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          name: { type: "string" },
+                          material: { type: "string" },
+                          condition: { type: "string", enum: ["good", "weathered", "damaged", "rotted"] },
+                          estimatedSize: { type: "string" },
+                        },
+                        required: ["name", "material", "condition", "estimatedSize"],
+                        additionalProperties: false,
+                      },
+                    },
+                    scopeOfWork: {
+                      type: "object",
+                      properties: {
+                        complexity: { type: "string", enum: ["simple", "moderate", "complex"] },
+                        estimatedHours: { type: "number" },
+                        crewSize: { type: "number" },
+                        equipmentNeeded: { type: "array", items: { type: "string" } },
+                      },
+                      required: ["complexity", "estimatedHours", "crewSize", "equipmentNeeded"],
+                      additionalProperties: false,
+                    },
+                    debrisEstimate: {
+                      type: "object",
+                      properties: {
+                        volume: { type: "number" },
+                        weight: { type: "number" },
+                        truckLoads: { type: "number" },
+                        disposalNotes: { type: "string" },
+                      },
+                      required: ["volume", "weight", "truckLoads", "disposalNotes"],
+                      additionalProperties: false,
+                    },
+                    priceEstimate: {
+                      type: "object",
+                      properties: {
+                        laborMin: { type: "number" },
+                        laborMax: { type: "number" },
+                        disposalMin: { type: "number" },
+                        disposalMax: { type: "number" },
+                        totalMin: { type: "number" },
+                        totalMax: { type: "number" },
+                        currency: { type: "string", enum: ["USD"] },
+                      },
+                      required: ["laborMin", "laborMax", "disposalMin", "disposalMax", "totalMin", "totalMax", "currency"],
+                      additionalProperties: false,
+                    },
+                    confidence: { type: "string", enum: ["low", "medium", "high"] },
+                    notes: { type: "string" },
+                    safetyConsiderations: { type: "array", items: { type: "string" } },
+                    recommendations: { type: "array", items: { type: "string" } },
+                  },
+                  required: ["projectType", "structures", "scopeOfWork", "debrisEstimate", "priceEstimate", "confidence", "notes", "safetyConsiderations", "recommendations"],
+                  additionalProperties: false,
+                },
+              },
+            },
+          ],
+          tool_choice: { type: "function", function: { name: "analyze_demolition" } },
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("AI gateway error:", response.status, errorText);
+        if (response.status === 429) {
+          return new Response(
+            JSON.stringify({ error: "We're getting a lot of requests right now. Please try again in a moment." }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        if (response.status === 402) {
+          return new Response(
+            JSON.stringify({ error: "AI service temporarily unavailable. Please call us for a quote!" }),
+            { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        throw new Error(`AI gateway error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+      if (!toolCall || toolCall.function.name !== "analyze_demolition") {
+        throw new Error("Invalid AI response format");
+      }
+
+      const analysis = JSON.parse(toolCall.function.arguments);
+      console.log("Recalculated demolition analysis:", JSON.stringify(analysis, null, 2));
+
+      return new Response(JSON.stringify(analysis), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Original image analysis flow
     console.log("Analyzing demolition project with AI...");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {

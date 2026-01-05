@@ -62,6 +62,8 @@ const translations = {
     addItem: "Add item",
     removeItem: "Remove",
     itemsEdited: "Items updated! Your estimate may vary based on actual items.",
+    recalculate: "Recalculate Estimate",
+    recalculating: "Recalculating...",
     bookYourPickup: "Book Your Pickup",
     yourDetails: "Your Details",
     name: "Name *",
@@ -126,6 +128,8 @@ const translations = {
     addItem: "Agregar artículo",
     removeItem: "Quitar",
     itemsEdited: "¡Artículos actualizados! Tu estimado puede variar según los artículos reales.",
+    recalculate: "Recalcular Estimado",
+    recalculating: "Recalculando...",
     bookYourPickup: "Reserva Tu Recolección",
     yourDetails: "Tus Datos",
     name: "Nombre *",
@@ -228,6 +232,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [editedItems, setEditedItems] = useState<JunkItem[] | null>(null);
   const [newItemName, setNewItemName] = useState("");
   const [isEditingItems, setIsEditingItems] = useState(false);
+  const [isRecalculating, setIsRecalculating] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -476,8 +481,44 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
     setSelectedTime("");
     setBookingPhotoUrls([]);
     setAddressData(getEmptyAddress());
-    setFormData({ name: "", email: "", phone: "", notes: "" });
+    setEditedItems(null);
+    setIsEditingItems(false);
   };
+
+  // Recalculate estimate with edited items
+  const recalculateEstimate = useCallback(async () => {
+    if (!editedItems || editedItems.length === 0) return;
+    
+    setIsRecalculating(true);
+    setIsEditingItems(false);
+    
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("analyze-junk", {
+        body: { recalculateItems: editedItems },
+      });
+
+      if (fnError) throw fnError;
+      if (data.error) throw new Error(data.error);
+
+      // Update result with recalculated estimate, keeping edited items
+      setResult(data);
+      setEditedItems(data.items);
+      
+      toast({
+        title: "Estimate Updated",
+        description: "Your estimate has been recalculated based on the updated items.",
+      });
+    } catch (err) {
+      console.error("Recalculation error:", err);
+      toast({
+        title: t.somethingWentWrong,
+        description: t.tryCallingUs,
+        variant: "destructive",
+      });
+    } finally {
+      setIsRecalculating(false);
+    }
+  }, [editedItems, toast, t]);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -803,11 +844,31 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                 </Button>
               </div>
               
-              {editedItems.length !== result.items.length && (
-                <p className="text-xs text-muted-foreground mt-2 italic">
+              {/* Recalculate button and message */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-3 pt-3 border-t border-border">
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={recalculateEstimate}
+                  disabled={isRecalculating || editedItems.length === 0}
+                  className="min-h-[44px] px-4"
+                >
+                  {isRecalculating ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      {t.recalculating}
+                    </>
+                  ) : (
+                    <>
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      {t.recalculate}
+                    </>
+                  )}
+                </Button>
+                <p className="text-xs text-muted-foreground italic">
                   {t.itemsEdited}
                 </p>
-              )}
+              </div>
             </div>
           ) : (
             <div className="flex flex-wrap gap-2">
