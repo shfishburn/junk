@@ -1,15 +1,16 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
-import { Upload, X, Loader2, Camera, Image as ImageIcon } from "lucide-react";
+import { X, Loader2, Camera, Image as ImageIcon } from "lucide-react";
 
 interface BookingPhotoUploadProps {
   onPhotosChange: (urls: string[]) => void;
   maxPhotos?: number;
 }
 
-export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPhotoUploadProps) {
+export const BookingPhotoUpload = forwardRef<HTMLDivElement, BookingPhotoUploadProps>(
+  function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }, ref) {
   const [photos, setPhotos] = useState<{ file: File; preview: string; url?: string; uploading?: boolean }[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const { toast } = useToast();
@@ -134,112 +135,113 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
     });
   };
 
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Camera className="h-4 w-4" />
-        <span>Upload photos of items to remove (optional, up to {maxPhotos})</span>
-      </div>
-
-      {/* Photo previews */}
-      {photos.length > 0 && (
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-          {photos.map((photo, index) => (
-            <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
-              <img
-                src={photo.preview}
-                alt={`Upload ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-              {photo.uploading && (
-                <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
-                  <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                </div>
-              )}
-              {!photo.uploading && (
-                <button
-                  type="button"
-                  onClick={() => removePhoto(index)}
-                  className="absolute top-1 right-1 p-1 bg-background/80 rounded-full hover:bg-destructive hover:text-destructive-foreground transition-colors"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              )}
-            </div>
-          ))}
+    return (
+      <div ref={ref} className="space-y-3">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Camera className="h-4 w-4" />
+          <span>Upload photos of items to remove (optional, up to {maxPhotos})</span>
         </div>
-      )}
 
-      {/* Upload area */}
-      {photos.length < maxPhotos && (
-        <div
-          className={`
-            relative border-2 border-dashed rounded-lg p-4 text-center
-            transition-colors duration-200 min-h-[100px]
-            ${isDragging 
-              ? "border-primary bg-primary/5" 
-              : "border-border"
-            }
-          `}
-          onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-          onDragLeave={() => setIsDragging(false)}
-          onDrop={handleDrop}
-        >
-          {/* Hidden file input - positioned absolutely but still in DOM */}
-          <input
-            ref={(input) => {
-              // Store ref for programmatic click
-              if (input) (window as any).__photoUploadInput = input;
-            }}
-            id="photo-upload-input"
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleInputChange}
-            style={{
-              position: 'absolute',
-              width: '1px',
-              height: '1px',
-              padding: 0,
-              margin: '-1px',
-              overflow: 'hidden',
-              clip: 'rect(0, 0, 0, 0)',
-              whiteSpace: 'nowrap',
-              border: 0,
-            }}
-          />
-          
-          {/* Visible clickable button for better mobile support */}
-          <Button
-            type="button"
-            variant="ghost"
-            className="w-full h-full min-h-[100px] flex flex-col items-center justify-center gap-3 hover:bg-muted/50 px-4 py-6"
-            onClick={() => {
-              const input = document.getElementById('photo-upload-input') as HTMLInputElement;
-              if (input) {
-                input.click();
+        {/* Photo previews */}
+        {photos.length > 0 && (
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+            {photos.map((photo, index) => (
+              <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+                <img
+                  src={photo.preview}
+                  alt={`Upload ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                {photo.uploading && (
+                  <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
+                    <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                  </div>
+                )}
+                {!photo.uploading && (
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(index)}
+                    className="absolute top-1 right-1 p-1 bg-background/80 rounded-full hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Upload area */}
+        {photos.length < maxPhotos && (
+          <div
+            className={`
+              relative border-2 border-dashed rounded-lg p-4 text-center
+              transition-colors duration-200 min-h-[100px]
+              ${isDragging 
+                ? "border-primary bg-primary/5" 
+                : "border-border"
               }
-            }}
+            `}
+            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+            onDragLeave={() => setIsDragging(false)}
+            onDrop={handleDrop}
           >
-            <div className="p-3 bg-muted rounded-full">
-              <ImageIcon className="h-6 w-6 text-muted-foreground" />
-            </div>
-            <div className="space-y-1 text-center">
-              <p className="text-sm font-medium text-foreground">
-                {photos.length > 0 
-                  ? "Add more photos"
-                  : "Tap to select photos"
+            {/* Hidden file input - positioned absolutely but still in DOM */}
+            <input
+              ref={(input) => {
+                // Store ref for programmatic click
+                if (input) (window as any).__photoUploadInput = input;
+              }}
+              id="photo-upload-input"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleInputChange}
+              style={{
+                position: 'absolute',
+                width: '1px',
+                height: '1px',
+                padding: 0,
+                margin: '-1px',
+                overflow: 'hidden',
+                clip: 'rect(0, 0, 0, 0)',
+                whiteSpace: 'nowrap',
+                border: 0,
+              }}
+            />
+            
+            {/* Visible clickable button for better mobile support */}
+            <Button
+              type="button"
+              variant="ghost"
+              className="w-full h-full min-h-[100px] flex flex-col items-center justify-center gap-3 hover:bg-muted/50 px-4 py-6"
+              onClick={() => {
+                const input = document.getElementById('photo-upload-input') as HTMLInputElement;
+                if (input) {
+                  input.click();
                 }
-              </p>
-              {photos.length > 0 && (
-                <p className="text-xs text-muted-foreground">
-                  {photos.length} of {maxPhotos} uploaded
+              }}
+            >
+              <div className="p-3 bg-muted rounded-full">
+                <ImageIcon className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <div className="space-y-1 text-center">
+                <p className="text-sm font-medium text-foreground">
+                  {photos.length > 0 
+                    ? "Add more photos"
+                    : "Tap to select photos"
+                  }
                 </p>
-              )}
-            </div>
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-}
+                {photos.length > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    {photos.length} of {maxPhotos} uploaded
+                  </p>
+                )}
+              </div>
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
+);
