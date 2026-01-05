@@ -67,20 +67,25 @@ serve(async (req) => {
               - Patio/Concrete (per 100 sq ft): $300-600
               - Flooring removal (per 100 sq ft): $150-300
               - Cabinet removal (kitchen set): $200-400
+              - Drywall removal (per room): $200-400
+              - Bathroom demo (full): $400-800
+              - Built-in shelving: $100-250
+              - Stairs/railing: $150-350
               
               MATERIAL SURCHARGES:
-              - Composite/Trex decking: +20-30%
-              - Concrete structures: +25-40%
-              - Pressure-treated/heavy lumber: +10-20%
-              - Rotted/unsafe structures: +15-25% (extra care needed)
+              - Composite/Trex: +20-30%
+              - Concrete: +25-40%
+              - Pressure-treated lumber: +10-20%
+              - Rotted/unsafe: +15-25%
+              - Brick/stone: +20-35%
               
-              DEBRIS DISPOSAL (if not included above):
+              DEBRIS DISPOSAL:
               - 1/4 Truck: $250-375
               - 1/2 Truck: $375-500
               - 3/4 Truck: $500-625
               - Full Truck: $625-815
               
-              Calculate total = structure demolition cost + any additional disposal.`,
+              Calculate total = structure demolition cost + material surcharges + additional disposal.`,
             },
             {
               role: "user",
@@ -212,13 +217,114 @@ serve(async (req) => {
             Analyze the image and provide accurate structure identification and pricing.
             Be helpful and slightly humorous in your notes.
             
-            Light demolition services we offer:
-            - Deck and patio removal
-            - Shed and playhouse teardown
-            - Fence removal
-            - Flooring removal
-            - Cabinet removal
-            - Small structure demolition
+            STRUCTURE IDENTIFICATION VOCABULARY (use these specific names):
+            
+            DECKS & PATIOS:
+            - Small Deck, Medium Deck, Large Deck, Multi-Level Deck, Elevated Deck
+            - Ground-Level Deck, Floating Deck, Pool Deck, Rooftop Deck
+            - Wood Deck, Composite Deck, Trex Deck, Pressure-Treated Deck, Cedar Deck, Redwood Deck
+            - Concrete Patio, Paver Patio, Brick Patio, Flagstone Patio, Stamped Concrete Patio
+            - Covered Patio, Enclosed Patio, Screened Porch, Three-Season Porch
+            - Deck Stairs, Deck Railing, Deck Boards, Deck Joists
+            - Porch, Front Porch, Back Porch, Wrap-Around Porch, Farmer's Porch
+            
+            SHEDS & OUTBUILDINGS:
+            - Small Shed, Medium Shed, Large Shed, Storage Shed
+            - Garden Shed, Tool Shed, Potting Shed, Bike Shed
+            - Wood Shed, Metal Shed, Plastic/Resin Shed, Vinyl Shed
+            - Lean-To Shed, Barn-Style Shed, Gable Shed, Saltbox Shed
+            - Playhouse, Kids Playhouse, Wooden Playhouse
+            - Workshop, Small Workshop, Garage-Style Shed
+            - Greenhouse, Hoop House, Cold Frame
+            - Chicken Coop, Animal Shelter, Dog House (large)
+            - Pump House, Well House
+            - Outhouse, Privy
+            
+            FENCING & GATES:
+            - Wood Fence, Cedar Fence, Pine Fence, Pressure-Treated Fence
+            - Privacy Fence, Picket Fence, Split-Rail Fence, Board-on-Board Fence
+            - Stockade Fence, Shadowbox Fence, Lattice Fence
+            - Chain Link Fence, Metal Fence, Iron Fence, Wrought Iron Fence
+            - Vinyl Fence, PVC Fence, Composite Fence
+            - Farm Fence, Ranch Fence, Post-and-Rail Fence, Horse Fence
+            - Fence Gate, Driveway Gate, Garden Gate, Arbor Gate
+            - Fence Posts, Fence Panels, Fence Rails
+            - Retaining Wall (small), Garden Wall, Block Wall, Timber Retaining Wall
+            
+            OUTDOOR STRUCTURES:
+            - Gazebo (Small), Gazebo (Large), Octagonal Gazebo, Square Gazebo
+            - Pergola, Arbor, Trellis, Garden Arch
+            - Carport, Covered Parking Structure
+            - Awning, Patio Cover, Shade Structure
+            - Outdoor Kitchen, Built-In Grill Island
+            - Fire Pit (built-in), Outdoor Fireplace, Pizza Oven
+            - Hot Tub, Spa, Jacuzzi, Hot Tub Surround, Hot Tub Deck
+            - Above Ground Pool, Pool Surround, Pool Deck, Pool Fence
+            - Pond, Fountain, Water Feature
+            
+            PLAY EQUIPMENT:
+            - Swing Set, Wooden Swing Set, Metal Swing Set
+            - Playset, Jungle Gym, Play Structure, Climbing Structure
+            - Slide, Tube Slide, Spiral Slide
+            - Sandbox, Sandpit
+            - Treehouse, Elevated Playhouse
+            - Trampoline, In-Ground Trampoline
+            - Basketball Hoop, Portable Basketball Goal, In-Ground Basketball Hoop
+            - Batting Cage, Sport Court
+            
+            INTERIOR DEMOLITION:
+            - Kitchen Cabinets, Upper Cabinets, Lower Cabinets, Cabinet Set
+            - Bathroom Vanity, Vanity Cabinet
+            - Built-In Shelving, Built-In Cabinets, Built-In Desk
+            - Closet Shelving, Closet Organizer System
+            - Flooring (Hardwood), Flooring (Laminate), Flooring (Tile), Flooring (Vinyl), Flooring (Carpet)
+            - Tile Floor, Ceramic Tile, Porcelain Tile
+            - Linoleum, Sheet Vinyl, VCT Tile
+            - Drywall, Sheetrock, Plaster Walls, Lath and Plaster
+            - Drop Ceiling, Suspended Ceiling, Ceiling Tiles
+            - Popcorn Ceiling, Textured Ceiling
+            - Interior Walls, Partition Walls, Non-Load-Bearing Walls
+            - Fireplace Surround, Mantle, Hearth, Fireplace Insert
+            - Bathtub, Shower Stall, Shower Enclosure, Glass Shower Door
+            - Toilet, Sink, Pedestal Sink, Bathroom Fixtures
+            - Countertop, Granite Countertop, Laminate Countertop, Tile Countertop
+            - Backsplash, Tile Backsplash
+            - Stairs, Staircase, Stair Railing, Banister
+            - Doors, Interior Doors, Exterior Doors, French Doors, Sliding Door
+            - Windows, Window Frames
+            
+            CONCRETE & MASONRY:
+            - Concrete Slab, Concrete Pad, Concrete Walkway
+            - Concrete Driveway, Asphalt Driveway
+            - Concrete Steps, Concrete Stairs, Stoop
+            - Concrete Block Wall, CMU Wall, Cinder Block Wall
+            - Brick Wall, Brick Veneer, Brick Columns
+            - Stone Wall, Flagstone, Pavers
+            - Retaining Wall, Landscape Wall
+            - Foundation (small section), Footer
+            
+            OTHER STRUCTURES:
+            - Dock, Boat Dock, Floating Dock
+            - Ramp, Wheelchair Ramp, Loading Ramp
+            - Deck/Patio Furniture (built-in), Built-In Benches, Planters (built-in)
+            - Light Posts, Lamp Posts, Mailbox Post
+            - Flagpole, Sign Post, Utility Pole
+            
+            MATERIALS TO IDENTIFY:
+            - Wood (Pine, Cedar, Redwood, Pressure-Treated, Painted, Stained)
+            - Composite (Trex, TimberTech, Fiberon, Azek)
+            - Metal (Steel, Aluminum, Iron, Wrought Iron, Chain Link)
+            - Concrete (Poured, Block, Precast)
+            - Brick (Standard, Pavers)
+            - Stone (Natural, Manufactured, Flagstone, Slate)
+            - Vinyl/PVC, Plastic, Resin
+            - Tile (Ceramic, Porcelain, Natural Stone)
+            
+            CONDITIONS TO ASSESS:
+            - Good: Solid, minimal wear, structurally sound
+            - Weathered: Sun-faded, some wear, still solid
+            - Damaged: Visible damage, broken parts, but mostly intact
+            - Rotted: Wood rot, decay, unsafe, may crumble
             
             STRUCTURE-SPECIFIC PRICING (labor + disposal included):
             - Small deck (under 100 sq ft): $300-500
@@ -240,6 +346,10 @@ serve(async (req) => {
             - Flooring removal (per 100 sq ft): $150-300
             - Cabinet removal (kitchen set): $200-400
             - Drywall removal (per room): $200-400
+            - Bathroom demolition (full): $400-800
+            - Built-in shelving/closet organizer: $100-250
+            - Interior door removal: $25-50 each
+            - Stairs/railing removal: $150-350
             
             MATERIAL SURCHARGES (add to base price):
             - Composite/Trex decking: +20-30%
@@ -247,6 +357,7 @@ serve(async (req) => {
             - Pressure-treated/heavy lumber: +10-20%
             - Rotted/unsafe structures: +15-25% (extra safety measures)
             - Second story or difficult access: +15-25%
+            - Brick/stone: +20-35%
             
             DEBRIS DISPOSAL (if additional loads needed):
             - 1/4 Truck: $250-375
@@ -255,7 +366,7 @@ serve(async (req) => {
             - Full Truck: $625-815
             - Multiple loads: multiply accordingly
             
-            IMPORTANT: Estimate structure sizes from the image. Be accurate with dimensions.
+            IMPORTANT: Use specific structure names from vocabulary above. Estimate dimensions carefully. Note materials and conditions accurately.
             Total = Sum of all structure costs + material surcharges + extra disposal if needed.`,
           },
           {
