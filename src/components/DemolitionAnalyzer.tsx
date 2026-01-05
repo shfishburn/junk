@@ -1018,11 +1018,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             )}
           </div>
           
-          <div className="flex flex-col items-center gap-1.5 text-center px-4 max-w-xs mx-auto">
-            <h3 className="font-semibold text-charcoal text-base leading-snug">
+          <div className="flex flex-col items-center gap-1.5 text-center px-4 mx-auto w-full max-w-[200px] sm:max-w-xs">
+            <h3 className="font-semibold text-charcoal text-base leading-snug whitespace-normal">
               {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
-            <p className="text-sm text-muted-foreground font-normal leading-relaxed text-balance">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed whitespace-normal">
               {t.dragDrop}
             </p>
           </div>
