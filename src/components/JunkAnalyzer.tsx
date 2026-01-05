@@ -851,22 +851,42 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
           isDragging 
             ? "border-primary bg-primary/5" 
-            : "border-border hover:border-primary/50 hover:bg-section-alt"
+            : "border-border"
         }`}
         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
       >
+        {/* Hidden file input */}
         <input
+          id="junk-upload-input"
           type="file"
           accept="image/*"
           multiple
-          capture="environment"
           onChange={handleInputChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          style={{
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            padding: 0,
+            margin: '-1px',
+            overflow: 'hidden',
+            clip: 'rect(0, 0, 0, 0)',
+            whiteSpace: 'nowrap',
+            border: 0,
+          }}
         />
         
-        <div className="space-y-4">
+        {/* Visible clickable button for better mobile support */}
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full h-full min-h-[120px] flex flex-col items-center justify-center gap-4 hover:bg-section-alt"
+          onClick={() => {
+            const input = document.getElementById('junk-upload-input') as HTMLInputElement;
+            if (input) input.click();
+          }}
+        >
           <div className="flex justify-center gap-4">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
               <Upload className="h-6 w-6 text-primary" />
@@ -880,11 +900,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             <p className="font-semibold text-charcoal">
               {t.dropPhotos}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground mt-1 font-normal">
               {t.takePics}
             </p>
           </div>
-        </div>
+        </Button>
       </div>
 
       <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">

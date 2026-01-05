@@ -860,27 +860,46 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
     <div className="space-y-4">
       <div
         className={`
-          relative p-8 rounded-xl border-2 border-dashed transition-all duration-200 cursor-pointer
+          relative p-8 rounded-xl border-2 border-dashed transition-all duration-200
           ${isDragging 
             ? "border-primary bg-primary/5 scale-[1.02]" 
-            : "border-border hover:border-primary/50 hover:bg-secondary/50"
+            : "border-border"
           }
         `}
         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
-        onClick={() => document.getElementById("demolition-upload")?.click()}
       >
+        {/* Hidden file input */}
         <input
+          id="demolition-upload-input"
           type="file"
-          id="demolition-upload"
-          className="hidden"
           accept="image/*"
           multiple
           onChange={handleInputChange}
+          style={{
+            position: 'absolute',
+            width: '1px',
+            height: '1px',
+            padding: 0,
+            margin: '-1px',
+            overflow: 'hidden',
+            clip: 'rect(0, 0, 0, 0)',
+            whiteSpace: 'nowrap',
+            border: 0,
+          }}
         />
         
-        <div className="text-center space-y-4">
+        {/* Visible clickable button for better mobile support */}
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full h-full min-h-[120px] flex flex-col items-center justify-center gap-4 hover:bg-secondary/50"
+          onClick={() => {
+            const input = document.getElementById('demolition-upload-input') as HTMLInputElement;
+            if (input) input.click();
+          }}
+        >
           <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
             {isDragging ? (
               <Sparkles className="h-8 w-8 text-primary animate-pulse" />
@@ -893,16 +912,16 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             <h3 className="font-semibold text-charcoal mb-1">
               {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground font-normal">
               {t.dragDrop}
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground font-normal">
             <Camera className="h-4 w-4" />
             <span>{t.fileTypes}</span>
           </div>
-        </div>
+        </Button>
       </div>
 
       <p className="text-xs text-center text-muted-foreground">
