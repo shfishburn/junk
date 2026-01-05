@@ -172,41 +172,66 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
 
       {/* Upload area */}
       {photos.length < maxPhotos && (
-        <label
-          htmlFor="photo-upload"
+        <div
           className={`
-            relative block border-2 border-dashed rounded-lg p-4 text-center cursor-pointer
+            relative border-2 border-dashed rounded-lg p-4 text-center
             transition-colors duration-200 min-h-[100px]
             ${isDragging 
               ? "border-primary bg-primary/5" 
-              : "border-border hover:border-primary/50 hover:bg-muted/50"
+              : "border-border"
             }
           `}
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
         >
+          {/* Hidden file input - positioned absolutely but still in DOM */}
           <input
-            id="photo-upload"
+            ref={(input) => {
+              // Store ref for programmatic click
+              if (input) (window as any).__photoUploadInput = input;
+            }}
+            id="photo-upload-input"
             type="file"
-            accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif"
+            accept="image/*"
             multiple
             onChange={handleInputChange}
-            className="sr-only"
-            aria-label="Upload photos"
+            style={{
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              padding: 0,
+              margin: '-1px',
+              overflow: 'hidden',
+              clip: 'rect(0, 0, 0, 0)',
+              whiteSpace: 'nowrap',
+              border: 0,
+            }}
           />
-          <div className="flex flex-col items-center justify-center gap-2 pointer-events-none">
+          
+          {/* Visible clickable button for better mobile support */}
+          <Button
+            type="button"
+            variant="ghost"
+            className="w-full h-full min-h-[80px] flex flex-col items-center justify-center gap-2 hover:bg-muted/50"
+            onClick={() => {
+              const input = document.getElementById('photo-upload-input') as HTMLInputElement;
+              if (input) {
+                input.click();
+              }
+            }}
+          >
             <div className="p-2 bg-muted rounded-full">
               <ImageIcon className="h-5 w-5 text-muted-foreground" />
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground font-normal">
               {photos.length > 0 
                 ? `Add more photos (${photos.length}/${maxPhotos})`
                 : "Tap to select photos"
               }
             </p>
-          </div>
-        </label>
+          </Button>
+        </div>
       )}
     </div>
   );
