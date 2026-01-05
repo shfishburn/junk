@@ -101,38 +101,38 @@ const AIEstimator = () => {
         pagePurpose="AI-powered photo estimator tool. Skip the sales dance - upload photos to get instant, accurate price estimates with no obligation."
       />
       {/* Hero */}
-      <section className="py-12 md:py-20 bg-section-alt">
-        <div className="container">
+      <section className="py-8 sm:py-12 md:py-20 bg-section-alt">
+        <div className="container px-4 sm:px-6">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 sm:mb-6">
               <Camera className="h-4 w-4" />
               {t.badge}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
               {t.heroTitle}
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
               {t.heroSubtitle}
             </p>
             
             {/* Anxiety Neutralizers */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
-              <div className="flex-1 p-4 rounded-xl bg-destructive/5 border border-destructive/10">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-2xl mx-auto">
+              <div className="flex-1 p-4 sm:p-5 rounded-xl bg-destructive/5 border border-destructive/10">
                 <p className="text-sm font-medium text-destructive/80 mb-3">{t.noMore}</p>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5 sm:space-y-2">
                   {t.noMoreList.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <li key={item} className="flex items-center gap-2.5 sm:gap-2 text-sm text-muted-foreground">
                       <XCircle className="h-4 w-4 text-destructive/60 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="flex-1 p-4 rounded-xl bg-primary/5 border border-primary/10">
+              <div className="flex-1 p-4 sm:p-5 rounded-xl bg-primary/5 border border-primary/10">
                 <p className="text-sm font-medium text-primary mb-3">{t.youGet}</p>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5 sm:space-y-2">
                   {t.youGetList.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <li key={item} className="flex items-center gap-2.5 sm:gap-2 text-sm text-muted-foreground">
                       <CheckCircle className="h-4 w-4 text-primary/60 flex-shrink-0" />
                       {item}
                     </li>
@@ -145,18 +145,20 @@ const AIEstimator = () => {
       </section>
 
       {/* Analyzer Section with Tabs */}
-      <section className="py-16 md:py-24">
-        <div className="container">
+      <section className="py-10 sm:py-16 md:py-24">
+        <div className="container px-4 sm:px-6">
           <div className="max-w-2xl mx-auto">
             <Tabs defaultValue="junk" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="junk" className="flex items-center gap-2">
+              <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 h-12 sm:h-10">
+                <TabsTrigger value="junk" className="flex items-center gap-2 text-sm sm:text-sm py-3 sm:py-1.5 min-h-[48px] sm:min-h-0">
                   <Trash2 className="h-4 w-4" />
-                  {t.junkRemoval}
+                  <span className="hidden xs:inline">{t.junkRemoval}</span>
+                  <span className="xs:hidden">Junk</span>
                 </TabsTrigger>
-                <TabsTrigger value="demolition" className="flex items-center gap-2">
+                <TabsTrigger value="demolition" className="flex items-center gap-2 text-sm sm:text-sm py-3 sm:py-1.5 min-h-[48px] sm:min-h-0">
                   <Hammer className="h-4 w-4" />
-                  {t.lightDemolition}
+                  <span className="hidden xs:inline">{t.lightDemolition}</span>
+                  <span className="xs:hidden">Demolition</span>
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="junk">
@@ -171,33 +173,33 @@ const AIEstimator = () => {
       </section>
 
       {/* Tips Section */}
-      <section className="py-16 md:py-24 bg-section-alt">
-        <div className="container">
+      <section className="py-10 sm:py-16 md:py-24 bg-section-alt">
+        <div className="container px-4 sm:px-6">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-charcoal text-center mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-charcoal text-center mb-6 sm:mb-8">
               {t.tipsTitle}
             </h2>
             
             <Tabs defaultValue="junk-tips" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="junk-tips">{t.junkRemoval}</TabsTrigger>
-                <TabsTrigger value="demolition-tips">{t.lightDemolition}</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 h-12 sm:h-10">
+                <TabsTrigger value="junk-tips" className="py-3 sm:py-1.5 min-h-[48px] sm:min-h-0">{t.junkRemoval}</TabsTrigger>
+                <TabsTrigger value="demolition-tips" className="py-3 sm:py-1.5 min-h-[48px] sm:min-h-0">{t.lightDemolition}</TabsTrigger>
               </TabsList>
               
               <TabsContent value="junk-tips">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                   {t.junkTips.map((tip, index) => {
                     const Icon = tipIcons[index];
                     return (
                       <div
                         key={tip.title}
-                        className="p-6 rounded-xl bg-card border border-border text-center"
+                        className="p-5 sm:p-6 rounded-xl bg-card border border-border text-center"
                       >
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3 sm:mb-4">
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                         <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
-                        <p className="text-sm text-muted-foreground">{tip.description}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{tip.description}</p>
                       </div>
                     );
                   })}
@@ -205,19 +207,19 @@ const AIEstimator = () => {
               </TabsContent>
               
               <TabsContent value="demolition-tips">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                   {t.demolitionTips.map((tip, index) => {
                     const Icon = tipIcons[index];
                     return (
                       <div
                         key={tip.title}
-                        className="p-6 rounded-xl bg-card border border-border text-center"
+                        className="p-5 sm:p-6 rounded-xl bg-card border border-border text-center"
                       >
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3 sm:mb-4">
                           <Icon className="h-6 w-6 text-primary" />
                         </div>
                         <h3 className="font-semibold text-charcoal mb-2">{tip.title}</h3>
-                        <p className="text-sm text-muted-foreground">{tip.description}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{tip.description}</p>
                       </div>
                     );
                   })}
@@ -229,29 +231,29 @@ const AIEstimator = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24">
-        <div className="container">
+      <section className="py-10 sm:py-16 md:py-24">
+        <div className="container px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-4">
               {t.ctaTitle}
             </h2>
             <p className="text-muted-foreground mb-2">
               {t.ctaSubtitle}
             </p>
-            <p className="text-sm text-muted-foreground mb-8">
+            <p className="text-sm text-muted-foreground mb-6 sm:mb-8">
               {t.ctaNote}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
+              <Button asChild size="lg" className="min-h-[48px]">
                 <Link to={isSpanish ? "/espanol#contacto" : "/contact"}>{t.contactUs}</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="min-h-[48px]">
                 <a href="tel:+13606109233">
                   <Phone className="mr-2 h-4 w-4" />
                   (360) 610-9233
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="min-h-[48px]">
                 <a href="tel:+13604222428">
                   <Phone className="mr-2 h-4 w-4" />
                   (360) 422-2428

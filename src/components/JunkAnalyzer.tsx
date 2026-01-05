@@ -989,22 +989,22 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <Button
           type="button"
           variant="ghost"
-          className="w-full h-full min-h-[140px] flex flex-col items-center justify-center gap-5 hover:bg-section-alt px-6 py-8"
+          className="w-full h-full min-h-[180px] sm:min-h-[160px] flex flex-col items-center justify-center gap-4 sm:gap-5 hover:bg-section-alt px-4 sm:px-6 py-6 sm:py-8 active:scale-[0.98] transition-transform"
           onClick={() => {
             const input = document.getElementById('junk-upload-input') as HTMLInputElement;
             if (input) input.click();
           }}
         >
-          <div className="flex justify-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-              <Upload className="h-7 w-7 text-primary" />
+          <div className="flex justify-center gap-3 sm:gap-4">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <Upload className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
             </div>
-            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-              <Camera className="h-7 w-7 text-primary" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <Camera className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
             </div>
           </div>
           
-          <div className="flex flex-col items-center gap-1.5 text-center px-4 mx-auto w-full max-w-[200px] sm:max-w-xs">
+          <div className="flex flex-col items-center gap-2 sm:gap-1.5 text-center px-2 sm:px-4 mx-auto w-full max-w-[220px] sm:max-w-xs">
             <p className="font-semibold text-charcoal text-base leading-snug whitespace-normal">
               {t.dropPhotos}
             </p>
