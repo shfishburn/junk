@@ -44,8 +44,8 @@ export function TrustSignals() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-12 sm:py-16 md:py-24 bg-section-alt">
-      <div className="container px-4 sm:px-6">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-section-alt">
+      <div className="container max-w-6xl px-4 sm:px-6">
         {/* Stats bar */}
         <div
           className={`grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 pb-8 sm:pb-12 border-b border-border transition-all duration-700 ${
@@ -67,7 +67,7 @@ export function TrustSignals() {
         </div>
 
         {/* Trust signals grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {signals.map((signal, index) => (
             <div
               key={signal.title}

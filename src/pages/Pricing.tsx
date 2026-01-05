@@ -159,14 +159,14 @@ const Pricing = () => {
         </script>
       </Helmet>
       {/* Hero */}
-      <section className="py-12 md:py-20 bg-section-alt">
-        <div className="container">
+      <section className="py-12 md:py-16 lg:py-20 bg-section-alt">
+        <div className="container max-w-6xl">
           <Breadcrumbs items={[{ label: "Pricing" }]} />
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-charcoal mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal mb-4 md:mb-5 leading-tight">
               Transparent Pricing (No Surprise Fees, We Promise)
             </h1>
-            <p className="text-lg text-muted-foreground mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed max-w-2xl">
               We're bad at math, but we're great at being upfront. Here's how our pricing works — no gimmicks, no bait-and-switch.
             </p>
             <DiscountBadge variant="banner" />
@@ -175,23 +175,23 @@ const Pricing = () => {
       </section>
 
       {/* AI Estimator Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-primary/5 to-background">
-        <div className="container">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-primary/5 to-background">
+        <div className="container max-w-6xl">
           <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-8">
+            <div className="text-center mb-6 md:mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                 <Sparkles className="h-4 w-4" />
                 New! AI-Powered Estimates
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-3 md:mb-4 leading-tight">
                 Too Lazy to Describe It? Just Show Us.
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
                 Snap a photo of your junk pile and our AI will estimate the cost. It's seen some things. It won't judge.
               </p>
             </div>
             
-            <div className="p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
+            <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
               <JunkAnalyzer />
             </div>
           </div>
@@ -199,22 +199,22 @@ const Pricing = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 md:py-24">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-charcoal text-center mb-12">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24">
+        <div className="container max-w-6xl">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal text-center mb-8 md:mb-12 leading-tight">
             How It Works
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
             {steps.map((step) => (
               <div key={step.step} className="text-center">
-                <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
-                  <step.icon className="h-8 w-8 text-primary" />
+                <div className="relative inline-flex items-center justify-center w-14 md:w-16 h-14 md:h-16 rounded-full bg-primary/10 mb-4 md:mb-6">
+                  <step.icon className="h-7 md:h-8 w-7 md:w-8 text-primary" />
                   <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
                     {step.step}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold text-charcoal mb-3">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
+                <h3 className="text-lg md:text-xl font-semibold text-charcoal mb-2 md:mb-3 leading-snug">{step.title}</h3>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">{step.description}</p>
               </div>
             ))}
           </div>
@@ -222,13 +222,13 @@ const Pricing = () => {
       </section>
 
       {/* Pricing Sheet */}
-      <section className="py-16 md:py-24 bg-section-alt">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-section-alt">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-3 md:mb-4 leading-tight">
               Pricing Guide
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Here's a ballpark of what things cost. Final prices depend on weight, location, and other factors — but this gives you a solid idea.
             </p>
           </div>

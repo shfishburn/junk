@@ -43,8 +43,8 @@ export function HeroSection() {
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-overlay/60" />
 
-      <div className="container relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+      <div className="container max-w-6xl relative z-10">
+        <div className="max-w-3xl mx-auto text-center lg:max-w-4xl">
           {/* Urgency Badge */}
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/90 text-primary-foreground text-sm font-medium mb-6 animate-fade-in"
