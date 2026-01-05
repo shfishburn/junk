@@ -209,13 +209,36 @@ serve(async (req) => {
             Analyze the image and provide accurate item identification and pricing.
             Be helpful and slightly humorous in your notes.
             
-            ITEM IDENTIFICATION VOCABULARY (identify items using these specific names):
+            CRITICAL IDENTIFICATION RULES:
+            1. BE SPECIFIC - Never use generic terms. Identify exact item types.
+            2. DISTINGUISH SEATING CAREFULLY:
+               - RECLINER = Single seat with reclining mechanism (footrest pops out, back reclines)
+               - RECLINING CHAIR = Same as recliner, single person seat that reclines
+               - LOVESEAT = Two-person seat (fits 2 people side by side), may or may not recline
+               - RECLINING LOVESEAT = Two-person seat with reclining mechanism on one or both sides
+               - SOFA/COUCH = Three+ person seat (fits 3+ people), typically 7+ feet wide
+               - RECLINING SOFA = Three+ seat sofa with reclining ends
+               - SECTIONAL = L-shaped or larger multi-piece sofa
+            3. COUNT SEATS to determine size: 1 seat = chair/recliner, 2 seats = loveseat, 3+ seats = sofa
+            4. Look for reclining mechanisms (handles, buttons, footrests) - if present, specify "Reclining"
+            5. DO NOT identify clutter, fabric, or background items as "bags" unless they are actual bags
+            6. Only identify items that actually need removal - ignore background/context items
             
-            FURNITURE - Living Room:
-            - Sofa, Couch, Sectional Sofa, L-Shaped Sectional, U-Shaped Sectional, Sleeper Sofa, Futon
-            - Loveseat, Settee, Chaise Lounge, Fainting Couch, Daybed
-            - Recliner, Armchair, Accent Chair, Wing Chair, Club Chair, Papasan Chair, Egg Chair
-            - Ottoman, Footstool, Pouf, Storage Ottoman
+            ITEM IDENTIFICATION VOCABULARY (use these SPECIFIC names):
+            
+            FURNITURE - Living Room (SEATING - be precise!):
+            - Recliner, Reclining Chair, Rocker Recliner, Wall-Hugger Recliner, Power Recliner, Leather Recliner
+            - Loveseat, Reclining Loveseat, Power Reclining Loveseat, Leather Loveseat
+            - Sofa, Couch, Reclining Sofa, Power Reclining Sofa, Leather Sofa
+            - Sectional Sofa, L-Shaped Sectional, U-Shaped Sectional, Reclining Sectional
+            - Sleeper Sofa, Sofa Bed, Pull-Out Couch, Futon
+            - Settee, Chaise Lounge, Fainting Couch, Daybed
+            - Armchair, Accent Chair, Wing Chair, Club Chair, Swivel Chair
+            - Papasan Chair, Egg Chair, Hanging Chair, Bean Bag Chair
+            - Glider, Rocker, Rocking Chair, Nursing Chair
+            
+            FURNITURE - Living Room (OTHER):
+            - Ottoman, Footstool, Pouf, Storage Ottoman, Recliner Footrest
             - Coffee Table, End Table, Side Table, Accent Table, Console Table, Sofa Table
             - TV Stand, Entertainment Center, Media Console, TV Cabinet, AV Stand
             - Bookshelf, Bookcase, Display Cabinet, Curio Cabinet, China Cabinet
@@ -364,9 +387,13 @@ serve(async (req) => {
             2. For 4+ items or large volumes: Use TRUCK LOAD pricing based on total volume
             3. Always use whichever method gives the HIGHER price (minimum viable rate)
             
-            SINGLE ITEM PRICES (memorize these):
-            - Sofa/Couch: $75-150, Large Sectional: $150-250
-            - Loveseat: $60-100, Recliner: $50-85
+            SINGLE ITEM PRICES (memorize these - use SPECIFIC item names):
+            - Recliner: $50-85, Reclining Chair: $50-85, Power Recliner: $65-100
+            - Loveseat: $60-100, Reclining Loveseat: $75-125
+            - Sofa/Couch: $75-150, Reclining Sofa: $100-175
+            - Large Sectional: $150-250, Reclining Sectional: $175-275
+            - Armchair/Accent Chair: $40-75
+            - Sleeper Sofa: $100-175, Futon: $50-85
             - Mattress (any size): $50-100, Box Spring: $40-75
             - Bed Frame: $40-75, Bunk Bed: $100-175
             - Dresser/Chest: $50-100, Armoire/Wardrobe: $75-150
@@ -391,7 +418,7 @@ serve(async (req) => {
             - Trampoline: $100-200
             - Shed (small): $200-400
             - Lawn Mower (push): $35-60, Riding Mower: $100-175
-            - Boxes/Bags (each): $10-25
+            - Boxes/Bags (each): $10-25 (only if ACTUAL bags/boxes, not clutter)
             - Safe/Gun Safe: $100-200
             - Wheelchair/Medical Equipment: $50-100
             
@@ -404,16 +431,21 @@ serve(async (req) => {
             - Full Truck (100%): $625-815
             
             VOLUME REFERENCE (cubic yards):
-            - Couch: 1-1.5 cy, Loveseat: 0.75 cy, Recliner: 0.5 cy
+            - Sofa: 1-1.5 cy, Reclining Sofa: 1.25-1.75 cy
+            - Loveseat: 0.75 cy, Reclining Loveseat: 0.85 cy
+            - Recliner: 0.5-0.6 cy
             - Mattress: 0.5-0.75 cy, Dresser: 0.5-0.75 cy
             - Refrigerator: 0.75-1 cy, Washer/Dryer: 0.5-0.75 cy each
-            - Desk: 0.5-0.75 cy, Boxes/Bags: 0.1-0.25 cy each
             - Full truck capacity = ~15 cubic yards
             
             WEIGHT SURCHARGES (add 10-20% for):
             - Concrete/brick, safes, pianos, hot tubs, cast iron, heavy appliances
             
-            IMPORTANT: Be accurate! Use specific item names from the vocabulary above. Count items carefully, estimate sizes properly.`,
+            CRITICAL REMINDERS:
+            - Use SPECIFIC names: "Reclining Loveseat" not "Sofa", "Recliner" not "Chair"
+            - Count seats: 1=recliner/chair, 2=loveseat, 3+=sofa
+            - Only identify actual items for removal, not background items
+            - "Bags" = actual garbage bags or storage bags, not random clutter`,
           },
           {
             role: "user",
