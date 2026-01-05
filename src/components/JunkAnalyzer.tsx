@@ -219,6 +219,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [isRestoredFromStorage, setIsRestoredFromStorage] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
@@ -270,19 +271,21 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
         localStorage.removeItem('junk-estimate');
       }
     }
+    // Mark restoration as complete so save effect can run
+    setIsRestoredFromStorage(true);
   }, []);
 
   // Save estimate and images to localStorage when they change
+  // Only run after restoration is complete to avoid overwriting saved data
   useEffect(() => {
+    if (!isRestoredFromStorage) return;
+    
     // Save if we have either a result or images
     if (result || imagePreviews.length > 0) {
       try {
-        const existing = localStorage.getItem('junk-estimate');
-        const existingData = existing ? JSON.parse(existing) : {};
-        
         localStorage.setItem('junk-estimate', JSON.stringify({
-          result: result || existingData.result || null,
-          images: imagePreviews.length > 0 ? imagePreviews : (existingData.images || []),
+          result: result,
+          images: imagePreviews,
           timestamp: Date.now()
         }));
       } catch (e) {
@@ -298,7 +301,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
         }
       }
     }
-  }, [result, imagePreviews]);
+  }, [result, imagePreviews, isRestoredFromStorage]);
 
   const handleFiles = useCallback(async (files: FileList) => {
     const validFiles: File[] = [];
