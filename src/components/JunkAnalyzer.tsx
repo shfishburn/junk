@@ -390,6 +390,70 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
+  // Add more photos to existing set (for revising estimate)
+  const addMorePhotos = useCallback(async (files: FileList) => {
+    const validFiles: File[] = [];
+    
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.startsWith("image/")) continue;
+      if (file.size > 10 * 1024 * 1024) continue;
+      validFiles.push(file);
+    }
+
+    if (validFiles.length === 0) return;
+
+    // Add new previews to existing ones
+    for (const file of validFiles) {
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target?.result as string);
+        reader.readAsDataURL(file);
+      });
+      setImagePreviews(prev => [...prev, base64]);
+    }
+  }, []);
+
+  // Re-analyze with current photos
+  const reanalyze = useCallback(async () => {
+    if (imagePreviews.length === 0) return;
+    
+    setIsAnalyzing(true);
+    setError(null);
+    
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      messageIndex = (messageIndex + 1) % loadingMessages.length;
+      setLoadingMessage(loadingMessages[messageIndex]);
+    }, 2000);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("analyze-junk", {
+        body: { 
+          imageBase64: imagePreviews[0],
+          totalImages: imagePreviews.length 
+        },
+      });
+
+      if (fnError) throw fnError;
+      if (data.error) throw new Error(data.error);
+
+      setResult(data);
+      trackAIEstimatorUse();
+    } catch (err) {
+      console.error("Analysis error:", err);
+      setError(err instanceof Error ? err.message : "Failed to analyze image");
+      toast({
+        title: t.analysisFailed,
+        description: t.dontWorryCall,
+        variant: "destructive",
+      });
+    } finally {
+      clearInterval(messageInterval);
+      setIsAnalyzing(false);
+    }
+  }, [imagePreviews, loadingMessages, t, toast]);
+
   const reset = () => {
     localStorage.removeItem('junk-estimate');
     resetBingoShown();
@@ -551,22 +615,66 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             ))}
           </div>
         )}
-        {/* Image previews */}
-        {imagePreviews.length > 0 && (
-          <div className="relative">
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {imagePreviews.map((preview, index) => (
-                <div key={index} className="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden">
-                  <img src={preview} alt={`Junk ${index + 1}`} className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-            <Button variant="secondary" size="sm" onClick={reset} className="absolute top-0 right-0">
+        {/* Image previews with add/remove capability */}
+        <div className="p-4 rounded-lg bg-card border border-border">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-medium text-charcoal text-sm">Your Photos ({imagePreviews.length})</h4>
+            <Button variant="ghost" size="sm" onClick={reset} className="text-muted-foreground hover:text-foreground">
               <RotateCcw className="h-4 w-4 mr-1" />
-              {t.newPhotos}
+              Start Over
             </Button>
           </div>
-        )}
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {imagePreviews.map((preview, index) => (
+              <div key={index} className="relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden group">
+                <img src={preview} alt={`Junk ${index + 1}`} className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="absolute top-1 right-1 p-1 bg-background/80 rounded-full opacity-0 group-hover:opacity-100 hover:bg-destructive hover:text-destructive-foreground transition-all"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            ))}
+            {/* Add more photos button */}
+            <label className="flex-shrink-0 w-20 h-20 rounded-lg border-2 border-dashed border-border hover:border-primary/50 flex items-center justify-center cursor-pointer transition-colors">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    addMorePhotos(e.target.files);
+                  }
+                }}
+                className="sr-only"
+              />
+              <Plus className="h-5 w-5 text-muted-foreground" />
+            </label>
+          </div>
+          {imagePreviews.length > 0 && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={reanalyze} 
+              disabled={isAnalyzing}
+              className="mt-3 w-full"
+            >
+              {isAnalyzing ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Re-analyze Photos
+                </>
+              )}
+            </Button>
+          )}
+        </div>
 
         {/* Price estimate - hero display */}
         <div className="p-6 rounded-xl bg-primary/10 border-2 border-primary/30 text-center">
