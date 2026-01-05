@@ -28,8 +28,8 @@ export function TestimonialsSection() {
   const isLoading = useLoadingDelay(400);
 
   return (
-    <section ref={ref} className="py-12 sm:py-16 md:py-24">
-      <div className="container px-4 sm:px-6">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24">
+      <div className="container max-w-6xl px-4 sm:px-6">
         <div
           className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -46,7 +46,7 @@ export function TestimonialsSection() {
         {isLoading ? (
           <TestimonialSkeletonGrid />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.name}

@@ -13,8 +13,8 @@ export function NoSurprises() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-10 sm:py-12 md:py-16 bg-destructive/5 border-y border-destructive/10">
-      <div className="container px-4 sm:px-6">
+    <section ref={ref} className="py-10 sm:py-12 md:py-14 lg:py-16 bg-destructive/5 border-y border-destructive/10">
+      <div className="container max-w-4xl px-4 sm:px-6">
         <div
           className={`max-w-3xl mx-auto text-center transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

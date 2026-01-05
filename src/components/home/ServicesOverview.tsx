@@ -67,8 +67,8 @@ export function ServicesOverview() {
   const isLoading = useLoadingDelay(300);
 
   return (
-    <section ref={ref} className="py-16 md:py-24">
-      <div className="container">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24">
+      <div className="container max-w-6xl">
         <div 
           className={`text-center mb-8 sm:mb-12 px-4 sm:px-0 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -85,7 +85,7 @@ export function ServicesOverview() {
         {isLoading ? (
           <ServiceCardSkeletonGrid />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {services.map((service, index) => (
               <Link
                 key={service.title}

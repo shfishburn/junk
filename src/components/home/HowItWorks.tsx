@@ -26,8 +26,8 @@ export function HowItWorks() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-12 sm:py-16 md:py-24 bg-section-alt">
-      <div className="container px-4 sm:px-6">
+    <section ref={ref} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-section-alt">
+      <div className="container max-w-6xl px-4 sm:px-6">
         <div
           className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -41,7 +41,7 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 max-w-5xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={step.title}
