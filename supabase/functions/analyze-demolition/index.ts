@@ -47,11 +47,22 @@ serve(async (req) => {
             {
               role: "system",
               content: `You are a light demolition expert for Junky Gurus. The customer has edited their structures list. Recalculate the demolition estimate.
-              Base pricing guidelines:
-              - Small projects (1-2 hours): $250-500
-              - Medium projects (3-5 hours): $500-1,000
-              - Large projects (full day): $1,000-2,000
-              - Multi-day projects: $2,000+`,
+              
+              LABOR PRICING GUIDELINES:
+              - Simple projects (1-2 hours, 1-2 crew): $150-350
+              - Small projects (2-4 hours): $350-600
+              - Medium projects (4-6 hours): $600-1,000
+              - Large projects (full day, 6-8 hours): $1,000-1,500
+              - Multi-day projects: $1,500+ per day
+              
+              DEBRIS DISPOSAL (add to labor):
+              - 1/4 Truck debris: $250-375
+              - 1/2 Truck debris: $375-500
+              - 3/4 Truck debris: $500-625
+              - Full Truck debris: $625-815
+              - Multiple loads: multiply accordingly
+              
+              Calculate total = labor + disposal costs.`,
             },
             {
               role: "user",
@@ -191,17 +202,27 @@ serve(async (req) => {
             - Cabinet removal
             - Small structure demolition
             
-            Base pricing guidelines:
-            - Small projects (1-2 hours): $250-500
-            - Medium projects (3-5 hours): $500-1,000
-            - Large projects (full day): $1,000-2,000
-            - Multi-day projects: $2,000+
+            LABOR PRICING (be accurate):
+            - Simple projects (1-2 hours, 1-2 crew): $150-350
+            - Small projects (2-4 hours): $350-600
+            - Medium projects (4-6 hours): $600-1,000
+            - Large projects (full day, 6-8 hours): $1,000-1,500
+            - Multi-day projects: $1,500+ per day
+            
+            DEBRIS DISPOSAL COSTS (add to labor):
+            - 1/4 Truck debris: $250-375
+            - 1/2 Truck debris: $375-500
+            - 3/4 Truck debris: $500-625
+            - Full Truck debris: $625-815
+            - Multiple truck loads: multiply accordingly
+            
+            TOTAL ESTIMATE = Labor Cost + Disposal Cost
             
             Factors that affect price:
             - Size and complexity of structure
             - Material type (wood, concrete, composite)
             - Accessibility
-            - Disposal requirements
+            - Disposal requirements (number of truck loads)
             - Heavy equipment needs`,
           },
           {

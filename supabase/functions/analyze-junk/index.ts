@@ -48,13 +48,22 @@ serve(async (req) => {
               role: "system",
               content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State.
               The customer has edited their items list. Recalculate the volume, weight, and removal price.
-              Base pricing on:
-              - 1/8 truck: $175-263
-              - 1/4 truck: $306-438
-              - 1/2 truck: $525-700
-              - 3/4 truck: $788-963
-              - Full truck: $963-1,225
-              Heavy items like concrete or appliances may add 10-20% to the base price.`,
+              
+              TRUCK LOAD PRICING (be accurate with these tiers):
+              - Minimum Load (1-2 small items): $125 – $190
+              - 1/8 Truck Load (couple items like chair + TV): $190 – $250
+              - 1/4 Truck Load (small room cleanout): $250 – $375
+              - 1/2 Truck Load (garage cleanout or bedroom set): $375 – $500
+              - 3/4 Truck Load (large room or multiple rooms): $500 – $625
+              - Full Truck Load (whole house or estate cleanout): $625 – $815
+              
+              SINGLE ITEM REFERENCE:
+              - Couch/Sofa: $75-150, Mattress: $50-100, Recliner: $50-85
+              - TV: $35-75, Refrigerator/Freezer: $75-125, Washer/Dryer: $65-100
+              - Hot Tub: $300-500, Piano: $200-400
+              
+              Heavy items like concrete or appliances may add 10-20% to the base price.
+              Calculate the truck percentage based on total volume of all items.`,
             },
             {
               role: "user",
@@ -175,12 +184,28 @@ serve(async (req) => {
             role: "system",
             content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State. 
             Analyze the image and estimate the items, volume, weight, and removal price.
-            Be helpful and slightly humorous in your notes. Base pricing on:
-            - 1/8 truck: $175-263
-            - 1/4 truck: $306-438
-            - 1/2 truck: $525-700
-            - 3/4 truck: $788-963
-            - Full truck: $963-1,225
+            Be helpful and slightly humorous in your notes.
+            
+            TRUCK LOAD PRICING (use these exact tiers for accurate estimates):
+            - Minimum Load (1-2 small items, ~5% truck): $125 – $190
+            - 1/8 Truck Load (~12.5% truck): $190 – $250
+            - 1/4 Truck Load (~25% truck): $250 – $375
+            - 1/2 Truck Load (~50% truck): $375 – $500
+            - 3/4 Truck Load (~75% truck): $500 – $625
+            - Full Truck Load (100% truck): $625 – $815
+            
+            SINGLE ITEM REFERENCE PRICES:
+            - Couch/Sofa: $75-150, Mattress/Box Spring: $50-100, Recliner/Armchair: $50-85
+            - TV (any size): $35-75, Refrigerator/Freezer: $75-125, Washer/Dryer each: $65-100
+            - Desk/Table: $50-100, Treadmill/Exercise Bike: $75-125
+            - Hot Tub: $300-500, Piano: $200-400
+            
+            CONSTRUCTION MATERIALS:
+            - Drywall: $15-30 per sheet, Lumber/Wood: $75-200
+            - Concrete/Brick: $150-400, Tile/Flooring: $100-250
+            - Mixed Construction Debris: $200-500
+            
+            Calculate truck percentage accurately based on total volume, then price accordingly.
             Heavy items like concrete or appliances may add 10-20% to the base price.`,
           },
           {
