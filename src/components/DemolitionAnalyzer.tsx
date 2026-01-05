@@ -268,15 +268,17 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
     complex: t.complex,
   };
 
-  // Restore saved estimate from localStorage on mount
+  // Restore saved estimate and images from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('demolition-estimate');
     if (saved) {
       try {
         const { result: savedResult, images: savedImages, timestamp } = JSON.parse(saved);
         if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
-          setResult(savedResult);
-          if (savedImages && Array.isArray(savedImages)) {
+          if (savedResult) {
+            setResult(savedResult);
+          }
+          if (savedImages && Array.isArray(savedImages) && savedImages.length > 0) {
             setImagePreviews(savedImages);
           }
         } else {
@@ -290,11 +292,15 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
 
   // Save estimate and images to localStorage when they change
   useEffect(() => {
-    if (result) {
+    // Save if we have either a result or images
+    if (result || imagePreviews.length > 0) {
       try {
+        const existing = localStorage.getItem('demolition-estimate');
+        const existingData = existing ? JSON.parse(existing) : {};
+        
         localStorage.setItem('demolition-estimate', JSON.stringify({
-          result,
-          images: imagePreviews,
+          result: result || existingData.result || null,
+          images: imagePreviews.length > 0 ? imagePreviews : (existingData.images || []),
           timestamp: Date.now()
         }));
       } catch (e) {
