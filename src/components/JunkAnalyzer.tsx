@@ -249,7 +249,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
     broken: t.conditionBroken,
   };
 
-  // Restore saved estimate from localStorage on mount
+  // Restore saved estimate and images from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('junk-estimate');
     if (saved) {
@@ -257,8 +257,10 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
         const { result: savedResult, images: savedImages, timestamp } = JSON.parse(saved);
         // Check if not expired (24 hours)
         if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
-          setResult(savedResult);
-          if (savedImages && Array.isArray(savedImages)) {
+          if (savedResult) {
+            setResult(savedResult);
+          }
+          if (savedImages && Array.isArray(savedImages) && savedImages.length > 0) {
             setImagePreviews(savedImages);
           }
         } else {
@@ -272,11 +274,15 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
 
   // Save estimate and images to localStorage when they change
   useEffect(() => {
-    if (result) {
+    // Save if we have either a result or images
+    if (result || imagePreviews.length > 0) {
       try {
+        const existing = localStorage.getItem('junk-estimate');
+        const existingData = existing ? JSON.parse(existing) : {};
+        
         localStorage.setItem('junk-estimate', JSON.stringify({
-          result,
-          images: imagePreviews,
+          result: result || existingData.result || null,
+          images: imagePreviews.length > 0 ? imagePreviews : (existingData.images || []),
           timestamp: Date.now()
         }));
       } catch (e) {
