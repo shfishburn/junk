@@ -1004,11 +1004,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </div>
           </div>
           
-          <div className="flex flex-col items-center gap-1.5 text-center px-4 max-w-xs mx-auto">
-            <p className="font-semibold text-charcoal text-base leading-snug">
+          <div className="flex flex-col items-center gap-1.5 text-center px-4 mx-auto w-full max-w-[200px] sm:max-w-xs">
+            <p className="font-semibold text-charcoal text-base leading-snug whitespace-normal">
               {t.dropPhotos}
             </p>
-            <p className="text-sm text-muted-foreground font-normal leading-relaxed text-balance">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed whitespace-normal">
               {t.takePics}
             </p>
           </div>
