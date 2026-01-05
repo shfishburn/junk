@@ -67,6 +67,8 @@ const translations = {
     addStructure: "Add structure",
     removeStructure: "Remove",
     structuresEdited: "Structures updated! Your estimate may vary based on actual scope.",
+    recalculate: "Recalculate Estimate",
+    recalculating: "Recalculating...",
     equipmentNeeded: "Equipment Needed",
     safetyConsiderations: "Safety Considerations",
     bookYourQuote: "Book Your Demolition Quote",
@@ -138,6 +140,8 @@ const translations = {
     addStructure: "Agregar estructura",
     removeStructure: "Quitar",
     structuresEdited: "¡Estructuras actualizadas! Tu estimado puede variar según el alcance real.",
+    recalculate: "Recalcular Estimado",
+    recalculating: "Recalculando...",
     equipmentNeeded: "Equipo Necesario",
     safetyConsiderations: "Consideraciones de Seguridad",
     bookYourQuote: "Reserva Tu Cotización de Demolición",
@@ -241,6 +245,7 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
   const [editedStructures, setEditedStructures] = useState<DemolitionStructure[] | null>(null);
   const [newStructureName, setNewStructureName] = useState("");
   const [isEditingStructures, setIsEditingStructures] = useState(false);
+  const [isRecalculating, setIsRecalculating] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -469,7 +474,44 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
     setBookingPhotoUrls([]);
     setAddressData(getEmptyAddress());
     setFormData({ name: "", email: "", phone: "", notes: "" });
+    setEditedStructures(null);
+    setIsEditingStructures(false);
   };
+
+  // Recalculate estimate with edited structures
+  const recalculateEstimate = useCallback(async () => {
+    if (!editedStructures || editedStructures.length === 0) return;
+    
+    setIsRecalculating(true);
+    setIsEditingStructures(false);
+    
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("analyze-demolition", {
+        body: { recalculateStructures: editedStructures },
+      });
+
+      if (fnError) throw fnError;
+      if (data.error) throw new Error(data.error);
+
+      // Update result with recalculated estimate
+      setResult(data);
+      setEditedStructures(data.structures);
+      
+      toast({
+        title: "Estimate Updated",
+        description: "Your estimate has been recalculated based on the updated structures.",
+      });
+    } catch (err) {
+      console.error("Recalculation error:", err);
+      toast({
+        title: t.somethingWentWrong,
+        description: t.tryCallingUs,
+        variant: "destructive",
+      });
+    } finally {
+      setIsRecalculating(false);
+    }
+  }, [editedStructures, toast, t]);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -798,11 +840,31 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
                 </Button>
               </div>
               
-              {editedStructures.length !== result.structures.length && (
-                <p className="text-xs text-muted-foreground mt-2 italic">
+              {/* Recalculate button and message */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-3 pt-3 border-t border-border">
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={recalculateEstimate}
+                  disabled={isRecalculating || editedStructures.length === 0}
+                  className="min-h-[44px] px-4"
+                >
+                  {isRecalculating ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      {t.recalculating}
+                    </>
+                  ) : (
+                    <>
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      {t.recalculate}
+                    </>
+                  )}
+                </Button>
+                <p className="text-xs text-muted-foreground italic">
                   {t.structuresEdited}
                 </p>
-              )}
+              </div>
             </div>
           ) : (
             <div className="space-y-2">

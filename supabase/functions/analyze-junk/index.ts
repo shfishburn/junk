@@ -11,11 +11,13 @@ serve(async (req) => {
   }
 
   try {
-    const { imageBase64 } = await req.json();
+    const body = await req.json();
+    const { imageBase64, recalculateItems } = body;
     
-    if (!imageBase64) {
+    // Either image analysis or recalculation with edited items
+    if (!imageBase64 && !recalculateItems) {
       return new Response(
-        JSON.stringify({ error: "No image provided" }),
+        JSON.stringify({ error: "No image or items provided" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -25,6 +27,139 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // If recalculating with edited items (no image needed)
+    if (recalculateItems && recalculateItems.length > 0) {
+      console.log("Recalculating estimate with edited items:", recalculateItems);
+      
+      const itemsList = recalculateItems.map((item: { name: string; quantity: number; condition: string }) => 
+        `${item.quantity}x ${item.name} (${item.condition})`
+      ).join(", ");
+
+      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            {
+              role: "system",
+              content: `You are a junk removal expert for Junky Gurus, a professional junk removal service in Washington State.
+              The customer has edited their items list. Recalculate the volume, weight, and removal price.
+              Base pricing on:
+              - 1/8 truck: $175-263
+              - 1/4 truck: $306-438
+              - 1/2 truck: $525-700
+              - 3/4 truck: $788-963
+              - Full truck: $963-1,225
+              Heavy items like concrete or appliances may add 10-20% to the base price.`,
+            },
+            {
+              role: "user",
+              content: `Recalculate the junk removal estimate for these items: ${itemsList}. Provide updated volume, weight, and price estimates.`,
+            },
+          ],
+          tools: [
+            {
+              type: "function",
+              function: {
+                name: "analyze_junk",
+                description: "Provide junk removal estimates for the given items",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    items: {
+                      type: "array",
+                      items: {
+                        type: "object",
+                        properties: {
+                          name: { type: "string" },
+                          quantity: { type: "number" },
+                          condition: { type: "string", enum: ["good", "fair", "poor", "broken"] },
+                        },
+                        required: ["name", "quantity", "condition"],
+                        additionalProperties: false,
+                      },
+                    },
+                    estimatedVolume: {
+                      type: "object",
+                      properties: {
+                        value: { type: "number" },
+                        unit: { type: "string", enum: ["cubic_yards"] },
+                        truckPercentage: { type: "number" },
+                      },
+                      required: ["value", "unit", "truckPercentage"],
+                      additionalProperties: false,
+                    },
+                    estimatedWeight: {
+                      type: "object",
+                      properties: {
+                        value: { type: "number" },
+                        unit: { type: "string", enum: ["lbs"] },
+                        category: { type: "string", enum: ["light", "medium", "heavy"] },
+                      },
+                      required: ["value", "unit", "category"],
+                      additionalProperties: false,
+                    },
+                    priceEstimate: {
+                      type: "object",
+                      properties: {
+                        min: { type: "number" },
+                        max: { type: "number" },
+                        currency: { type: "string", enum: ["USD"] },
+                      },
+                      required: ["min", "max", "currency"],
+                      additionalProperties: false,
+                    },
+                    confidence: { type: "string", enum: ["low", "medium", "high"] },
+                    notes: { type: "string" },
+                    recommendations: { type: "array", items: { type: "string" } },
+                  },
+                  required: ["items", "estimatedVolume", "estimatedWeight", "priceEstimate", "confidence", "notes", "recommendations"],
+                  additionalProperties: false,
+                },
+              },
+            },
+          ],
+          tool_choice: { type: "function", function: { name: "analyze_junk" } },
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("AI gateway error:", response.status, errorText);
+        if (response.status === 429) {
+          return new Response(
+            JSON.stringify({ error: "We're getting a lot of requests right now. Please try again in a moment." }),
+            { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        if (response.status === 402) {
+          return new Response(
+            JSON.stringify({ error: "AI service temporarily unavailable. Please call us for a quote!" }),
+            { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        throw new Error(`AI gateway error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+      if (!toolCall || toolCall.function.name !== "analyze_junk") {
+        throw new Error("Invalid AI response format");
+      }
+
+      const analysis = JSON.parse(toolCall.function.arguments);
+      console.log("Recalculated analysis:", JSON.stringify(analysis, null, 2));
+
+      return new Response(JSON.stringify(analysis), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Original image analysis flow
     console.log("Analyzing junk image with AI...");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
