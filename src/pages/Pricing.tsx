@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, DiscountBadge } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart, Hammer } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { JunkAnalyzer } from "@/components/features";
+import { JunkAnalyzer, DemolitionAnalyzer } from "@/components/features";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Helmet } from "react-helmet-async";
 
 const steps = [
@@ -187,13 +189,34 @@ const Pricing = () => {
                 Too Lazy to Describe It? Just Show Us.
               </h2>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-                Snap a photo of your junk pile and our AI will estimate the cost. It's seen some things. It won't judge.
+                Snap a photo and our AI will estimate the cost. It's seen some things. It won't judge.
               </p>
             </div>
             
-            <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
-              <JunkAnalyzer />
-            </div>
+            <Tabs defaultValue="junk" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="junk" className="flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  Junk Removal
+                </TabsTrigger>
+                <TabsTrigger value="demolition" className="flex items-center gap-2">
+                  <Hammer className="h-4 w-4" />
+                  Light Demolition
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="junk">
+                <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
+                  <JunkAnalyzer />
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="demolition">
+                <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
+                  <DemolitionAnalyzer />
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </section>
