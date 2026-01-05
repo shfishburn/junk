@@ -1018,11 +1018,11 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             )}
           </div>
           
-          <div className="space-y-2 text-center">
-            <h3 className="font-semibold text-charcoal text-base">
+          <div className="space-y-1.5 text-center px-2">
+            <h3 className="font-semibold text-charcoal text-base leading-snug">
               {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
-            <p className="text-sm text-muted-foreground font-normal leading-relaxed max-w-[280px]">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed">
               {t.dragDrop}
             </p>
           </div>
