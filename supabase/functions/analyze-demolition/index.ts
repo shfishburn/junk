@@ -366,7 +366,97 @@ serve(async (req) => {
             - Full Truck: $875-1,100
             - Multiple loads: multiply accordingly
             
-            IMPORTANT: Use specific structure names from vocabulary above. Estimate dimensions carefully. Note materials and conditions accurately.
+            EQUIPMENT VOCABULARY (use specific names from this list):
+            
+            HAND TOOLS - DEMOLITION:
+            - Sledgehammer (10 lb), Sledgehammer (16 lb), Sledgehammer (20 lb)
+            - Pry Bar, Wrecking Bar, Flat Bar, Cat's Paw
+            - Crowbar, Pinch Bar, Digging Bar
+            - Framing Hammer, Claw Hammer, Dead Blow Hammer
+            - Nail Puller, Nail Kicker
+            - Drywall Pry Bar, Drywall Ripper
+            
+            POWER TOOLS - CUTTING:
+            - Reciprocating Saw (Sawzall), Demo Blades
+            - Circular Saw, Carbide Demo Blade
+            - Angle Grinder, Cutoff Wheel, Diamond Blade
+            - Chainsaw, Electric Chainsaw
+            - Oscillating Multi-Tool
+            - Jigsaw
+            
+            POWER TOOLS - DRILLING & BREAKING:
+            - Rotary Hammer Drill, SDS-Plus Bits
+            - Hammer Drill, Masonry Bits
+            - Electric Demolition Hammer (Jack Hammer)
+            - Pneumatic Jackhammer
+            - Concrete Breaker
+            - Chipping Hammer
+            
+            HEAVY EQUIPMENT:
+            - Skid Steer Loader (Bobcat)
+            - Mini Excavator
+            - Backhoe
+            - Dump Trailer
+            - Flatbed Trailer
+            - Grapple Attachment
+            - Bucket Attachment
+            
+            HAULING & TRANSPORT:
+            - Dump Truck, 14-yard Dump Truck
+            - Box Truck
+            - Pickup Truck with Trailer
+            - Utility Trailer
+            - Roll-Off Dumpster (10 yd, 20 yd, 30 yd)
+            - Wheelbarrow, Heavy-Duty Wheelbarrow
+            - Gorilla Cart, Yard Cart
+            - Hand Truck, Appliance Dolly
+            
+            LIFTING & RIGGING:
+            - Come-Along (Hand Winch)
+            - Chain Hoist, Manual Chain Block
+            - Tow Strap, Recovery Strap
+            - Ratchet Straps, Tie-Down Straps
+            - Chain and Binders
+            - Lifting Slings
+            - Pallet Jack
+            
+            SAFETY EQUIPMENT:
+            - Hard Hat, Bump Cap
+            - Safety Glasses, Goggles
+            - Face Shield
+            - N95 Respirator, Half-Face Respirator, Full-Face Respirator
+            - Hearing Protection, Ear Muffs, Ear Plugs
+            - Work Gloves, Cut-Resistant Gloves, Leather Gloves
+            - Steel-Toe Boots, Composite-Toe Boots
+            - Hi-Vis Vest, Safety Vest
+            - Knee Pads
+            - Fall Protection Harness, Lanyard
+            - First Aid Kit
+            
+            SITE PROTECTION:
+            - Plastic Sheeting, Poly Sheeting
+            - Drop Cloths, Canvas Tarps
+            - Dust Barriers, Zip Walls
+            - Caution Tape, Barrier Tape
+            - Traffic Cones, Safety Cones
+            - Barricades
+            - Plywood Sheets (floor protection)
+            
+            SPECIALTY TOOLS:
+            - Bolt Cutters, Cable Cutters
+            - Pipe Wrench, Adjustable Wrench
+            - Socket Set, Impact Wrench
+            - Staple Puller, Staple Remover
+            - Floor Scraper, Long-Handle Scraper
+            - Tile Chisel, Cold Chisel
+            - Wire Brush, Grinder Wire Wheel
+            - Extension Cords, Heavy-Duty Extension Cords
+            - Generator, Portable Generator
+            - Work Lights, LED Work Lights
+            - Ladder (Step Ladder, Extension Ladder)
+            - Scaffolding
+            
+            IMPORTANT: Use specific structure names and equipment names from vocabulary above. Estimate dimensions carefully. Note materials and conditions accurately.
             Total = Sum of all structure costs + material surcharges + extra disposal if needed.`,
           },
           {
