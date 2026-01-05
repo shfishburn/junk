@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
+import { compressImagesForStorage } from "@/lib";
 import { 
   Upload, 
   Camera, 
@@ -300,24 +301,33 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
     
     // Save if we have either a result or images
     if (result || imagePreviews.length > 0) {
-      try {
-        localStorage.setItem('demolition-estimate', JSON.stringify({
-          result: result,
-          images: imagePreviews,
-          timestamp: Date.now()
-        }));
-      } catch (e) {
-        // If storage fails (quota exceeded), try saving without images
-        console.warn('Could not save with images, trying without:', e);
+      const saveToStorage = async () => {
         try {
+          // Compress images before storing to avoid quota issues
+          const compressedImages = imagePreviews.length > 0 
+            ? await compressImagesForStorage(imagePreviews) 
+            : [];
+          
           localStorage.setItem('demolition-estimate', JSON.stringify({
-            result,
+            result: result,
+            images: compressedImages,
             timestamp: Date.now()
           }));
-        } catch (e2) {
-          console.warn('Could not save estimate to localStorage:', e2);
+        } catch (e) {
+          // If storage fails (quota exceeded), try saving without images
+          console.warn('Could not save with images, trying without:', e);
+          try {
+            localStorage.setItem('demolition-estimate', JSON.stringify({
+              result,
+              images: [],
+              timestamp: Date.now()
+            }));
+          } catch (e2) {
+            console.warn('Could not save estimate to localStorage:', e2);
+          }
         }
-      }
+      };
+      saveToStorage();
     }
   }, [result, imagePreviews, isRestoredFromStorage]);
 

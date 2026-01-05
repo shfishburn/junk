@@ -87,3 +87,9 @@ export {
   trackServicePageView,
   trackCityPageView,
 } from "./analytics";
+
+// Image utilities
+export {
+  compressImageForStorage,
+  compressImagesForStorage,
+} from "./image-utils";
