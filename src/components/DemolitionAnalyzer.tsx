@@ -1004,21 +1004,21 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <Button
           type="button"
           variant="ghost"
-          className="w-full h-full min-h-[160px] flex flex-col items-center justify-center gap-5 hover:bg-secondary/50 px-6 py-8"
+          className="w-full h-full min-h-[180px] sm:min-h-[160px] flex flex-col items-center justify-center gap-4 sm:gap-5 hover:bg-secondary/50 px-4 sm:px-6 py-6 sm:py-8 active:scale-[0.98] transition-transform"
           onClick={() => {
             const input = document.getElementById('demolition-upload-input') as HTMLInputElement;
             if (input) input.click();
           }}
         >
-          <div className="w-16 h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
             {isDragging ? (
-              <Sparkles className="h-8 w-8 text-primary animate-pulse" />
+              <Sparkles className="h-7 w-7 sm:h-8 sm:w-8 text-primary animate-pulse" />
             ) : (
-              <Hammer className="h-8 w-8 text-primary" />
+              <Hammer className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
             )}
           </div>
           
-          <div className="flex flex-col items-center gap-1.5 text-center px-4 mx-auto w-full max-w-[200px] sm:max-w-xs">
+          <div className="flex flex-col items-center gap-2 sm:gap-1.5 text-center px-2 sm:px-4 mx-auto w-full max-w-[220px] sm:max-w-xs">
             <h3 className="font-semibold text-charcoal text-base leading-snug whitespace-normal">
               {isDragging ? t.dropHere : t.uploadTitle}
             </h3>
