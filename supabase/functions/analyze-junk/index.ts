@@ -54,54 +54,39 @@ serve(async (req) => {
               2. For 4+ items or large volumes: Use TRUCK LOAD pricing based on total volume
               3. Always use whichever method gives the HIGHER price (minimum viable rate)
               
-              SINGLE ITEM PRICES (use for small jobs):
-              - Couch/Sofa/Sectional: $75-150 (large sectionals up to $200)
-              - Loveseat: $60-100
-              - Mattress (any size): $50-100
-              - Box Spring: $40-75
-              - Recliner/Armchair: $50-85
-              - Office Chair: $25-50
-              - Dining Table: $50-100
-              - Dining Chairs (each): $15-30
-              - Desk: $50-100
-              - Dresser/Chest: $50-100
-              - Nightstand: $25-50
-              - Bookshelf: $35-75
-              - TV (any size): $35-75
-              - Refrigerator/Freezer: $75-125
-              - Washer or Dryer (each): $65-100
-              - Dishwasher: $50-85
-              - Microwave: $25-45
-              - Stove/Oven: $65-100
-              - Treadmill/Elliptical: $75-125
-              - Exercise Bike: $50-85
-              - Hot Tub: $300-500
-              - Piano (upright): $200-350
-              - Piano (grand): $350-500
-              - Grill/BBQ: $50-100
-              - Patio Furniture Set: $75-150
-              - Swing Set: $150-300
-              - Trampoline: $100-200
-              - Shed (small): $200-400
-              - Boxes/Bags (each): $10-25
+              SINGLE ITEM PRICES:
+              - Sofa/Couch: $75-150, Large Sectional: $150-250, Loveseat: $60-100
+              - Recliner: $50-85, Armchair: $50-85, Office Chair: $25-50
+              - Mattress (any size): $50-100, Box Spring: $40-75, Bed Frame: $40-75
+              - Dresser/Chest: $50-100, Armoire/Wardrobe: $75-150, Nightstand: $25-50
+              - Dining Table: $50-100, Dining Chairs (each): $15-30, Desk: $50-100
+              - Bookshelf: $35-75, Entertainment Center: $50-100, TV Stand: $35-65
+              - TV: $35-75, CRT TV: $50-85, Computer: $25-50
+              - Refrigerator/Freezer: $75-125, Mini Fridge: $35-60
+              - Washer or Dryer: $65-100 each, Dishwasher: $50-85
+              - Stove/Oven: $65-100, Microwave: $25-45, Water Heater: $75-125
+              - Treadmill/Elliptical: $75-125, Exercise Bike: $50-85, Home Gym: $100-175
+              - Hot Tub: $300-500, Pool Table: $200-350
+              - Piano (upright): $200-350, Piano (grand): $350-500
+              - Grill/BBQ: $50-100, Patio Set: $75-150
+              - Swing Set: $150-300, Trampoline: $100-200
+              - Lawn Mower: $35-60, Riding Mower: $100-175
+              - Safe: $100-200, Boxes/Bags: $10-25 each
               
-              TRUCK LOAD PRICING (for larger jobs by volume):
-              - Minimum Load (~5%, 1-2 small items): $125-190
+              TRUCK LOAD PRICING:
+              - Minimum Load (~5%): $125-190
               - 1/8 Truck (~12.5%): $190-250
               - 1/4 Truck (~25%): $250-375
               - 1/2 Truck (~50%): $375-500
               - 3/4 Truck (~75%): $500-625
               - Full Truck (100%): $625-815
               
-              VOLUME GUIDE (cubic yards):
-              - Couch: 1-1.5 cy, Mattress: 0.5-0.75 cy, Dresser: 0.5-0.75 cy
-              - Refrigerator: 0.75-1 cy, Washer/Dryer: 0.5-0.75 cy each
-              - Full truck = ~15 cubic yards
+              VOLUME GUIDE: Couch: 1-1.5 cy, Mattress: 0.5-0.75 cy, Fridge: 0.75-1 cy
+              Full truck = ~15 cubic yards
               
-              WEIGHT SURCHARGES (add 10-20%):
-              - Concrete/brick, safes, pianos, hot tubs, heavy appliances
+              WEIGHT SURCHARGES (add 10-20%): Concrete, safes, pianos, hot tubs, cast iron
               
-              Be accurate and fair - don't overestimate or underestimate.`,
+              Be accurate and fair - calculate both methods and use the higher price.`,
             },
             {
               role: "user",
@@ -224,42 +209,191 @@ serve(async (req) => {
             Analyze the image and provide accurate item identification and pricing.
             Be helpful and slightly humorous in your notes.
             
+            ITEM IDENTIFICATION VOCABULARY (identify items using these specific names):
+            
+            FURNITURE - Living Room:
+            - Sofa, Couch, Sectional Sofa, L-Shaped Sectional, U-Shaped Sectional, Sleeper Sofa, Futon
+            - Loveseat, Settee, Chaise Lounge, Fainting Couch, Daybed
+            - Recliner, Armchair, Accent Chair, Wing Chair, Club Chair, Papasan Chair, Egg Chair
+            - Ottoman, Footstool, Pouf, Storage Ottoman
+            - Coffee Table, End Table, Side Table, Accent Table, Console Table, Sofa Table
+            - TV Stand, Entertainment Center, Media Console, TV Cabinet, AV Stand
+            - Bookshelf, Bookcase, Display Cabinet, Curio Cabinet, China Cabinet
+            - Floor Lamp, Table Lamp, Lamp (any), Chandelier
+            
+            FURNITURE - Bedroom:
+            - Mattress (Twin), Mattress (Full/Double), Mattress (Queen), Mattress (King), Mattress (California King)
+            - Box Spring (any size), Foundation, Adjustable Bed Base, Bed Frame, Platform Bed
+            - Headboard, Footboard, Bed Rails, Bunk Bed, Loft Bed, Trundle Bed, Murphy Bed
+            - Dresser, Tall Dresser, Double Dresser, Chest of Drawers, Highboy, Lowboy
+            - Nightstand, Bedside Table, Night Table
+            - Armoire, Wardrobe, Clothing Armoire, TV Armoire
+            - Vanity, Vanity Table, Makeup Vanity, Dresser Mirror, Standing Mirror, Full-Length Mirror
+            
+            FURNITURE - Dining/Kitchen:
+            - Dining Table, Kitchen Table, Breakfast Table, Drop-Leaf Table, Extendable Table
+            - Dining Chair, Kitchen Chair, Bar Stool, Counter Stool, High Chair, Booster Seat
+            - Buffet, Sideboard, Hutch, China Hutch, Baker's Rack, Kitchen Island, Kitchen Cart
+            
+            FURNITURE - Office:
+            - Desk, Computer Desk, Executive Desk, L-Shaped Desk, Standing Desk, Writing Desk, Secretary Desk
+            - Office Chair, Executive Chair, Task Chair, Ergonomic Chair, Mesh Chair, Gaming Chair
+            - Filing Cabinet (2-drawer), Filing Cabinet (4-drawer), Lateral File Cabinet
+            - Bookcase, Office Bookshelf, Credenza, Office Storage Cabinet
+            
+            APPLIANCES - Kitchen:
+            - Refrigerator, Side-by-Side Refrigerator, French Door Refrigerator, Top Freezer Refrigerator
+            - Mini Fridge, Compact Refrigerator, Wine Cooler, Beverage Cooler, Kegerator
+            - Freezer, Chest Freezer, Upright Freezer, Deep Freezer
+            - Stove, Gas Stove, Electric Stove, Range, Oven, Wall Oven, Double Oven
+            - Microwave, Over-the-Range Microwave, Countertop Microwave, Microwave Cart
+            - Dishwasher, Portable Dishwasher
+            - Trash Compactor, Garbage Disposal Unit
+            - Range Hood, Vent Hood, Exhaust Fan
+            
+            APPLIANCES - Laundry:
+            - Washer, Washing Machine, Top-Load Washer, Front-Load Washer
+            - Dryer, Gas Dryer, Electric Dryer, Stacked Washer/Dryer, Combo Washer/Dryer
+            - Laundry Sink, Utility Sink
+            
+            APPLIANCES - Climate:
+            - Window AC, Window Air Conditioner, Portable AC, Mini Split Unit
+            - Space Heater, Portable Heater, Radiator, Baseboard Heater
+            - Dehumidifier, Humidifier, Air Purifier, Swamp Cooler, Evaporative Cooler
+            - Water Heater, Hot Water Tank, Tankless Water Heater
+            - Furnace, Boiler
+            
+            APPLIANCES - Other:
+            - Vacuum Cleaner, Shop Vac, Central Vacuum
+            - Sewing Machine, Sewing Table
+            
+            ELECTRONICS:
+            - TV, Television, Flat Screen TV, CRT TV, Tube TV, Projection TV, Plasma TV
+            - Computer Monitor, CRT Monitor, LCD Monitor
+            - Desktop Computer, Computer Tower, PC, Server, Computer Case
+            - Laptop, Notebook Computer
+            - Printer, Copier, Fax Machine, All-in-One Printer, Large Format Printer
+            - Stereo System, Home Theater System, Receiver, Amplifier, Subwoofer
+            - Speakers, Floor Speakers, Bookshelf Speakers, Surround Sound Speakers
+            - VCR, DVD Player, Blu-Ray Player, Cable Box, Satellite Receiver, TiVo
+            - Gaming Console, PlayStation, Xbox, Nintendo, Wii
+            - Treadmill, Elliptical, Exercise Bike, Stationary Bike, Spin Bike
+            - Rowing Machine, Stair Climber, Home Gym, Weight Machine, Smith Machine
+            - Record Player, Turntable, Stereo Cabinet
+            
+            OUTDOOR/GARAGE:
+            - Lawn Mower, Push Mower, Riding Mower, Zero-Turn Mower
+            - Weed Whacker, String Trimmer, Leaf Blower, Chainsaw, Hedge Trimmer
+            - Snow Blower, Snowplow
+            - Wheelbarrow, Garden Cart, Yard Cart
+            - Grill, Gas Grill, Charcoal Grill, Smoker, BBQ, Propane Tank
+            - Patio Umbrella, Patio Heater, Fire Pit, Outdoor Fireplace
+            - Patio Table, Patio Chair, Patio Set, Outdoor Sofa, Outdoor Loveseat
+            - Adirondack Chair, Lounge Chair, Chaise, Pool Lounger
+            - Picnic Table, Park Bench, Garden Bench
+            - Hammock, Hammock Stand, Porch Swing, Glider
+            - Shed (Small), Shed (Medium), Shed (Large), Storage Shed
+            - Playhouse, Treehouse, Clubhouse
+            - Swing Set, Playset, Jungle Gym, Slide, Sandbox
+            - Trampoline, Basketball Hoop, Portable Basketball Hoop
+            - Hot Tub, Spa, Jacuzzi, Above Ground Pool, Pool Ladder, Pool Pump
+            - Fence Section, Gate, Arbor, Trellis
+            - Planter Box, Large Planter, Garden Bed Frame
+            - Ladder, Extension Ladder, Step Ladder, Scaffolding
+            - Tool Box, Tool Chest, Tool Cabinet, Workbench
+            - Compressor, Air Compressor, Shop Tools
+            - Sawhorses, Work Table
+            
+            SPORTS & RECREATION:
+            - Bicycle, Bike, Mountain Bike, Road Bike, Kids Bike, Tricycle
+            - Exercise Equipment, Weights, Dumbbells, Weight Bench, Squat Rack
+            - Golf Clubs, Golf Bag, Ski Equipment, Snowboard, Surfboard
+            - Kayak, Canoe, Paddleboard
+            - Camping Gear, Tent, Camping Stove
+            - Pool Table, Billiard Table, Foosball Table, Air Hockey Table, Ping Pong Table
+            - Dart Board, Arcade Machine, Pinball Machine
+            
+            BABY/KIDS:
+            - Crib, Baby Crib, Convertible Crib, Bassinet, Cradle
+            - Changing Table, Diaper Changing Station
+            - High Chair, Booster Seat, Infant Car Seat, Stroller, Double Stroller
+            - Pack and Play, Playpen, Baby Gate
+            - Toddler Bed, Kids Bed, Kids Desk, Kids Chair
+            - Toy Box, Toy Chest, Toy Organizer
+            - Toys (box/bag), Stuffed Animals (bag), Kids Books (box)
+            
+            MUSICAL INSTRUMENTS:
+            - Piano (Upright), Piano (Grand), Piano (Baby Grand), Piano (Digital/Electric)
+            - Keyboard, Synthesizer, Organ, Electric Organ
+            - Guitar, Acoustic Guitar, Electric Guitar, Bass Guitar, Guitar Amplifier
+            - Drum Set, Drum Kit, Electronic Drums
+            - Other Instruments
+            
+            MISCELLANEOUS ITEMS:
+            - Boxes (Small), Boxes (Medium), Boxes (Large), Moving Boxes
+            - Bags, Trash Bags (full), Garbage Bags
+            - Totes, Plastic Bins, Storage Bins, Rubbermaid Totes
+            - Luggage, Suitcase, Trunk
+            - Carpet, Area Rug, Rolled Carpet, Carpet Padding
+            - Blinds, Curtains, Drapes, Curtain Rod
+            - Clothing (bag), Shoes (box), Linens (bag), Blankets, Pillows
+            - Books (box), Magazines (box), Papers (box), Documents
+            - Dishes (box), Kitchenware (box), Pots and Pans, Small Appliances
+            - Holiday Decorations (box), Christmas Tree, Artificial Christmas Tree
+            - Picture Frames, Artwork, Canvas, Paintings
+            - Safe, Gun Safe, Fireproof Safe
+            - Aquarium, Fish Tank, Terrarium
+            - Fireplace Insert, Wood Stove, Pellet Stove
+            - Mannequin, Display Case, Retail Fixtures
+            - Medical Equipment, Wheelchair, Walker, Hospital Bed, Mobility Scooter
+            - Exercise Mat, Yoga Mat, Foam Roller
+            - Tire, Tires (set of 4), Car Parts, Engine, Transmission
+            - Batteries, Car Battery, Lead Acid Battery
+            - Paint Cans, Chemicals (must note for hazmat)
+            - Debris, Construction Debris, Renovation Debris, Rubble
+            - Scrap Metal, Scrap Wood, Lumber, Pallets
+            - Old Fencing, Fence Posts, Chain Link Fencing
+            - Doors, Windows, Shutters, Screen Door, Storm Door
+            - Countertop, Cabinet Doors, Kitchen Cabinets
+            - Toilet, Sink, Bathroom Vanity, Bathtub, Shower Door
+            - Water Softener, Water Filtration System
+            - Random Junk Pile, Miscellaneous Items, Clutter
+            
             PRICING STRATEGY:
             1. For 1-3 single items: Use SINGLE ITEM pricing (sum individual items)
             2. For 4+ items or large volumes: Use TRUCK LOAD pricing based on total volume
             3. Always use whichever method gives the HIGHER price (minimum viable rate)
             
             SINGLE ITEM PRICES (memorize these):
-            - Couch/Sofa/Sectional: $75-150 (large sectionals up to $200)
-            - Loveseat: $60-100
-            - Mattress (any size): $50-100
-            - Box Spring: $40-75
-            - Recliner/Armchair: $50-85
-            - Office Chair: $25-50
-            - Dining Table: $50-100
-            - Dining Chairs (each): $15-30
-            - Desk: $50-100
-            - Dresser/Chest: $50-100
-            - Nightstand: $25-50
-            - Bookshelf: $35-75
-            - TV (any size): $35-75
-            - Refrigerator/Freezer: $75-125
+            - Sofa/Couch: $75-150, Large Sectional: $150-250
+            - Loveseat: $60-100, Recliner: $50-85
+            - Mattress (any size): $50-100, Box Spring: $40-75
+            - Bed Frame: $40-75, Bunk Bed: $100-175
+            - Dresser/Chest: $50-100, Armoire/Wardrobe: $75-150
+            - Nightstand: $25-50, Desk: $50-100
+            - Dining Table: $50-100, Dining Chairs (each): $15-30
+            - Office Chair: $25-50, Bookshelf: $35-75
+            - Entertainment Center: $50-100, TV Stand: $35-65
+            - TV (any size): $35-75, CRT TV: $50-85
+            - Refrigerator/Freezer: $75-125, Mini Fridge: $35-60
             - Washer or Dryer (each): $65-100
-            - Dishwasher: $50-85
-            - Microwave: $25-45
-            - Stove/Oven: $65-100
-            - Treadmill/Elliptical: $75-125
-            - Exercise Bike: $50-85
+            - Dishwasher: $50-85, Stove/Oven: $65-100
+            - Microwave: $25-45, Window AC: $35-60
+            - Water Heater: $75-125
+            - Treadmill/Elliptical: $75-125, Exercise Bike: $50-85
+            - Weight Bench/Home Gym: $75-150
             - Hot Tub: $300-500
-            - Piano (upright): $200-350
-            - Piano (grand): $350-500
+            - Piano (upright): $200-350, Piano (grand): $350-500
+            - Pool Table: $200-350
             - Grill/BBQ: $50-100
             - Patio Furniture Set: $75-150
-            - Swing Set: $150-300
+            - Swing Set/Playset: $150-300
             - Trampoline: $100-200
             - Shed (small): $200-400
+            - Lawn Mower (push): $35-60, Riding Mower: $100-175
             - Boxes/Bags (each): $10-25
-            - Miscellaneous small items: $15-40
+            - Safe/Gun Safe: $100-200
+            - Wheelchair/Medical Equipment: $50-100
             
             TRUCK LOAD PRICING (for larger jobs):
             - Minimum Load (~5%, 1-2 small items): $125-190
@@ -270,16 +404,16 @@ serve(async (req) => {
             - Full Truck (100%): $625-815
             
             VOLUME REFERENCE (cubic yards):
-            - Couch: 1-1.5 cy, Loveseat: 0.75 cy, Mattress: 0.5-0.75 cy
-            - Dresser: 0.5-0.75 cy, Refrigerator: 0.75-1 cy
-            - Washer/Dryer: 0.5-0.75 cy each, Desk: 0.5-0.75 cy
-            - Boxes/Bags: 0.1-0.25 cy each
+            - Couch: 1-1.5 cy, Loveseat: 0.75 cy, Recliner: 0.5 cy
+            - Mattress: 0.5-0.75 cy, Dresser: 0.5-0.75 cy
+            - Refrigerator: 0.75-1 cy, Washer/Dryer: 0.5-0.75 cy each
+            - Desk: 0.5-0.75 cy, Boxes/Bags: 0.1-0.25 cy each
             - Full truck capacity = ~15 cubic yards
             
             WEIGHT SURCHARGES (add 10-20% for):
-            - Concrete/brick, safes, pianos, hot tubs, cast iron
+            - Concrete/brick, safes, pianos, hot tubs, cast iron, heavy appliances
             
-            IMPORTANT: Be accurate! Count items carefully, estimate sizes properly.`,
+            IMPORTANT: Be accurate! Use specific item names from the vocabulary above. Count items carefully, estimate sizes properly.`,
           },
           {
             role: "user",
