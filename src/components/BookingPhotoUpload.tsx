@@ -213,7 +213,7 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
           <Button
             type="button"
             variant="ghost"
-            className="w-full h-full min-h-[80px] flex flex-col items-center justify-center gap-2 hover:bg-muted/50"
+            className="w-full h-full min-h-[100px] flex flex-col items-center justify-center gap-3 hover:bg-muted/50 px-4 py-6"
             onClick={() => {
               const input = document.getElementById('photo-upload-input') as HTMLInputElement;
               if (input) {
@@ -221,15 +221,22 @@ export function BookingPhotoUpload({ onPhotosChange, maxPhotos = 10 }: BookingPh
               }
             }}
           >
-            <div className="p-2 bg-muted rounded-full">
-              <ImageIcon className="h-5 w-5 text-muted-foreground" />
+            <div className="p-3 bg-muted rounded-full">
+              <ImageIcon className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="text-sm text-muted-foreground font-normal">
-              {photos.length > 0 
-                ? `Add more photos (${photos.length}/${maxPhotos})`
-                : "Tap to select photos"
-              }
-            </p>
+            <div className="space-y-1 text-center">
+              <p className="text-sm font-medium text-foreground">
+                {photos.length > 0 
+                  ? "Add more photos"
+                  : "Tap to select photos"
+                }
+              </p>
+              {photos.length > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  {photos.length} of {maxPhotos} uploaded
+                </p>
+              )}
+            </div>
           </Button>
         </div>
       )}

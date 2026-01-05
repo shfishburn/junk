@@ -881,26 +881,26 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         <Button
           type="button"
           variant="ghost"
-          className="w-full h-full min-h-[120px] flex flex-col items-center justify-center gap-4 hover:bg-section-alt"
+          className="w-full h-full min-h-[140px] flex flex-col items-center justify-center gap-5 hover:bg-section-alt px-6 py-8"
           onClick={() => {
             const input = document.getElementById('junk-upload-input') as HTMLInputElement;
             if (input) input.click();
           }}
         >
           <div className="flex justify-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <Upload className="h-6 w-6 text-primary" />
+            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <Upload className="h-7 w-7 text-primary" />
             </div>
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-              <Camera className="h-6 w-6 text-primary" />
+            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+              <Camera className="h-7 w-7 text-primary" />
             </div>
           </div>
           
-          <div>
-            <p className="font-semibold text-charcoal">
+          <div className="space-y-2 text-center">
+            <p className="font-semibold text-charcoal text-base">
               {t.dropPhotos}
             </p>
-            <p className="text-sm text-muted-foreground mt-1 font-normal">
+            <p className="text-sm text-muted-foreground font-normal leading-relaxed max-w-[280px]">
               {t.takePics}
             </p>
           </div>
