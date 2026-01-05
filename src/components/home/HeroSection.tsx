@@ -53,11 +53,11 @@ export function HeroSection() {
             Same-Day Service Available
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-4 animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-on-primary mb-4 sm:mb-5 leading-tight animate-fade-in px-2 sm:px-0">
             We Love Your Junk (So You Don't Have To)
           </h1>
           <p
-            className="text-base md:text-lg text-on-primary font-medium mb-4 animate-fade-in"
+            className="text-base sm:text-lg md:text-lg text-on-primary font-medium mb-3 sm:mb-4 leading-relaxed animate-fade-in px-4 sm:px-0"
             style={{
               animationDelay: "0.05s",
             }}
@@ -65,7 +65,7 @@ export function HeroSection() {
             Real pricing upfront. Reliable scheduling. Responsible disposal. From a local team that actually shows up.
           </p>
           <p
-            className="text-lg md:text-xl text-on-primary-muted mb-8 animate-fade-in"
+            className="text-base sm:text-lg md:text-xl text-on-primary-muted mb-6 sm:mb-8 leading-relaxed animate-fade-in px-4 sm:px-0"
             style={{
               animationDelay: "0.1s",
             }}

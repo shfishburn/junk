@@ -26,22 +26,22 @@ export function HowItWorks() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-section-alt">
-      <div className="container">
+    <section ref={ref} className="py-12 sm:py-16 md:py-24 bg-section-alt">
+      <div className="container px-4 sm:px-6">
         <div
-          className={`text-center mb-12 transition-all duration-700 ${
+          className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
             How It Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Getting rid of junk shouldn't be complicated. Here's our foolproof, 3-step process.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={step.title}
@@ -55,12 +55,12 @@ export function HowItWorks() {
                 {step.step}
               </div>
               
-              <div className="pt-6 pb-6 px-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                  <step.icon className="h-8 w-8 text-primary" />
+              <div className="pt-6 pb-4 sm:pb-6 px-3 sm:px-4">
+                <div className="inline-flex items-center justify-center w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-primary/10 mb-3 sm:mb-4">
+                  <step.icon className="h-7 sm:h-8 w-7 sm:w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground text-lg mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.description}</p>
+                <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2 leading-snug">{step.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
 
               {/* Connector line (hidden on last item and mobile) */}
