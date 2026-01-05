@@ -28,17 +28,17 @@ export function TestimonialsSection() {
   const isLoading = useLoadingDelay(400);
 
   return (
-    <section ref={ref} className="py-16 md:py-24">
-      <div className="container">
+    <section ref={ref} className="py-12 sm:py-16 md:py-24">
+      <div className="container px-4 sm:px-6">
         <div
-          className={`text-center mb-12 transition-all duration-700 ${
+          className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
             What Our Customers Say
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Don't just take our word for it — our neighbors love us.
           </p>
         </div>
@@ -46,30 +46,30 @@ export function TestimonialsSection() {
         {isLoading ? (
           <TestimonialSkeletonGrid />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.name}
-                className={`relative p-6 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20 ${
+                className={`relative p-4 sm:p-6 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`}
                 style={{ transitionDelay: isVisible ? `${index * 150}ms` : "0ms" }}
               >
-                <Quote className="absolute top-4 right-4 h-8 w-8 text-primary/10" />
+                <Quote className="absolute top-3 sm:top-4 right-3 sm:right-4 h-6 sm:h-8 w-6 sm:w-8 text-primary/10" />
                 
                 {/* Stars */}
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-3 sm:mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                   ))}
                 </div>
 
-                <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                <p className="text-muted-foreground mb-3 sm:mb-4 text-sm leading-relaxed">
                   "{testimonial.text}"
                 </p>
 
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
+                <div className="border-t border-border pt-3 sm:pt-4">
+                  <p className="font-semibold text-foreground text-sm sm:text-base">{testimonial.name}</p>
                   <p className="text-xs text-muted-foreground">{testimonial.location}</p>
                 </div>
               </div>

@@ -281,3 +281,45 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* Mobile typography improvements */
+@layer utilities {
+  /* Relaxed text spacing for mobile readability */
+  .mobile-text {
+    @apply leading-relaxed tracking-normal;
+  }
+  
+  .mobile-text-tight {
+    @apply leading-snug tracking-tight;
+  }
+}
+
+@media (max-width: 639px) {
+  /* Base mobile typography adjustments */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+  
+  h1 {
+    @apply text-3xl leading-tight tracking-tight;
+  }
+  
+  h2 {
+    @apply text-2xl leading-tight;
+  }
+  
+  h3 {
+    @apply text-lg leading-snug;
+  }
+  
+  p {
+    @apply leading-relaxed;
+  }
+  
+  /* Improve readability of description text on mobile */
+  .text-muted-foreground {
+    line-height: 1.65;
+  }
+}

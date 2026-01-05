@@ -44,11 +44,11 @@ export function TrustSignals() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-section-alt">
-      <div className="container">
+    <section ref={ref} className="py-12 sm:py-16 md:py-24 bg-section-alt">
+      <div className="container px-4 sm:px-6">
         {/* Stats bar */}
         <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 pb-12 border-b border-border transition-all duration-700 ${
+          className={`grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12 pb-8 sm:pb-12 border-b border-border transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -58,30 +58,30 @@ export function TrustSignals() {
               className="text-center"
               style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
             >
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground leading-snug">{stat.label}</div>
             </div>
           ))}
         </div>
 
         {/* Trust signals grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {signals.map((signal, index) => (
             <div
               key={signal.title}
-              className={`flex items-start gap-4 p-4 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20 ${
+              className={`flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg bg-card border border-border transition-all duration-700 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${(index + 4) * 100}ms` : "0ms" }}
             >
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <signal.icon className="h-5 w-5 text-primary" />
+              <div className="flex-shrink-0 w-9 sm:w-10 h-9 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <signal.icon className="h-4 sm:h-5 w-4 sm:w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-1">{signal.title}</h3>
-                <p className="text-sm text-muted-foreground">{signal.description}</p>
+                <h3 className="font-semibold text-foreground mb-1 text-sm sm:text-base leading-snug">{signal.title}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{signal.description}</p>
               </div>
             </div>
           ))}

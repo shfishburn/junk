@@ -70,14 +70,14 @@ export function ServicesOverview() {
     <section ref={ref} className="py-16 md:py-24">
       <div className="container">
         <div 
-          className={`text-center mb-12 transition-all duration-700 ${
+          className={`text-center mb-8 sm:mb-12 px-4 sm:px-0 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
             We'll Haul Basically Anything
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Couches, fridges, that weird thing in your basement you're afraid to touch — we've seen it all, and we're not easily spooked.
           </p>
         </div>
@@ -102,11 +102,11 @@ export function ServicesOverview() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="p-5">
-                  <h3 className="font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors">
+                <div className="p-4 sm:p-5">
+                  <h3 className="font-semibold text-card-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{service.description}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
                   {service.isContactCTA && (
                     <span className="inline-flex items-center text-sm text-primary font-medium mt-3">
                       Contact Us <ArrowRight className="ml-1 h-3 w-3" />

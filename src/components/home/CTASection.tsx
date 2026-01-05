@@ -7,17 +7,17 @@ export function CTASection() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-primary">
-      <div className="container">
+    <section ref={ref} className="py-12 sm:py-16 md:py-24 bg-primary">
+      <div className="container px-4 sm:px-6">
         <div 
           className={`max-w-2xl mx-auto text-center transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-3 sm:mb-4 leading-tight px-2 sm:px-0">
             Your Junk Won't Remove Itself (Trust Us, We've Asked)
           </h2>
-          <p className="text-lg text-primary-foreground/90 mb-8">
+          <p className="text-base sm:text-lg text-primary-foreground/90 mb-6 sm:mb-8 leading-relaxed px-2 sm:px-0">
             Get a free quote and experience the sweet, sweet freedom of a clutter-free life. We're weirdly excited to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
