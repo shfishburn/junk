@@ -63,6 +63,10 @@ const translations = {
     moderate: "Moderate",
     complex: "Complex",
     structuresIdentified: "Structures Identified",
+    editStructures: "Edit Structures",
+    addStructure: "Add structure",
+    removeStructure: "Remove",
+    structuresEdited: "Structures updated! Your estimate may vary based on actual scope.",
     equipmentNeeded: "Equipment Needed",
     safetyConsiderations: "Safety Considerations",
     bookYourQuote: "Book Your Demolition Quote",
@@ -130,6 +134,10 @@ const translations = {
     moderate: "Moderado",
     complex: "Complejo",
     structuresIdentified: "Estructuras Identificadas",
+    editStructures: "Editar Estructuras",
+    addStructure: "Agregar estructura",
+    removeStructure: "Quitar",
+    structuresEdited: "¡Estructuras actualizadas! Tu estimado puede variar según el alcance real.",
     equipmentNeeded: "Equipo Necesario",
     safetyConsiderations: "Consideraciones de Seguridad",
     bookYourQuote: "Reserva Tu Cotización de Demolición",
@@ -230,6 +238,9 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [bookingPhotoUrls, setBookingPhotoUrls] = useState<string[]>([]);
   const [addressData, setAddressData] = useState<AddressData>(getEmptyAddress());
+  const [editedStructures, setEditedStructures] = useState<DemolitionStructure[] | null>(null);
+  const [newStructureName, setNewStructureName] = useState("");
+  const [isEditingStructures, setIsEditingStructures] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -698,24 +709,115 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           </div>
         </div>
 
-        {/* Structures list */}
+        {/* Structures list - Editable */}
         <div className="p-4 rounded-lg bg-card border border-border">
-          <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-primary" />
-            {t.structuresIdentified}
-          </h4>
-          <div className="space-y-2">
-            {result.structures.map((structure, i) => (
-              <div key={i} className="flex flex-wrap items-center gap-2 p-2 rounded-lg bg-secondary/50">
-                <span className="font-medium text-charcoal">{structure.name}</span>
-                <span className="text-sm text-muted-foreground">({structure.material})</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-                  {conditionLabels[structure.condition]}
-                </span>
-                <span className="text-xs text-muted-foreground ml-auto">{structure.estimatedSize}</span>
-              </div>
-            ))}
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-semibold text-charcoal flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-primary" />
+              {t.structuresIdentified}
+            </h4>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                if (!isEditingStructures) {
+                  setEditedStructures(editedStructures || [...result.structures]);
+                }
+                setIsEditingStructures(!isEditingStructures);
+              }}
+              className="text-xs text-primary hover:text-primary/80"
+            >
+              {isEditingStructures ? <CheckCircle2 className="h-3 w-3 mr-1" /> : null}
+              {isEditingStructures ? "Done" : t.editStructures}
+            </Button>
           </div>
+          
+          {isEditingStructures && editedStructures ? (
+            <div className="space-y-3">
+              <div className="space-y-2">
+                {editedStructures.map((structure, i) => (
+                  <div key={i} className="flex flex-wrap items-center gap-2 p-2 rounded-lg bg-secondary/50 group">
+                    <span className="font-medium text-charcoal">{structure.name}</span>
+                    <span className="text-sm text-muted-foreground">({structure.material})</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newStructures = editedStructures.filter((_, index) => index !== i);
+                        setEditedStructures(newStructures);
+                      }}
+                      className="text-destructive hover:text-destructive/80 opacity-70 group-hover:opacity-100 transition-opacity ml-auto"
+                      aria-label={t.removeStructure}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Add new structure */}
+              <div className="flex gap-2 mt-3">
+                <Input
+                  type="text"
+                  value={newStructureName}
+                  onChange={(e) => setNewStructureName(e.target.value)}
+                  placeholder={t.addStructure}
+                  className="flex-1 h-9 text-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newStructureName.trim()) {
+                      e.preventDefault();
+                      setEditedStructures([...editedStructures, { 
+                        name: newStructureName.trim(), 
+                        material: "unknown", 
+                        condition: "weathered",
+                        estimatedSize: "TBD"
+                      }]);
+                      setNewStructureName("");
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    if (newStructureName.trim()) {
+                      setEditedStructures([...editedStructures, { 
+                        name: newStructureName.trim(), 
+                        material: "unknown", 
+                        condition: "weathered",
+                        estimatedSize: "TBD"
+                      }]);
+                      setNewStructureName("");
+                    }
+                  }}
+                  disabled={!newStructureName.trim()}
+                  className="h-9"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              {editedStructures.length !== result.structures.length && (
+                <p className="text-xs text-muted-foreground mt-2 italic">
+                  {t.structuresEdited}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {(editedStructures || result.structures).map((structure, i) => (
+                <div key={i} className="flex flex-wrap items-center gap-2 p-2 rounded-lg bg-secondary/50">
+                  <span className="font-medium text-charcoal">{structure.name}</span>
+                  <span className="text-sm text-muted-foreground">({structure.material})</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                    {conditionLabels[structure.condition]}
+                  </span>
+                  <span className="text-xs text-muted-foreground ml-auto">{structure.estimatedSize}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Equipment needed */}
