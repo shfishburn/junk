@@ -250,16 +250,17 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   };
 
   // Restore saved estimate from localStorage on mount
-  // NOTE: We only store the result, NOT images (to avoid localStorage quota issues)
   useEffect(() => {
     const saved = localStorage.getItem('junk-estimate');
     if (saved) {
       try {
-        const { result: savedResult, timestamp } = JSON.parse(saved);
+        const { result: savedResult, images: savedImages, timestamp } = JSON.parse(saved);
         // Check if not expired (24 hours)
         if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
           setResult(savedResult);
-          // Images are not restored - user will need to re-upload if they want to modify
+          if (savedImages && Array.isArray(savedImages)) {
+            setImagePreviews(savedImages);
+          }
         } else {
           localStorage.removeItem('junk-estimate');
         }
@@ -269,20 +270,29 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
     }
   }, []);
 
-  // Save estimate to localStorage when result changes (without images to avoid quota issues)
+  // Save estimate and images to localStorage when they change
   useEffect(() => {
     if (result) {
       try {
         localStorage.setItem('junk-estimate', JSON.stringify({
           result,
+          images: imagePreviews,
           timestamp: Date.now()
         }));
       } catch (e) {
-        // If storage fails, just continue without persistence
-        console.warn('Could not save estimate to localStorage:', e);
+        // If storage fails (quota exceeded), try saving without images
+        console.warn('Could not save with images, trying without:', e);
+        try {
+          localStorage.setItem('junk-estimate', JSON.stringify({
+            result,
+            timestamp: Date.now()
+          }));
+        } catch (e2) {
+          console.warn('Could not save estimate to localStorage:', e2);
+        }
       }
     }
-  }, [result]);
+  }, [result, imagePreviews]);
 
   const handleFiles = useCallback(async (files: FileList) => {
     const validFiles: File[] = [];
