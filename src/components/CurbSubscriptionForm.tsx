@@ -10,8 +10,7 @@ import {
   Trash2, 
   Loader2, 
   Calendar,
-  Check,
-  Heart
+  Check
 } from "lucide-react";
 import {
   Select,
@@ -20,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 
 // Validation schema for subscription form
 const subscriptionFormSchema = z.object({
@@ -67,7 +65,6 @@ export function CurbSubscriptionForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string>("weekly");
   const [trashDay, setTrashDay] = useState<string>("");
-  const [isSeniorOrVeteran, setIsSeniorOrVeteran] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -116,10 +113,9 @@ export function CurbSubscriptionForm() {
 
     try {
       const selectedPlanInfo = PLAN_OPTIONS.find(p => p.id === selectedPlan);
-      const discountNote = isSeniorOrVeteran ? " (15% Senior/Veteran Discount Requested)" : "";
       
       const message = `TRASH CAN TO CURB SUBSCRIPTION REQUEST\n\n` +
-        `Plan: ${selectedPlanInfo?.label} - ${selectedPlanInfo?.price}${discountNote}\n` +
+        `Plan: ${selectedPlanInfo?.label} - ${selectedPlanInfo?.price}\n` +
         `Trash Day: ${TRASH_DAYS.find(d => d.value === trashDay)?.label}\n\n` +
         `Service Address: ${validation.data.address}\n\n` +
         `Additional Notes: ${validation.data.notes || "None"}`;
@@ -148,7 +144,6 @@ export function CurbSubscriptionForm() {
       setFormData({ name: "", email: "", phone: "", address: "", notes: "" });
       setSelectedPlan("weekly");
       setTrashDay("");
-      setIsSeniorOrVeteran(false);
     } catch (error) {
       console.error("Error sending subscription request:", error);
       toast({
@@ -306,30 +301,6 @@ export function CurbSubscriptionForm() {
           placeholder="123 Main St, Mount Vernon, WA"
           required
         />
-
-        {/* Senior/Veteran Discount */}
-        <div 
-          className={cn(
-            "p-4 rounded-lg border-2 transition-all cursor-pointer",
-            isSeniorOrVeteran 
-              ? "border-primary bg-primary/5" 
-              : "border-border hover:border-primary/30"
-          )}
-          onClick={() => setIsSeniorOrVeteran(!isSeniorOrVeteran)}
-        >
-          <div className="flex items-center gap-3">
-            <Checkbox
-              checked={isSeniorOrVeteran}
-              onCheckedChange={(checked) => setIsSeniorOrVeteran(checked === true)}
-              onClick={(e) => e.stopPropagation()}
-            />
-            <div className="flex items-center gap-2">
-              <Heart className="h-4 w-4 text-primary" />
-              <span className="font-medium text-foreground">I'm a senior (65+) or veteran</span>
-              <span className="text-sm text-primary font-medium">— 15% off!</span>
-            </div>
-          </div>
-        </div>
 
         <TextareaField
           id="curb-notes"

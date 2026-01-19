@@ -169,7 +169,6 @@ const trustCallouts = [
   { icon: Clock, text: "Reliable scheduling—we show up when we say we will" },
   { icon: Recycle, text: "Responsible disposal—donate, recycle, landfill last" },
   { icon: Check, text: "No on-site upsells or surprise fees" },
-  { icon: Heart, text: "15% off for seniors & veterans" },
 ];
 
 const hazmatFaqs = [
@@ -549,10 +548,6 @@ const Services = () => {
               </div>
             </div>
 
-            <p className="text-center text-sm text-muted-foreground mt-8">
-              <Heart className="inline h-4 w-4 text-primary mr-1" />
-              15% senior & veteran discount applies to all subscription plans
-            </p>
           </div>
         </div>
       </section>
@@ -620,14 +615,6 @@ const Services = () => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="curb-6" className="border border-border rounded-lg px-6 bg-card">
-                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
-                  Is the senior/veteran discount automatic?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4">
-                  Just let us know when you sign up and we'll apply the 15% discount to your subscription. No paperwork or verification hassles.
-                </AccordionContent>
-              </AccordionItem>
             </Accordion>
           </div>
         </div>
