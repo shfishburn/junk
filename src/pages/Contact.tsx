@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks";
 import { trackContactFormSubmit } from "@/lib";
-import { Loader2, Sparkles, Camera } from "lucide-react";
+import { Loader2, Sparkles, Camera, Calendar } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { JunkRouletteModal } from "@/components/features";
 import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
@@ -23,7 +23,18 @@ const SERVICE_TYPES = [
   { value: "commercial", label: "Commercial/Office" },
   { value: "cleanout", label: "Estate/Garage Cleanout" },
   { value: "hazmat", label: "Hazmat Materials" },
+  { value: "curb-weekly", label: "Trash Can to Curb – Weekly ($40/mo)" },
+  { value: "curb-biweekly", label: "Trash Can to Curb – Bi-Weekly ($25/mo)" },
+  { value: "curb-onetime", label: "Trash Can to Curb – One-Time ($15)" },
   { value: "other", label: "Other" },
+];
+
+const TRASH_DAYS = [
+  { value: "monday", label: "Monday" },
+  { value: "tuesday", label: "Tuesday" },
+  { value: "wednesday", label: "Wednesday" },
+  { value: "thursday", label: "Thursday" },
+  { value: "friday", label: "Friday" },
 ];
 
 const contactSchema = z.object({
@@ -44,6 +55,7 @@ const Contact = () => {
   const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
+  const [trashDay, setTrashDay] = useState<string>("");
   const [address, setAddress] = useState<AddressData>(getEmptyAddress());
   const [formData, setFormData] = useState({
     name: "",
@@ -78,6 +90,8 @@ const Contact = () => {
         : null;
 
       const serviceLabel = SERVICE_TYPES.find(s => s.value === formData.serviceType)?.label;
+      const isCurbService = formData.serviceType?.startsWith("curb-");
+      const trashDayLabel = TRASH_DAYS.find(d => d.value === trashDay)?.label;
 
       const formattedAddress = formatAddressForStorage(address);
       
@@ -88,6 +102,8 @@ const Contact = () => {
           serviceType: serviceLabel || formData.serviceType,
           preferredAppointment: appointmentInfo,
           photoUrls: photoUrls,
+          trashDay: isCurbService ? trashDayLabel : undefined,
+          isCurbSubscription: isCurbService,
         },
       });
 
@@ -106,6 +122,7 @@ const Contact = () => {
       setPreferredDate(undefined);
       setPreferredTime("");
       setPhotoUrls([]);
+      setTrashDay("");
       setAddress(getEmptyAddress());
     } catch (error) {
       console.error("Error sending message:", error);
@@ -260,6 +277,31 @@ const Contact = () => {
                       </SelectContent>
                     </Select>
                   </div>
+
+                  {/* Trash Day Selection - only show for Curb services */}
+                  {formData.serviceType?.startsWith("curb-") && (
+                    <div>
+                      <Label htmlFor="trashDay" className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        Your Trash Day *
+                      </Label>
+                      <Select value={trashDay} onValueChange={setTrashDay}>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Select your trash collection day" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {TRASH_DAYS.map((day) => (
+                            <SelectItem key={day.value} value={day.value}>
+                              {day.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        We'll take your bins out before pickup and return them the same day.
+                      </p>
+                    </div>
+                  )}
 
                   {/* Date & Time Picker */}
                   <DateTimePicker
