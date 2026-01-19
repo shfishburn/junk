@@ -330,6 +330,18 @@ const handler = async (req: Request): Promise<Response> => {
 
       console.log("Admin curb subscription notification sent:", businessEmail);
 
+      // Helper to get plan details for customer email
+      const getPlanDetails = (plan: string) => {
+        const plans: Record<string, { name: string; price: string; frequency: string; description: string }> = {
+          'curb-weekly': { name: 'Weekly Service', price: '$40/month', frequency: 'Every Week', description: 'We handle your bins every trash day, rain or shine.' },
+          'curb-biweekly': { name: 'Bi-Weekly Service', price: '$25/month', frequency: 'Every Other Week', description: 'Perfect for smaller households or those who don\'t fill bins often.' },
+          'curb-onetime': { name: 'One-Time Service', price: '$15', frequency: 'Single Visit', description: 'Just need help once? We\'ve got you covered.' },
+        };
+        return plans[plan] || { name: plan || 'Selected Plan', price: 'To be confirmed', frequency: 'To be confirmed', description: '' };
+      };
+      
+      const planDetails = getPlanDetails(validatedData.serviceType || '');
+
       // Customer confirmation for curb subscription
       const customerEmail = await resend.emails.send({
         from: "Junky Gurus <bookings@thejunkygurus.com>",
@@ -338,35 +350,66 @@ const handler = async (req: Request): Promise<Response> => {
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for signing up, ${name}!</h1>
-            <p>We've received your Trash Can to Curb subscription request and we're excited to take trash day off your plate!</p>
+            <p style="font-size: 16px; line-height: 1.6;">We've received your <strong>Trash Can to Curb</strong> subscription request and we're excited to take trash day off your plate!</p>
             
-            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
-              <h2 style="margin-top: 0; color: #166534;">📋 Your Plan Details</h2>
-              <p style="font-size: 18px; margin: 0;"><strong>Plan:</strong> ${serviceType || 'Selected plan'}</p>
-              <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Trash Day:</strong> ${trashDay || 'To be confirmed'}</p>
-              ${pickupAddress ? `<p style="font-size: 16px; margin: 8px 0 0 0;"><strong>Address:</strong> ${pickupAddress}</p>` : ''}
+            <div style="background: #dcfce7; padding: 25px; border-radius: 12px; margin: 25px 0; border-left: 5px solid #16a34a;">
+              <h2 style="margin: 0 0 20px 0; color: #166534; font-size: 20px;">📋 Your Subscription Summary</h2>
+              
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #374151;"><strong>Service Plan:</strong></td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #166534; font-weight: bold; font-size: 16px;">${planDetails.name}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #374151;"><strong>Price:</strong></td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #16a34a; font-weight: bold; font-size: 18px;">${planDetails.price}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #374151;"><strong>Frequency:</strong></td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #374151;">${planDetails.frequency}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #374151;"><strong>Your Trash Day:</strong></td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #bbf7d0; color: #166534; font-weight: bold;">${trashDay || 'To be confirmed'}</td>
+                </tr>
+              </table>
+              
+              ${planDetails.description ? `<p style="margin: 15px 0 0 0; color: #166534; font-style: italic; font-size: 14px;">${planDetails.description}</p>` : ''}
             </div>
             
-            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="margin-top: 0;">What happens next?</h2>
-              <ul>
-                <li>We'll review your request within 24 hours</li>
-                <li>We'll confirm your service start date</li>
-                <li>We'll set up your payment method</li>
-                <li>Then just sit back — we've got your bins covered!</li>
+            ${pickupAddress ? `
+              <div style="background: #f3f4f6; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="margin: 0 0 10px 0; color: #374151; font-size: 16px;">📍 Service Location</h3>
+                <p style="margin: 0; font-size: 15px; color: #1f2937;">${pickupAddress}</p>
+              </div>
+            ` : ''}
+            
+            <div style="background: #fefce8; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #eab308;">
+              <h2 style="margin: 0 0 15px 0; color: #854d0e; font-size: 18px;">⏳ What Happens Next?</h2>
+              <ol style="margin: 0; padding-left: 20px; color: #713f12;">
+                <li style="margin-bottom: 8px;">We'll review your request within <strong>24 hours</strong></li>
+                <li style="margin-bottom: 8px;">We'll call or text to confirm your <strong>service start date</strong></li>
+                <li style="margin-bottom: 8px;">We'll set up your <strong>payment method</strong></li>
+                <li style="margin-bottom: 0;">Then sit back — <strong>we've got your bins covered!</strong></li>
+              </ol>
+            </div>
+            
+            <div style="background: #eff6ff; padding: 20px; border-radius: 10px; margin: 20px 0;">
+              <h2 style="margin: 0 0 15px 0; color: #1e40af; font-size: 18px;">🗑️ How Our Service Works</h2>
+              <ul style="margin: 0; padding-left: 20px; color: #1e3a8a;">
+                <li style="margin-bottom: 8px;">We arrive on your trash day morning and take your bins to the curb</li>
+                <li style="margin-bottom: 8px;">After pickup, we return them to your garage or designated spot</li>
+                <li style="margin-bottom: 0;">That's it — <strong>you never touch your bins again!</strong></li>
               </ul>
             </div>
             
-            <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="margin-top: 0; color: #1e40af;">🗑️ How It Works</h2>
-              <ul>
-                <li>We take your bins out on your scheduled trash day morning</li>
-                <li>We return them to your garage/storage area after pickup</li>
-                <li>That's it — you never touch your bins again!</li>
-              </ul>
+            <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f0fdf4; border-radius: 10px;">
+              <p style="margin: 0 0 10px 0; color: #374151;"><strong>Questions about your subscription?</strong></p>
+              <p style="margin: 0;">
+                <a href="tel:+13606109233" style="display: inline-block; background: #16a34a; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-right: 10px;">📞 Call (360) 610-9233</a>
+              </p>
+              <p style="margin: 10px 0 0 0; color: #6b7280; font-size: 13px;">or reply directly to this email</p>
             </div>
-            
-            <p><strong>Questions?</strong> Give us a call at <strong>(360) 610-9233</strong> or reply to this email.</p>
           ${emailFooter()}
         `,
       });
