@@ -3,7 +3,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs, DiscountBadge } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart, Hammer } from "lucide-react";
+import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart, Hammer, TrashIcon } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JunkAnalyzer, DemolitionAnalyzer } from "@/components/features";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -72,6 +72,13 @@ const hazmatPricing = [
   { item: "Propane Tanks", description: "Small to medium", price: "$20 – $35" },
   { item: "Mixed Hazardous Load", description: "Multiple items", price: "$75 – $150+" },
 ];
+
+const trashToCurbPricing = [
+  { plan: "Weekly Service", description: "4 pickups per month", price: "$40/month" },
+  { plan: "Bi-Weekly Service", description: "2 pickups per month", price: "$25/month" },
+  { plan: "One-Time Service", description: "Single trash day coverage", price: "$15" },
+];
+
 
 const pricingInfo = [
   {
@@ -385,6 +392,43 @@ const Pricing = () => {
             <div className="p-4 bg-muted/50 border-t border-border">
               <p className="text-xs text-muted-foreground">
                 * Pricing includes pickup, transport, and disposal fees. We handle household quantities. Industrial chemicals, asbestos, and medical waste require specialized services—just ask and we'll point you in the right direction.
+              </p>
+            </div>
+          </div>
+
+          {/* Trash Can to Curb Pricing */}
+          <div className="mt-8 bg-background rounded-xl border border-border overflow-hidden">
+            <div className="p-6 bg-primary/5 border-b border-border">
+              <h3 className="text-xl font-bold text-charcoal flex items-center gap-2">
+                <TrashIcon className="h-5 w-5 text-primary" />
+                Trash Can to Curb
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">We take your bins out and bring them back — so you don't have to</p>
+            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="font-semibold">Plan</TableHead>
+                  <TableHead className="text-right font-semibold">Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {trashToCurbPricing.map((item) => (
+                  <TableRow key={item.plan}>
+                    <TableCell>
+                      <div>
+                        <span className="font-medium">{item.plan}</span>
+                        <p className="text-xs text-muted-foreground">{item.description}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right font-medium text-primary">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className="p-4 bg-muted/50 border-t border-border">
+              <p className="text-xs text-muted-foreground">
+                * Includes trash, recycling, and yard waste bins. Bins returned to your garage or storage area the same day. No contracts — cancel anytime.
               </p>
             </div>
           </div>
