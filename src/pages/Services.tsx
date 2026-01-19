@@ -490,7 +490,7 @@ const Services = () => {
                 <h3 className="text-2xl font-bold text-foreground mb-2">Weekly Service</h3>
                 <p className="text-muted-foreground mb-6">Perfect for busy households</p>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-foreground">$49</span>
+                  <span className="text-4xl font-bold text-foreground">$40</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -521,7 +521,7 @@ const Services = () => {
                 <h3 className="text-2xl font-bold text-foreground mb-2">Bi-Weekly Service</h3>
                 <p className="text-muted-foreground mb-6">Great for smaller households</p>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-foreground">$29</span>
+                  <span className="text-4xl font-bold text-foreground">$25</span>
                   <span className="text-muted-foreground">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
