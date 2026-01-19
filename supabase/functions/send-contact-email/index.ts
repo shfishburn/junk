@@ -86,7 +86,9 @@ const contactSchema = z.object({
   bookingDate: z.string().max(50, "Booking date must be less than 50 characters").optional().nullable(),
   bookingTime: z.string().max(20, "Booking time must be less than 20 characters").optional().nullable(),
   isHazmatRequest: z.boolean().optional().default(false),
-  serviceType: z.string().max(50, "Service type must be less than 50 characters").optional().nullable(),
+  isCurbSubscription: z.boolean().optional().default(false),
+  trashDay: z.string().max(20, "Trash day must be less than 20 characters").optional().nullable(),
+  serviceType: z.string().max(100, "Service type must be less than 100 characters").optional().nullable(),
   address: z.string().max(500, "Address must be less than 500 characters").optional().nullable(),
   skipAdminNotification: z.boolean().optional().default(false),
   photoUrls: z.array(z.string().url()).max(10).optional(),
@@ -240,6 +242,9 @@ const handler = async (req: Request): Promise<Response> => {
     const bookingDate = sanitizeHtml(validatedData.bookingDate);
     const bookingTime = sanitizeHtml(validatedData.bookingTime);
     const isHazmatRequest = validatedData.isHazmatRequest;
+    const isCurbSubscription = validatedData.isCurbSubscription;
+    const trashDay = sanitizeHtml(validatedData.trashDay);
+    const serviceType = sanitizeHtml(validatedData.serviceType);
     const skipAdminNotification = validatedData.skipAdminNotification;
     const pickupAddress = sanitizeHtml(validatedData.address);
     const photoUrls = validatedData.photoUrls || [];
@@ -254,12 +259,120 @@ const handler = async (req: Request): Promise<Response> => {
       bookingDate: validatedData.bookingDate, 
       bookingTime: validatedData.bookingTime, 
       isHazmatRequest,
+      isCurbSubscription,
+      trashDay: validatedData.trashDay,
+      serviceType: validatedData.serviceType,
       skipAdminNotification 
     });
 
     const adminEmail = "booking@thejunkygurus.com";
 
-    if (isHazmatRequest) {
+    // Handle Trash Can to Curb subscription requests
+    if (isCurbSubscription) {
+      // Admin notification for curb subscription
+      const businessEmail = await resend.emails.send({
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        to: [adminEmail],
+        subject: `🗑️ New Trash Can to Curb Subscription - ${validatedData.name}`,
+        html: `
+          ${emailHeader()}
+            <div style="background: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid #2563eb; margin-bottom: 20px;">
+              <h1 style="color: #1e40af; margin: 0; font-size: 24px;">🗑️ New Curb Service Subscription</h1>
+            </div>
+            
+            <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #1e40af;">📋 Subscription Details</h2>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="padding: 8px 0;"><strong>Plan:</strong></td><td>${serviceType || 'Not specified'}</td></tr>
+                <tr><td style="padding: 8px 0;"><strong>Trash Day:</strong></td><td style="color: #16a34a; font-weight: bold;">${trashDay || 'Not specified'}</td></tr>
+              </table>
+            </div>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #374151;">📍 Service Address</h2>
+              <p style="margin: 0;">${pickupAddress || 'Not provided'}</p>
+              ${pickupAddress ? `
+                <p style="margin: 12px 0 0 0;">
+                  <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(validatedData.address || '')}" target="_blank" style="display: inline-block; background: #16a34a; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">🧭 Google Maps</a>
+                  <a href="https://maps.apple.com/?daddr=${encodeURIComponent(validatedData.address || '')}" target="_blank" style="display: inline-block; background: #374151; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;"> Apple Maps</a>
+                </p>
+              ` : ''}
+            </div>
+            
+            <h2 style="color: #374151;">👤 Customer Information</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 8px 0;"><strong>Name:</strong></td><td>${name}</td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Email:</strong></td><td><a href="mailto:${email}" style="color: #16a34a;">${email}</a></td></tr>
+              <tr><td style="padding: 8px 0;"><strong>Phone:</strong></td><td>${phone || 'Not provided'}</td></tr>
+            </table>
+            ${validatedData.phone ? `
+              <p style="margin: 12px 0 0 0;">
+                <a href="tel:${validatedData.phone}" style="display: inline-block; background: #2563eb; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">📞 Call Customer</a>
+                <a href="sms:${validatedData.phone}" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">💬 Text Customer</a>
+              </p>
+            ` : ''}
+            
+            ${sanitizeHtml(validatedData.message) ? `
+              <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                <h3 style="margin-top: 0; color: #374151;">📝 Additional Notes</h3>
+                <p style="margin: 0;">${sanitizeHtml(validatedData.message)}</p>
+              </div>
+            ` : ''}
+            
+            <div style="margin-top: 30px; padding: 15px; background: #dbeafe; border-radius: 8px;">
+              <p style="color: #1e40af; font-size: 12px; margin: 0;">
+                🗑️ Remember to confirm the service start date and payment method with the customer.
+              </p>
+            </div>
+          ${emailFooter()}
+        `,
+      });
+
+      console.log("Admin curb subscription notification sent:", businessEmail);
+
+      // Customer confirmation for curb subscription
+      const customerEmail = await resend.emails.send({
+        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        to: [email],
+        subject: "Your Trash Can to Curb Subscription Request! 🗑️",
+        html: `
+          ${emailHeader()}
+            <h1 style="color: #16a34a; margin-top: 0;">Thanks for signing up, ${name}!</h1>
+            <p>We've received your Trash Can to Curb subscription request and we're excited to take trash day off your plate!</p>
+            
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+              <h2 style="margin-top: 0; color: #166534;">📋 Your Plan Details</h2>
+              <p style="font-size: 18px; margin: 0;"><strong>Plan:</strong> ${serviceType || 'Selected plan'}</p>
+              <p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Trash Day:</strong> ${trashDay || 'To be confirmed'}</p>
+              ${pickupAddress ? `<p style="font-size: 16px; margin: 8px 0 0 0;"><strong>Address:</strong> ${pickupAddress}</p>` : ''}
+            </div>
+            
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0;">What happens next?</h2>
+              <ul>
+                <li>We'll review your request within 24 hours</li>
+                <li>We'll confirm your service start date</li>
+                <li>We'll set up your payment method</li>
+                <li>Then just sit back — we've got your bins covered!</li>
+              </ul>
+            </div>
+            
+            <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="margin-top: 0; color: #1e40af;">🗑️ How It Works</h2>
+              <ul>
+                <li>We take your bins out on your scheduled trash day morning</li>
+                <li>We return them to your garage/storage area after pickup</li>
+                <li>That's it — you never touch your bins again!</li>
+              </ul>
+            </div>
+            
+            <p><strong>Questions?</strong> Give us a call at <strong>(360) 610-9233</strong> or reply to this email.</p>
+          ${emailFooter()}
+        `,
+      });
+
+      console.log("Customer curb subscription confirmation sent:", customerEmail);
+    } else if (isHazmatRequest) {
       // Parse hazmat items from message (sanitize for parsing, then sanitize output)
       const sanitizedMessage = sanitizeText(message);
       const messageLines = message.split('\n');
@@ -643,7 +756,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     return new Response(JSON.stringify({ 
       success: true,
-      type: isHazmatRequest ? 'hazmat' : isBooking ? 'booking' : 'contact',
+      type: isCurbSubscription ? 'curb' : isHazmatRequest ? 'hazmat' : isBooking ? 'booking' : 'contact',
       skipAdminNotification: skipAdminNotification || false,
     }), {
       status: 200,
