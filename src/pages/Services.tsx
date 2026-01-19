@@ -7,6 +7,7 @@ import { useScrollAnimation } from "@/hooks";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
 import { HazmatBookingForm } from "@/components/features";
+import { CurbSubscriptionForm } from "@/components/CurbSubscriptionForm";
 import residentialImg from "@/assets/service-residential.jpg";
 import appliancesImg from "@/assets/service-appliances.jpg";
 import yardWasteImg from "@/assets/service-yard-waste.jpg";
@@ -628,6 +629,15 @@ const Services = () => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Trash Can to Curb Signup Form */}
+      <section className="py-16 md:py-24 bg-section-alt">
+        <div className="container">
+          <div className="max-w-2xl mx-auto">
+            <CurbSubscriptionForm />
           </div>
         </div>
       </section>
