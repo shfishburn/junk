@@ -433,8 +433,100 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Government & Commercial Contracts Section */}
+      {/* Trash Can to Curb Subscription Pricing */}
       <section className="py-16 md:py-24 bg-section-alt">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <TrashIcon className="h-4 w-4" />
+                Subscription Service
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Trash Can to Curb Plans
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Never worry about trash day again. We handle your bins so you don't have to.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Weekly Plan */}
+              <div className="bg-card border-2 border-primary rounded-2xl p-8 relative overflow-hidden">
+                <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                  MOST POPULAR
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-2">Weekly Service</h3>
+                <p className="text-muted-foreground mb-6">Perfect for busy households</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-foreground">$49</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Weekly curb service (4x/month)</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Trash, recycling & yard waste bins</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Bins returned to garage/storage</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>No contracts — cancel anytime</span>
+                  </li>
+                </ul>
+                <Button asChild className="w-full">
+                  <Link to="/contact">Get Started</Link>
+                </Button>
+              </div>
+
+              {/* Bi-Weekly Plan */}
+              <div className="bg-card border border-border rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-foreground mb-2">Bi-Weekly Service</h3>
+                <p className="text-muted-foreground mb-6">Great for smaller households</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-foreground">$29</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Bi-weekly curb service (2x/month)</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Trash, recycling & yard waste bins</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Bins returned to garage/storage</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>No contracts — cancel anytime</span>
+                  </li>
+                </ul>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/contact">Get Started</Link>
+                </Button>
+              </div>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground mt-8">
+              <Heart className="inline h-4 w-4 text-primary mr-1" />
+              15% senior & veteran discount applies to all subscription plans
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Government & Commercial Contracts Section */}
+      <section className="py-16 md:py-24">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
