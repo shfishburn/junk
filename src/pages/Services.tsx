@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart, MessageSquare, Landmark, Shield, FileCheck, Award } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart, MessageSquare, Landmark, Shield, FileCheck, Award, TrashIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
@@ -15,6 +15,7 @@ import constructionImg from "@/assets/service-construction.jpg";
 import commercialImg from "@/assets/service-commercial.jpg";
 import lightDemolitionImg from "@/assets/service-light-demolition.jpg";
 import hazmatImg from "@/assets/service-hazmat.jpg";
+import trashToCurbImg from "@/assets/service-trash-to-curb.jpg";
 import somethingElseImg from "@/assets/service-something-else.jpg";
 
 const services = [
@@ -131,6 +132,20 @@ const services = [
       "Propane tanks (small)",
     ],
     note: "We handle household quantities. Industrial chemicals, asbestos, and medical waste require specialized services—ask us and we'll point you in the right direction.",
+  },
+  {
+    icon: TrashIcon,
+    title: "Trash Can to Curb",
+    slug: "trash-to-curb",
+    description: "Can't make it to the curb on trash day? Recovering from surgery, dealing with mobility issues, or just too busy? We'll wheel your bins out and back—so you never miss a pickup.",
+    image: trashToCurbImg,
+    details: [
+      "Weekly or bi-weekly service available",
+      "Trash, recycling & yard waste bins",
+      "Ideal for seniors and those with mobility challenges",
+      "Perfect for busy professionals and travelers",
+      "We bring bins back to your garage or storage area",
+    ],
   },
   {
     icon: MessageSquare,
