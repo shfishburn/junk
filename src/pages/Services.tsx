@@ -450,11 +450,42 @@ const Services = () => {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* One-Time Pickup */}
+              <div className="bg-card border border-border rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-foreground mb-2">One-Time Pickup</h3>
+                <p className="text-muted-foreground mb-6">For travelers & occasional needs</p>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold text-foreground">$15</span>
+                  <span className="text-muted-foreground">/pickup</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Single trash day coverage</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Trash, recycling & yard waste bins</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Bins returned to garage/storage</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-muted-foreground">
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span>Book as needed — no commitment</span>
+                  </li>
+                </ul>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/contact">Book Now</Link>
+                </Button>
+              </div>
+
               {/* Weekly Plan */}
               <div className="bg-card border-2 border-primary rounded-2xl p-8 relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                  MOST POPULAR
+                  BEST VALUE
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-2">Weekly Service</h3>
                 <p className="text-muted-foreground mb-6">Perfect for busy households</p>
