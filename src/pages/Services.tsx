@@ -451,9 +451,9 @@ const Services = () => {
             </div>
             
             <div className="grid md:grid-cols-3 gap-6">
-              {/* One-Time Pickup */}
+              {/* One-Time Service */}
               <div className="bg-card border border-border rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-foreground mb-2">One-Time Pickup</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-2">One-Time Service</h3>
                 <p className="text-muted-foreground mb-6">For travelers & occasional needs</p>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-foreground">$15</span>
