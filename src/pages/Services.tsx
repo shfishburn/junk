@@ -556,8 +556,84 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Government & Commercial Contracts Section */}
+      {/* Trash Can to Curb FAQ */}
       <section className="py-16 md:py-24">
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <TrashIcon className="h-4 w-4" />
+                Trash Can to Curb FAQ
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Questions About Trash Can to Curb?
+              </h2>
+              <p className="text-muted-foreground">
+                Everything you need to know about our bin service.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem value="curb-1" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  What bins do you take to the curb?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  We handle all your curbside bins — trash, recycling, and yard waste. If you have multiple bins, we'll take them all out and bring them back in.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="curb-2" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  When do you take out and return the bins?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  We take your bins to the curb the morning of your scheduled trash day (before pickup) and return them to your garage or designated storage area the same day after the truck comes through.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="curb-3" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  How do I cancel or pause my subscription?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  No contracts means no hassle. Just give us a call or text and we'll pause or cancel your service immediately. You can restart anytime — we'll be here.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="curb-4" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  What if I'm going on vacation and need extra coverage?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  Our One-Time Service is perfect for this. Book individual pickups for the weeks you'll be away. Or if you're already a subscriber, we've got you covered automatically.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="curb-5" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  Do you serve my area?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  We serve Mount Vernon, Burlington, Sedro-Woolley, Anacortes, La Conner, Bow, and surrounding Skagit County communities. Not sure? Give us a call and we'll let you know.
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="curb-6" className="border border-border rounded-lg px-6 bg-card">
+                <AccordionTrigger className="text-left text-foreground hover:no-underline py-4">
+                  Is the senior/veteran discount automatic?
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  Just let us know when you sign up and we'll apply the 15% discount to your subscription. No paperwork or verification hassles.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Government & Commercial Contracts Section */}
+      <section className="py-16 md:py-24 bg-section-alt">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
