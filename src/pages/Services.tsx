@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, Heart, MessageSquare, Landmark, Shield, FileCheck, Award, TrashIcon } from "lucide-react";
+import { Trash2, Refrigerator, TreeDeciduous, Home, HardHat, Building2, ArrowRight, Hammer, AlertTriangle, Check, Clock, DollarSign, Recycle, MessageSquare, TrashIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
@@ -633,109 +633,6 @@ const Services = () => {
         <div className="container">
           <div className="max-w-2xl mx-auto">
             <CurbSubscriptionForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Government & Commercial Contracts Section */}
-      <section className="py-16 md:py-24 bg-section-alt">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                <Landmark className="h-4 w-4" />
-                Government & Commercial
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Federal & Commercial Contract Services
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                SAM.gov registered and ready to serve government agencies, military installations, and commercial enterprises throughout the Pacific Northwest.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              <div className="bg-card border border-border rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Shield className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">SAM.gov Registered</h3>
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Fully registered in the System for Award Management (SAM.gov) and ready to bid on federal contracts. Our UEI and NAICS codes are on file and current.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <FileCheck className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">NAICS Certified</h3>
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Certified under NAICS codes 562111 (Solid Waste Collection), 562119 (Other Waste Collection), and 238910 (Site Preparation) for all junk removal and light demolition services.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building2 className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">Government Facilities</h3>
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Experience with military base cleanouts, federal office debris removal, and post-construction cleanup for government projects. Cleared and ready to work on secure sites.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Award className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">Small Business Ready</h3>
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Eligible for small business set-aside contracts and micro-purchases (under $10K). Perfect for quick-turnaround projects that need reliable local service.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-card border border-border rounded-xl p-6 mb-8">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Contract Services We Provide:</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  "Military base cleanouts & debris removal",
-                  "Federal building waste management",
-                  "Post-construction cleanup",
-                  "Disaster debris removal (FEMA eligible)",
-                  "Office relocation waste services",
-                  "Secure document/equipment destruction hauling",
-                  "Ongoing facility maintenance contracts",
-                  "Emergency response cleanups"
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 text-muted-foreground">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span className="text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <p className="text-muted-foreground mb-4">
-                Ready to discuss a government or commercial contract? Contact our team for quotes, capability statements, or to discuss your project requirements.
-              </p>
-              <Button asChild size="lg">
-                <Link to="/contact">
-                  Request Contract Quote
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
