@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Zap, Leaf, Percent, Clock } from "lucide-react";
+import { X, Zap, Leaf, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib";
 import type { LucideIcon } from "lucide-react";
@@ -22,13 +22,6 @@ const announcements: Announcement[] = [
     message: "Same-day pickups available!",
     linkText: "Book now",
     linkTo: "/book",
-  },
-  {
-    icon: Percent,
-    emoji: "💰",
-    message: "10% off your first booking!",
-    linkText: "Get quote",
-    linkTo: "/ai-estimator",
   },
   {
     icon: Leaf,
