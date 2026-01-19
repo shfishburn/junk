@@ -457,7 +457,7 @@ const Services = () => {
                 <p className="text-muted-foreground mb-6">For travelers & occasional needs</p>
                 <div className="mb-6">
                   <span className="text-4xl font-bold text-foreground">$15</span>
-                  <span className="text-muted-foreground">/pickup</span>
+                  <span className="text-muted-foreground">/One-Time</span>
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center gap-2 text-muted-foreground">
