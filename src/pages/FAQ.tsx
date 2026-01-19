@@ -34,6 +34,22 @@ const faqCategories = [
       {
         question: "Can you remove items from anywhere on my property?",
         answer: "Yes, we handle all the heavy lifting! Whether your items are in the attic, basement, backyard, garage, or anywhere else on your property, our team will do the work. You just point, and we haul."
+      },
+      {
+        question: "What is the Trash Can to Curb service?",
+        answer: "It's our subscription service for people who can't—or don't want to—take their trash bins to the curb. We wheel your trash, recycling, and yard waste bins out on your scheduled pickup day and return them to your garage or storage area after the truck comes through."
+      },
+      {
+        question: "Who uses Trash Can to Curb?",
+        answer: "Seniors, people recovering from surgery, busy professionals, frequent travelers, and anyone who just doesn't want to deal with trash day. It's surprisingly popular with people who have long driveways too!"
+      },
+      {
+        question: "What are the Trash Can to Curb pricing options?",
+        answer: "We offer three plans: Weekly Service at $40/month (4 pickups), Bi-Weekly Service at $25/month (2 pickups), and One-Time Service at $15 for a single trash day. No contracts—cancel anytime."
+      },
+      {
+        question: "What bins are included with Trash Can to Curb?",
+        answer: "All of them! We handle your trash, recycling, and yard waste bins. If you have multiple bins, we'll take them all out and bring them all back."
       }
     ]
   },
