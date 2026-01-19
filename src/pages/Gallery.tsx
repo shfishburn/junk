@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Layout } from "@/components/layout";
 import { SEO } from "@/components/SEO";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Helmet } from "react-helmet-async";
 import { X } from "lucide-react";
 
 // Import all gallery images
@@ -41,6 +42,30 @@ const galleryImages: GalleryImage[] = [
 
 const categories = ["All", ...new Set(galleryImages.map(img => img.category))];
 
+const SITE_URL = "https://thejunkygurus.com";
+
+// ImageGallery structured data for SEO
+const imageGallerySchema = {
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": "Junky Gurus Photo Gallery",
+  "description": "Photos of junk removal projects across Skagit County, Washington",
+  "url": `${SITE_URL}/gallery`,
+  "publisher": {
+    "@type": "Organization",
+    "name": "Junky Gurus LLC",
+    "url": SITE_URL
+  },
+  "about": {
+    "@type": "Service",
+    "name": "Junk Removal Services",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Junky Gurus LLC"
+    }
+  }
+};
+
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -52,10 +77,18 @@ export default function Gallery() {
   return (
     <Layout>
       <SEO
-        title="Photo Gallery | Junky Gurus - See Our Work"
+        title="Photo Gallery"
         description="Browse photos of our junk removal projects across Skagit County. From residential cleanouts to commercial jobs, see the Junky Gurus team in action."
+        keywords="junk removal photos, before after junk removal, Mount Vernon junk hauling, Skagit County cleanout photos"
         url="/gallery"
+        pageType="gallery"
+        pagePurpose="Photo gallery showcasing real junk removal projects. Includes team photos, residential cleanouts, commercial jobs, appliance removal, and demolition work."
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(imageGallerySchema)}
+        </script>
+      </Helmet>
       
       <section className="py-16 md:py-24">
         <div className="container">
