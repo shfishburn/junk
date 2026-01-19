@@ -147,6 +147,7 @@ const services = [
       "Perfect for busy professionals and travelers",
       "We bring bins back to your garage or storage area",
     ],
+    isCurbService: true,
   },
   {
     icon: MessageSquare,
@@ -302,6 +303,13 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
+        ) : 'isCurbService' in service && service.isCurbService ? (
+          <Button asChild>
+            <a href="#curb-pricing">
+              See Pricing & Sign Up
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
         ) : (
           <Button asChild>
             <Link to="/ai-estimator">
@@ -434,7 +442,7 @@ const Services = () => {
       </section>
 
       {/* Trash Can to Curb Subscription Pricing */}
-      <section className="py-16 md:py-24 bg-section-alt">
+      <section id="curb-pricing" className="py-16 md:py-24 bg-section-alt scroll-mt-24">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
