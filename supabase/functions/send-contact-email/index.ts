@@ -292,7 +292,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (isCurbSubscription) {
       // Admin notification for curb subscription
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `🗑️ New Trash Can to Curb Subscription - ${validatedData.name}`,
         html: `
@@ -365,9 +366,15 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Customer confirmation for curb subscription
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "Your Trash Can to Curb Subscription Request! 🗑️",
+        text: customerTextEmail(name, "Trash Can to Curb subscription", [
+          `Service plan: ${planDetails.name}`,
+          `Trash day: ${trashDay || 'To be confirmed'}`,
+          pickupAddress ? `Service location: ${pickupAddress}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for signing up, ${name}!</h1>
