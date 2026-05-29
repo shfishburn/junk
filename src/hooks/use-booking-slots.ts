@@ -38,7 +38,7 @@ export function useBookingSlots() {
 
     // Subscribe to real-time updates
     const channel = supabase
-      .channel("bookings-changes")
+      .channel(`bookings-changes-${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "bookings" },
