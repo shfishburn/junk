@@ -81,7 +81,6 @@ Disallow: /admin
 
 # Sitemaps (dynamically generated)
 Sitemap: https://thejunkygurus.com/sitemap.xml
-Sitemap: https://thejunkygurus.com/sitemap_index.xml
 
 # LLM Context Files
 Llms-txt: https://thejunkygurus.com/llms.txt
