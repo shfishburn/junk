@@ -22,8 +22,6 @@ export const siteRoutes: SiteRoute[] = [
   { path: '/gallery', priority: 0.6, changefreq: 'monthly' },
   
   // Specialty pages
-  { path: '/referrals', priority: 0.6, changefreq: 'monthly' },
-  { path: '/bingo', priority: 0.6, changefreq: 'monthly' },
   { path: '/discounts', priority: 0.7, changefreq: 'monthly' },
   
   // Spanish version

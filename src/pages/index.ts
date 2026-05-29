@@ -13,9 +13,6 @@ export { default as Gallery } from "./Gallery";
 
 // Feature Pages
 export { default as AIEstimator } from "./AIEstimator";
-export { default as Bingo } from "./Bingo";
-export { default as Discounts } from "./Discounts";
-export { default as Referrals } from "./Referrals";
 
 // Legal Pages
 export { default as PrivacyPolicy } from "./PrivacyPolicy";

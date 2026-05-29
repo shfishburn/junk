@@ -24,5 +24,3 @@ export { BookingSlotPicker } from "./BookingSlotPicker";
 export { DateTimePicker } from "./DateTimePicker";
 export { TimeSlotGrid } from "./TimeSlotGrid";
 
-// Feature Components
-export { ReferralWidget } from "./ReferralWidget";
