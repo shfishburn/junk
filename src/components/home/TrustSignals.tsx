@@ -20,7 +20,7 @@ const signals = [
   {
     icon: Heart,
     title: "Senior & Veteran Discount",
-    description: "15% off for those who've served our country and community. No paperwork—just let us know.",
+    description: "10% off for those who've served our country and community. No paperwork—just let us know.",
   },
   {
     icon: Award,

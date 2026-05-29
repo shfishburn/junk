@@ -50,7 +50,7 @@ const promises = [
   { text: "Upfront pricing—what we quote is what you pay", positive: true },
   { text: "Reliable scheduling—we show up when we say we will", positive: true },
   { text: "Eco-conscious disposal—your junk deserves better than a landfill", positive: true },
-  { text: "15% off for seniors & veterans", positive: true },
+  { text: "10% off for seniors & veterans", positive: true },
 ];
 
 const antiPromises = [
@@ -71,7 +71,7 @@ const About = () => {
     <Layout>
       <SEO
         title="About Us"
-        description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA, built on honest pricing and responsible disposal. 15% off for seniors & veterans."
+        description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA, built on honest pricing and responsible disposal. 10% off for seniors & veterans."
         keywords="about junky gurus, Mount Vernon junk removal, local junk removal company, responsible disposal, senior discount, veteran discount"
         url="/about"
         pageType="about"
@@ -270,10 +270,10 @@ const About = () => {
               Honoring Those Who Serve
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-              15% Off for Seniors & Veterans
+              10% Off for Seniors & Veterans
             </h2>
             <p className="text-muted-foreground mb-6">
-              We're proud to honor those who've served our country and community. Seniors 65+ and veterans of any military branch get 15% off every service. No paperwork, no proof required—we trust you.
+              We're proud to honor those who've served our country and community. Seniors 65+ and veterans of any military branch get 10% off every service. No paperwork, no proof required—we trust you.
             </p>
             <Button asChild variant="outline">
               <Link to="/discounts">View All Discounts</Link>

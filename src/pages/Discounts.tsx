@@ -9,7 +9,7 @@ const discounts = [
     id: "senior-veteran",
     icon: Heart,
     title: "Senior & Veteran Discount",
-    discount: "15% Off",
+    discount: "10% Off",
     description: "We're proud to honor those who've served our country and community.",
     eligibility: [
       "Seniors aged 65 and older",
@@ -39,7 +39,7 @@ export default function Discounts() {
     <Layout>
       <SEO
         title="Discounts & Savings | Junky Gurus"
-        description="Save on junk removal with Junky Gurus. 15% off for seniors and veterans, plus repeat customer discounts. Serving Whatcom & Skagit County."
+        description="Save on junk removal with Junky Gurus. 10% off for seniors and veterans, plus repeat customer discounts. Serving Whatcom & Skagit County."
         keywords="junk removal discounts, senior discount, veteran discount, repeat customer, Bellingham junk removal deals"
       />
 

@@ -45,7 +45,7 @@
     "Hazardous Materials Pickup"
   ],
   "discounts": [
-    { "name": "Senior & Veteran", "amount": "15% off" },
+    { "name": "Senior & Veteran", "amount": "10% off" },
     { "name": "Referral", "amount": "$25 off" },
     { "name": "Repeat Customer", "amount": "10% off" }
   ],
