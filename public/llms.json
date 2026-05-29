@@ -223,7 +223,7 @@
       {
         "id": "repeat",
         "name": "Repeat Customer Appreciation",
-        "amount": "10% Off",
+        "amount": "5% Off",
         "eligibility": ["Customers who have used our services before", "Applies to second booking and beyond"],
         "howToClaim": "We keep track of our customers. Just book again and we automatically apply your discount.",
         "url": "/discounts#repeat"
