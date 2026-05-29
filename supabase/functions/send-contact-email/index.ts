@@ -4,6 +4,9 @@ import { z } from "https://esm.sh/zod@3.23.8";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+const senderEmail = "Junky Gurus <booking@thejunkygurus.com>";
+const replyToEmail = "contact@thejunkygurus.com";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -178,6 +181,24 @@ function emailFooter(): string {
   `;
 }
 
+function customerTextEmail(name: string, requestType: string, details: string[] = []): string {
+  return [
+    `Hi ${name},`,
+    "",
+    `We've received your ${requestType} request.`,
+    ...details.filter(Boolean).flatMap((detail) => ["", detail]),
+    "",
+    "What happens next:",
+    "- We'll review your request within 24 hours.",
+    "- One of our junk experts will reach out to confirm the details.",
+    "- You can reply to this email or call/text (360) 610-9233 if you need anything.",
+    "",
+    "Thanks!",
+    "Junky Gurus",
+    "https://thejunkygurus.com",
+  ].join("\n");
+}
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -271,7 +292,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (isCurbSubscription) {
       // Admin notification for curb subscription
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `🗑️ New Trash Can to Curb Subscription - ${validatedData.name}`,
         html: `
@@ -344,9 +366,15 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Customer confirmation for curb subscription
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "Your Trash Can to Curb Subscription Request! 🗑️",
+        text: customerTextEmail(name, "Trash Can to Curb subscription", [
+          `Service plan: ${planDetails.name}`,
+          `Trash day: ${trashDay || 'To be confirmed'}`,
+          pickupAddress ? `Service location: ${pickupAddress}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for signing up, ${name}!</h1>
@@ -446,7 +474,8 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Admin notification for hazmat
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
@@ -509,9 +538,14 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Customer confirmation for hazmat
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "Your Hazmat Pickup Request is Received! ♻️",
+        text: customerTextEmail(name, "hazmat pickup", [
+          `Pickup location: ${pickupAddress}`,
+          preferredAppointment ? `Preferred time: ${preferredAppointment}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for your hazmat pickup request, ${name}!</h1>
@@ -559,9 +593,13 @@ const handler = async (req: Request): Promise<Response> => {
       // Handle cancellation emails
       if (isCancellation) {
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Your Booking Has Been Cancelled",
+          text: customerTextEmail(name, "booking cancellation", [
+            `Cancelled appointment: ${bookingDate} at ${bookingTime}`,
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #dc2626; margin-top: 0;">Booking Cancelled</h1>
@@ -592,9 +630,13 @@ const handler = async (req: Request): Promise<Response> => {
       } else if (isCompletion) {
         // Handle completion emails
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Thanks for Choosing Junky Gurus! 🎉",
+          text: customerTextEmail(name, "completed booking", [
+            `Completed appointment: ${bookingDate} at ${bookingTime}`,
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #16a34a; margin-top: 0;">Job Complete! 🎉</h1>
@@ -648,7 +690,8 @@ const handler = async (req: Request): Promise<Response> => {
           ` : '';
 
           const businessEmail = await resend.emails.send({
-            from: "Junky Gurus <bookings@thejunkygurus.com>",
+            from: senderEmail,
+            reply_to: replyToEmail,
             to: [adminEmail],
             subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}${photoUrls.length > 0 ? ' 📷' : ''}`,
             html: `
@@ -692,9 +735,14 @@ const handler = async (req: Request): Promise<Response> => {
         }
 
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Your Booking is Confirmed! 🗓️",
+          text: customerTextEmail(name, "booking", [
+            `Appointment: ${bookingDate} at ${bookingTime}`,
+            pickupAddress ? `Address: ${pickupAddress}` : "",
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #16a34a; margin-top: 0;">Booking Confirmed!</h1>
@@ -743,7 +791,8 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Standard contact form emails
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `New Quote Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
@@ -786,9 +835,14 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Business notification email sent:", businessEmail);
 
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "We Got Your Junk Request! 🗑️",
+        text: customerTextEmail(name, "quote", [
+          pickupAddress ? `Service address: ${pickupAddress}` : "",
+          preferredAppointment ? `Preferred time: ${preferredAppointment}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for reaching out, ${name}!</h1>
