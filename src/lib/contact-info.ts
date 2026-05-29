@@ -7,10 +7,9 @@ export const CONTACT_INFO = {
     { number: "+13604222428", display: "(360) 422-2428" },
   ],
   emails: [
-    { address: "contact@thejunkygurus.com", label: "General Inquiries" },
-    { address: "booking@thejunkygurus.com", label: "Bookings" },
+    { address: "junkygurus@gmail.com", label: "General Inquiries & Bookings" },
   ],
-  email: "contact@thejunkygurus.com", // Primary email for backward compatibility
+  email: "junkygurus@gmail.com", // Primary email for backward compatibility
   location: "Mount Vernon, WA",
   serviceArea: "Serving Skagit, Whatcom, Snohomish & King Counties",
 };
