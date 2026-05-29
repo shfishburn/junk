@@ -12,6 +12,7 @@ import {
   About,
   Contact,
   AIEstimator,
+  Discounts,
   PrivacyPolicy,
   TermsAndConditions,
   FAQ,
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/ai-estimator" element={<AIEstimator />} />
+          <Route path="/discounts" element={<Discounts />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/faq" element={<FAQ />} />

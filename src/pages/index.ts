@@ -13,6 +13,7 @@ export { default as Gallery } from "./Gallery";
 
 // Feature Pages
 export { default as AIEstimator } from "./AIEstimator";
+export { default as Discounts } from "./Discounts";
 
 // Legal Pages
 export { default as PrivacyPolicy } from "./PrivacyPolicy";
