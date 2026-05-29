@@ -5,7 +5,6 @@ import {
   HowItWorks,
   ServicesOverview,
   AIEstimatorCTA,
-  GamificationCTA,
   TestimonialsSection,
   NoSurprises,
   TrustSignals,
@@ -35,9 +34,6 @@ const Index = () => {
       </section>
       <section id="estimator">
         <AIEstimatorCTA />
-      </section>
-      <section id="games">
-        <GamificationCTA />
       </section>
       <section id="testimonials">
         <TestimonialsSection />
