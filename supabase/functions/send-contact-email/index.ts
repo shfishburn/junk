@@ -749,16 +749,30 @@ const handler = async (req: Request): Promise<Response> => {
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">New Quote Request</h1>
-            
-            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="margin-top: 0; color: #374151;">👤 Customer Information</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-              <p><strong>Phone:</strong> ${phone ? `<a href="tel:${validatedData.phone}">${phone}</a>` : "Not provided"}</p>
-              ${validatedData.address ? `<p><strong>Address:</strong> ${sanitizeHtml(validatedData.address)}</p>` : ""}
-              ${preferredAppointment ? `<p><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
+
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+              <h2 style="margin-top: 0; color: #166534;">📍 Service Details</h2>
+              <p style="font-size: 18px; margin: 0;"><strong>📍 Address:</strong> ${pickupAddress || 'Not provided'}</p>
+              ${preferredAppointment ? `<p style="font-size: 18px; margin: 8px 0 0 0;"><strong>Preferred Appointment:</strong> ${preferredAppointment}</p>` : ""}
+              ${pickupAddress ? `
+                <p style="margin: 12px 0 0 0;">
+                  <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(validatedData.address || '')}" target="_blank" style="display: inline-block; background: #16a34a; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">🧭 Google Maps</a>
+                  <a href="https://maps.apple.com/?daddr=${encodeURIComponent(validatedData.address || '')}" target="_blank" style="display: inline-block; background: #374151; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;"> Apple Maps</a>
+                </p>
+              ` : ''}
             </div>
-            
+
+            <h2 style="color: #374151;">Customer Information</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> <a href="mailto:${email}" style="color: #16a34a;">${email}</a></p>
+            <p style="margin-bottom: 12px;"><strong>Phone:</strong> ${phone || "Not provided"}</p>
+            ${validatedData.phone ? `
+              <p style="margin: 0;">
+                <a href="tel:${validatedData.phone}" style="display: inline-block; background: #2563eb; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 8px;">📞 Call Customer</a>
+                <a href="sms:${validatedData.phone}" style="display: inline-block; background: #7c3aed; color: white; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">💬 Text Customer</a>
+              </p>
+            ` : ''}
+
             <h2 style="color: #374151;">📝 Message</h2>
             <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border-left: 4px solid #16a34a;">
               <p style="margin: 0;">${sanitizedMessage}</p>
