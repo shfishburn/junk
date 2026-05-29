@@ -149,7 +149,7 @@ export default function TermsAndConditions() {
             </p>
             <ul className="list-none text-muted-foreground mt-4 space-y-1">
               <li>Phone: (360) 610-9233</li>
-              <li>Email: booking@thejunkygurus.com</li>
+              <li>Email: junkygurus@gmail.com</li>
               <li>Location: Mount Vernon, WA</li>
             </ul>
           </section>
