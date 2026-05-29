@@ -41,9 +41,7 @@ export {
   trackContactFormSubmit,
   trackAIEstimatorUse,
   trackAIEstimatorBooking,
-  trackRouletteWin,
   trackHazmatRequest,
-  trackBingoComplete,
   trackServicePageView,
   trackCityPageView,
 } from "./analytics";

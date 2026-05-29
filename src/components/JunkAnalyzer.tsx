@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast, useBookingSlots } from "@/hooks";
 import { supabase } from "@/integrations/supabase/client";
-import { wasBingoShownForEstimate, markBingoShown, resetBingoShown, trackAIEstimatorUse, trackAIEstimatorBooking, trackBookingSubmit, compressImagesForStorage } from "@/lib";
+import { trackAIEstimatorUse, trackAIEstimatorBooking, trackBookingSubmit, compressImagesForStorage } from "@/lib";
 import { 
   Upload, 
   Camera, 
@@ -27,7 +27,7 @@ import {
   Send,
   CalendarDays
 } from "lucide-react";
-import { JunkBingoModal } from "./JunkBingoModal";
+
 import { BookingSlotPicker } from "@/components/shared";
 import { BookingPhotoUpload } from "./BookingPhotoUpload";
 import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "./AddressInput";
@@ -222,7 +222,7 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
-  const [showBingo, setShowBingo] = useState(false);
+  
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
@@ -391,13 +391,6 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
       
-      // Show Bingo modal after successful analysis (only once per session)
-      if (!wasBingoShownForEstimate()) {
-        setTimeout(() => {
-          setShowBingo(true);
-          markBingoShown();
-        }, 1000);
-      }
       
       onAnalysisComplete?.();
     } catch (err) {
@@ -498,7 +491,6 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
 
   const reset = () => {
     localStorage.removeItem('junk-estimate');
-    resetBingoShown();
     setImagePreviews([]);
     setResult(null);
     setError(null);
