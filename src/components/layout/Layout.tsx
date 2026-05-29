@@ -2,9 +2,9 @@ import { ReactNode, useState, useEffect } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
-import { CookieConsent, AIAssistant, ExitIntentPopup } from "@/components/features";
+import { CookieConsent, AIAssistant } from "@/components/features";
 import { PageTransition } from "@/components/shared";
-import { useGoogleAnalytics, useExitIntent } from "@/hooks";
+import { useGoogleAnalytics } from "@/hooks";
 
 const ANNOUNCEMENT_DISMISSED_KEY = "junky-gurus-announcement-dismissed";
 const ANNOUNCEMENT_VERSION = "v1";
@@ -16,9 +16,6 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   // Initialize Google Analytics (respects cookie consent)
   useGoogleAnalytics();
-  
-  // Exit intent popup for first-time visitors
-  const { showPopup, closePopup } = useExitIntent();
   
   // Track if announcement bar is visible for layout adjustments
   const [announcementVisible, setAnnouncementVisible] = useState(false);
@@ -74,7 +71,6 @@ export function Layout({ children }: LayoutProps) {
       <Footer />
       <CookieConsent />
       <AIAssistant />
-      <ExitIntentPopup open={showPopup} onClose={closePopup} />
     </div>
   );
 }
