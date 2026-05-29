@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/layout";
-import { SEO, Breadcrumbs, DiscountBadge } from "@/components/shared";
+import { SEO, Breadcrumbs } from "@/components/shared";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart, Hammer, TrashIcon } from "lucide-react";
@@ -178,7 +178,6 @@ const Pricing = () => {
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed max-w-2xl">
               We're bad at math, but we're great at being upfront. Here's how our pricing works — no gimmicks, no bait-and-switch.
             </p>
-            <DiscountBadge variant="banner" />
           </div>
         </div>
       </section>

@@ -27,7 +27,6 @@ import {
   Send,
   CalendarDays
 } from "lucide-react";
-import { JunkRouletteModal } from "./JunkRouletteModal";
 import { JunkBingoModal } from "./JunkBingoModal";
 import { BookingSlotPicker } from "@/components/shared";
 import { BookingPhotoUpload } from "./BookingPhotoUpload";
@@ -223,7 +222,6 @@ export function JunkAnalyzer({ variant = "inline", onAnalysisComplete, isSpanish
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
-  const [showRoulette, setShowRoulette] = useState(false);
   const [showBingo, setShowBingo] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -650,9 +648,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         title: t.bookingConfirmed,
         description: t.checkEmail,
       });
-      
-      // Show the roulette wheel!
-      setShowRoulette(true);
     } catch (error) {
       console.error("Error creating booking:", error);
       toast({
@@ -1047,14 +1042,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </p>
           </div>
         )}
-
-        {/* Junk Roulette Modal */}
-        <JunkRouletteModal
-          open={showRoulette}
-          onOpenChange={setShowRoulette}
-          customerName={formData.name}
-          customerEmail={formData.email}
-        />
 
         {/* Junk Bingo Modal - shows after estimate */}
         <JunkBingoModal
