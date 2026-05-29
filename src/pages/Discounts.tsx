@@ -23,7 +23,7 @@ const discounts = [
     id: "repeat",
     icon: Calendar,
     title: "Repeat Customer Appreciation",
-    discount: "10% Off",
+    discount: "5% Off",
     description: "Loyalty deserves recognition. Come back and save.",
     eligibility: [
       "Customers who have used our services before",
