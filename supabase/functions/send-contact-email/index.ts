@@ -4,6 +4,9 @@ import { z } from "https://esm.sh/zod@3.23.8";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+const senderEmail = "Junky Gurus <booking@thejunkygurus.com>";
+const replyToEmail = "contact@thejunkygurus.com";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -176,6 +179,24 @@ function emailFooter(): string {
       </div>
     </div>
   `;
+}
+
+function customerTextEmail(name: string, requestType: string, details: string[] = []): string {
+  return [
+    `Hi ${name},`,
+    "",
+    `We've received your ${requestType} request.`,
+    ...details.filter(Boolean).flatMap((detail) => ["", detail]),
+    "",
+    "What happens next:",
+    "- We'll review your request within 24 hours.",
+    "- One of our junk experts will reach out to confirm the details.",
+    "- You can reply to this email or call/text (360) 610-9233 if you need anything.",
+    "",
+    "Thanks!",
+    "Junky Gurus",
+    "https://thejunkygurus.com",
+  ].join("\n");
 }
 
 const handler = async (req: Request): Promise<Response> => {
