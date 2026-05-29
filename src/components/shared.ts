@@ -25,5 +25,4 @@ export { DateTimePicker } from "./DateTimePicker";
 export { TimeSlotGrid } from "./TimeSlotGrid";
 
 // Feature Components
-export { DiscountBadge } from "./DiscountBadge";
 export { ReferralWidget } from "./ReferralWidget";

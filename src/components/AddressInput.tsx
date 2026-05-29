@@ -73,7 +73,7 @@ export function AddressInput({ value, onChange, required = false, className }: A
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Close suggestions on outside click
   useEffect(() => {
