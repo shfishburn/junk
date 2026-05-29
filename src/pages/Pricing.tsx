@@ -98,7 +98,7 @@ const pricingInfo = [
 const faqs = [
   {
     question: "Do you offer any discounts?",
-    answer: "Yes! We offer a 15% discount for seniors (65+) and veterans. No paperwork required—just let us know when you book or when we arrive. It's our way of saying thanks for your service to our country and community."
+    answer: "Yes! We offer a 10% discount for seniors (65+) and veterans. No paperwork required—just let us know when you book or when we arrive. It's our way of saying thanks for your service to our country and community."
   },
   {
     question: "How much does junk removal cost?",

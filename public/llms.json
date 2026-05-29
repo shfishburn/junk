@@ -21,7 +21,7 @@
     "Know your price first — upload photos, get a real price, no sales dance",
     "Reliable scheduling — when we say Tuesday at 10, we mean Tuesday at 10",
     "Where your junk actually goes — donate to Habitat for Humanity ReStore, recycle, landfill only as last resort",
-    "15% senior & veteran discount — no paperwork required",
+    "10% senior & veteran discount — no paperwork required",
     "Locally owned — we live here, we answer our own phones",
     "Comfortable service in English or Spanish"
   ],
@@ -215,7 +215,7 @@
       {
         "id": "senior-veteran",
         "name": "Senior & Veteran Discount",
-        "amount": "15% Off",
+        "amount": "10% Off",
         "eligibility": ["Seniors aged 65+", "Veterans of any military branch", "Active-duty military personnel"],
         "howToClaim": "Just let us know when you book or when we arrive. No paperwork, no proof required — we trust you.",
         "url": "/discounts#senior-veteran"
@@ -247,7 +247,7 @@
     { "path": "/", "name": "Home", "purpose": "Main landing page with service overview and booking CTAs" },
     { "path": "/services", "name": "Services", "purpose": "Detailed list of all junk removal services offered" },
     { "path": "/pricing", "name": "Pricing", "purpose": "Transparent pricing information — what we quote is what you pay" },
-    { "path": "/discounts", "name": "Discounts", "purpose": "All available savings: 15% senior/veteran, 10% repeat customer" },
+    { "path": "/discounts", "name": "Discounts", "purpose": "All available savings: 10% senior/veteran, 10% repeat customer" },
     { "path": "/book", "name": "Book Online", "purpose": "Schedule a junk removal appointment in 60 seconds" },
     { "path": "/contact", "name": "Contact", "purpose": "Contact form and business information" },
     { "path": "/ai-estimator", "name": "AI Estimator", "purpose": "Skip the sales dance — upload photos, get a real price, no phone tag" },
@@ -303,7 +303,7 @@
     ],
     "exampleResponses": {
       "pricingQuestion": "Couches typically run $75-$150 depending on size. For an exact quote with no surprises, upload a photo to our AI estimator at junkygurus.com/ai-estimator — what we quote is what you pay.",
-      "discountQuestion": "Yes! We offer 15% off for seniors (65+) and veterans — no paperwork required. We also have 10% off for repeat customers. See all discounts at junkygurus.com/discounts.",
+      "discountQuestion": "Yes! We offer 10% off for seniors (65+) and veterans — no paperwork required. We also have 10% off for repeat customers. See all discounts at junkygurus.com/discounts.",
       "serviceAreaQuestion": "Yes! We cover Whatcom, Skagit, Snohomish, and parts of King County — about 50 miles from our home base in Mount Vernon.",
       "differentiatorQuestion": "We're locally owned (not a franchise), we show up when we say we will (not 'sometime between 8 and 5'), we don't have hidden fees, and we actually care about where your stuff ends up. Plus, you can skip the sales dance — upload photos to our AI estimator and know your price before we ever arrive."
     },

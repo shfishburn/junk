@@ -124,7 +124,7 @@ export default function Book() {
       if (isSenior) discountInfo.push("Senior (65+)");
       if (isVeteran) discountInfo.push("Veteran/Active Military");
       const discountNote = discountInfo.length > 0 
-        ? `\n\n[15% DISCOUNT ELIGIBLE: ${discountInfo.join(", ")}]` 
+        ? `\n\n[10% DISCOUNT ELIGIBLE: ${discountInfo.join(", ")}]` 
         : "";
       
       // Insert booking into database
@@ -364,7 +364,7 @@ export default function Book() {
                   <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
                     <div className="flex items-center gap-2 mb-3">
                       <Heart className="h-4 w-4 text-primary" />
-                      <p className="text-sm font-medium text-foreground">15% Senior & Veteran Discount</p>
+                      <p className="text-sm font-medium text-foreground">10% Senior & Veteran Discount</p>
                     </div>
                     <p className="text-xs text-muted-foreground mb-4">
                       Check if applicable — no proof required, we trust you.
@@ -407,7 +407,7 @@ export default function Book() {
                     {(isSenior || isVeteran) && (
                       <p className="text-sm text-primary mt-1 flex items-center gap-1">
                         <Heart className="h-3 w-3" />
-                        15% discount will be applied
+                        10% discount will be applied
                       </p>
                     )}
                   </div>

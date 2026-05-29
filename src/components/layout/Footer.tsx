@@ -18,7 +18,7 @@ export function Footer() {
             </p>
             <div className="mt-4 flex items-center gap-2 text-sm text-primary font-medium">
               <Heart className="h-4 w-4" />
-              <span>15% off for seniors & veterans</span>
+              <span>10% off for seniors & veterans</span>
             </div>
             <BusinessHours variant="compact" className="mt-3" />
             

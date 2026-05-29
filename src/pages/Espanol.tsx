@@ -49,7 +49,7 @@ const senalesConfianza = [
   {
     icon: Heart,
     title: "Descuento para Veteranos y Mayores",
-    description: "15% de descuento para quienes han servido. Sin papeleo—solo avísenos.",
+    description: "10% de descuento para quienes han servido. Sin papeleo—solo avísenos.",
   },
   {
     icon: Award,
@@ -157,7 +157,7 @@ const Espanol = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Heart className="h-4 w-4 text-primary" />
-                15% Descuento Veteranos/Mayores
+                10% Descuento Veteranos/Mayores
               </div>
             </div>
           </div>
