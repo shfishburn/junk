@@ -474,7 +474,8 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Admin notification for hazmat
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `⚠️ HAZMAT Pickup Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
@@ -537,9 +538,14 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Customer confirmation for hazmat
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "Your Hazmat Pickup Request is Received! ♻️",
+        text: customerTextEmail(name, "hazmat pickup", [
+          `Pickup location: ${pickupAddress}`,
+          preferredAppointment ? `Preferred time: ${preferredAppointment}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for your hazmat pickup request, ${name}!</h1>
@@ -587,9 +593,13 @@ const handler = async (req: Request): Promise<Response> => {
       // Handle cancellation emails
       if (isCancellation) {
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Your Booking Has Been Cancelled",
+          text: customerTextEmail(name, "booking cancellation", [
+            `Cancelled appointment: ${bookingDate} at ${bookingTime}`,
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #dc2626; margin-top: 0;">Booking Cancelled</h1>
