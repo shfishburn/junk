@@ -630,9 +630,13 @@ const handler = async (req: Request): Promise<Response> => {
       } else if (isCompletion) {
         // Handle completion emails
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Thanks for Choosing Junky Gurus! 🎉",
+          text: customerTextEmail(name, "completed booking", [
+            `Completed appointment: ${bookingDate} at ${bookingTime}`,
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #16a34a; margin-top: 0;">Job Complete! 🎉</h1>
@@ -686,7 +690,8 @@ const handler = async (req: Request): Promise<Response> => {
           ` : '';
 
           const businessEmail = await resend.emails.send({
-            from: "Junky Gurus <bookings@thejunkygurus.com>",
+            from: senderEmail,
+            reply_to: replyToEmail,
             to: [adminEmail],
             subject: `🗓️ New Booking from ${validatedData.name} - ${validatedData.bookingDate} at ${validatedData.bookingTime}${photoUrls.length > 0 ? ' 📷' : ''}`,
             html: `
@@ -730,9 +735,14 @@ const handler = async (req: Request): Promise<Response> => {
         }
 
         const customerEmail = await resend.emails.send({
-          from: "Junky Gurus <bookings@thejunkygurus.com>",
+          from: senderEmail,
+          reply_to: replyToEmail,
           to: [email],
           subject: "Your Booking is Confirmed! 🗓️",
+          text: customerTextEmail(name, "booking", [
+            `Appointment: ${bookingDate} at ${bookingTime}`,
+            pickupAddress ? `Address: ${pickupAddress}` : "",
+          ]),
           html: `
             ${emailHeader()}
               <h1 style="color: #16a34a; margin-top: 0;">Booking Confirmed!</h1>
