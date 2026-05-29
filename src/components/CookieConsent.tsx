@@ -14,7 +14,7 @@ const translations = {
   en: {
     title: "We use cookies to haul away a better experience!",
     description: "Essential cookies keep things running smoothly. Analytics cookies help us understand how to serve you better. No junk here!",
-    learnMore: "Learn more",
+    learnMore: "Read our privacy policy",
     essentialOnly: "Essential Only",
     customize: "Customize",
     acceptAll: "Accept All",
@@ -22,7 +22,7 @@ const translations = {
   es: {
     title: "¡Usamos cookies para una mejor experiencia!",
     description: "Las cookies esenciales mantienen todo funcionando. Las cookies de análisis nos ayudan a servirle mejor. ¡Sin basura aquí!",
-    learnMore: "Más información",
+    learnMore: "Lee nuestra política de privacidad",
     essentialOnly: "Solo Esenciales",
     customize: "Personalizar",
     acceptAll: "Aceptar Todo",
