@@ -155,7 +155,7 @@ function emailFooter(): string {
           <p style="margin: 0; color: #374151; font-size: 14px;">
             <a href="tel:+13606109233" style="color: #16a34a; text-decoration: none; font-weight: 600;">(360) 610-9233</a>
             <span style="color: #9ca3af; margin: 0 10px;">|</span>
-            <a href="mailto:booking@thejunkygurus.com" style="color: #16a34a; text-decoration: none;">booking@thejunkygurus.com</a>
+            <a href="mailto:junkygurus@gmail.com" style="color: #16a34a; text-decoration: none;">junkygurus@gmail.com</a>
           </p>
         </div>
         <!-- Location -->
@@ -265,7 +265,7 @@ const handler = async (req: Request): Promise<Response> => {
       skipAdminNotification 
     });
 
-    const adminEmail = "booking@thejunkygurus.com";
+    const adminEmail = "junkygurus@gmail.com";
 
     // Handle Trash Can to Curb subscription requests
     if (isCurbSubscription) {
