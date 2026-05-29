@@ -71,7 +71,7 @@ const About = () => {
     <Layout>
       <SEO
         title="About Us"
-        description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA. We believe in hard work, honest pricing, and responsible disposal. 15% discount for seniors and veterans."
+        description="Junky Gurus is a locally owned junk removal company in Mount Vernon, WA, built on honest pricing and responsible disposal. 15% off for seniors & veterans."
         keywords="about junky gurus, Mount Vernon junk removal, local junk removal company, responsible disposal, senior discount, veteran discount"
         url="/about"
         pageType="about"

@@ -160,7 +160,7 @@ export default function FAQ() {
     <Layout>
       <SEO 
         title="Frequently Asked Questions" 
-        description="Find answers to frequently asked questions about Junky Gurus junk removal services, pricing, scheduling, and service areas in Mount Vernon and the Puget Sound Region."
+        description="Answers to common questions about Junky Gurus junk removal: pricing, scheduling, and service areas in Mount Vernon and the Puget Sound Region."
         keywords="junk removal FAQ, junk removal questions, Mount Vernon junk removal help, pricing questions, scheduling help"
         url="/faq"
         pageType="faq"
