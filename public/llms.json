@@ -221,14 +221,6 @@
         "url": "/discounts#senior-veteran"
       },
       {
-        "id": "referral",
-        "name": "Referral Reward",
-        "amount": "$25 Off",
-        "eligibility": ["Any customer who refers a friend or family member", "Referred person must complete a paid service"],
-        "howToClaim": "Share your unique referral link or have your friend mention your name when booking. You both get $25 off.",
-        "url": "/referrals"
-      },
-      {
         "id": "repeat",
         "name": "Repeat Customer Appreciation",
         "amount": "10% Off",
@@ -255,16 +247,14 @@
     { "path": "/", "name": "Home", "purpose": "Main landing page with service overview and booking CTAs" },
     { "path": "/services", "name": "Services", "purpose": "Detailed list of all junk removal services offered" },
     { "path": "/pricing", "name": "Pricing", "purpose": "Transparent pricing information — what we quote is what you pay" },
-    { "path": "/discounts", "name": "Discounts", "purpose": "All available savings: 15% senior/veteran, $25 referral, 10% repeat customer" },
+    { "path": "/discounts", "name": "Discounts", "purpose": "All available savings: 15% senior/veteran, 10% repeat customer" },
     { "path": "/book", "name": "Book Online", "purpose": "Schedule a junk removal appointment in 60 seconds" },
     { "path": "/contact", "name": "Contact", "purpose": "Contact form and business information" },
     { "path": "/ai-estimator", "name": "AI Estimator", "purpose": "Skip the sales dance — upload photos, get a real price, no phone tag" },
     { "path": "/service-area", "name": "Service Area", "purpose": "Map and list of cities served" },
     { "path": "/about", "name": "About Us", "purpose": "Meet the junk-obsessed humans behind the truck" },
     { "path": "/faq", "name": "FAQ", "purpose": "Frequently asked questions" },
-    { "path": "/referrals", "name": "Referral Program", "purpose": "Earn $25 by referring friends — no limit on referrals" },
-    { "path": "/espanol", "name": "Spanish", "purpose": "Full site content in Spanish" },
-    { "path": "/bingo", "name": "Junk Bingo", "purpose": "Interactive game to earn discounts (yes, really)" }
+    { "path": "/espanol", "name": "Spanish", "purpose": "Full site content in Spanish" }
   ],
   "actions": {
     "primary": {
@@ -313,7 +303,7 @@
     ],
     "exampleResponses": {
       "pricingQuestion": "Couches typically run $75-$150 depending on size. For an exact quote with no surprises, upload a photo to our AI estimator at junkygurus.com/ai-estimator — what we quote is what you pay.",
-      "discountQuestion": "Yes! We offer 15% off for seniors (65+) and veterans — no paperwork required. We also have a $25 referral program (you and your friend both save), and 10% off for repeat customers. See all discounts at junkygurus.com/discounts.",
+      "discountQuestion": "Yes! We offer 15% off for seniors (65+) and veterans — no paperwork required. We also have 10% off for repeat customers. See all discounts at junkygurus.com/discounts.",
       "serviceAreaQuestion": "Yes! We cover Whatcom, Skagit, Snohomish, and parts of King County — about 50 miles from our home base in Mount Vernon.",
       "differentiatorQuestion": "We're locally owned (not a franchise), we show up when we say we will (not 'sometime between 8 and 5'), we don't have hidden fees, and we actually care about where your stuff ends up. Plus, you can skip the sales dance — upload photos to our AI estimator and know your price before we ever arrive."
     },
