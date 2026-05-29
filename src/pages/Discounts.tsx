@@ -120,15 +120,6 @@ export default function Discounts() {
                     </div>
                   </div>
 
-                  {discount.link && (
-                    <div className="md:self-center">
-                      <Button asChild size="lg">
-                        <Link to={discount.link}>
-                          {discount.linkText}
-                        </Link>
-                      </Button>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
