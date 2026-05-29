@@ -27,7 +27,7 @@ const announcements: Announcement[] = [
     icon: Leaf,
     emoji: "🌱",
     message: "Eco-friendly disposal — we recycle & donate!",
-    linkText: "Learn more",
+    linkText: "About our green disposal",
     linkTo: "/about",
   },
   {

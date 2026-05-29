@@ -191,7 +191,7 @@ export function Header({ announcementVisible = false }: HeaderProps) {
               "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
               mutedColor, "hover:text-primary hover:bg-primary/5"
             )}>
-              More
+              Resources
               <ChevronDown className="h-3.5 w-3.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-48 bg-background border border-border shadow-lg z-50">
