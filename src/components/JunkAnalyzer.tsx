@@ -1035,11 +1035,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
           </div>
         )}
 
-        {/* Junk Bingo Modal - shows after estimate */}
-        <JunkBingoModal
-          open={showBingo}
-          onOpenChange={setShowBingo}
-        />
 
         {/* Quick call option */}
         <div className="flex flex-col sm:flex-row justify-center gap-3">
