@@ -29,7 +29,6 @@ import {
   AlertTriangle,
   CalendarDays
 } from "lucide-react";
-import { JunkRouletteModal } from "./JunkRouletteModal";
 import { BookingSlotPicker } from "@/components/shared";
 import { BookingPhotoUpload } from "./BookingPhotoUpload";
 import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "./AddressInput";
@@ -239,7 +238,6 @@ export function DemolitionAnalyzer({ variant = "inline", onAnalysisComplete, isS
   const [error, setError] = useState<string | null>(null);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
-  const [showRoulette, setShowRoulette] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [bookingPhotoUrls, setBookingPhotoUrls] = useState<string[]>([]);
@@ -634,8 +632,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
         title: t.bookingConfirmed,
         description: t.checkEmail,
       });
-      
-      setShowRoulette(true);
     } catch (error) {
       console.error("Error creating booking:", error);
       toast({
@@ -1077,14 +1073,6 @@ Customer Notes: ${formData.notes || "None"}` : formData.notes;
             </p>
           </div>
         )}
-
-        {/* Junk Roulette Modal */}
-        <JunkRouletteModal
-          open={showRoulette}
-          onOpenChange={setShowRoulette}
-          customerName={formData.name}
-          customerEmail={formData.email}
-        />
 
         {/* Quick call option */}
         <div className="flex flex-col sm:flex-row justify-center gap-3">

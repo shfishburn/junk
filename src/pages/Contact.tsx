@@ -11,7 +11,6 @@ import { useToast } from "@/hooks";
 import { trackContactFormSubmit } from "@/lib";
 import { Loader2, Sparkles, Camera, Calendar } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { JunkRouletteModal } from "@/components/features";
 import { BookingPhotoUpload } from "@/components/BookingPhotoUpload";
 import { AddressInput, getEmptyAddress, formatAddressForStorage, type AddressData } from "@/components/AddressInput";
 
@@ -51,8 +50,6 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [preferredDate, setPreferredDate] = useState<Date | undefined>();
   const [preferredTime, setPreferredTime] = useState<string>("");
-  const [showRoulette, setShowRoulette] = useState(false);
-  const [submittedCustomer, setSubmittedCustomer] = useState({ name: "", email: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [trashDay, setTrashDay] = useState<string>("");
@@ -111,12 +108,6 @@ const Contact = () => {
 
       // Track successful submission in GA
       trackContactFormSubmit(formData.serviceType || undefined);
-
-      // Save customer info before clearing form
-      setSubmittedCustomer({ name: formData.name, email: formData.email });
-      
-      // Show the roulette wheel!
-      setShowRoulette(true);
 
       setFormData({ name: "", email: "", phone: "", serviceType: "", message: "" });
       setPreferredDate(undefined);
@@ -342,14 +333,6 @@ const Contact = () => {
           </div>
         </div>
       </section>
-
-      {/* Junk Roulette Modal */}
-      <JunkRouletteModal
-        open={showRoulette}
-        onOpenChange={setShowRoulette}
-        customerName={submittedCustomer.name}
-        customerEmail={submittedCustomer.email}
-      />
     </Layout>
   );
 };
