@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { SEO } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Heart, Users, Percent, Gift, Calendar, CheckCircle } from "lucide-react";
+import { Heart, Percent, Gift, Calendar, CheckCircle } from "lucide-react";
 
 const discounts = [
   {
@@ -18,21 +18,6 @@ const discounts = [
     ],
     howToClaim: "Just let us know when you book or when we arrive. No paperwork, no proof required—we trust you.",
     color: "primary",
-  },
-  {
-    id: "referral",
-    icon: Users,
-    title: "Referral Reward",
-    discount: "$25 Off",
-    description: "Know someone with junk? You both win when you spread the word.",
-    eligibility: [
-      "Any customer who refers a friend or family member",
-      "The referred person must complete a paid service",
-    ],
-    howToClaim: "Share your unique referral link or have your friend mention your name when booking. You'll both get $25 off your next service.",
-    link: "/referrals",
-    linkText: "Get Your Referral Link",
-    color: "secondary",
   },
   {
     id: "repeat",
@@ -54,8 +39,8 @@ export default function Discounts() {
     <Layout>
       <SEO
         title="Discounts & Savings | Junky Gurus"
-        description="Save on junk removal with Junky Gurus. 15% off for seniors and veterans, $25 referral rewards, and repeat customer discounts. Serving Whatcom & Skagit County."
-        keywords="junk removal discounts, senior discount, veteran discount, referral program, Bellingham junk removal deals"
+        description="Save on junk removal with Junky Gurus. 15% off for seniors and veterans, plus repeat customer discounts. Serving Whatcom & Skagit County."
+        keywords="junk removal discounts, senior discount, veteran discount, repeat customer, Bellingham junk removal deals"
       />
 
       {/* Hero Section */}
