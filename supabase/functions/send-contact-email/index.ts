@@ -791,7 +791,8 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Standard contact form emails
       const businessEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [adminEmail],
         subject: `New Quote Request from ${validatedData.name}${photoUrls.length > 0 ? ' 📷' : ''}`,
         html: `
@@ -834,9 +835,14 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Business notification email sent:", businessEmail);
 
       const customerEmail = await resend.emails.send({
-        from: "Junky Gurus <bookings@thejunkygurus.com>",
+        from: senderEmail,
+        reply_to: replyToEmail,
         to: [email],
         subject: "We Got Your Junk Request! 🗑️",
+        text: customerTextEmail(name, "quote", [
+          pickupAddress ? `Service address: ${pickupAddress}` : "",
+          preferredAppointment ? `Preferred time: ${preferredAppointment}` : "",
+        ]),
         html: `
           ${emailHeader()}
             <h1 style="color: #16a34a; margin-top: 0;">Thanks for reaching out, ${name}!</h1>
