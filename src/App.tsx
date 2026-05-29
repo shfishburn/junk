@@ -12,15 +12,12 @@ import {
   About,
   Contact,
   AIEstimator,
-  Referrals,
-  Bingo,
   PrivacyPolicy,
   TermsAndConditions,
   FAQ,
   Book,
   NotFound,
   Espanol,
-  Discounts,
   Gallery,
   AdminLogin,
   AdminDashboard,
@@ -57,14 +54,11 @@ const App = () => (
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/ai-estimator" element={<AIEstimator />} />
-          <Route path="/referrals" element={<Referrals />} />
-          <Route path="/bingo" element={<Bingo />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/book" element={<Book />} />
           <Route path="/espanol" element={<Espanol />} />
-          <Route path="/discounts" element={<Discounts />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />

@@ -209,13 +209,6 @@ Upload photos of your junk through our AI-powered tool to get instant price esti
 - Available at: /ai-estimator
 - Snap photos → Get estimate → Book if you like the price
 
-### Junk Bingo Game
-Interactive game where customers can mark off items they have for removal. It's weirdly fun, and you might win discounts.
-- Available at: /bingo
-
-### Referral Program
-Refer friends and get $25 off your next booking. They get 10% off their first service. Everybody wins.
-- Available at: /referrals
 
 ## Booking Options
 

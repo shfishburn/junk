@@ -28,8 +28,6 @@ const serviceLinks = [
 const resourceLinks = [
   { href: "/faq", label: "FAQ" },
   { href: "/discounts", label: "Discounts & Deals" },
-  { href: "/referrals", label: "Referral Program" },
-  { href: "/bingo", label: "Junk Bingo Game" },
 ];
 
 interface HeaderProps {

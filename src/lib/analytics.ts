@@ -69,26 +69,11 @@ export function trackAIEstimatorBooking(priceRange: string): void {
   });
 }
 
-export function trackRouletteWin(prize: string): void {
-  trackEvent('roulette_win', {
-    event_category: 'Engagement',
-    event_label: prize,
-  });
-}
-
 export function trackHazmatRequest(itemCount: number): void {
   trackEvent('hazmat_request', {
     event_category: 'Booking',
     event_label: `${itemCount} item types`,
     value: itemCount,
-  });
-}
-
-export function trackBingoComplete(score: number): void {
-  trackEvent('bingo_complete', {
-    event_category: 'Engagement',
-    event_label: `Score: ${score}`,
-    value: score,
   });
 }
 
