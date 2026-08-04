@@ -11,7 +11,7 @@ export const CONTACT_INFO = {
   ],
   email: "junkygurus@gmail.com", // Primary email for backward compatibility
   location: "Mount Vernon, WA",
-  serviceArea: "Serving Skagit, Whatcom, Snohomish & King Counties",
+  serviceArea: "Serving Skagit, Whatcom & Snohomish Counties",
 };
 
 export type PhoneInfo = typeof CONTACT_INFO.phones[0];

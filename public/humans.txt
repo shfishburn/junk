@@ -52,7 +52,7 @@ Sunday: Even junk gurus need rest
 /* SERVICE AREA */
 
 Primary: Skagit County (Home Base)
-Extended: Whatcom, Snohomish, King Counties
+Extended: Whatcom, Snohomish Counties
 Radius: ~50 miles from Mount Vernon
 States served: Just Washington (for now)
 

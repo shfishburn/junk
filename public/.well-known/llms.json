@@ -33,7 +33,7 @@
     "sunday": "Closed"
   },
   "languages": ["English", "Spanish"],
-  "serviceArea": ["Skagit County, WA", "Whatcom County, WA", "Snohomish County, WA", "King County, WA"],
+  "serviceArea": ["Skagit County, WA", "Whatcom County, WA", "Snohomish County, WA"],
   "services": [
     "Residential Junk Removal",
     "Appliance Removal",

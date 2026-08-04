@@ -45,7 +45,7 @@ We got into this business because we were tired of seeing people get ripped off.
 - [All Services](/services)
 - [Pricing](/pricing) - Transparent, volume-based pricing from $125
 - [Discounts](/discounts) - All available savings: senior/veteran, repeat customer
-- [Service Area](/service-area) - Skagit, Whatcom, Snohomish, King Counties
+- [Service Area](/service-area) - Skagit, Whatcom, Snohomish Counties
 - [Book Online](/book) - Schedule in 60 seconds
 - [AI Photo Estimator](/ai-estimator) - Skip the sales dance. Know your price before we arrive.
 - [Contact](/contact)
@@ -66,7 +66,6 @@ We serve ~50 miles from Mount Vernon:
 - **Skagit County** (Home Base): Mount Vernon, Burlington, Anacortes, Sedro-Woolley
 - **Whatcom County**: Bellingham, Lynden, Ferndale, Blaine
 - **Snohomish County**: Everett, Marysville, Arlington, Lake Stevens
-- **King County**: North Seattle, Shoreline, Kenmore, Bothell
 
 ## Hours
 

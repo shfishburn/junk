@@ -126,7 +126,7 @@ const faqs = [
   },
   {
     question: "What areas do you serve?",
-    answer: "We're based in Mount Vernon, WA and serve Skagit, Whatcom, Snohomish, and northern King Counties. We travel up to 50 miles for junk removal services."
+    answer: "We're based in Mount Vernon, WA and serve Skagit, Whatcom, and Snohomish Counties. We travel up to 50 miles for junk removal services."
   },
   {
     question: "Do you recycle or donate items?",
