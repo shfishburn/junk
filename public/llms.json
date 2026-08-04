@@ -112,12 +112,6 @@
         "name": "Snohomish County",
         "primary": false,
         "cities": ["Everett", "Marysville", "Arlington", "Lake Stevens", "Stanwood", "Granite Falls"]
-      },
-      {
-        "name": "King County",
-        "primary": false,
-        "note": "Northern areas",
-        "cities": ["North Seattle", "Shoreline", "Kenmore", "Bothell", "Woodinville"]
       }
     ]
   },
