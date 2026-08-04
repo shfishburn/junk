@@ -48,17 +48,11 @@ const siteRoutes: SiteRoute[] = [
   // Legal pages
   { path: '/privacy-policy', priority: 0.3, changefreq: 'yearly' },
   { path: '/terms-and-conditions', priority: 0.3, changefreq: 'yearly' },
-  
-  // LLM/AI discovery files
-  { path: '/llms.txt', priority: 0.3, changefreq: 'monthly' },
-  { path: '/llms.json', priority: 0.3, changefreq: 'monthly' },
 ];
 
 const SITE_BASE_URL = 'https://thejunkygurus.com';
 
 function generateSitemap(): string {
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-  
   const publicRoutes = siteRoutes.filter(route => !route.exclude);
   
   const urlEntries = publicRoutes.map(route => {
@@ -68,7 +62,6 @@ function generateSitemap(): string {
     
     return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority.toFixed(1)}</priority>
   </url>`;
@@ -81,13 +74,10 @@ ${urlEntries}
 }
 
 function generateSitemapIndex(): string {
-  const today = new Date().toISOString().split('T')[0];
-  
   return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>${SITE_BASE_URL}/sitemap.xml</loc>
-    <lastmod>${today}</lastmod>
   </sitemap>
 </sitemapindex>`;
 }
