@@ -19,7 +19,6 @@ const serviceAreas = [
   { county: "Condado de Skagit", cities: ["Mount Vernon", "Burlington", "Anacortes", "Sedro-Woolley", "La Conner"] },
   { county: "Condado de Whatcom", cities: ["Bellingham", "Lynden", "Ferndale", "Blaine"] },
   { county: "Condado de Snohomish", cities: ["Everett", "Marysville", "Arlington", "Lake Stevens"] },
-  { county: "Condado de King", cities: ["North Seattle", "Shoreline", "Kenmore", "Bothell"] },
 ];
 
 const noSorpresas = [
