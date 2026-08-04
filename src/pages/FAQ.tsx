@@ -108,7 +108,7 @@ const faqCategories = [
     questions: [
       {
         question: "What areas do you serve?",
-        answer: "We proudly serve Mount Vernon and the entire Puget Sound Region, including Skagit County, Whatcom County, Snohomish County, and parts of King County. This includes cities like Bellingham, Burlington, Anacortes, Sedro-Woolley, Everett, and surrounding areas."
+        answer: "We proudly serve Mount Vernon and the entire Puget Sound Region, including Skagit County, Whatcom County, and Snohomish County. This includes cities like Bellingham, Burlington, Anacortes, Sedro-Woolley, Everett, and surrounding areas."
       },
       {
         question: "Do you charge extra for locations outside Mount Vernon?",

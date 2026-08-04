@@ -14,7 +14,7 @@ const ServiceArea = () => {
     <Layout>
       <SEO
         title="Service Area"
-        description="Junk removal in Skagit, Whatcom, Snohomish & King Counties. Serving Mount Vernon, Bellingham, Everett, and surrounding areas within 50 miles."
+        description="Junk removal in Skagit, Whatcom & Snohomish Counties. Serving Mount Vernon, Bellingham, Everett, and surrounding areas within 50 miles."
         keywords="junk removal Skagit County, junk removal Whatcom County, junk removal Bellingham, junk removal Everett, service area"
         url="/service-area"
       />

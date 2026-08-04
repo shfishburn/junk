@@ -19,7 +19,7 @@ interface SEOProps {
 }
 
 const SITE_NAME = "Junky Gurus LLC";
-const DEFAULT_DESCRIPTION = "Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Serving Skagit, Whatcom, Snohomish & King Counties.";
+const DEFAULT_DESCRIPTION = "Mount Vernon junk removal with no hidden fees, reliable scheduling, and responsible disposal. Serving Skagit, Whatcom & Snohomish Counties.";
 const DEFAULT_IMAGE = "https://thejunkygurus.com/og-image.jpg";
 const SITE_URL = "https://thejunkygurus.com";
 const PHONE = "+1-360-610-9233";
@@ -82,8 +82,7 @@ export function SEO({
       },
       { "@type": "AdministrativeArea", "name": "Skagit County, WA" },
       { "@type": "AdministrativeArea", "name": "Whatcom County, WA" },
-      { "@type": "AdministrativeArea", "name": "Snohomish County, WA" },
-      { "@type": "AdministrativeArea", "name": "King County, WA" }
+      { "@type": "AdministrativeArea", "name": "Snohomish County, WA" }
     ],
     "serviceArea": {
       "@type": "GeoCircle",

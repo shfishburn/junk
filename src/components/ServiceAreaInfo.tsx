@@ -27,13 +27,6 @@ export const SERVICE_AREA_DATA = {
       description: "We serve northern Snohomish County with the same enthusiasm we bring everywhere.",
       isHomeBase: false,
     },
-    {
-      name: "King County",
-      citiesSummary: "North Seattle, Shoreline, Kenmore, Bothell",
-      cities: ["Shoreline", "Kenmore", "Bothell", "Woodinville", "North Seattle", "Lake Forest Park", "Mountlake Terrace", "Edmonds"],
-      description: "We venture into northern King County for bigger projects.",
-      isHomeBase: false,
-    },
   ],
   cityLinks: {
     "Mount Vernon": "/junk-removal-mount-vernon-wa",

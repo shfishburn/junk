@@ -78,11 +78,6 @@
       "longitude": -122.3343
     }
   },
-    "coordinates": {
-      "latitude": 48.4201,
-      "longitude": -122.3343
-    }
-  },
   "hours": {
     "monday": "8:00 AM - 6:00 PM",
     "tuesday": "8:00 AM - 6:00 PM",
@@ -112,12 +107,6 @@
         "name": "Snohomish County",
         "primary": false,
         "cities": ["Everett", "Marysville", "Arlington", "Lake Stevens", "Stanwood", "Granite Falls"]
-      },
-      {
-        "name": "King County",
-        "primary": false,
-        "note": "Northern areas",
-        "cities": ["North Seattle", "Shoreline", "Kenmore", "Bothell", "Woodinville"]
       }
     ]
   },
@@ -304,7 +293,7 @@
     "exampleResponses": {
       "pricingQuestion": "Couches typically run $75-$150 depending on size. For an exact quote with no surprises, upload a photo to our AI estimator at junkygurus.com/ai-estimator — what we quote is what you pay.",
       "discountQuestion": "Yes! We offer 10% off for seniors (65+) and veterans — no paperwork required. We also have 5% off for repeat customers. See all discounts at junkygurus.com/discounts.",
-      "serviceAreaQuestion": "Yes! We cover Whatcom, Skagit, Snohomish, and parts of King County — about 50 miles from our home base in Mount Vernon.",
+      "serviceAreaQuestion": "Yes! We cover Whatcom, Skagit, and Snohomish Counties — about 50 miles from our home base in Mount Vernon.",
       "differentiatorQuestion": "We're locally owned (not a franchise), we show up when we say we will (not 'sometime between 8 and 5'), we don't have hidden fees, and we actually care about where your stuff ends up. Plus, you can skip the sales dance — upload photos to our AI estimator and know your price before we ever arrive."
     },
     "doNotAssume": [
