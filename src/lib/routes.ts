@@ -43,16 +43,12 @@ export const siteRoutes: SiteRoute[] = [
   { path: '/privacy-policy', priority: 0.3, changefreq: 'yearly' },
   { path: '/terms-and-conditions', priority: 0.3, changefreq: 'yearly' },
   
-  // LLM/AI discovery files
-  { path: '/llms.txt', priority: 0.3, changefreq: 'monthly' },
-  { path: '/llms.json', priority: 0.3, changefreq: 'monthly' },
-  
   // Admin routes (excluded from sitemap)
   { path: '/admin', priority: 0, changefreq: 'never', exclude: true },
   { path: '/admin/login', priority: 0, changefreq: 'never', exclude: true },
   { path: '/admin/bookings', priority: 0, changefreq: 'never', exclude: true },
   { path: '/admin/calendar', priority: 0, changefreq: 'never', exclude: true },
-  { path: '/admin/hazmat-requests', priority: 0, changefreq: 'never', exclude: true },
+  { path: '/admin/hazmat', priority: 0, changefreq: 'never', exclude: true },
 ];
 
 // Get only public routes for sitemap

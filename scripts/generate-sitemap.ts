@@ -6,13 +6,10 @@ import { resolve } from "path";
 import { getPublicRoutes, SITE_BASE_URL } from "../src/lib/routes";
 
 function generateSitemap() {
-  const today = new Date().toISOString().split("T")[0];
-
   const urls = getPublicRoutes().map((route) =>
     [
       `  <url>`,
       `    <loc>${SITE_BASE_URL}${route.path}</loc>`,
-      `    <lastmod>${today}</lastmod>`,
       `    <changefreq>${route.changefreq}</changefreq>`,
       `    <priority>${route.priority.toFixed(1)}</priority>`,
       `  </url>`,
