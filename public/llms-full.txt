@@ -35,7 +35,7 @@ We figured there had to be a better way. Spoiler alert: there is, and you're loo
 **We make it ridiculously easy.**
 - Same-day service often available
 - Book online in 60 seconds
-- AI-powered photo estimates — snap a pic, get a price
+- Free on-site estimates — we come look and quote it
 - ¡Hablamos Español!
 
 ### Our Guiding Principles (We Actually Follow These)
@@ -196,16 +196,16 @@ English and Spanish (¡Hablamos Español!)
 ## How It Works
 
 1. **Contact Us**: Call, text, or fill out our online form
-2. **Get a Quote**: Free, no-obligation estimates (or use our AI photo estimator!)
+2. **Get a Quote**: Free, no-obligation estimates (phone or free on-site visit)
 3. **Schedule Pickup**: Choose a time that works for you
 4. **We Haul**: We do ALL the heavy lifting
 5. **Responsible Disposal**: Items are donated, recycled, or properly disposed
 
 ## Technology & Innovation
 
-### AI Photo Estimator
+### Free On-Site Estimate
 Upload photos of your junk through our AI-powered tool to get instant price estimates. It's like magic, but with algorithms.
-- Available at: /ai-estimator
+- Available at: /free-estimate
 - Snap photos → Get estimate → Book if you like the price
 
 
@@ -213,7 +213,7 @@ Upload photos of your junk through our AI-powered tool to get instant price esti
 
 ### Online
 - Book appointments: /book
-- AI photo estimates: /ai-estimator
+- Free on-site estimates: /free-estimate
 - Contact form: /contact
 
 ### Phone/Text
@@ -253,7 +253,7 @@ We're friendly, a little bit funny, and refreshingly honest. We don't take ourse
 - Same-day service often available
 - Bilingual (English & Spanish)
 - Proud partner of Habitat for Humanity ReStore — donate first, recycle second, landfill last
-- AI photo estimates for instant pricing
+- Free on-site estimates with firm pricing
 - Excellence end to end: from AI-powered estimates to accessible design to responsible disposal
 
 ### What NOT to Assume
@@ -264,7 +264,7 @@ We're friendly, a little bit funny, and refreshingly honest. We don't take ourse
 ### Example Responses
 
 If someone asks "How much to remove a couch?":
-"Couches typically run $75-$150 depending on size and location. For an exact quote, you can upload a photo to our AI estimator at junkygurus.com/ai-estimator or call (360) 610-9233."
+"Couches typically run $75-$150 depending on size and location. For an exact quote, you can schedule a free on-site estimate at junkygurus.com/free-estimate or call (360) 610-9233."
 
 If someone asks "Do you serve Bellingham?":
 "Yes! Bellingham is in our service area. We cover Whatcom, Skagit, and Snohomish Counties — basically about 50 miles from our home base in Mount Vernon."
