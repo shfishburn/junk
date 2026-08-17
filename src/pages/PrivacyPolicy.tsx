@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
             </ul>
             <h3 className="text-lg font-medium text-foreground mt-4 mb-2">Service-Related Information</h3>
             <ul className="list-disc pl-6 text-muted-foreground space-y-2 mb-4">
-              <li><strong>Photos and descriptions:</strong> Images of items for estimation purposes (when you use our AI estimator or send photos)</li>
+              <li><strong>Photos and descriptions:</strong> Images of items for estimation purposes (when you send us photos)</li>
               <li><strong>Service notes:</strong> Details about items to be removed, special instructions, and access information</li>
               <li><strong>Communication records:</strong> Messages, emails, texts, and call logs related to your service</li>
             </ul>

@@ -158,7 +158,7 @@ const Pricing = () => {
         keywords="junk removal pricing, junk removal cost, Mount Vernon hauling prices, free estimate"
         url="/pricing"
         pageType="pricing"
-        pagePurpose="Pricing information for junk removal services. Volume-based truck load pricing from $125-$750. Single item prices. AI photo estimator available."
+        pagePurpose="Pricing information for junk removal services. Volume-based truck load pricing from $125-$750. Single item prices. Free on-site estimates available."
       />
       <Helmet>
         <script type="application/ld+json">
