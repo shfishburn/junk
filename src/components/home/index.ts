@@ -1,5 +1,5 @@
 // Home Page Components Barrel File
-export { AIEstimatorCTA } from "./AIEstimatorCTA";
+export { InPersonQuoteCTA } from "./InPersonQuoteCTA";
 export { CTASection } from "./CTASection";
 export { HeroSection } from "./HeroSection";
 export { HowItWorks } from "./HowItWorks";

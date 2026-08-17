@@ -62,7 +62,7 @@ const faqCategories = [
       },
       {
         question: "Do you offer free estimates?",
-        answer: "Yes! We provide free, no-obligation estimates. You can get a rough estimate over the phone or by using our AI Estimator tool online. For the most accurate quote, we offer free on-site estimates."
+        answer: "Yes! We provide free, no-obligation estimates. You can get a rough estimate over the phone, or schedule a free in-person estimate online and we'll come out to quote the job."
       },
       {
         question: "What payment methods do you accept?",

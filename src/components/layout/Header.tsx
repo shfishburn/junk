@@ -21,7 +21,7 @@ const mainNavLinks = [
 
 const serviceLinks = [
   { href: "/services", label: "All Services" },
-  { href: "/ai-estimator", label: "AI Instant Quote", icon: Sparkles },
+  { href: "/free-estimate", label: "Free In-Person Estimate", icon: Sparkles },
   { href: "/service-area", label: "Service Areas" },
 ];
 

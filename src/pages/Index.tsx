@@ -4,7 +4,7 @@ import {
   HeroSection,
   HowItWorks,
   ServicesOverview,
-  AIEstimatorCTA,
+  InPersonQuoteCTA,
   TestimonialsSection,
   NoSurprises,
   TrustSignals,
@@ -33,7 +33,7 @@ const Index = () => {
         <ServicesOverview />
       </section>
       <section id="estimator">
-        <AIEstimatorCTA />
+        <InPersonQuoteCTA />
       </section>
       <section id="testimonials">
         <TestimonialsSection />

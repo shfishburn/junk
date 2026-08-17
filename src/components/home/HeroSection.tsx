@@ -87,9 +87,9 @@ export function HeroSection() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="invert" className="w-full sm:w-auto text-base min-h-[48px]">
-              <Link to="/ai-estimator">
+              <Link to="/free-estimate">
                 <Sparkles className="mr-2 h-4 w-4" />
-                Know Your Price First
+                Free In-Person Estimate
               </Link>
             </Button>
             <Button asChild variant="hero" size="lg" className="w-full sm:w-auto text-base min-h-[48px]">

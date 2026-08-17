@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Zap, Clock } from "lucide-react";
+import { Handshake, DollarSign, Clock } from "lucide-react";
 import { useScrollAnimation } from "@/hooks";
 
-export function AIEstimatorCTA() {
+export function InPersonQuoteCTA() {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
@@ -17,37 +17,37 @@ export function AIEstimatorCTA() {
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium mb-4">
-                <Sparkles className="h-4 w-4" />
-                Skip the Sales Dance
+                <Handshake className="h-4 w-4" />
+                Free On-Site Estimates
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Know Your Price Before We Ever Arrive
+                We'll Come Look at It — Free
               </h2>
               <p className="text-muted-foreground mb-6">
-                Upload photos. Get a real price. No phone tag. No on-site upsells. No surprises.
+                Pick a time, we show up, size up the job, and hand you a firm price. No hidden fees, no obligation.
               </p>
-              
+
               <div className="flex flex-wrap gap-4 mb-6 justify-center md:justify-start">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Zap className="h-4 w-4 text-primary" />
-                  Instant results
+                  <DollarSign className="h-4 w-4 text-primary" />
+                  Free, no obligation
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4 text-primary" />
-                  Available 24/7
+                  Usually 15 minutes
                 </div>
               </div>
 
               <Button asChild size="lg">
-                <Link to="/ai-estimator">
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  Get Your Real Price
+                <Link to="/free-estimate">
+                  <Handshake className="mr-2 h-4 w-4" />
+                  Schedule a Free Estimate
                 </Link>
               </Button>
             </div>
 
             <div className="hidden md:flex items-center justify-center w-48 h-48 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10">
-              <Sparkles className="h-20 w-20 text-primary/60" />
+              <Handshake className="h-20 w-20 text-primary/60" />
             </div>
           </div>
         </div>

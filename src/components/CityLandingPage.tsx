@@ -265,14 +265,14 @@ export function CityLandingPage({ city }: { city: CityData }) {
               Transparent Pricing for {city.name}
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              We charge by volume, not by item. See our pricing guide or get a free estimate with our AI tool.
+              We charge by volume, not by item. See our pricing guide or book a free on-site estimate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
                 <Link to="/pricing">View Pricing</Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link to="/ai-estimator">Get Your Real Price</Link>
+                <Link to="/free-estimate">Get a Free On-Site Estimate</Link>
               </Button>
             </div>
           </div>

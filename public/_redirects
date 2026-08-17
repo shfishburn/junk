@@ -4,5 +4,8 @@
 # Redirect sitemap_index.xml to dynamic edge function
 /sitemap_index.xml https://vwskratcffxobbicpkie.supabase.co/functions/v1/sitemap?type=index 301
 
+# Retired AI estimator -> free in-person estimate
+/ai-estimator /free-estimate 301
+
 # SPA fallback - must be last
 /*    /index.html   200

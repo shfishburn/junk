@@ -155,7 +155,7 @@ export default function Discounts() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg">
-                <Link to="/ai-estimator">Get Your Free Estimate</Link>
+                <Link to="/free-estimate">Get Your Free Estimate</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link to="/book">Book Now</Link>

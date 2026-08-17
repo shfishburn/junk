@@ -12,7 +12,7 @@ export { default as ServiceArea } from "./ServiceArea";
 export { default as Gallery } from "./Gallery";
 
 // Feature Pages
-export { default as AIEstimator } from "./AIEstimator";
+export { default as InPersonQuote } from "./InPersonQuote";
 export { default as Discounts } from "./Discounts";
 
 // Legal Pages

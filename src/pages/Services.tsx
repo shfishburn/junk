@@ -312,8 +312,8 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </Button>
         ) : (
           <Button asChild>
-            <Link to="/ai-estimator">
-              Know Your Price
+            <Link to="/free-estimate">
+              Get a Free Estimate
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -747,10 +747,10 @@ const Services = () => {
               Not Sure What You've Got? We'll Figure It Out.
             </h2>
             <p className="text-lg text-primary-foreground/90 mb-8">
-              Upload a photo for an instant estimate—or just give us a call. No sales pitch, no pressure. Just answers.
+              Book a free on-site estimate—or just give us a call. No sales pitch, no pressure. Just answers.
             </p>
             <Button asChild size="lg" className="bg-on-primary text-primary hover:bg-on-primary/90">
-              <Link to="/ai-estimator">Get Your Price</Link>
+              <Link to="/free-estimate">Get a Free Estimate</Link>
             </Button>
           </div>
         </div>

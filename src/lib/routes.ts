@@ -13,7 +13,7 @@ export const siteRoutes: SiteRoute[] = [
   { path: '/', priority: 1.0, changefreq: 'weekly' },
   { path: '/services', priority: 0.9, changefreq: 'monthly' },
   { path: '/pricing', priority: 0.9, changefreq: 'monthly' },
-  { path: '/ai-estimator', priority: 0.9, changefreq: 'weekly' },
+  { path: '/free-estimate', priority: 0.9, changefreq: 'weekly' },
   { path: '/book', priority: 0.8, changefreq: 'weekly' },
   { path: '/service-area', priority: 0.8, changefreq: 'monthly' },
   { path: '/contact', priority: 0.8, changefreq: 'monthly' },

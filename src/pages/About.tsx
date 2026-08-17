@@ -294,7 +294,7 @@ const About = () => {
               More Than Just Hauling Junk
             </h2>
             <p className="text-lg text-muted-foreground">
-              From AI-powered estimates to accessible design to responsible disposal—we obsess over every detail because you deserve better than "good enough." That's why we've invested in technology that makes everything easier, faster, and more accessible.
+              From free on-site estimates to accessible design to responsible disposal—we obsess over every detail because you deserve better than "good enough." That's why we've invested in the details that make everything easier, faster, and more accessible.
             </p>
           </div>
           
@@ -303,9 +303,9 @@ const About = () => {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Bot className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">AI-Powered Estimates</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Free On-Site Estimates</h3>
               <p className="text-muted-foreground">
-                Upload a photo and get an instant price estimate. No waiting around, no guessing games. Our AI technology analyzes your junk and gives you a real number in seconds—before we even arrive.
+                Book a time online and we come to you. We look at the actual job, then hand you a firm price—no guessing games, no obligation, and no surprise fees on pickup day.
               </p>
             </div>
             

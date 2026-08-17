@@ -128,9 +128,9 @@ const Espanol = () => {
                 </Link>
               </Button>
               <Button size="lg" variant="invert" className="text-lg px-8 py-6" asChild>
-                <Link to="/ai-estimator">
+                <Link to="/free-estimate">
                   <Camera className="mr-2 h-5 w-5" />
-                  Sepa Su Precio Primero
+                  Estimado Gratis en Persona
                 </Link>
               </Button>
               <Button size="lg" variant="hero" className="text-lg px-8 py-6" asChild>
@@ -252,24 +252,24 @@ const Espanol = () => {
         </div>
       </section>
 
-      {/* AI Estimator CTA */}
+      {/* Estimado en Persona CTA */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-primary/5">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium mb-6">
               <Camera className="h-4 w-4" />
-              Tecnología IA
+              Estimados Gratis
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Sepa Su Precio Antes de Que Lleguemos
+              Vamos a Su Casa y Le Damos el Precio
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Suba fotos de su basura y obtenga un estimado instantáneo. Sin llamadas telefónicas, sin esperar, sin sorpresas.
+              Elija la fecha y hora. Llegamos, vemos el trabajo y le damos un precio firme. Gratis y sin compromiso.
             </p>
             <Button asChild size="lg">
-              <Link to="/ai-estimator">
+              <Link to="/free-estimate">
                 <Camera className="mr-2 h-5 w-5" />
-                Probar el Estimador con Fotos
+                Agendar Estimado Gratis
               </Link>
             </Button>
           </div>
@@ -397,9 +397,9 @@ const Espanol = () => {
               </Link>
             </Button>
             <Button size="lg" variant="hero" asChild>
-              <Link to="/ai-estimator">
+              <Link to="/free-estimate">
                 <Camera className="mr-2 h-5 w-5" />
-                Estimador con Fotos
+                Estimado Gratis
               </Link>
             </Button>
           </div>

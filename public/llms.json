@@ -239,7 +239,7 @@
     { "path": "/discounts", "name": "Discounts", "purpose": "All available savings: 10% senior/veteran, 5% repeat customer" },
     { "path": "/book", "name": "Book Online", "purpose": "Schedule a junk removal appointment in 60 seconds" },
     { "path": "/contact", "name": "Contact", "purpose": "Contact form and business information" },
-    { "path": "/ai-estimator", "name": "AI Estimator", "purpose": "Skip the sales dance — upload photos, get a real price, no phone tag" },
+    { "path": "/free-estimate", "name": "Free On-Site Estimate", "purpose": "Schedule a free in-person estimate — we come out and quote the job" },
     { "path": "/service-area", "name": "Service Area", "purpose": "Map and list of cities served" },
     { "path": "/about", "name": "About Us", "purpose": "Meet the junk-obsessed humans behind the truck" },
     { "path": "/faq", "name": "FAQ", "purpose": "Frequently asked questions" },
@@ -252,7 +252,7 @@
       "description": "Schedule a junk removal appointment online in 60 seconds"
     },
     "secondary": [
-      { "label": "Know Your Price First", "url": "/ai-estimator", "description": "Upload photos, get a real price. No phone tag. No on-site upsells." },
+      { "label": "Free On-Site Estimates", "url": "/free-estimate", "description": "Book a free on-site estimate. We look at the job and give you a firm price." },
       { "label": "Call", "url": "tel:+13606109233", "description": "Speak with us directly" },
       { "label": "Text", "url": "sms:+13606109233", "description": "Send us a text message" }
     ]
@@ -265,7 +265,7 @@
       "No hidden fees — what we quote is what you pay",
       "Reliable scheduling — when we say Tuesday at 10, we mean it",
       "Proud partner of Habitat for Humanity ReStore — donate first, recycle second, landfill last",
-      "Know your price before we arrive via AI photo estimates",
+      "Know your price up front via free on-site estimates",
       "Locally owned in Mount Vernon, WA — we live here",
       "Comfortable service in English or Spanish",
       "Excellence end to end — from AI-powered estimates to accessible design to responsible disposal"
@@ -279,7 +279,7 @@
     ],
     "marketFears": {
       "fear": "I don't know what this will cost",
-      "solution": "AI photo estimates + no hidden fees = know your price before we arrive"
+      "solution": "free on-site estimates + no hidden fees = no surprises"
     },
     "commonQuestions": [
       "What items do you remove?",
@@ -291,10 +291,10 @@
       "How are you different from 1-800-GOT-JUNK?"
     ],
     "exampleResponses": {
-      "pricingQuestion": "Couches typically run $75-$150 depending on size. For an exact quote with no surprises, upload a photo to our AI estimator at junkygurus.com/ai-estimator — what we quote is what you pay.",
+      "pricingQuestion": "Couches typically run $75-$150 depending on size. For an exact quote with no surprises, schedule a free on-site estimate at junkygurus.com/free-estimate — what we quote is what you pay.",
       "discountQuestion": "Yes! We offer 10% off for seniors (65+) and veterans — no paperwork required. We also have 5% off for repeat customers. See all discounts at junkygurus.com/discounts.",
       "serviceAreaQuestion": "Yes! We cover Whatcom, Skagit, and Snohomish Counties — about 50 miles from our home base in Mount Vernon.",
-      "differentiatorQuestion": "We're locally owned (not a franchise), we show up when we say we will (not 'sometime between 8 and 5'), we don't have hidden fees, and we actually care about where your stuff ends up. Plus, you can skip the sales dance — upload photos to our AI estimator and know your price before we ever arrive."
+      "differentiatorQuestion": "We're locally owned (not a franchise), we show up when we say we will (not 'sometime between 8 and 5'), we don't have hidden fees, and we actually care about where your stuff ends up. Plus, you can skip the sales dance — upload photos to our free on-site estimate and know your price before we ever arrive."
     },
     "doNotAssume": [
       "Specific availability without checking",

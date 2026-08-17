@@ -48,14 +48,14 @@
         }
       }
     },
-    "/ai-estimator": {
+    "/free-estimate": {
       "get": {
         "operationId": "getAIEstimator",
-        "summary": "AI Photo Estimator",
+        "summary": "Free On-Site Estimate",
         "description": "Direct users to upload photos of their junk to get instant price estimates powered by AI.",
         "responses": {
           "200": {
-            "description": "AI Estimator page"
+            "description": "Free On-Site Estimate page"
           }
         }
       }
@@ -179,7 +179,7 @@
               "Locally owned, not a franchise",
               "No hidden fees",
               "Same-day service available",
-              "AI photo estimates",
+              "free on-site estimates",
               "Bilingual (English/Spanish)",
               "Eco-friendly disposal"
             ]

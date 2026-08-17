@@ -33,9 +33,9 @@ const announcements: Announcement[] = [
   {
     icon: Zap,
     emoji: "⚡",
-    message: "Free estimates in minutes!",
-    linkText: "Try it",
-    linkTo: "/ai-estimator",
+    message: "Free on-site estimates — we come to you!",
+    linkText: "Schedule a free estimate",
+    linkTo: "/free-estimate",
   },
 ];
 
