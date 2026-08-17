@@ -180,47 +180,24 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* AI Estimator Section */}
+      {/* Free On-Site Estimate Section */}
       <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-primary/5 to-background">
         <div className="container max-w-6xl">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-6 md:mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                <Sparkles className="h-4 w-4" />
-                New! AI-Powered Estimates
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-3 md:mb-4 leading-tight">
-                Too Lazy to Describe It? Just Show Us.
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-                Snap a photo and our AI will estimate the cost. It's seen some things. It won't judge.
-              </p>
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Sparkles className="h-4 w-4" />
+              Free On-Site Estimates
             </div>
-            
-            <Tabs defaultValue="junk" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="junk" className="flex items-center gap-2">
-                  <Package className="h-4 w-4" />
-                  Junk Removal
-                </TabsTrigger>
-                <TabsTrigger value="demolition" className="flex items-center gap-2">
-                  <Hammer className="h-4 w-4" />
-                  Light Demolition
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="junk">
-                <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
-                  <JunkAnalyzer />
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="demolition">
-                <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-card border border-border shadow-lg">
-                  <DemolitionAnalyzer />
-                </div>
-              </TabsContent>
-            </Tabs>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal mb-3 md:mb-4 leading-tight">
+              Rather Have Us Take a Look?
+            </h2>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto mb-6">
+              Book a free in-person estimate. We swing by, size up the job, and hand you a firm price — no obligation, no
+              surprise fees.
+            </p>
+            <Button asChild size="lg">
+              <Link to="/free-estimate">Schedule a Free Estimate</Link>
+            </Button>
           </div>
         </div>
       </section>
