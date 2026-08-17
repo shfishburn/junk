@@ -176,14 +176,14 @@ const Contact = () => {
                     <Sparkles className="h-6 w-6 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-charcoal mb-1">Skip the Typing</h3>
+                    <h3 className="font-semibold text-charcoal mb-1">Want Us to Take a Look?</h3>
                     <p className="text-muted-foreground text-sm mb-3">
-                      Snap a photo and let our AI do the heavy lifting (pun intended).
+                      Book a free in-person estimate and we'll come quote the job on-site.
                     </p>
                     <Button asChild className="w-full sm:w-auto">
-                      <Link to="/ai-estimator">
+                      <Link to="/free-estimate">
                         <Camera className="mr-2 h-4 w-4" />
-                        Get AI Quote
+                        Schedule Free Estimate
                       </Link>
                     </Button>
                   </div>
