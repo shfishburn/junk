@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MessageSquare, Truck, CheckCircle2, Sparkles, Camera, Sofa, Tv, Refrigerator, Armchair, BedDouble, Package, HardHat, AlertTriangle, Heart, Hammer, TrashIcon } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { JunkAnalyzer, DemolitionAnalyzer } from "@/components/features";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Helmet } from "react-helmet-async";
 
 const steps = [
