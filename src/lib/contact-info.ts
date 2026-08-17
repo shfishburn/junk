@@ -4,7 +4,7 @@
 export const CONTACT_INFO = {
   phones: [
     { number: "+13606109233", display: "(360) 610-9233" },
-    { number: "+13604222428", display: "(360) 422-2428" },
+    { number: "+13604886375", display: "(360) 488-6375" },
   ],
   emails: [
     { address: "junkygurus@gmail.com", label: "General Inquiries & Bookings" },
