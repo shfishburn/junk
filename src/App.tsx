@@ -11,7 +11,7 @@ import {
   Pricing,
   About,
   Contact,
-  AIEstimator,
+  InPersonQuote,
   Discounts,
   PrivacyPolicy,
   TermsAndConditions,
@@ -54,7 +54,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/ai-estimator" element={<AIEstimator />} />
+          <Route path="/free-estimate" element={<InPersonQuote />} />
           <Route path="/discounts" element={<Discounts />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
